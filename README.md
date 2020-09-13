@@ -2,9 +2,9 @@
 
 FDAF (or F.D.A.F) is a free, open-source, MVC framework for flexibly creating
 Java web applications based JSF (JavaServer Face), and also mainly designed for
-flexibly creating enterprise application. It favors both convention and
-configuration, makes implementation and configuration to be more simple, and
-even lets you write less of code.
+flexibly creating enterprise application, implementing the standard Java EE.
+It favors both convention and configuration, makes implementation and
+configuration to be more simple, and even lets you write less of code.
 
 ## Builtin Ready-To-Use-Application-Source-Codes
 
