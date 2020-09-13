@@ -35,16 +35,19 @@ FDAF supports the following application server platforms for deployment:
 - [Payara](https://www.payara.fish/)
 - [Thorntail](https://thorntail.io/)
 
-Notice: Since Thorntail is discontinued, the support for Thorntail probably
-will unexpectedly defective in the future.
+Notice: Since Thorntail development discontinued, the support for Thorntail
+probably will unexpectedly defective in the future.
 
 ## Supported JPA Providers
 
-FDAF supports only [Hibernate](https://hibernate.org/orm/) and [EclipseLink](https://www.eclipse.org/eclipselink/).
+FDAF for this initial release supports only the following JPA providers:
+
+- [Hibernate](https://hibernate.org/orm/)
+- [EclipseLink](https://www.eclipse.org/eclipselink/)
 
 ## Documentation
 
-Documentation (API, Manuals, & Getting Started) not available yet within
+Documentation (API, Manuals, & Getting Started) not available yet within this
 initial release.
 
 ## Author & Copyright Information
