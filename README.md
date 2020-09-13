@@ -6,9 +6,9 @@ flexibly creating enterprise application. It favors both convention and
 configuration, makes implementation and configuration to be more simple, and
 even lets you write less of code.
 
-## Builtin Ready-To-Use-Application-Source
+## Builtin Ready-To-Use-Application-Source-Codes
 
-The source code distribution of FDAF includes the following application sources:
+The source code distribution of FDAF includes the following ready-to-use-application source codes:
 
 - Administrator Dashboard
 - User Session Management Boards:
@@ -25,6 +25,9 @@ The source code distribution of FDAF includes the following application sources:
   - User Group Member (with listing, editor (to add new record & alter), view, remove, mass remove, and check orphan data)
   - Employee (with listing, editor (to add new record & alter), view, remove, mass remove, and check orphan data)
 - Mailer Configuration Board
+
+Besides the above listed builtin sources, you will find ready-to-use
+business-logic-application source codes within FDAF.
 
 ## Supported Application Server Platform
 
@@ -52,7 +55,7 @@ initial release.
 
 ## Author & Copyright Information
 
-FDAF is designed by Heru Himawan Tejo Laksono
+FDAF is designed by [Heru Himawan Tejo Laksono]
 
 Copyright (c) by Heru Himawan Tejo Laksono. All rights reserved.
 
