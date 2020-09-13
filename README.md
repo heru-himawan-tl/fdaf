@@ -6,6 +6,21 @@ flexibly creating enterprise application. It favors both convention and
 configuration, makes implementation and configuration to be more simple, and
 even lets you write less of code.
 
+## Builtin Ready-To-Use-Application-Source
+
+The source code distribution of FDAF includes the following application sources:
+
+- Account Management Boards:
+  - Add Administrator
+  - Staff Invitation
+  - User (with listing, editor (to add new record & alter), view, remove, mass remove, and check orphan data)
+  - Department (with listing, editor (to add new record & alter), view, remove, mass remove, and check orphan data)
+  - Role (with listing, editor (to add new record & alter), view, remove, mass remove, and check orphan data)
+  - User Group (with listing, editor (to add new record & alter), view, remove, mass remove, and check orphan data)
+  - User Group Member (with listing, editor (to add new record & alter), view, remove, mass remove, and check orphan data)
+  - Employee (with listing, editor (to add new record & alter), view, remove, mass remove, and check orphan data)
+- Mailer Configuration Board
+
 ## Documentation
 
 Documentation (API, Manuals, & Getting Started) not available yet within
