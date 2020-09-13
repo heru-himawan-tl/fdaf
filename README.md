@@ -26,6 +26,18 @@ The source code distribution of FDAF includes the following application sources:
   - Employee (with listing, editor (to add new record & alter), view, remove, mass remove, and check orphan data)
 - Mailer Configuration Board
 
+## Supported Application Server Platform
+
+FDAF supports the following application server platforms for deployment:
+
+- WildFly
+- GlashFish
+- Payara
+- Thorntail
+
+Notice: Since Thorntail is discontinued, the support for Thorntail probably
+will unexpectedly defective in the future.
+
 ## Documentation
 
 Documentation (API, Manuals, & Getting Started) not available yet within
