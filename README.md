@@ -30,7 +30,7 @@ The source code distribution of FDAF includes the following application sources:
 
 FDAF supports the following application server platforms for deployment:
 
-- WildFly
+- [WildFly](https://www.wildfly.org/)
 - GlashFish
 - Payara
 - Thorntail
