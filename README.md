@@ -2,12 +2,10 @@
 
 ## About FDAF
 
-FDAF (F.D.A.F) is a build-layer framework to build database access application
-based Java EE implementation. The application model targeted in FDAF
-implementation is web-application and enterprise application. FDAF includes
-several builtin ready-to-use data-list, edit form, and data item viewer
-(which you will find them upon you compiled the FDAF as an example application
-or as a real product).
+FDAF (or F.D.A.F) is a framework designed to flexibly build a Java EE
+application. It supports standard Java EE implementations, to make easy
+and fast in building web-application and enterprise application. It
+supports the deployment under GlassFish, Payara, WildFly, and Thorntail.
 
 ## Documentation
 
