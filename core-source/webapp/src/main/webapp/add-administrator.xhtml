@@ -1,0 +1,175 @@
+<!--
+
+Copyright (c) Heru Himawan Tejo Laksono. All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+
+1. Redistributions of source code must retain the above copyright notice,
+   this list of conditions and the following disclaimer.
+
+2. Redistributions in binary form must reproduce the above copyright notice,
+   this list of conditions and the following disclaimer in the documentation
+   and/or other materials provided with the distribution.
+
+3. Neither the name of the copyright holders nor the names of its
+   contributors may be used to endorse or promote products derived from this
+   software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ARE DISCLAIMED. IN NO EVENT SHALL THE REGENTS OR CONTRIBUTORS BE LIABLE FOR
+ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE
+USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:d="http://java.sun.com/jsf/composite/component"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions">
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title><h:outputText value="#{addAdministratorWebAppBean.applicationName} - #{fn:toUpperCase(label.addAdministrator)}" /></title>
+        <h:outputStylesheet library="css" name="style.css"/>
+        <d:customHeadTag />
+    </h:head>
+    <h:body>
+        <h:form id="form">
+            <d:mainInit webAppBean="#{addAdministratorWebAppBean}" />
+            <d:databaseServiceCheck webAppBean="#{addAdministratorWebAppBean}" />
+            <d:administratorAccountCheck webAppBean="#{addAdministratorWebAppBean}" />
+            <d:addAdministratorInit webAppBean="#{addAdministratorWebAppBean}" />
+            <d:userSessionWatch webAppBean="#{addAdministratorWebAppBean}" rendered="#{(addAdministratorWebAppBean.administratorAccountExists eq true)}" />
+            <d:customTopPanel webAppBean="#{addAdministratorWebAppBean}" />
+            <h:panelGroup layout="block" styleClass="left_panel_back_overlay"></h:panelGroup>
+            <h:panelGroup layout="block" styleClass="right_panel_back_overlay"></h:panelGroup>
+            <h:panelGroup layout="block" styleClass="main_panel_back_overlay"></h:panelGroup>
+            <h:panelGroup layout="block" styleClass="body_flexbox">
+                <h:panelGroup layout="block" styleClass="left_panel">
+                    <d:customLeftPanel webAppBean="#{addAdministratorWebAppBean}" />
+                </h:panelGroup>
+                <h:panelGroup layout="block" styleClass="main_panel">
+                    <h:panelGroup layout="block" styleClass="main_panel_inner">
+                        <d:pageContainer id="page" webAppBean="#{addAdministratorWebAppBean}">
+                            <d:customProgramHeading pageTitle="#{fn:toUpperCase(label.addAdministrator)}">
+                                <h:commandButton type="button" styleClass="grouped_button_left" value="#{label.buttonSaveCreate}" rendered="#{(addAdministratorWebAppBean.opMode ne 'UPDATE')}">
+                                    <f:ajax event="click" execute="@form" render="@form" listener="#{addAdministratorWebAppBean.executeCreate}" />
+                                </h:commandButton>
+                                <h:commandButton type="button" styleClass="grouped_button_right" onclick="document.location.href='adm.jsf'" value="#{label.buttonClose}" rendered="#{(addAdministratorWebAppBean.opMode ne 'UPDATE')}" />
+                            </d:customProgramHeading>
+                            <h:panelGroup layout="block" styleClass="field_container" rendered="#{(addAdministratorWebAppBean.opMode eq 'UPDATE')}">
+                                <h:panelGroup layout="block" styleClass="field_container_inner">
+                                    <d:fieldRow>
+                                        <d:fieldColumn>
+                                            <h:panelGroup layout="block" styleClass="predefinition">
+                                                <h:outputText value="#{defaultMessage.addAdministratorAccountSuccess}" />
+                                            </h:panelGroup>
+                                        </d:fieldColumn>
+                                    </d:fieldRow>
+                                    <d:fieldRow rendered="#{(addAdministratorWebAppBean.mailerFailure eq true)}">
+                                        <d:fieldColumn>
+                                            <h:panelGroup layout="block" styleClass="predefinition">
+                                                <h:outputText value="#{defaultMessage.mailerFailureWarning}" />
+                                            </h:panelGroup>
+                                        </d:fieldColumn>
+                                    </d:fieldRow>
+                                    <d:fieldRow>
+                                        <d:fieldColumn>
+                                            <h:panelGroup layout="block" styleClass="predefinition">
+                                                <h:commandButton type="button" styleClass="common_button" value="#{label.buttonClose}" onclick="document.location.href='adm.jsf';" />
+                                            </h:panelGroup>
+                                        </d:fieldColumn>
+                                    </d:fieldRow>
+                                </h:panelGroup>
+                            </h:panelGroup>
+                            <d:messages rendered="#{(addAdministratorWebAppBean.opMode ne 'UPDATE')}" />
+                            <h:panelGroup layout="block" styleClass="field_container" rendered="#{(addAdministratorWebAppBean.opMode ne 'UPDATE')}">
+                                <h:panelGroup layout="block" styleClass="field_container_inner">
+                                    <d:fieldRow>
+                                        <d:fieldColumn>
+                                            <h:panelGroup layout="block" styleClass="predefinition">
+                                                <h:outputText value="#{(addAdministratorWebAppBean.administratorAccountExists eq false) ? defaultMessage.addAdministratorAccountPredefinition : defaultMessage.addAdministratorAccountWarning}" />
+                                            </h:panelGroup>
+                                        </d:fieldColumn>
+                                    </d:fieldRow>
+                                    <d:fieldRow>
+                                        <d:fieldColumn>
+                                            <d:fieldLabel for="name" value="#{elabel.userName}" />
+                                            <d:fieldInputBox>
+                                                <h:inputText id="name" value="#{addAdministratorWebAppBean.entity.userName}">
+                                                    <f:validateBean disabled="#{addAdministratorWebAppBean.disableValidation}" />
+                                                </h:inputText>
+                                            </d:fieldInputBox>
+                                        </d:fieldColumn>
+                                    </d:fieldRow>
+                                    <d:fieldRow>
+                                        <d:fieldColumn>
+                                            <d:fieldLabel for="password" value="#{elabel.password}" />
+                                            <d:fieldInputBox>
+                                                <h:inputSecret id="password" value="#{addAdministratorWebAppBean.entity.password}">
+                                                    <f:validateBean disabled="#{addAdministratorWebAppBean.disableValidation}" />
+                                                </h:inputSecret>
+                                            </d:fieldInputBox>
+                                        </d:fieldColumn>
+                                    </d:fieldRow>
+                                    <d:fieldRow>
+                                        <d:fieldColumn>
+                                            <d:fieldLabel for="passwordConfirm" value="#{elabel.passwordConfirm}" />
+                                            <d:fieldInputBox>
+                                                <h:inputSecret id="passwordConfirm" value="#{addAdministratorWebAppBean.entity.passwordConfirm}">
+                                                    <f:validateBean disabled="#{addAdministratorWebAppBean.disableValidation}" />
+                                                </h:inputSecret>
+                                            </d:fieldInputBox>
+                                        </d:fieldColumn>
+                                    </d:fieldRow>
+                                    <d:fieldRow>
+                                        <d:fieldColumn>
+                                            <d:fieldLabel for="email" value="#{elabel.email}" />
+                                            <d:fieldInputBox>
+                                                <h:inputText id="email" value="#{addAdministratorWebAppBean.entity.email}">
+                                                    <f:validateBean disabled="#{addAdministratorWebAppBean.disableValidation}" />
+                                                </h:inputText>
+                                            </d:fieldInputBox>
+                                        </d:fieldColumn>
+                                    </d:fieldRow>
+                                    <d:fieldRow rendered="#{addAdministratorWebAppBean.userType ne 'ADMINISTRATOR'}">
+                                        <d:fieldColumn>
+                                            <h:panelGroup layout="block" styleClass="predefinition">
+                                                <h:outputText value="#{defaultMessage.unlockPasswordPredefinition} " />
+                                                <br />
+                                                <h:outputText value="#{addAdministratorWebAppBean.getMasterPasswordFileAddr()}" />
+                                            </h:panelGroup>
+                                        </d:fieldColumn>
+                                    </d:fieldRow>
+                                    <d:fieldRow rendered="#{addAdministratorWebAppBean.userType ne 'ADMINISTRATOR'}">
+                                        <d:fieldColumn>
+                                            <d:fieldLabel for="unlockPassword" value="#{label.masterPassword}" />
+                                            <d:fieldInputBox>
+                                                <h:inputSecret id="unlockPassword" value="#{addAdministratorWebAppBean.unlockPassword}">
+                                                    <f:validateBean disabled="#{true}" />
+                                                </h:inputSecret>
+                                            </d:fieldInputBox>
+                                        </d:fieldColumn>
+                                    </d:fieldRow>
+                                </h:panelGroup>
+                            </h:panelGroup>
+                            <d:mainPanelFooter webAppBean="#{addAdministratorWebAppBean}" />
+                        </d:pageContainer>
+                    </h:panelGroup>
+                </h:panelGroup>
+                <h:panelGroup layout="block" styleClass="right_panel">
+                    <d:customRightPanel webAppBean="#{addAdministratorWebAppBean}" />
+                </h:panelGroup>
+            </h:panelGroup>
+            <d:customBottomForm webAppBean="#{addAdministratorWebAppBean}" />
+        </h:form>
+        <d:customBottomBody webAppBean="#{addAdministratorWebAppBean}" />
+    </h:body>
+</html>
