@@ -10,6 +10,11 @@ even lets you write less of code.
 
 The source code distribution of FDAF includes the following application sources:
 
+- Administrator Dashboard
+- User Session Management Boards:
+  - Login
+  - User Account Registration
+  - Password Reset
 - Account Management Boards:
   - Add Administrator
   - Staff Invitation
