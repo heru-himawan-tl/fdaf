@@ -1,9 +1,10 @@
 # FDAF (F.D.A.F) - Flexible Database Access Application Framework
 
 FDAF (or F.D.A.F) is a free, open-source, MVC framework for flexibly creating
-Java web applications based JSF (JavaServer Face) and enterprise application.
-It favors both convention and configuration, with simple implementation and
-simple configuration, and even let you write less of code.
+Java web applications based JSF (JavaServer Face), and also mainly designed for
+flexibly creating enterprise application. It favors both convention and
+configuration, makes implementation and configuration to be more simple, and
+even lets you write less of code.
 
 ## Documentation
 
