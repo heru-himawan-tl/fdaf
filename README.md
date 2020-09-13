@@ -31,12 +31,16 @@ The source code distribution of FDAF includes the following application sources:
 FDAF supports the following application server platforms for deployment:
 
 - [WildFly](https://www.wildfly.org/)
-- GlashFish
-- Payara
-- Thorntail
+- [GlashFish](https://javaee.github.io/glassfish/)
+- [Payara](https://www.payara.fish/)
+- [Thorntail](https://thorntail.io/)
 
 Notice: Since Thorntail is discontinued, the support for Thorntail probably
 will unexpectedly defective in the future.
+
+## Supported JPA Providers
+
+FDAF supports only [Hibernate](https://hibernate.org/orm/) and [EclipseLink](https://www.eclipse.org/eclipselink/).
 
 ## Documentation
 
