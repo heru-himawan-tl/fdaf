@@ -70,7 +70,7 @@ initial release.
 
 ## Author & Copyright Information
 
-FDAF is designed by [Heru Himawan Tejo Laksono]
+FDAF is designed by [Heru Himawan Tejo Laksono](https://www.linkedin.com/in/heru-himawan-tejo-laksono-65485716/)
 
 Copyright (c) by Heru Himawan Tejo Laksono. All rights reserved.
 
