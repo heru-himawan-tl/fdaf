@@ -253,7 +253,7 @@ public class UserRegistrationFacade extends AbstractFacade<UserRepository, User>
     private void rollback() {
         new RemovalTool<UserRepository, User>().remove(repository, getNewRecordId());
         new RemovalTool<UserGroupMemberRepository, UserGroupMember>().remove(userGroupMemberRepository, userGroupMemberId);
-        new RemovalTool<UserGroupRepository, UserGroup>().remove(userGroupRepository, userGroupId);
+        //new RemovalTool<UserGroupRepository, UserGroup>().remove(userGroupRepository, userGroupId);
         new RemovalTool<AuthorRepository, Author>().remove(authorRepository, authorId);
         new RemovalTool<ModifierRepository, Modifier>().remove(modifierRepository, modifierId);
         new RemovalTool<EmployeeRepository, Employee>().remove(employeeRepository, employeeId);

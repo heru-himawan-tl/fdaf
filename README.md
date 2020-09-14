@@ -9,26 +9,21 @@ and even lets the programmer write less of codes.
 
 ## Why should you use FDAF?
 
-A Java web-application as basically is database access application relies on
-CRUD (Create - Read - Update - Delete) operations. The design will become
-little bit complex, since it must provide several automation-controls to
-allow application for properly executing the tasks as requested by users
-in which the application must also be synchronizing itself to "be friendly
-& interactivally in serving the users". In this case, there will be consist
-thousand lines of code that programmer have to write. Here FDAF provides the
-things to reduce such a complexity, so that the programmer will only need to
-write JSF markups as necessary for a web-application's presentation-layer,
-and/or write less Java codes for both side of web-tiers and business-logic-tiers.
+A Java web-application with dynamic contents basically a _database access
+application_ relies on CRUD (Create - Read - Update - Delete) operations.
+It applies the _Model-View-Control_ or _MVC_ architecture, in which the
+_Model_ represents the business or database code, the _View_ represents the
+page design code, and the _Controller_ represents the navigational code.
 
-Working with FDAF is a working with standard Java EE. You no need too busy by
-learning the FDAF itself. The most of things you have to understand is 
-about understood Java EE in the first place, then you will get using FDAF
-just so easy and so simply. One way to separate concerns in a software
-application is to use a Model-View-Controller (MVC) architecture. The Model
-represents the business or database code, the View represents the page design 
-code, and the Controller represents the navigational code. FDAF is designed to
-help developers create web applications that utilize an MVC architecture, but
-with more simple fashion by let the developers to implement standard Java EE.
+In modern versions of Java EE, there's a default MVC framework called JSF
+(JavaServer Face). Following this framework, Facelets is used for the _View_
+and the _Controller_ is given. But you don't need to implement Facelets,
+instead, you need to apply the concept called the _backing bean_ (which is
+often referred to as the _Model_, but isn't a pure _Model_ itself). The
+backing bean delegates to the real model such as _EJB services_. The backing
+bean can also take up some _Controller_ responsibilities, for example
+issuing a redirect, or putting a message in a kind of queue for the _View_
+to display.
 
 ## Builtin Ready-To-Use-Application-Modules Source Codes
 
