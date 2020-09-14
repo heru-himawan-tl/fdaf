@@ -9,7 +9,7 @@ and even lets the programmer write less of codes.
 
 ## Why should you use FDAF?
 
-### Technical View
+### Technical View: From The CRUD Principle Into The Modern Web-Application Design
 
 A Java web-application with dynamic contents basically a _database access
 application_ relies on CRUD (Create - Read - Update - Delete) operations.
