@@ -7,6 +7,21 @@ implementing the standard Java EE. It favors both convention and
 configuration, makes implementation and configuration to be more simple,
 and even lets the programmer write less of codes.
 
+## Description
+
+A Java web-application as basically is database access application relies on
+CRUD (Create - Read - Update - Delete) operations. The design will become
+little bit complex, since it must provide several automation-controls to
+allow application for properly executing the tasks as requested by users
+in which the application must also be synchronizing itself to "be friendly
+& interactivally in serving the users". In this case, there will be consist
+thousand lines of code that programmer have to write. Imagine, only for CRUD
+operation, the application must be with thousand lines of code, and of course
+it will make debugging job become more complex. Here FDAF provides the things
+to reduces such a complexity, in which the programmer only needed to write
+JSF markups in XHTML for a web-application's presentation-layer, and/or write
+less Java codes for both side of web-tiers and business-logic-tiers.
+
 ## Builtin Ready-To-Use-Application-Modules Source Codes
 
 The distribution of FDAF includes the following ready-to-use-web-application-modules
