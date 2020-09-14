@@ -22,8 +22,8 @@ and/or write less Java codes for both side of web-tiers and business-logic-tiers
 
 Working with FDAF is a working with standard Java EE. You no need too busy by
 learning the FDAF itself. The most of things you have to understand is 
-about understood Java EE in the first place, then you will got using FDAF
-is just so easy and simply.
+about understood Java EE in the first place, then you will get using FDAF
+just so easy and so simply.
 
 ## Builtin Ready-To-Use-Application-Modules Source Codes
 
