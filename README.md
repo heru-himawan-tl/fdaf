@@ -7,7 +7,7 @@ implementing the standard Java EE. It favors both convention and
 configuration, makes implementation and configuration to be more simple,
 and even lets the programmer write less of codes.
 
-## Builtin Ready-To-Use-Application-Source-Codes
+## Builtin Ready-To-Use-Application-Modules Source Codes
 
 The distribution of FDAF includes the following ready-to-use-web-application-modules
 source codes:
