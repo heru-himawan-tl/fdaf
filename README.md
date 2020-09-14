@@ -7,7 +7,7 @@ implementing the standard Java EE. It favors both convention and
 configuration, makes implementation and configuration to be more simple,
 and even lets the programmer write less of codes.
 
-## Description
+## Why should base on FDAF?
 
 A Java web-application as basically is database access application relies on
 CRUD (Create - Read - Update - Delete) operations. The design will become
