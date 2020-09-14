@@ -53,8 +53,8 @@ FDAF supports the following application server platforms for deployment:
 - [Payara](https://www.payara.fish/)
 - [Thorntail](https://thorntail.io/)
 
-Notice: Since Thorntail development discontinued, the support for Thorntail
-probably will unexpectedly defective in the future.
+Notice: Thorntail development was discontinued, the support for Thorntail
+probably will be unexpectedly defective in the future.
 
 ## Supported JPA Providers
 
