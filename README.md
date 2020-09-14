@@ -26,7 +26,7 @@ about understood Java EE in the first place, then you will get using FDAF
 just so easy and so simply. One way to separate concerns in a software
 application is to use a Model-View-Controller (MVC) architecture. The Model
 represents the business or database code, the View represents the page design 
-ode, and the Controller represents the navigational code. FDAF is designed to
+code, and the Controller represents the navigational code. FDAF is designed to
 help developers create web applications that utilize an MVC architecture, but
 with more simple fashion by let the developers to implement standard Java EE.
 
