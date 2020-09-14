@@ -23,7 +23,12 @@ and/or write less Java codes for both side of web-tiers and business-logic-tiers
 Working with FDAF is a working with standard Java EE. You no need too busy by
 learning the FDAF itself. The most of things you have to understand is 
 about understood Java EE in the first place, then you will get using FDAF
-just so easy and so simply.
+just so easy and so simply. One way to separate concerns in a software
+application is to use a Model-View-Controller (MVC) architecture. The Model
+represents the business or database code, the View represents the page design 
+ode, and the Controller represents the navigational code. FDAF is designed to
+help developers create web applications that utilize an MVC architecture, but
+with more simple fashion by let the developers to implement standard Java EE.
 
 ## Builtin Ready-To-Use-Application-Modules Source Codes
 
