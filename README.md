@@ -25,6 +25,13 @@ bean can also take up some _Controller_ responsibilities, for example
 issuing a redirect, or putting a message in a kind of queue for the _View_
 to display.
 
+The modern design of a Java web-application applies the separation between
+web-tier (web-application itself) as the _View_ and as the _Controller_ over
+the business-tier as the _Model_. There are some technical considerations
+in applying this design pattern, for example in case of security matter: _In
+order to achieve some security norms, the business layer has to reside in a
+more secure place that will not exposed directly to Internet_.
+
 ## Builtin Ready-To-Use-Application-Modules Source Codes
 
 The distribution of FDAF includes the following ready-to-use-web-application-modules
