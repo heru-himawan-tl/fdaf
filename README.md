@@ -9,6 +9,8 @@ and even lets the programmer write less of codes.
 
 ## Why should you use FDAF?
 
+### Technical View
+
 A Java web-application with dynamic contents basically a _database access
 application_ relies on CRUD (Create - Read - Update - Delete) operations.
 It applies the _Model-View-Control_ or _MVC_ architecture, in which the
