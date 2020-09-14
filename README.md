@@ -9,7 +9,7 @@ and even lets the programmer write less of codes.
 
 ## Builtin Ready-To-Use-Application-Source-Codes
 
-The source code distribution of FDAF includes the following ready-to-use-application
+The distribution of FDAF includes the following ready-to-use-web-application-modules
 source codes:
 
 - Administrator Dashboard
@@ -29,7 +29,7 @@ source codes:
 - Mailer Configuration Board
 
 Besides the above listed builtin sources, you will find ready-to-use
-business-logic-application source codes within FDAF.
+business-logic-application-modules source codes within FDAF.
 
 ## Supported Application Server Platform
 
