@@ -16,7 +16,7 @@ allow application for properly executing the tasks as requested by users
 in which the application must also be synchronizing itself to "be friendly
 & interactivally in serving the users". In this case, there will be consist
 thousand lines of code that programmer have to write. Here FDAF provides the
-things to reduces such a complexity, so that the programmer will only need to
+things to reduce such a complexity, so that the programmer will only need to
 write JSF markups as necessary for a web-application's presentation-layer,
 and/or write less Java codes for both side of web-tiers and business-logic-tiers.
 
