@@ -78,15 +78,10 @@ FDAF for this initial release supports only the following JPA providers:
 Documentation (API, Manuals, & Getting Started) not available yet within this
 initial release.
 
-## Author & Copyright Information
-
-FDAF is designed by [Heru Himawan Tejo Laksono](https://www.linkedin.com/in/heru-himawan-tejo-laksono-65485716/)
-
-Copyright (c) by Heru Himawan Tejo Laksono. All rights reserved.
-
 ## License
 
-Copyright (c) Heru Himawan Tejo Laksono. All rights reserved.
+Copyright (c) [Heru Himawan Tejo Laksono](https://www.linkedin.com/in/heru-himawan-tejo-laksono-65485716/).
+All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions are met:
