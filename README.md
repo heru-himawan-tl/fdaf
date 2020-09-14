@@ -20,6 +20,11 @@ things to reduce such a complexity, so that the programmer will only need to
 write JSF markups as necessary for a web-application's presentation-layer,
 and/or write less Java codes for both side of web-tiers and business-logic-tiers.
 
+Working with FDAF is a working with standard Java EE. You no need too busy by
+learning the FDAF itself. The most of things you have to understand is 
+about understood Java EE in the first place, then you will got using FDAF
+is just so easy and simply.
+
 ## Builtin Ready-To-Use-Application-Modules Source Codes
 
 The distribution of FDAF includes the following ready-to-use-web-application-modules
