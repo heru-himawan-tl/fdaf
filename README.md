@@ -29,10 +29,17 @@ to display.
 
 The modern design of a Java web-application applies the separation between
 web-tier (web-application itself) as the _View_ and as the _Controller_ over
-the business-tier as the _Model_. There are some technical considerations
-in applying this design pattern, for example in case of security matter: _In
-order to achieve some security norms, the business layer has to reside in a
-more secure place that will not exposed directly to Internet_.
+the business-tier as the _Model_. There are various technical considerations
+in applying this kind of design pattern, for example in cases:
+- Security matter: In order to achieve some security norms, the business
+layer has to reside in a more secure place that will not exposed directly to
+Internet.
+- Interactivity matter: A web-application must keep its function interactively
+without encountered total interruption whenever the business-tier fall in
+serious problem. For example, when business-tier encountered database-server
+problem, the web-tier will keep interact to the user by informing current
+situation to let the user take reasonable decision in working with the
+web-application in current situation. 
 
 ## Builtin Ready-To-Use-Application-Modules Source Codes
 
