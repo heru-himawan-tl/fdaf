@@ -44,7 +44,7 @@ web-application in current situation.
 
 ### The Solution: Reduce The Write Of Thousand Lines Of Code, Debugging Complexity, & Compilation Complexity
 
-FDAF over the solutions regarding the above described engineering view, by
+FDAF offers the solutions regarding the above described engineering view, by
 providing ready-to-implement API and JSF components to let the developers
 build the modern web-application that follows the modern version of Java EE.
 The API collections include the abstractions and interfaces to apply modern
