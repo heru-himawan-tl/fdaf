@@ -42,7 +42,7 @@ problem, the web-tier will keep interact to the user by informing current
 situation to let the user take reasonable decision in working with the
 web-application in current situation.
 
-### The Solution: Reduce The Write Of Thousand Lines Of Code, Debugging Complexity, and Compilation Complexity
+### The Solution: Reduce The Write Of Thousand Lines Of Code, Debugging Complexity, & Compilation Complexity
 
 FDAF over the solutions regarding the above described engineering view, by
 providing ready-to-implement API and JSF components to let the developers
