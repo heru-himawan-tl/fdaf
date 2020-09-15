@@ -25,7 +25,7 @@ often referred to as the _Model_, but isn't a pure _Model_ itself). The
 backing bean delegates to the real model such as _EJB services_. The backing
 bean can also take up some _Controller_ responsibilities, for example
 issuing a redirect, or putting a message in a kind of queue for the _View_
-to display.
+to display. 
 
 The modern design of a Java web-application, also in FDAF fashion, applies
 the separation between web-tier (web-application itself) as the _View_ and as
@@ -54,7 +54,7 @@ components - will reduce the complexity of code and debugging; you no need
 to write the thousand lines of code or markup.
 
 FDAF also includes the compilation-tools to reduce the compilation
-complexities. For example, you no need to write the complicated the JPA
+complexities. For example, you no need to write the complicated JPA
 entity-classes with their complicated bunch of "setter" and "getter"
 methods, but you need only to write the _primitive model of JPA
 entity-classes_ and let FDAF do the rest things to do. FDAF will help you
