@@ -42,7 +42,7 @@ problem, the web-tier will keep interact to the user by informing current
 situation to let the user take reasonable decision in working with the
 web-application in current situation.
 
-### The Solution: Reduce The Write Of Thousand Lines Of Code & Debugging Complexity
+### The Solution: Reduce The Write Of Thousand Lines Of Code, Debugging Complexity, and Compilation Complexity
 
 FDAF over the solutions regarding the above described engineering view, by
 providing ready-to-implement API and JSF components to let the developers
@@ -51,7 +51,18 @@ The API collections include the abstractions and interfaces to apply modern
 & advanced web-application _View_ layer & _Controller_ and complex _Model_
 of business logic application. Implementing the FDAF's API(s) and FDAF's JSF
 components - will reduce the complexity of code and debugging; you no need
-to write the thousand lines of code or markup; 
+to write the thousand lines of code or markup.
+
+FDAF also includes the compilation-tools to reduce the compilation
+complexities. For example, you no need to write the complicated the JPA
+entity-classes with their complicated bunch of "setter" and "getter"
+methods, but you need only to write the _primitive model of JPA
+entity-classes_ and let FDAF do the rest things to do. FDAF will help you
+to organize your web-application & business-logic-application source-codes
+to be a  _ready-to-distribute-and-compilable-source-code_. And, if you want,
+FDAF will help you to compile your web-application &
+business-logic-application into _ready-to-deploy-application_ in the form
+of _WAR (Web Application Archive)_ and _EAR (Enterprise Application Archive)_.
 
 ## Builtin Ready-To-Use-Application-Modules Source Codes
 
