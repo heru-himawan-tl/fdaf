@@ -62,7 +62,8 @@ to organize your web-application & business-logic-application source-codes
 to be a  _ready-to-distribute-and-compilable-source-code_. And, if you want,
 FDAF will help you to compile your web-application &
 business-logic-application into _ready-to-deploy-application_ in the form
-of _WAR (Web Application Archive)_ and _EAR (Enterprise Application Archive)_.
+of _WAR (Web Application Archive)_, _EAR (Enterprise Application Archive)_,
+or a standalone JAR (if apply FDAF as a Thorntail application).
 
 ## Builtin Ready-To-Use-Application-Modules Source Codes
 
