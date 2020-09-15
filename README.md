@@ -32,9 +32,11 @@ the separation between web-tier (web-application itself) as the _View_ and as
 the _Controller_ over the business-tier as the _Model_. There are various
 technical considerations in applying this kind of design pattern,
 for example:
+
 - Security matter: In order to achieve some security norms, the business
 layer has to reside in a more secure place that will not exposed directly to
 Internet.
+
 - Interactivity matter: A web-application must keep its function interactively
 without encountered total interruption whenever the business-tier fall in
 serious problem. For example, when business-tier encountered database-server
