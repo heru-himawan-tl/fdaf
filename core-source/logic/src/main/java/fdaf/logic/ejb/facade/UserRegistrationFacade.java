@@ -124,6 +124,8 @@ public class UserRegistrationFacade extends AbstractFacade<UserRepository, User>
             setCustomMessage("passwordEncryptError");
             return false;
         }
+        Modifier modifierEntity = null;
+        Author authorEntity = null;
         try {
             Specification<UserGroup> userGroupSpec = userGroupRepository.presetSpecification();
             userGroupSpec.setPredicate(userGroupSpec.getBuilder().equal(userGroupSpec.getRoot().get("name"), userType.name()));
@@ -163,11 +165,13 @@ public class UserRegistrationFacade extends AbstractFacade<UserRepository, User>
         try {
             Specification<Author> authorSpec = authorRepository.presetSpecification();
             authorSpec.setPredicate(authorSpec.getBuilder().equal(authorSpec.getRoot().get("userId"), userId));
-            Author authorEntity = authorRepository.find(authorSpec);
+            authorEntity = authorRepository.find(authorSpec);
             if (authorEntity == null) {
                 authorEntity = new Author();
                 authorEntity.setUserId(userId);
                 authorEntity.setUuid(UUID.randomUUID().toString());
+                authorEntity.setCreatedDate(recordDate);
+                authorEntity.setModificationDate(recordDate);
                 authorRepository.create(authorEntity);
                 authorEntity = authorRepository.find(authorSpec);
             }
@@ -179,15 +183,17 @@ public class UserRegistrationFacade extends AbstractFacade<UserRepository, User>
         try {
             Specification<Modifier> modifierSpec = modifierRepository.presetSpecification();
             modifierSpec.setPredicate(modifierSpec.getBuilder().equal(modifierSpec.getRoot().get("userId"), userId));
-            Modifier modifierEntity = modifierRepository.find(modifierSpec);
+            modifierEntity = modifierRepository.find(modifierSpec);
             if (modifierEntity == null) {
                 modifierEntity = new Modifier();
                 modifierEntity.setUserId(userId);
                 modifierEntity.setUuid(UUID.randomUUID().toString());
+                modifierEntity.setCreatedDate(recordDate);
+                modifierEntity.setModificationDate(recordDate);
                 modifierRepository.create(modifierEntity);
                 modifierEntity = modifierRepository.find(modifierSpec);
-                modifierId = modifierEntity.getId();
             }
+            modifierId = modifierEntity.getId();
         } catch (Exception e) {
             indicateServiceError(e);
             return false;
@@ -237,6 +243,22 @@ public class UserRegistrationFacade extends AbstractFacade<UserRepository, User>
             entity.setModifierId(modifierId);
             entity.setPermission(Permission.READ_ONLY_FOR_ALL);
             repository.update(entity);
+        } catch (Exception e) {
+            indicateServiceError(e);
+            return false;
+        }
+        try {
+            modifierEntity.setAuthorId(authorId);
+            modifierEntity.setModifierId(modifierId);
+            modifierRepository.update(modifierEntity);
+        } catch (Exception e) {
+            indicateServiceError(e);
+            return false;
+        }
+        try {
+            authorEntity.setAuthorId(authorId);
+            authorEntity.setModifierId(modifierId);
+            authorRepository.update(authorEntity);
         } catch (Exception e) {
             indicateServiceError(e);
             return false;
