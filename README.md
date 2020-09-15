@@ -27,10 +27,11 @@ bean can also take up some _Controller_ responsibilities, for example
 issuing a redirect, or putting a message in a kind of queue for the _View_
 to display.
 
-The modern design of a Java web-application applies the separation between
-web-tier (web-application itself) as the _View_ and as the _Controller_ over
-the business-tier as the _Model_. There are various technical considerations
-in applying this kind of design pattern, for example:
+The modern design of a Java web-application, in FDAF fashion, applies the
+separation between web-tier (web-application itself) as the _View_ and as
+the _Controller_ over the business-tier as the _Model_. There are various
+technical considerations in applying this kind of design pattern,
+for example:
 - Security matter: In order to achieve some security norms, the business
 layer has to reside in a more secure place that will not exposed directly to
 Internet.
@@ -39,7 +40,18 @@ without encountered total interruption whenever the business-tier fall in
 serious problem. For example, when business-tier encountered database-server
 problem, the web-tier will keep interact to the user by informing current
 situation to let the user take reasonable decision in working with the
-web-application in current situation. 
+web-application in current situation.
+
+### The Solution: Reduce The Write Of Thousand Lines Of Code & Debugging Complexity
+
+FDAF over the solutions regarding the above described engineering view, by
+providing ready-to-implement API and JSF components to let the developers
+build the modern web-application that follows the modern version of Java EE.
+The API collections include the abstractions and interfaces to apply modern
+& advanced web-application _View_ layer & _Controller_ and complex _Model_
+of business logic application. Implementing the FDAF's API(s) and FDAF's JSF
+components - will reduce the complexity of code and debugging; you no need
+to write the thousand lines of code or markup; 
 
 ## Builtin Ready-To-Use-Application-Modules Source Codes
 
