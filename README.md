@@ -27,8 +27,8 @@ bean can also take up some _Controller_ responsibilities, for example
 issuing a redirect, or putting a message in a kind of queue for the _View_
 to display.
 
-The modern design of a Java web-application, in FDAF fashion, applies the
-separation between web-tier (web-application itself) as the _View_ and as
+The modern design of a Java web-application, also in FDAF fashion, applies
+the separation between web-tier (web-application itself) as the _View_ and as
 the _Controller_ over the business-tier as the _Model_. There are various
 technical considerations in applying this kind of design pattern,
 for example:
