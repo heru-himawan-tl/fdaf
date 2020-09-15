@@ -11,8 +11,8 @@ and even lets the programmer write less of codes.
 
 ### Engineering View: From The CRUD Principle Into The Modern Web-Application Design
 
-A Java web-application with dynamic contents basically a _database access
-application_ relies on CRUD (Create - Read - Update - Delete) operations.
+A Java web-application to handle dynamic contents is basically a _database
+access application_ relies on CRUD (Create - Read - Update - Delete) operations.
 It applies the _Model-View-Control_ or _MVC_ architecture, in which the
 _Model_ represents the business or database code, the _View_ represents the
 page design code, and the _Controller_ represents the navigational code.
@@ -39,7 +39,7 @@ Internet.
 without encountered total interruption whenever the business-tier fall in
 serious problem. For example, when business-tier encountered database-server
 problem, the web-tier will keep interact to the user by informing current
-situation to let the user take reasonable decision in working with the
+states to let the user take reasonable decision in working with the
 web-application in current situation.
 
 ### The Solution: Reduce The Write Of Thousand Lines Of Code, Debugging Complexity, & Compilation Complexity
