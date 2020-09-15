@@ -22,7 +22,7 @@ In modern versions of Java EE, there's a default MVC framework called JSF
 and the _Controller_ is given. But you don't need to implement Facelets,
 instead, you need to apply the concept called the _backing bean_ (which is
 often referred to as the _Model_, but isn't a pure _Model_ itself). The
-backing bean delegates to the real model such as _EJB services_. The backing
+backing bean delegates to the real _Model_ such as _EJB services_. The backing
 bean can also take up some _Controller_ responsibilities, for example
 issuing a redirect, or putting a message in a kind of queue for the _View_
 to display. 
@@ -48,7 +48,7 @@ FDAF offers the solutions regarding the above described engineering view, by
 providing ready-to-implement API and JSF components to let the developers
 build the modern web-application that follows the modern version of Java EE.
 The API collections include the abstractions and interfaces to apply modern
-& advanced web-application _View_ layer & _Controller_ and complex _Model_
+& advanced web-application's _View_ layer & _Controller_ and complex _Model_
 of business logic application. Implementing the FDAF's API(s) and FDAF's JSF
 components - will reduce the complexity of code and debugging; you no need
 to write the thousand lines of code or markup.
