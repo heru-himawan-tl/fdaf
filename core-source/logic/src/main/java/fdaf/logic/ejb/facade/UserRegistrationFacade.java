@@ -270,13 +270,13 @@ public class UserRegistrationFacade extends AbstractFacade<UserRepository, User>
     public boolean findUserByName(String userName) {
         Specification<User> spec = repository.presetSpecification();
         spec.setPredicate(spec.getBuilder().equal(spec.getRoot().get("userName"), userName));
-        return (repository.find(spec) == null);
+        return (repository.find(spec) != null);
     }
     
     public boolean findUserByEmail(String email) {
         Specification<User> spec = repository.presetSpecification();
         spec.setPredicate(spec.getBuilder().equal(spec.getRoot().get("email"), email));
-        return (repository.find(spec) == null);
+        return (repository.find(spec) != null);
     }
 
     @Override
