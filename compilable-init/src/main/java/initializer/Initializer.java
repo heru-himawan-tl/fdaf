@@ -43,8 +43,8 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.Enumeration;
 import java.util.HashMap;
-import java.util.Link;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
@@ -55,6 +55,9 @@ public class Initializer {
     private final String applicationSourceDirectory;
     private final String ejbLookupDir;
     private final String applicationCodeName;
+    
+    private final List<String> undefinedCustomCallbackMessage = new ArrayList<String>();
+    private final List<String> definedCustomCallbackMessage = new ArrayList<String>();
     
     public Initializer() throws Exception {
         Properties properties = new Properties();
@@ -107,6 +110,20 @@ public class Initializer {
         String originalSource = "";
         String source = "";
         String dest = "";
+        if (nodeAddr.matches(".*custom_callback_message\\.properties.*")) {
+            try {
+                BufferedReader r = Files.newBufferedReader(Paths.get(nodeAddr));
+                String l = null;
+                while ((l = r.readLine()) != null) {
+                    if (!l.trim().isEmpty()) {
+                        String s = l.replaceAll("=.*", "").trim();
+                        definedCustomCallbackMessage.add(s);
+                    }
+                }
+                r.close();
+            } catch (Exception e) {
+            }
+        }
         try {
             BufferedReader r = Files.newBufferedReader(Paths.get(nodeAddr));
             String l = null;
@@ -132,6 +149,12 @@ public class Initializer {
                 }
                 if (nodeAddr.matches(".*with\\-hibernate.*")) {
                     s = s.replaceAll("__JPA_PROVIDER_NAME__", "Hibernate").replaceAll("__JPA_PROVIDER__", "hibernate");
+                }
+                if (nodeAddr.matches(".*(logic\\/ejb\\/callback|logic\\/ejb\\/facade).*") && s.matches(".*setCustomMessage\\(.*")) {
+                    String ccm = s.replaceAll(".*setCustomMessage\\(\"|\"\\).*", "");
+                    if (!undefinedCustomCallbackMessage.contains(ccm + "=") && !definedCustomCallbackMessage.contains(ccm)) {
+                        undefinedCustomCallbackMessage.add(ccm + "=");
+                    }
                 }
                 source += s + "\n";
             }
@@ -198,6 +221,26 @@ public class Initializer {
         System.out.println("-------------------------------------------------------------------------------");
         for (String nodeAddr : toFormatNodeList) {
             format(nodeAddr);
+        }
+        try {
+            Files.delete(Paths.get("undefined_custom_callback.txt"));
+        } catch (Exception e) {
+        }
+        if (!undefinedCustomCallbackMessage.isEmpty()) {
+            Collections.sort(undefinedCustomCallbackMessage);
+            String undefinedCustomCallbackMessageTxt = "";
+            for (String ucmc : undefinedCustomCallbackMessage) {
+                undefinedCustomCallbackMessageTxt += ucmc + "\n";
+            }
+            undefinedCustomCallbackMessageTxt = undefinedCustomCallbackMessageTxt.trim();
+            if (!undefinedCustomCallbackMessageTxt.isEmpty()) {
+                try {
+                    FileWriter fw = new FileWriter("undefined_custom_callback.txt", false);
+                    fw.write(undefinedCustomCallbackMessageTxt);
+                    fw.close();
+                } catch (Exception e) {
+                }
+            }
         }
         System.out.println("-------------------------------------------------------------------------------");
         System.out.println("Organizing compilable application source files ...");
