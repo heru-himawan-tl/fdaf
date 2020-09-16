@@ -51,9 +51,9 @@ providing ready-to-implement API and JSF components to let the developers
 build the modern web-application that follows the modern version of Java EE.
 The API collections include the abstractions and interfaces to apply modern
 & advanced web-application's _View_ layer & _Controller_ and complex _Model_
-of business logic application. Implementing the FDAF's API(s) and FDAF's JSF
-components - will reduce the complexity of code and debugging; you no need
-to write the thousand lines of code or markup.
+of business logic application. Implementing FDAF's API(s) and FDAF's JSF
+components will reduce the complexity of code and debugging; you no need
+to write thousand lines of code or markup.
 
 FDAF also includes the compilation-tools to reduce the compilation
 complexities. For example, you no need to write the complicated JPA
