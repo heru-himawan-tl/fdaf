@@ -102,12 +102,16 @@ public class StaffInvitationWebAppBean extends AbstractWebAppBean implements Ser
             addMessage(SV_WARN, "mailerDisabledWarning");
         }
         if (opMode != WebAppOpMode.CREATE && opMode != WebAppOpMode.UPDATE) {
-            opMode = WebAppOpMode.CREATE;
-            disableValidation = false;
-            exitSearch(null);
-            getFacade().prepareCreate();
-            presetEntity();
+            prepareCreateMode();
         }
+    }
+    
+    private void prepareCreateMode() {
+        opMode = WebAppOpMode.CREATE;
+        disableValidation = false;
+        exitSearch(null);
+        getFacade().prepareCreate();
+        presetEntity();
     }
     
     @Override
@@ -147,15 +151,26 @@ public class StaffInvitationWebAppBean extends AbstractWebAppBean implements Ser
                 String subject = facade.getInvitaionSubject().trim();
                 subject = (subject.isEmpty()) ? label.getString("staffInvitationMailNotificationSubject") : subject;
                 if (!mailer.send("noreply@" + mailer.getDomain(), facade.getEmail(), subject, message)) {
-                    addMessage(SV_ERROR, "mailerErrorWarning");
-                    mailerFailure = true;
+                    indicateMailerFailure();
+                    rollbackCreateTask();
+                    prepareCreateMode();
                 }
             }
         } catch (Exception e) {
             LOGGER.log(Level.SEVERE, null, e);
-            addMessage(SV_ERROR, "mailerErrorWarning");
-            mailerFailure = true;
+            indicateMailerFailure();
+            rollbackCreateTask();
+            prepareCreateMode();
         }
+    }
+    
+    private void indicateMailerFailure() {
+        if (!mailer.isValidAddress()) {
+            addMessage(SV_ERROR, "mailerErrorInvalidAddressWarning");
+        } else {
+            addMessage(SV_ERROR, "mailerErrorWarning");
+        }
+        mailerFailure = true;
     }
     
     public boolean getMailerFailure() {

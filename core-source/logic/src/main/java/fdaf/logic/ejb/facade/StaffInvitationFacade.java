@@ -31,9 +31,12 @@ package fdaf.logic.ejb.facade;
 import fdaf.base.StaffInvitationInterface;
 import fdaf.logic.base.AbstractFacade;
 import fdaf.logic.base.Specification;
+import fdaf.logic.base.UpdateCallbackInterface;
 import fdaf.logic.ejb.repository.StaffInvitationRepository;
 import fdaf.logic.entity.StaffInvitation;
 import java.io.Serializable;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ejb.Remote;
 import javax.ejb.Stateful;
@@ -44,11 +47,17 @@ public class StaffInvitationFacade extends AbstractFacade<StaffInvitationReposit
 
     private static final long serialVersionUID = 1L;
     
+    private static final Logger LOGGER = Logger.getLogger(StaffInvitationFacade.class.getName());
+    
     @EJB
     private StaffInvitationRepository repository;
     
     @EJB(lookup = "java:global/__EJB_LOOKUP_DIR__/StaffInvitationUpdateCallback")
-    fdaf.logic.base.UpdateCallbackInterface<StaffInvitationRepository, StaffInvitation> updateCallbackBean;
+    private UpdateCallbackInterface<StaffInvitationRepository, StaffInvitation> updateCallbackBean;
+    
+    private StaffInvitation backupEntity;
+    
+    private boolean rolledBack;
 
     public StaffInvitationFacade() {
         super(StaffInvitation.class);
@@ -90,7 +99,39 @@ public class StaffInvitationFacade extends AbstractFacade<StaffInvitationReposit
     public String getInvitaionMessage() {
         return entity.getMessage();
     }
-
+    
+    @Override
+    public void prepareCreate() {
+        super.prepareCreate();
+        if (rolledBack && backupEntity != null) {
+            entity.setSignature(backupEntity.getSignature());
+            entity.setEmail(backupEntity.getEmail());
+        }
+        backupEntity = null;
+        rolledBack = false;
+    }
+    
+    @Override
+    public void rollbackCreateTask() {
+        try {
+            if (entity == null) {
+                return;
+            }
+            Long primaryKey = entity.getId();
+            if (primaryKey == null) {
+                return;
+            }
+            entity = getRepository().find(primaryKey);
+            if (entity != null) {
+                backupEntity = entity;
+                getRepository().remove(entity);
+            }
+        } catch (Exception e) {
+            LOGGER.log(Level.SEVERE, null, e);
+        }
+        rolledBack = true;
+    }
+    
     @Override
     protected void updateDataProperties(boolean updateMode) {
         updateRecordDate();

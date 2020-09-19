@@ -30,6 +30,7 @@ package fdaf.webapp.bean.system;
 
 import fdaf.base.AdministratorAccountCheckerInterface;
 import fdaf.base.DatabaseServiceCheckerInterface;
+import fdaf.base.MailerInterface;
 import fdaf.base.UserRegistrationInterface;
 import fdaf.base.UserSessionManagerInterface;
 import fdaf.base.UserType;
@@ -70,6 +71,9 @@ public class UserRegistrationWebAppBean extends AbstractWebAppBean implements Se
     
     @EJB(lookup = "java:global/__EJB_LOOKUP_DIR__/UserRegistrationFacade")
     private UserRegistrationInterface facade;
+    
+    @EJB(lookup = "java:global/__EJB_LOOKUP_DIR__/Mailer")
+    private MailerInterface mailer;
     
     private UserType userType;
     
@@ -199,14 +203,35 @@ public class UserRegistrationWebAppBean extends AbstractWebAppBean implements Se
                 return;
             }
             facade.reloadEntity();
-            
+            if (mailer.isEnabled()) {
+                String subject = label.getString("userRegistrationNotificationSubject");
+                String message = String.format(messageBundle.getString("userRegistrationNotificationMessage"), getWebappURL(), getWebappURL(), userName, password);
+                if (!mailer.send("noreply@" + mailer.getDomain(), email, subject, message)) {
+                    rollbackOnError();
+                    return;
+                }
+            } else {
+                addMessage(SV_WARN, "mailerDisabledWarning");
+                success = false;
+                rollbackCreateTask();
+                return;
+            }            
         } catch (Exception e) {
             LOGGER.log(Level.SEVERE, null, e);
-            addMessage(SV_ERROR, "serviceErrorWarning");
-            success = false;
+            rollbackOnError();
             return;
         }
         success = true;
+    }
+    
+    private void rollbackOnError() {
+        if (!mailer.isValidAddress()) {
+            addMessage(SV_ERROR, "mailerErrorInvalidAddressWarning");
+        } else {
+            addMessage(SV_ERROR, "mailerErrorWarning");
+        }
+        success = false;
+        rollbackCreateTask();
     }
 
     @Override

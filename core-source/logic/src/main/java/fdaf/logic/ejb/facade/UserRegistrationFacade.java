@@ -272,6 +272,11 @@ public class UserRegistrationFacade extends AbstractFacade<UserRepository, User>
         setCustomMessage("registerAccountServiceFailure");
     }
     
+    @Override
+    public void rollbackCreateTask() {
+        rollback();
+    }
+    
     private void rollback() {
         new RemovalTool<UserRepository, User>().remove(repository, getNewRecordId());
         new RemovalTool<UserGroupMemberRepository, UserGroupMember>().remove(userGroupMemberRepository, userGroupMemberId);

@@ -182,7 +182,6 @@ public abstract class AbstractFacade<R extends AbstractRepository<E>, E extends 
         updateCallback.rollbackCreateTask();
     }
     
-    
     public void inlineUpdate(Object primaryKey, E entity) {
         if (isDataExists(primaryKey)) {
             getRepository().update(entity);
