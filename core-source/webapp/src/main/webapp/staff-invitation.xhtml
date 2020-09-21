@@ -74,24 +74,22 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                                     <h:panelGroup layout="block" styleClass="field_container_inner">
                                         <d:fieldRow rendered="#{(staffInvitationWebAppBean.mailerFailure eq false)}">
                                             <d:fieldColumn>
-                                                <h:panelGroup layout="block" styleClass="predefinition">
+                                                <d:informationBox>
                                                     <h:outputText value="#{defaultMessage.staffInvitationSuccess}" rendered="#{(staffInvitationWebAppBean.mailerEnabled eq true)}" />
                                                     <h:outputText value="#{defaultMessage.staffInvitationUnsent}" rendered="#{(staffInvitationWebAppBean.mailerEnabled eq false)}" />
-                                                </h:panelGroup>
+                                                </d:informationBox>
                                             </d:fieldColumn>
                                         </d:fieldRow>
                                         <d:fieldRow rendered="#{(staffInvitationWebAppBean.mailerFailure eq true)}">
                                             <d:fieldColumn>
-                                                <h:panelGroup layout="block" styleClass="predefinition">
-                                                    <h:outputText value="#{defaultMessage.staffInvitationUnsentByMailerFailure}" />
-                                                </h:panelGroup>
+                                                <d:informationBox content="#{defaultMessage.staffInvitationUnsentByMailerFailure}" />
                                             </d:fieldColumn>
                                         </d:fieldRow>
                                         <d:fieldRow>
                                             <d:fieldColumn>
-                                                <h:panelGroup layout="block" styleClass="predefinition">
+                                                <d:informationBox>
                                                     <h:commandButton type="button" styleClass="common_button" value="#{label.buttonClose}" onclick="document.location.href='adm.jsf';" />
-                                                </h:panelGroup>
+                                                </d:informationBox>
                                             </d:fieldColumn>
                                         </d:fieldRow>
                                     </h:panelGroup>
@@ -101,9 +99,7 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                                     <h:panelGroup layout="block" styleClass="field_container_inner">
                                         <d:fieldRow>
                                             <d:fieldColumn>
-                                                <h:panelGroup layout="block" styleClass="predefinition">
-                                                    <h:outputText value="#{defaultMessage.staffInvitationPredefinition}" />
-                                                </h:panelGroup>
+                                                <d:informationBox content="#{defaultMessage.staffInvitationPredefinition}" />
                                             </d:fieldColumn>
                                         </d:fieldRow>
                                         <d:fieldRow>

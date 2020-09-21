@@ -49,9 +49,7 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                     <h:commandButton type="button" styleClass="grouped_button_right" value="#{label.buttonClose}" onclick="document.location.href='index.jsf';" />
                 </d:customProgramHeading>
                 <h:panelGroup layout="block" styleClass="stack_traces_box">
-                    <h:panelGroup layout="block" styleClass="predefinition">
-                        <h:outputText value="#{defaultMessage.errorPredefinition}" />
-                    </h:panelGroup>
+                    <d:informationBox content="#{defaultMessage.errorPredefinition}" />
                     <br />
                     <h:outputText value="#{label.errorStackTraces}" />:
                     <pre><h:outputText value="#{requestScope['fdaf.error.stackTraces']}" /></pre>

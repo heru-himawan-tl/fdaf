@@ -50,7 +50,7 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                         <h:outputLink value="index.jsf" styleClass="login_close_button" />
                         <h:outputText value="#{userRegistrationWebAppBean.applicationName} - #{fn:toUpperCase(label.userAccountRegistration)}" />
                     </h:panelGroup>
-                    <d:loginStyledMessages disableBottomMargin="true" />
+                    <d:loginStyledMessages disableBottomMargin="#{(userRegistrationWebAppBean.success eq false)}" />
                     <h:panelGroup layout="block" styleClass="dialog_content_box login_content_box login_content_justify_box" rendered="#{(userRegistrationWebAppBean.isLoggedOn eq true)}">
                         <h:outputText value="#{defaultMessage.alreadyLoggedOnWarning}" />
                     </h:panelGroup>
@@ -117,7 +117,8 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                      <h:panelGroup layout="block" styleClass="login_button_box" rendered="#{(
                             userRegistrationWebAppBean.isLoggedOn eq false and userRegistrationWebAppBean.success eq false
                         )}">
-                        <h:commandButton type="button" styleClass="login_button" value="#{label.buttonSubmit}" rendered="#{(userRegistrationWebAppBean.success eq false)}">
+                        <h:commandButton type="button" styleClass="login_button" value="#{label.buttonSubmit}"
+                                rendered="#{(userRegistrationWebAppBean.success eq false)}">
                             <f:ajax event="click" execute="@form" render="@form" listener="#{userRegistrationWebAppBean.register}" />
                         </h:commandButton>
                     </h:panelGroup>

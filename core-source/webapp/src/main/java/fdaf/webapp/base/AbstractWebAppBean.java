@@ -546,6 +546,10 @@ public abstract class AbstractWebAppBean extends AbstractBaseWebAppBean {
             resultObject.setRemovable((userType == UserType.ADMINISTRATOR && authorUserType != UserType.STAFF) ? true : permissionCheck.isRemovable());
             resultObject.setEditable((userType == UserType.ADMINISTRATOR && authorUserType != UserType.STAFF) ? true : permissionCheck.isEditable());
         }
+        if (userType == UserType.ADMINISTRATOR) {
+            resultObject.setRemovable(true);
+            resultObject.setEditable(true);
+        }
         resultObject.setTakeoverable((userType == UserType.ADMINISTRATOR && authorUserType != UserType.ADMINISTRATOR && currentAuthorId != authorId)
             || ((authorUserType == null || authorName == null) && checkOrphanDataMode && userType == UserType.ADMINISTRATOR));
         resultObject.setUserGroupName(dataProperties.getUserGroupName());

@@ -70,9 +70,7 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                                 <h:panelGroup layout="block" styleClass="field_container_inner">
                                     <d:fieldRow>
                                         <d:fieldColumn>
-                                            <h:panelGroup layout="block" styleClass="predefinition">
-                                                <h:outputText value="#{defaultMessage.mailerConfigurationSavingSuccess}" />
-                                            </h:panelGroup>
+                                            <d:informationBox content="#{defaultMessage.mailerConfigurationSavingSuccess}" />
                                         </d:fieldColumn>
                                     </d:fieldRow>
                                 </h:panelGroup>
@@ -142,11 +140,11 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                                     </d:fieldRow>
                                     <d:fieldRow rendered="#{mailerConfigurationWebAppBean.isLoggedOn eq false}">
                                         <d:fieldColumn>
-                                            <h:panelGroup layout="block" styleClass="predefinition">
+                                            <d:informationBox>
                                                 <h:outputText value="#{defaultMessage.mailerConfigurationUnlockPasswordPredefinition} " />
                                                 <br />
                                                 <h:outputText value="#{mailerConfigurationWebAppBean.getMasterPasswordFileAddr()}" />
-                                            </h:panelGroup>
+                                            </d:informationBox>
                                         </d:fieldColumn>
                                     </d:fieldRow>
                                     <d:fieldRow rendered="#{mailerConfigurationWebAppBean.isLoggedOn eq false}">

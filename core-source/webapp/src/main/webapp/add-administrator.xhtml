@@ -68,23 +68,19 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                                 <h:panelGroup layout="block" styleClass="field_container_inner">
                                     <d:fieldRow>
                                         <d:fieldColumn>
-                                            <h:panelGroup layout="block" styleClass="predefinition">
-                                                <h:outputText value="#{defaultMessage.addAdministratorAccountSuccess}" />
-                                            </h:panelGroup>
+                                            <d:informationBox content="#{defaultMessage.addAdministratorAccountSuccess}" />
                                         </d:fieldColumn>
                                     </d:fieldRow>
                                     <d:fieldRow rendered="#{(addAdministratorWebAppBean.mailerFailure eq true)}">
                                         <d:fieldColumn>
-                                            <h:panelGroup layout="block" styleClass="predefinition">
-                                                <h:outputText value="#{defaultMessage.mailerFailureWarning}" />
-                                            </h:panelGroup>
+                                            <d:informationBox content="#{defaultMessage.mailerFailureWarning}" />
                                         </d:fieldColumn>
                                     </d:fieldRow>
                                     <d:fieldRow>
                                         <d:fieldColumn>
-                                            <h:panelGroup layout="block" styleClass="predefinition">
+                                            <d:informationBox>
                                                 <h:commandButton type="button" styleClass="common_button" value="#{label.buttonClose}" onclick="document.location.href='adm.jsf';" />
-                                            </h:panelGroup>
+                                            </d:informationBox>
                                         </d:fieldColumn>
                                     </d:fieldRow>
                                 </h:panelGroup>
@@ -94,9 +90,7 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                                 <h:panelGroup layout="block" styleClass="field_container_inner">
                                     <d:fieldRow>
                                         <d:fieldColumn>
-                                            <h:panelGroup layout="block" styleClass="predefinition">
-                                                <h:outputText value="#{(addAdministratorWebAppBean.administratorAccountExists eq false) ? defaultMessage.addAdministratorAccountPredefinition : defaultMessage.addAdministratorAccountWarning}" />
-                                            </h:panelGroup>
+                                            <d:informationBox content="#{(addAdministratorWebAppBean.administratorAccountExists eq false) ? defaultMessage.addAdministratorAccountPredefinition : defaultMessage.addAdministratorAccountWarning}" />
                                         </d:fieldColumn>
                                     </d:fieldRow>
                                     <d:fieldRow>
@@ -141,11 +135,11 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                                     </d:fieldRow>
                                     <d:fieldRow rendered="#{addAdministratorWebAppBean.userType ne 'ADMINISTRATOR'}">
                                         <d:fieldColumn>
-                                            <h:panelGroup layout="block" styleClass="predefinition">
+                                            <d:informationBox>
                                                 <h:outputText value="#{defaultMessage.unlockPasswordPredefinition} " />
                                                 <br />
                                                 <h:outputText value="#{addAdministratorWebAppBean.getMasterPasswordFileAddr()}" />
-                                            </h:panelGroup>
+                                            </d:informationBox>
                                         </d:fieldColumn>
                                     </d:fieldRow>
                                     <d:fieldRow rendered="#{addAdministratorWebAppBean.userType ne 'ADMINISTRATOR'}">

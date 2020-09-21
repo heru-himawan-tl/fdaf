@@ -221,6 +221,7 @@ public class UserRegistrationWebAppBean extends AbstractWebAppBean implements Se
             rollbackOnError();
             return;
         }
+        addMessage(SV_INFO, "userRegistrationSuccessMessage");
         success = true;
     }
     
