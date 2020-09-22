@@ -81,7 +81,7 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                                 <h:panelGroup layout="block" rendered="#{cc.attrs.webAppBean.allowRender}">
                                     <d:messages />
                                     <ui:include src="/WEB-INF/templates/#{cc.attrs.pagePrefix}View.xhtml" />
-                                    <ui:include src="#{(cc.attrs.webAppBean.allowAdd eq true) ? '/WEB-INF/templates/'.concat(cc.attrs.pagePrefix).concat('Edit.xhtml') : ''}" />
+                                    <ui:include src="#{(cc.attrs.webAppBean.allowAdd eq true or (cc.attrs.webAppBean.opMode eq 'UPDATE' and cc.attrs.webAppBean.allowAdd eq false)) ? '/WEB-INF/templates/'.concat(cc.attrs.pagePrefix).concat('Edit.xhtml') : ''}" />
                                     <h:panelGroup layout="block" rendered="#{(cc.attrs.webAppBean.opMode eq 'LISTING')}">
                                         <f:passThroughAttribute name="autocomplete" value="off" />
                                         <d:listControl webAppBean="#{cc.attrs.webAppBean}" />

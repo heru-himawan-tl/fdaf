@@ -33,14 +33,15 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         xmlns:ui="http://java.sun.com/jsf/facelets"
         xmlns:h="http://java.sun.com/jsf/html"
         xmlns:f="http://java.sun.com/jsf/core"
-        xmlns:d="http://java.sun.com/jsf/composite/component">
+        xmlns:d="http://java.sun.com/jsf/composite/component"
+        xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
     <ui:composition>
         <d:editorContainer webAppBean="#{userWebAppBean}">
             <d:fieldRow>
                 <d:fieldColumn>
                     <d:fieldLabel for="name" value="#{elabel.name}" />
                     <d:fieldInputBox>
-                        <h:inputText id="name" value="#{userWebAppBean.entity.userName}">
+                        <h:inputText id="name" value="#{userWebAppBean.entity.userName}" a:readonly="readonly" >
                             <f:validateBean disabled="#{userWebAppBean.disableValidation}" />
                         </h:inputText>
                     </d:fieldInputBox>
@@ -48,7 +49,7 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                 <d:fieldColumn>
                     <d:fieldLabel for="email" value="#{elabel.email}" />
                     <d:fieldInputBox>
-                        <h:inputText id="email" value="#{userWebAppBean.entity.email}">
+                        <h:inputText id="email" value="#{userWebAppBean.entity.email}" a:readonly="readonly" >
                             <f:validateBean disabled="#{userWebAppBean.disableValidation}" />
                         </h:inputText>
                     </d:fieldInputBox>
@@ -64,17 +65,6 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                             <f:selectItem itemValue="CLIENT" itemLabel="CLIENT" />
                             <f:validateBean disabled="#{userWebAppBean.disableValidation}" />
                         </h:selectOneMenu>
-                    </d:fieldInputBox>
-                </d:fieldColumn>
-                <d:fieldColumn>
-                    <d:fieldLabel for="password" value="#{elabel.password}" />
-                    <d:fieldInputBox>
-                        <h:inputText id="password" styleClass="open_password_field" value="#{userWebAppBean.entity.password}">
-                            <f:validateBean disabled="#{userWebAppBean.disableValidation}" />
-                        </h:inputText>
-                        <h:outputScript>
-                            document.getElementsByClassName('open_password_field')[0].value='';
-                        </h:outputScript>
                     </d:fieldInputBox>
                 </d:fieldColumn>
             </d:fieldRow>
