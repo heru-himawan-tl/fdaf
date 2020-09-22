@@ -37,15 +37,14 @@ import javax.inject.Named;
 
 @SessionScoped
 @Named
-public class UserSelectOption extends AbstractSelectOptionBean implements Serializable {
+public class StaffUserSelectOption extends AbstractSelectOptionBean implements Serializable {
 
     private static final long serialVersionUID = 1L;
     
-    @EJB(lookup = "java:global/__EJB_LOOKUP_DIR__/UserMapFacade")
-    
+    @EJB(lookup = "java:global/__EJB_LOOKUP_DIR__/StaffUserMapFacade")
     private MapInterface mapInterface;
     
-    public UserSelectOption() {
+    public StaffUserSelectOption() {
         // NO-OP
     }
     

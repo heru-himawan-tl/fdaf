@@ -729,14 +729,21 @@ a:hover
     margin-right: 1px;
 }
 
+.grouped_button_inner
+{
+    border-radius: 0px;
+}
+
 .grouped_button_left
 {
+    border-radius: 0px;
     border-top-left-radius: 2px;
     border-bottom-left-radius: 2px;
 }
 
 .grouped_button_right
 {
+    border-radius: 0px;
     border-top-right-radius: 2px;
     border-bottom-right-radius: 2px;
 }

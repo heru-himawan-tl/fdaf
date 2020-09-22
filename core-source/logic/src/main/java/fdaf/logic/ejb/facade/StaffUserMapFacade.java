@@ -26,30 +26,47 @@
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE
  * USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package fdaf.webapp.bean.utility;
+package fdaf.logic.ejb.facade;
 
 import fdaf.base.MapInterface;
-import fdaf.webapp.base.AbstractSelectOptionBean;
+import fdaf.base.OrderingMode;
+import fdaf.logic.base.Specification;
+import fdaf.logic.ejb.repository.UserRepository;
+import fdaf.logic.entity.User;
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 import javax.ejb.EJB;
-import javax.enterprise.context.SessionScoped;
-import javax.inject.Named;
+import javax.ejb.Remote;
+import javax.ejb.Stateful;
 
-@SessionScoped
-@Named
-public class UserSelectOption extends AbstractSelectOptionBean implements Serializable {
-
+@Remote({MapInterface.class})
+@Stateful
+public class StaffUserMapFacade implements Serializable {
     private static final long serialVersionUID = 1L;
-    
-    @EJB(lookup = "java:global/__EJB_LOOKUP_DIR__/UserMapFacade")
-    
-    private MapInterface mapInterface;
-    
-    public UserSelectOption() {
+    @EJB
+    private UserRepository repository;
+
+    public StaffUserMapFacade() {
         // NO-OP
     }
     
-    protected MapInterface getMapInterface() {
-        return mapInterface;
+    public Map<String, Long> getMap() {
+        Specification<User> spec = repository.presetSpecification();
+        spec.setPredicate(spec.getBuilder().equal(spec.getRoot().get("userType"), "STAFF"));
+        List<User> resultList = repository.findAll(spec, "userName", OrderingMode.ASC);
+        Map<String, Long> map = new HashMap<String, Long>();
+        if (!resultList.isEmpty()) {
+            for (User entity : resultList) {
+                map.put(entity.getUserName() + " ("
+                    + entity.getEmployee().getFirstName() + " "
+                    + entity.getEmployee().getMiddleName() + " "
+                    + entity.getEmployee().getLastName()
+                    + ")", entity.getId());
+            }
+        }
+        return new TreeMap<String, Long>(map);
     }
 }
