@@ -101,16 +101,16 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                         <d:freeFieldRow>
                             <d:freeFieldColumn>
                                 <h:outputLabel for="password" styleClass="dialog_label" value="#{elabel.password}" />
-                                <h:inputText autocomplete="off" id="password" value="#{userRegistrationWebAppBean.password}">
+                                <h:inputSecret autocomplete="off" id="password" value="#{userRegistrationWebAppBean.password}">
                                     <f:validateBean disabled="#{userRegistrationWebAppBean.disableValidation}" />
-                                </h:inputText>
+                                </h:inputSecret>
                             </d:freeFieldColumn>
                             <d:freeGapFieldColumn>&nbsp;</d:freeGapFieldColumn>
                             <d:freeFieldColumn>
                                 <h:outputLabel for="passwordConfirm" styleClass="dialog_label" value="#{elabel.passwordConfirm}" />
-                                <h:inputText autocomplete="off" id="passwordConfirm" value="#{userRegistrationWebAppBean.passwordConfirm}">
+                                <h:inputSecret autocomplete="off" id="passwordConfirm" value="#{userRegistrationWebAppBean.passwordConfirm}">
                                     <f:validateBean disabled="#{userRegistrationWebAppBean.disableValidation}" />
-                                </h:inputText>
+                                </h:inputSecret>
                             </d:freeFieldColumn>
                         </d:freeFieldRow>
                      </h:panelGroup>
