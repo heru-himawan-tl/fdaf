@@ -49,7 +49,6 @@ public class IsoLanguageOption implements Serializable {
         // NO-OP
     }
 
-    @SuppressWarnings("unchecked")
     @PostConstruct
     public void postConstruct() {
         List<SelectItem> itemsTemp = new ArrayList<SelectItem>();
