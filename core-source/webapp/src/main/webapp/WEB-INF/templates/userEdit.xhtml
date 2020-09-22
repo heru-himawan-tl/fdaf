@@ -39,9 +39,14 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         <d:editorContainer webAppBean="#{userWebAppBean}">
             <d:fieldRow>
                 <d:fieldColumn>
+                    <d:informationBox content="#{defaultMessage.userEditNoticeForAdmin}" />
+                </d:fieldColumn>
+            </d:fieldRow>
+            <d:fieldRow>
+                <d:fieldColumn>
                     <d:fieldLabel for="name" value="#{elabel.name}" />
                     <d:fieldInputBox>
-                        <h:inputText id="name" value="#{userWebAppBean.entity.userName}" a:readonly="readonly" >
+                        <h:inputText id="name" value="#{userWebAppBean.entity.userName}" >
                             <f:validateBean disabled="#{userWebAppBean.disableValidation}" />
                         </h:inputText>
                     </d:fieldInputBox>
@@ -49,7 +54,7 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                 <d:fieldColumn>
                     <d:fieldLabel for="email" value="#{elabel.email}" />
                     <d:fieldInputBox>
-                        <h:inputText id="email" value="#{userWebAppBean.entity.email}" a:readonly="readonly" >
+                        <h:inputText id="email" value="#{userWebAppBean.entity.email}" >
                             <f:validateBean disabled="#{userWebAppBean.disableValidation}" />
                         </h:inputText>
                     </d:fieldInputBox>
