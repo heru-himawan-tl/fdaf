@@ -30,6 +30,7 @@ package fdaf.logic.ejb.facade;
 
 import fdaf.base.MapInterface;
 import fdaf.base.OrderingMode;
+import fdaf.base.UserType;
 import fdaf.logic.base.Specification;
 import fdaf.logic.ejb.repository.UserRepository;
 import fdaf.logic.entity.User;
@@ -55,7 +56,7 @@ public class StaffUserMapFacade implements Serializable {
     
     public Map<String, Long> getMap() {
         Specification<User> spec = repository.presetSpecification();
-        spec.setPredicate(spec.getBuilder().equal(spec.getRoot().get("userType"), "STAFF"));
+        spec.setPredicate(spec.getBuilder().equal(spec.getRoot().get("userType"), UserType.STAFF));
         List<User> resultList = repository.findAll(spec, "userName", OrderingMode.ASC);
         Map<String, Long> map = new HashMap<String, Long>();
         if (!resultList.isEmpty()) {

@@ -58,8 +58,8 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                         <d:viewerRowSet label="#{label.modifiedBy}" value="#{cc.attrs.webAppBean.resultObject.modifierName}" />
                         <d:viewerRowSet label="#{elabel.createdDate}" value="#{cc.attrs.webAppBean.resultObject.createdDate}" />
                         <d:viewerRowSet label="#{elabel.modificationDate}" value="#{cc.attrs.webAppBean.resultObject.modificationDate}" />
-                        <d:viewerRowSet label="#{label.editable}" value="#{cc.attrs.webAppBean.resultObject.editable}" />
-                        <d:viewerRowSet label="#{label.removable}" value="#{cc.attrs.webAppBean.resultObject.removable}" />
+                        <d:viewerRowSet label="#{label.editable}" value="#{(cc.attrs.webAppBean.resultObject.editable eq true) ? label.yes : label.no}" />
+                        <d:viewerRowSet label="#{label.removable}" value="#{(cc.attrs.webAppBean.resultObject.removable eq true) ? label.yes : label.no}" />
                     </d:viewerTable>
                 </h:panelGroup>
             </h:panelGroup>
