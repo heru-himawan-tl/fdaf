@@ -30,8 +30,11 @@ package fdaf.webapp.bean.utility;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
+import java.util.TreeMap;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.model.SelectItem;
@@ -52,12 +55,17 @@ public class IsoLanguageOption implements Serializable {
     @PostConstruct
     public void postConstruct() {
         List<SelectItem> itemsTemp = new ArrayList<SelectItem>();
+        Map<String, String> languageMap = new HashMap<String, String>();
         String[] languageCodes = Locale.getISOLanguages();
         for (String languageCode : languageCodes) {
             Locale locale = new Locale(languageCode);
+            languageMap.put(locale.getDisplayLanguage(), languageCode);
+        }
+        Map<String, String> tlm = new TreeMap<String, String>(languageMap);
+        for (Map.Entry<String, String> entry : tlm.entrySet()) {
             SelectItem selectItem = new SelectItem();
-            selectItem.setValue(languageCode);
-            selectItem.setLabel(locale.getDisplayLanguage() + " (" + languageCode.toUpperCase() + ")");
+            selectItem.setValue(entry.getKey());
+            selectItem.setLabel(entry.getKey() + " (" + entry.getValue().toUpperCase() + ")");
             itemsTemp.add(selectItem);
         }
         items = itemsTemp.toArray(new SelectItem[]{});
