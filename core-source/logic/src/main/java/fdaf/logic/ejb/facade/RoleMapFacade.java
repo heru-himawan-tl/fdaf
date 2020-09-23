@@ -44,8 +44,10 @@ import javax.ejb.Stateful;
 @Remote({MapInterface.class})
 @Stateful
 public class RoleMapFacade implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @EJB
+    
     private RoleRepository repository;
 
     public RoleMapFacade() {

@@ -49,7 +49,7 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                     <f:ajax event="click" execute="@form" render="@form" />
                 </h:commandButton>
                 <composite:insertChildren />
-                <h:commandButton styleClass="grouped_button_inner" immediate="true" value="#{label.buttonTakeover}" rendered="#{(cc.attrs.listObject.takeoverable eq true and cc.attrs.webAppBean.allowRender and cc.attrs.webAppBean.inCheckOrphanDataMode and cc.attrs.webAppBean.userType eq 'ADMINISTRATOR')}">
+                <h:commandButton styleClass="grouped_button_inner" immediate="true" value="#{label.buttonTakeover}" rendered="#{(cc.attrs.listObject.takeoverable eq true and cc.attrs.webAppBean.allowRender eq true and cc.attrs.webAppBean.inCheckOrphanDataMode and cc.attrs.webAppBean.userType eq 'ADMINISTRATOR')}">
                     <f:actionListener binding="#{cc.attrs.webAppBean.prepareTakeover(cc.attrs.listObject.data.id)}" />
                     <f:ajax event="click" execute="@form" render="@form" />
                 </h:commandButton>

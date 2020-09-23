@@ -78,7 +78,7 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                                 <d:loginRequirementDialog webAppBean="#{cc.attrs.webAppBean}" />
                                 <d:listInit webAppBean="#{cc.attrs.webAppBean}" />
                                 <d:programHeading pageTitle="#{fn:toUpperCase(cc.attrs.pageTitle)}" webAppBean="#{cc.attrs.webAppBean}" simpleMode="" />
-                                <h:panelGroup layout="block" rendered="#{cc.attrs.webAppBean.allowRender}">
+                                <h:panelGroup layout="block" rendered="#{cc.attrs.webAppBean.allowRender eq true}">
                                     <d:messages />
                                     <ui:include src="/WEB-INF/templates/#{cc.attrs.pagePrefix}View.xhtml" />
                                     <ui:include src="#{(cc.attrs.webAppBean.allowAdd eq true or (cc.attrs.webAppBean.opMode eq 'UPDATE' and cc.attrs.webAppBean.allowAdd eq false)) ? '/WEB-INF/templates/'.concat(cc.attrs.pagePrefix).concat('Edit.xhtml') : ''}" />
@@ -91,7 +91,7 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                                         <d:massiveSelectReset webAppBean="#{cc.attrs.webAppBean}" />
                                     </h:panelGroup>
                                 </h:panelGroup>
-                                <d:programRestrictionWarningBox webAppBean="#{cc.attrs.webAppBean}" rendered="#{cc.attrs.webAppBean.isLoggedOn eq false}" />
+                                <d:programRestrictionWarningBox webAppBean="#{cc.attrs.webAppBean}" rendered="#{cc.attrs.webAppBean.isLoggedOn eq false or cc.attrs.webAppBean.allowRender eq false}" />
                                 <d:mainPanelFooter webAppBean="#{cc.attrs.webAppBean}" />
                             </d:pageContainer>
                             <d:deinit webAppBean="#{cc.attrs.webAppBean}" />
