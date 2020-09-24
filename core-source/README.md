@@ -9,5 +9,5 @@ This directory contains the core source of F.D.A.F organized as follow:
 3. The F.D.A.F Web Application - web application base extension inside
    `./webapp/` directory
    
-All sources within this directory should be untouched. To add the additional
-or custom sources, you may consider to place something in `../custom-source`.
+All sources within this directory should be untouched. To add additional
+or custom sources, you may consider to place something in `../custom-core-source/`.
