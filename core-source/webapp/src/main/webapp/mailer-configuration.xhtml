@@ -60,10 +60,10 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                     <h:panelGroup layout="block" styleClass="main_panel_inner">
                         <d:pageContainer id="page" webAppBean="#{mailerConfigurationWebAppBean}">
                             <d:customProgramHeading pageTitle="#{fn:toUpperCase(label.mailerConfiguration)}">
-                                <h:commandButton type="button" styleClass="grouped_button_left" value="#{label.buttonSaveCreate}" rendered="#{(mailerConfigurationWebAppBean.inSaving eq false)}">
+                                <h:commandButton type="button" styleClass="grouped_button_left" value="#{label.buttonSaveCreate}" rendered="#{(mailerConfigurationWebAppBean.inSaving eq false and mailerConfigurationWebAppBean.userType ne 'STAFF' and mailerConfigurationWebAppBean.userType ne 'CLIENT')}">
                                     <f:ajax event="click" execute="@form" render="@form" listener="#{mailerConfigurationWebAppBean.save}" />
                                 </h:commandButton>
-                                <h:commandButton type="button" styleClass="grouped_button_right" onclick="document.location.href='adm.jsf'" value="#{label.buttonClose}" rendered="#{(mailerConfigurationWebAppBean.inSaving eq false)}" />
+                                <h:commandButton type="button" styleClass="#{(mailerConfigurationWebAppBean.userType eq 'CLIENT' or mailerConfigurationWebAppBean.userType eq 'STAFF') ? 'common_button' : 'grouped_button_right'}" onclick="document.location.href='adm.jsf'" value="#{label.buttonClose}" rendered="#{(mailerConfigurationWebAppBean.inSaving eq false)}" />
                                 <h:commandButton type="button" styleClass="common_button" value="#{label.buttonClose}" onclick="document.location.href='adm.jsf';" rendered="#{(mailerConfigurationWebAppBean.inSaving eq true)}" />
                             </d:customProgramHeading>
                             <h:panelGroup layout="block" styleClass="field_container" rendered="#{(mailerConfigurationWebAppBean.inSaving eq true)}">
@@ -76,7 +76,11 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                                 </h:panelGroup>
                             </h:panelGroup>
                             <d:messages rendered="#{(mailerConfigurationWebAppBean.inSaving eq false)}" />
-                            <h:panelGroup layout="block" styleClass="field_container" rendered="#{(mailerConfigurationWebAppBean.inSaving eq false)}">
+                            <h:panelGroup layout="block" styleClass="field_container" rendered="#{(
+                                    mailerConfigurationWebAppBean.inSaving eq false and
+                                    mailerConfigurationWebAppBean.userType ne 'STAFF' and
+                                    mailerConfigurationWebAppBean.userType ne 'CLIENT'
+                                )}">
                                 <h:panelGroup layout="block" styleClass="field_container_inner">
                                     <d:fieldRow>
                                         <d:fieldColumn>
@@ -159,6 +163,7 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                                     </d:fieldRow>
                                 </h:panelGroup>
                             </h:panelGroup>
+                            <d:altProgramRestrictionWarningBox rendered="#{mailerConfigurationWebAppBean.userType eq 'CLIENT' or mailerConfigurationWebAppBean.userType eq 'STAFF'}" />
                             <d:mainPanelFooter webAppBean="#{mailerConfigurationWebAppBean}" />
                         </d:pageContainer>
                     </h:panelGroup>
