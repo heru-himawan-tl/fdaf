@@ -60,11 +60,10 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                 <h:panelGroup layout="block" styleClass="right_panel_back_overlay"></h:panelGroup>
                 <h:panelGroup layout="block" styleClass="main_panel_back_overlay"></h:panelGroup>
                 <h:panelGroup layout="block" styleClass="body_flexbox">
-                    <h:panelGroup layout="block" styleClass="left_panel">
+                    <d:leftPanel>
                         <d:customLeftPanel webAppBean="#{cc.attrs.webAppBean}" />
-                    </h:panelGroup>
-                    <h:panelGroup layout="block" styleClass="main_panel">
-                        <h:panelGroup layout="block" styleClass="main_panel_inner">
+                    </d:leftPanel>
+                    <d:mainPanel>
                             <d:pageContainer id="page" webAppBean="#{cc.attrs.webAppBean}">
                                 <d:takeoverPrompt webAppBean="#{cc.attrs.webAppBean}" />
                                 <d:massiveRemovalPrompt webAppBean="#{cc.attrs.webAppBean}" />
@@ -95,8 +94,7 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                                 <d:mainPanelFooter webAppBean="#{cc.attrs.webAppBean}" />
                             </d:pageContainer>
                             <d:deinit webAppBean="#{cc.attrs.webAppBean}" />
-                        </h:panelGroup>
-                    </h:panelGroup>
+                    </d:mainPanel>
                     <h:panelGroup layout="block" styleClass="right_panel">
                         <d:customRightPanel webAppBean="#{cc.attrs.webAppBean}" />
                     </h:panelGroup>

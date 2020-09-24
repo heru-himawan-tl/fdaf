@@ -56,11 +56,10 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
             <h:panelGroup layout="block" styleClass="right_panel_back_overlay"></h:panelGroup>
             <h:panelGroup layout="block" styleClass="main_panel_back_overlay"></h:panelGroup>
             <h:panelGroup layout="block" styleClass="body_flexbox">
-                <h:panelGroup layout="block" styleClass="left_panel">
+                <d:leftPanel>
                     <d:customLeftPanel webAppBean="#{staffInvitationWebAppBean}" />
-                </h:panelGroup>
-                <h:panelGroup layout="block" styleClass="main_panel">
-                    <h:panelGroup layout="block" styleClass="main_panel_inner">
+                </d:leftPanel>
+                <d:mainPanel>
                         <d:customRightTopPanel webAppBean="#{staffInvitationWebAppBean}" />
                         <d:pageContainer id="page" webAppBean="#{staffInvitationWebAppBean}">
                             <d:customProgramHeading pageTitle="#{fn:toUpperCase(elabel.staffInvitation)}">
@@ -149,8 +148,7 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                             <d:altProgramRestrictionWarningBox rendered="#{staffInvitationWebAppBean.userType eq 'CLIENT' or staffInvitationWebAppBean.userType eq 'STAFF'}" />
                             <d:mainPanelFooter webAppBean="#{staffInvitationWebAppBean}" />
                         </d:pageContainer>
-                    </h:panelGroup>
-                </h:panelGroup>
+                </d:mainPanel>
                 <h:panelGroup layout="block" styleClass="right_panel">
                     <d:customRightPanel webAppBean="#{staffInvitationWebAppBean}" />
                 </h:panelGroup>
