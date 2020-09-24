@@ -59,10 +59,10 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                     <h:panelGroup layout="block" styleClass="main_panel_inner">
                         <d:pageContainer id="page" webAppBean="#{addAdministratorWebAppBean}">
                             <d:customProgramHeading pageTitle="#{fn:toUpperCase(label.addAdministrator)}">
-                                <h:commandButton type="button" styleClass="grouped_button_left" value="#{label.buttonSaveCreate}" rendered="#{(addAdministratorWebAppBean.opMode ne 'UPDATE')}">
+                                <h:commandButton type="button" styleClass="grouped_button_left" value="#{label.buttonSaveCreate}" rendered="#{(addAdministratorWebAppBean.opMode ne 'UPDATE' and addAdministratorWebAppBean.userType ne 'STAFF' and addAdministratorWebAppBean.userType ne 'CLIENT')}">
                                     <f:ajax event="click" execute="@form" render="@form" listener="#{addAdministratorWebAppBean.executeCreate}" />
                                 </h:commandButton>
-                                <h:commandButton type="button" styleClass="grouped_button_right" onclick="document.location.href='adm.jsf'" value="#{label.buttonClose}" rendered="#{(addAdministratorWebAppBean.opMode ne 'UPDATE')}" />
+                                <h:commandButton type="button" styleClass="#{(addAdministratorWebAppBean.userType eq 'CLIENT' or addAdministratorWebAppBean.userType eq 'STAFF') ? 'common_button' : 'grouped_button_right'}" onclick="document.location.href='adm.jsf'" value="#{label.buttonClose}" rendered="#{(addAdministratorWebAppBean.opMode ne 'UPDATE')}" />
                             </d:customProgramHeading>
                             <h:panelGroup layout="block" styleClass="field_container" rendered="#{(addAdministratorWebAppBean.opMode eq 'UPDATE')}">
                                 <h:panelGroup layout="block" styleClass="field_container_inner">
@@ -86,7 +86,11 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                                 </h:panelGroup>
                             </h:panelGroup>
                             <d:messages rendered="#{(addAdministratorWebAppBean.opMode ne 'UPDATE')}" />
-                            <h:panelGroup layout="block" styleClass="field_container" rendered="#{(addAdministratorWebAppBean.opMode ne 'UPDATE')}">
+                            <h:panelGroup layout="block" styleClass="field_container" rendered="#{(
+                                    addAdministratorWebAppBean.opMode ne 'UPDATE' and
+                                    addAdministratorWebAppBean.userType ne 'STAFF' and
+                                    addAdministratorWebAppBean.userType ne 'CLIENT'
+                                )}">
                                 <h:panelGroup layout="block" styleClass="field_container_inner">
                                     <d:fieldRow>
                                         <d:fieldColumn>
@@ -154,6 +158,7 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                                     </d:fieldRow>
                                 </h:panelGroup>
                             </h:panelGroup>
+                            <d:altProgramRestrictionWarningBox rendered="#{addAdministratorWebAppBean.userType eq 'CLIENT' or addAdministratorWebAppBean.userType eq 'STAFF'}" />
                             <d:mainPanelFooter webAppBean="#{addAdministratorWebAppBean}" />
                         </d:pageContainer>
                     </h:panelGroup>
