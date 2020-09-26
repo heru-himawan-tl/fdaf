@@ -121,7 +121,7 @@ public class UserRegistrationFacade extends AbstractFacade<UserRepository, User>
             encryptedPassword = PBKDF2Tool.encrypt(password);
         } catch (Exception e) {
             indicateServiceError(e);
-            setCustomMessage("passwordEncryptError");
+            setMessage("passwordEncryptError");
             return false;
         }
         Modifier modifierEntity = null;
@@ -269,7 +269,7 @@ public class UserRegistrationFacade extends AbstractFacade<UserRepository, User>
     private void indicateServiceError(Exception e) {
         rollback();
         LOGGER.log(Level.SEVERE, "Account Registration Service Failure", e);
-        setCustomMessage("registerAccountServiceFailure");
+        setMessage("registerAccountServiceFailure");
     }
     
     @Override

@@ -68,6 +68,8 @@ public class Initializer {
     
     private final List<String> undefinedCustomCallbackMessage = new ArrayList<String>();
     private final List<String> definedCustomCallbackMessage = new ArrayList<String>();
+    private final List<String> undefinedCallbackMessage = new ArrayList<String>();
+    private final List<String> definedCallbackMessage = new ArrayList<String>();
     
     public Initializer() throws Exception {
         Properties properties = new Properties();
@@ -134,6 +136,20 @@ public class Initializer {
             } catch (Exception e) {
             }
         }
+        if (nodeAddr.matches(".*\\/callback_message\\.properties.*")) {
+            try {
+                BufferedReader r = Files.newBufferedReader(Paths.get(nodeAddr));
+                String l = null;
+                while ((l = r.readLine()) != null) {
+                    if (!l.trim().isEmpty()) {
+                        String s = l.replaceAll("=.*", "").trim();
+                        definedCallbackMessage.add(s);
+                    }
+                }
+                r.close();
+            } catch (Exception e) {
+            }
+        }
         try {
             BufferedReader r = Files.newBufferedReader(Paths.get(nodeAddr));
             String l = null;
@@ -164,6 +180,12 @@ public class Initializer {
                     String ccm = s.replaceAll(".*setCustomMessage\\(\"|\"\\).*", "");
                     if (!undefinedCustomCallbackMessage.contains(ccm + "=") && !definedCustomCallbackMessage.contains(ccm)) {
                         undefinedCustomCallbackMessage.add(ccm + "=");
+                    }
+                }
+                if (nodeAddr.matches(".*(logic\\/ejb\\/callback|logic\\/ejb\\/facade).*") && s.matches(".*setMessage\\(.*")) {
+                    String ccm = s.replaceAll(".*setMessage\\(\"|\"\\).*", "");
+                    if (!undefinedCallbackMessage.contains(ccm + "=") && !definedCallbackMessage.contains(ccm)) {
+                        undefinedCallbackMessage.add(ccm + "=");
                     }
                 }
                 source += s + "\n";
@@ -247,6 +269,26 @@ public class Initializer {
                 try {
                     FileWriter fw = new FileWriter("undefined_custom_callback.txt", false);
                     fw.write(undefinedCustomCallbackMessageTxt);
+                    fw.close();
+                } catch (Exception e) {
+                }
+            }
+        }
+        try {
+            Files.delete(Paths.get("undefined_callback.txt"));
+        } catch (Exception e) {
+        }
+        if (!undefinedCallbackMessage.isEmpty()) {
+            Collections.sort(undefinedCallbackMessage);
+            String undefinedCallbackMessageTxt = "";
+            for (String cmc : undefinedCallbackMessage) {
+                undefinedCallbackMessageTxt += cmc + "\n";
+            }
+            undefinedCallbackMessageTxt = undefinedCallbackMessageTxt.trim();
+            if (!undefinedCallbackMessageTxt.isEmpty()) {
+                try {
+                    FileWriter fw = new FileWriter("undefined_callback.txt", false);
+                    fw.write(undefinedCallbackMessageTxt);
                     fw.close();
                 } catch (Exception e) {
                 }
