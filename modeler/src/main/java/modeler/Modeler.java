@@ -56,14 +56,15 @@ public class Modeler {
     private String templatesDirectory;
     
     public static final String ANSI_RESET = "\u001B[0m";
-    public static final String ANSI_BLACK = "\u001B[30m\u001B[1m";
-    public static final String ANSI_RED = "\u001B[31m\u001B[1m";
-    public static final String ANSI_GREEN = "\u001B[32m\u001B[1m";
-    public static final String ANSI_YELLOW = "\u001B[33m\u001B[1m";
-    public static final String ANSI_BLUE = "\u001B[34m\u001B[1m";
-    public static final String ANSI_PURPLE = "\u001B[35m\u001B[1m";
-    public static final String ANSI_CYAN = "\u001B[36m\u001B[1m";
-    public static final String ANSI_WHITE = "\u001B[37m\u001B[1m";
+    public static final String ANSI_BLACK = "\u001B[30m";
+    public static final String ANSI_RED = "\u001B[31m";
+    public static final String ANSI_GREEN = "\u001B[32m";
+    public static final String ANSI_YELLOW = "\u001B[33m";
+    public static final String ANSI_BLUE = "\u001B[34m";
+    public static final String ANSI_PURPLE = "\u001B[35m";
+    public static final String ANSI_CYAN = "\u001B[36m";
+    public static final String ANSI_WHITE = "\u001B[37m";
+    public static final String ANSI_BOLD = "\u001B[1m";
 
     public Modeler(String[] args) throws Exception {
         currentWorkingDirectory = new File(".").getCanonicalPath();
@@ -476,7 +477,7 @@ public class Modeler {
         if (modelSourceContents.equals(modelSourceDestContents.trim())) {
             return;
         }
-        System.out.println("[" + ANSI_BLUE + "FDAF INFO" + ANSI_RESET + "] Updating entity source: " + currentModel);
+        System.out.println("[" + ANSI_BLUE + ANSI_BOLD + "FDAF INFO" + ANSI_RESET + "] " + ANSI_GREEN + "Updating entity source: " + ANSI_RESET + currentModel);
         try {
             FileWriter fw = new FileWriter(currentModel, false);
             fw.write(modelSourceContents);
@@ -516,7 +517,7 @@ public class Modeler {
         if (templateSource.equals(currentWebAppBeanSource)) {
             return;
         }
-        System.out.println("[" + ANSI_BLUE + "FDAF INFO" + ANSI_RESET + "] Updating web application bean source: " + currentWebAppBeanPath);
+        System.out.println("[" + ANSI_BLUE + ANSI_BOLD + "FDAF INFO" + ANSI_RESET + "] " + ANSI_GREEN + "Updating web application bean source: " + ANSI_RESET + currentWebAppBeanPath);
         try {
             FileWriter fw = new FileWriter(currentWebAppBeanPath, false);
             fw.write(templateSource);
@@ -611,7 +612,7 @@ public class Modeler {
         if (templateSource.equals(currentFacadeSource)) {
             return;
         }
-        System.out.println("[" + ANSI_BLUE + "FDAF INFO" + ANSI_RESET + "] Updating facade source: " + currentFacadePath);
+        System.out.println("[" + ANSI_BLUE + ANSI_BOLD + "FDAF INFO" + ANSI_RESET + "] " + ANSI_GREEN + "Updating facade source: " + ANSI_RESET + currentFacadePath);
         try {
             FileWriter fw = new FileWriter(currentFacadePath, false);
             fw.write(templateSource);
@@ -648,7 +649,7 @@ public class Modeler {
         if (templateSource.equals(currentRepositorySource)) {
             return;
         }
-        System.out.println("[" + ANSI_BLUE + "FDAF INFO" + ANSI_RESET + "] Updating repository source: " + currentRepositoryPath);
+        System.out.println("[" + ANSI_BLUE + ANSI_BOLD + "FDAF INFO" + ANSI_RESET + "] " + ANSI_GREEN + "Updating repository source: " + ANSI_RESET + currentRepositoryPath);
         try {
             FileWriter fw = new FileWriter(currentRepositoryPath, false);
             fw.write(templateSource);
@@ -733,7 +734,7 @@ public class Modeler {
             sqlScriptFixTail += sqlScriptFix + "\n";
         }
         if (!sqlScriptTemplateTail.equals(sqlScriptFixTail)) {
-            System.out.println("[" + ANSI_BLUE + "FDAF INFO" + ANSI_RESET + "] Updating SQL script: " + sqlScriptFileFixDir + "/create-tables.sql");
+            System.out.println("[" + ANSI_BLUE + ANSI_BOLD + "FDAF INFO" + ANSI_RESET + "] " + ANSI_GREEN + "Updating SQL script: " + ANSI_RESET + sqlScriptFileFixDir + "/create-tables.sql");
             try {
                 FileWriter fw = new FileWriter(sqlScriptFileFixDir + "/create-tables.sql", false);
                 fw.write(sqlScriptTemplateTail);
@@ -802,7 +803,7 @@ public class Modeler {
         persistenceXmlTemplate = persistenceXmlTemplate.trim().replace("<properties>", "<properties>\n            " + persistenceXmlLoadScriptParamDef.trim());
         newPersistenceXml = newPersistenceXml.trim();
         if (!persistenceXmlTemplate.equals(newPersistenceXml)) {
-            System.out.println("[" + ANSI_BLUE + "FDAF INFO" + ANSI_RESET + "] Updating persistence.xml: " + newPersistenceXmlFilePath);
+            System.out.println("[" + ANSI_BLUE + ANSI_BOLD + "FDAF INFO" + ANSI_RESET + "] " + ANSI_GREEN + "Updating persistence.xml: " + ANSI_RESET + newPersistenceXmlFilePath);
             try {
                 FileWriter fw = new FileWriter(newPersistenceXmlFilePath, false);
                 fw.write(persistenceXmlTemplate);
@@ -877,7 +878,7 @@ public class Modeler {
             }
             cerbm = cerbm.trim();
             if (!entityResourceBundleMessage.equals(cerbm)) {
-                System.out.println("[" + ANSI_BLUE + "FDAF INFO" + ANSI_RESET + "] Updating validation message bundle source: " + erbmp);
+                System.out.println("[" + ANSI_BLUE + ANSI_BOLD + "FDAF INFO" + ANSI_RESET + "] " + ANSI_GREEN + "Updating validation message bundle source: " + ANSI_RESET + erbmp);
                 try {
                     FileWriter fw = new FileWriter(erbmp, false);
                     fw.write(entityResourceBundleMessage);
@@ -905,7 +906,7 @@ public class Modeler {
             currentUiLabelFromEntity = currentUiLabelFromEntity.trim();
             newUiLabelFromEntity = newUiLabelFromEntity.trim();
             if (!newUiLabelFromEntity.equals(currentUiLabelFromEntity)) {
-                System.out.println("[" + ANSI_BLUE + "FDAF INFO" + ANSI_RESET + "] Updating message bundle source: " + uiLabelFromEntityFilePath);
+                System.out.println("[" + ANSI_BLUE + ANSI_BOLD + "FDAF INFO" + ANSI_RESET + "] " + ANSI_GREEN + "Updating message bundle source: " + ANSI_RESET + uiLabelFromEntityFilePath);
                 try {
                     FileWriter fw = new FileWriter(uiLabelFromEntityFilePath, false);
                     fw.write(newUiLabelFromEntity);
@@ -936,9 +937,9 @@ public class Modeler {
                 }
             }
         }
-        System.out.println("[" + ANSI_BLUE + "FDAF INFO" + ANSI_RESET + "] ===============================================================================");
-        System.out.println("[" + ANSI_BLUE + "FDAF INFO" + ANSI_RESET + "] Proceed modeling for/with " + ((modeler.getWithEclipseLink()) ? "EclipseLink" : "Hibernate (& for general compilation)") + " ...");
-        System.out.println("[" + ANSI_BLUE + "FDAF INFO" + ANSI_RESET + "] ===============================================================================");
+        System.out.println("[" + ANSI_BLUE + ANSI_BOLD + "FDAF INFO" + ANSI_RESET + "] ===============================================================================");
+        System.out.println("[" + ANSI_BLUE + ANSI_BOLD + "FDAF INFO" + ANSI_RESET + "] " + ANSI_BOLD + "Proceed modeling for/with " + ((modeler.getWithEclipseLink()) ? "EclipseLink" : "Hibernate (& for general compilation)") + " ..." + ANSI_RESET);
+        System.out.println("[" + ANSI_BLUE + ANSI_BOLD + "FDAF INFO" + ANSI_RESET + "] ===============================================================================");
         modeler.proceed();
     }
 }

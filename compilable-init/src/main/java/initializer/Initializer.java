@@ -51,14 +51,15 @@ import java.util.Properties;
 public class Initializer {
 
     public static final String ANSI_RESET = "\u001B[0m";
-    public static final String ANSI_BLACK = "\u001B[30m\u001B[1m";
-    public static final String ANSI_RED = "\u001B[31m\u001B[1m";
-    public static final String ANSI_GREEN = "\u001B[32m\u001B[1m";
-    public static final String ANSI_YELLOW = "\u001B[33m\u001B[1m";
-    public static final String ANSI_BLUE = "\u001B[34m\u001B[1m";
-    public static final String ANSI_PURPLE = "\u001B[35m\u001B[1m";
-    public static final String ANSI_CYAN = "\u001B[36m\u001B[1m";
-    public static final String ANSI_WHITE = "\u001B[37m\u001B[1m";
+    public static final String ANSI_BLACK = "\u001B[30m";
+    public static final String ANSI_RED = "\u001B[31m";
+    public static final String ANSI_GREEN = "\u001B[32m";
+    public static final String ANSI_YELLOW = "\u001B[33m";
+    public static final String ANSI_BLUE = "\u001B[34m";
+    public static final String ANSI_PURPLE = "\u001B[35m";
+    public static final String ANSI_CYAN = "\u001B[36m";
+    public static final String ANSI_WHITE = "\u001B[37m";
+    public static final String ANSI_BOLD = "\u001B[1m";
 
     private final Map<String, String> propertyMap = new HashMap<String, String>();
     private final String temporaryCompilationDir;
@@ -198,7 +199,7 @@ public class Initializer {
                 FileWriter fw = new FileWriter(nodeAddr.replace(applicationSourceDirectory, temporaryCompilationDir), false);
                 fw.write(source);
                 fw.close();
-                System.out.println("[" + ANSI_BLUE + "FDAF INFO" + ANSI_RESET + "] Formatted temporary compilation source: " + nodeAddr);
+                System.out.println("[" + ANSI_BLUE + ANSI_BOLD + "FDAF INFO" + ANSI_RESET + "] " + ANSI_GREEN + "Formatted temporary compilation source: " + ANSI_RESET + nodeAddr);
             } catch (Exception e) {
             }
         }
@@ -233,7 +234,7 @@ public class Initializer {
     private void writeFile(String fileAddress, byte[] contents) {
         try {
             Files.write(Paths.get(fileAddress), contents);
-            System.out.println("[" + ANSI_BLUE + "FDAF INFO" + ANSI_RESET + "] Written file: " + fileAddress);
+            System.out.println("[" + ANSI_BLUE + ANSI_BOLD + "FDAF INFO" + ANSI_RESET + "] " + ANSI_GREEN + "Written file: " + ANSI_RESET + fileAddress);
         } catch (Exception e) {
             e.printStackTrace(System.out);
         }
@@ -248,9 +249,9 @@ public class Initializer {
         String finalEAR = applicationCodeName + ".ear";
         String buildDirectory = "";
         recursiveReadDir(temporaryCompilationDir, toFormatNodeList, true);
-        System.out.println("[" + ANSI_BLUE + "FDAF INFO" + ANSI_RESET + "] -------------------------------------------------------------------------------");
-        System.out.println("[" + ANSI_BLUE + "FDAF INFO" + ANSI_RESET + "] Formatting specific compilable application source files ...");
-        System.out.println("[" + ANSI_BLUE + "FDAF INFO" + ANSI_RESET + "] -------------------------------------------------------------------------------");
+        System.out.println("[" + ANSI_BLUE + ANSI_BOLD + "FDAF INFO" + ANSI_RESET + "] -------------------------------------------------------------------------------");
+        System.out.println("[" + ANSI_BLUE + ANSI_BOLD + "FDAF INFO" + ANSI_RESET + "] " + ANSI_BOLD + "Formatting specific compilable application source files ..." + ANSI_RESET);
+        System.out.println("[" + ANSI_BLUE + ANSI_BOLD + "FDAF INFO" + ANSI_RESET + "] -------------------------------------------------------------------------------");
         for (String nodeAddr : toFormatNodeList) {
             format(nodeAddr);
         }
@@ -294,9 +295,9 @@ public class Initializer {
                 }
             }
         }
-        System.out.println("[" + ANSI_BLUE + "FDAF INFO" + ANSI_RESET + "] -------------------------------------------------------------------------------");
-        System.out.println("[" + ANSI_BLUE + "FDAF INFO" + ANSI_RESET + "] Organizing compilable application source files ...");
-        System.out.println("[" + ANSI_BLUE + "FDAF INFO" + ANSI_RESET + "] -------------------------------------------------------------------------------");
+        System.out.println("[" + ANSI_BLUE + ANSI_BOLD + "FDAF INFO" + ANSI_RESET + "] -------------------------------------------------------------------------------");
+        System.out.println("[" + ANSI_BLUE + ANSI_BOLD + "FDAF INFO" + ANSI_RESET + "] " + ANSI_BOLD + "Organizing compilable application source files ..." + ANSI_RESET);
+        System.out.println("[" + ANSI_BLUE + ANSI_BOLD + "FDAF INFO" + ANSI_RESET + "] -------------------------------------------------------------------------------");
         recursiveReadDir(temporaryCompilationDir, preformattedNodeList, false);
         Collections.sort(preformattedNodeList);
         for (String nodeAddr : preformattedNodeList) {
@@ -329,15 +330,15 @@ public class Initializer {
                         }
                     }
                     if (!isEqual) {
-                        System.out.println("[" + ANSI_BLUE + "FDAF INFO" + ANSI_RESET + "] Updating file: " + currentAppSourceNodeAddr);
+                        System.out.println("[" + ANSI_BLUE + ANSI_BOLD + "FDAF INFO" + ANSI_RESET + "] " + ANSI_GREEN + "Updating file: " + ANSI_RESET + currentAppSourceNodeAddr);
                         writeFile(currentAppSourceNodeAddr, c1);
                     }
                 }
             }
         }
-        System.out.println("[" + ANSI_BLUE + "FDAF INFO" + ANSI_RESET + "] -------------------------------------------------------------------------------");
-        System.out.println("[" + ANSI_BLUE + "FDAF INFO" + ANSI_RESET + "] Checking for unused compilable application source files or directories ...");
-        System.out.println("[" + ANSI_BLUE + "FDAF INFO" + ANSI_RESET + "] -------------------------------------------------------------------------------");
+        System.out.println("[" + ANSI_BLUE + ANSI_BOLD + "FDAF INFO" + ANSI_RESET + "] -------------------------------------------------------------------------------");
+        System.out.println("[" + ANSI_BLUE + ANSI_BOLD + "FDAF INFO" + ANSI_RESET + "] " + ANSI_BOLD + "Checking for unused compilable application source files or directories ..." + ANSI_RESET);
+        System.out.println("[" + ANSI_BLUE + ANSI_BOLD + "FDAF INFO" + ANSI_RESET + "] -------------------------------------------------------------------------------");
         recursiveReadDir(applicationSourceDirectory, applicationNodeList, false);
         Collections.sort(applicationNodeList);
         for (String nodeAddr : applicationNodeList) {
@@ -383,9 +384,9 @@ public class Initializer {
     }
     
     public static void main(String[] args) throws Exception {
-        System.out.println("[" + ANSI_BLUE + "FDAF INFO" + ANSI_RESET + "] ===============================================================================");
-        System.out.println("[" + ANSI_BLUE + "FDAF INFO" + ANSI_RESET + "] Initializing compilable application source ...");
-        System.out.println("[" + ANSI_BLUE + "FDAF INFO" + ANSI_RESET + "] ===============================================================================");
+        System.out.println("[" + ANSI_BLUE + ANSI_BOLD + "FDAF INFO" + ANSI_RESET + "] ===============================================================================");
+        System.out.println("[" + ANSI_BLUE + ANSI_BOLD + "FDAF INFO" + ANSI_RESET + "] " + ANSI_BOLD + "Initializing compilable application source ..." + ANSI_RESET);
+        System.out.println("[" + ANSI_BLUE + ANSI_BOLD + "FDAF INFO" + ANSI_RESET + "] ===============================================================================");
         Initializer initializer = new Initializer();
         initializer.proceed();
     }
