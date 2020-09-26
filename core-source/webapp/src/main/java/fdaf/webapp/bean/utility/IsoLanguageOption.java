@@ -59,10 +59,10 @@ public class IsoLanguageOption implements Serializable {
         String[] languageCodes = Locale.getISOLanguages();
         for (String languageCode : languageCodes) {
             Locale locale = new Locale(languageCode);
-            languageMap.put(locale.getDisplayLanguage(), languageCode);
+            languageMap.put(locale.getDisplayLanguage(), locale.toLanguageTag());
         }
-        Map<String, String> tlm = new TreeMap<String, String>(languageMap);
-        for (Map.Entry<String, String> entry : tlm.entrySet()) {
+        Map<String, String> ltm = new TreeMap<String, String>(languageMap);
+        for (Map.Entry<String, String> entry : ltm.entrySet()) {
             SelectItem selectItem = new SelectItem();
             selectItem.setValue(entry.getKey());
             selectItem.setLabel(entry.getKey() + " (" + entry.getValue().toUpperCase() + ")");
@@ -73,5 +73,10 @@ public class IsoLanguageOption implements Serializable {
     
     public SelectItem[] getItems() {
         return items;
+    }
+    
+    public String getDisplayLanguage(String languageCode) {
+        Locale locale = new Locale(languageCode);
+        return locale.getDisplayLanguage();
     }
 }
