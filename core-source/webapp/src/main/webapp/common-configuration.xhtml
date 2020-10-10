@@ -1,0 +1,214 @@
+<!--
+
+Copyright (c) Heru Himawan Tejo Laksono. All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+
+1. Redistributions of source code must retain the above copyright notice,
+   this list of conditions and the following disclaimer.
+
+2. Redistributions in binary form must reproduce the above copyright notice,
+   this list of conditions and the following disclaimer in the documentation
+   and/or other materials provided with the distribution.
+
+3. Neither the name of the copyright holders nor the names of its
+   contributors may be used to endorse or promote products derived from this
+   software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ARE DISCLAIMED. IN NO EVENT SHALL THE REGENTS OR CONTRIBUTORS BE LIABLE FOR
+ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE
+USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:d="http://java.sun.com/jsf/composite/component"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions"
+        xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title><h:outputText value="#{commonConfigurationWebAppBean.applicationName} - #{fn:toUpperCase(label.commonConfiguration)}" /></title>
+        <h:outputStylesheet library="css" name="style.css"/>
+        <d:customHeadTag />
+    </h:head>
+    <h:body>
+        <h:form id="form">
+            <d:mainInit webAppBean="#{commonConfigurationWebAppBean}" />
+            <d:databaseServiceCheck webAppBean="#{commonConfigurationWebAppBean}" />
+            <d:administratorAccountCheck webAppBean="#{commonConfigurationWebAppBean}" />
+            <d:commonConfigurationInit webAppBean="#{commonConfigurationWebAppBean}" />
+            <d:userSessionWatch webAppBean="#{commonConfigurationWebAppBean}" rendered="#{(commonConfigurationWebAppBean.administratorAccountExists eq true)}" />
+            <d:customTopPanel webAppBean="#{commonConfigurationWebAppBean}" />
+            <h:panelGroup layout="block" styleClass="left_panel_back_overlay"></h:panelGroup>
+            <h:panelGroup layout="block" styleClass="right_panel_back_overlay"></h:panelGroup>
+            <h:panelGroup layout="block" styleClass="main_panel_back_overlay"></h:panelGroup>
+            <h:panelGroup layout="block" styleClass="body_flexbox">
+                <d:leftPanel>
+                    <d:customLeftPanel webAppBean="#{commonConfigurationWebAppBean}" />
+                </d:leftPanel>
+                <d:mainPanel>
+                        <d:pageContainer id="page" webAppBean="#{commonConfigurationWebAppBean}">
+                            <d:customProgramHeading pageTitle="#{fn:toUpperCase(label.commonConfiguration)}">
+                                <h:commandButton type="button" styleClass="grouped_button_left" value="#{label.buttonSaveCreate}" rendered="#{(commonConfigurationWebAppBean.inSaving eq false and commonConfigurationWebAppBean.userType ne 'STAFF' and commonConfigurationWebAppBean.userType ne 'CLIENT')}">
+                                    <f:ajax event="click" execute="@form" render="@form" listener="#{commonConfigurationWebAppBean.save}" />
+                                </h:commandButton>
+                                <h:commandButton type="button" styleClass="#{(commonConfigurationWebAppBean.userType eq 'CLIENT' or commonConfigurationWebAppBean.userType eq 'STAFF') ? 'common_button' : 'grouped_button_right'}" onclick="document.location.href='adm.jsf'" value="#{label.buttonClose}" rendered="#{(commonConfigurationWebAppBean.inSaving eq false)}" />
+                                <h:commandButton type="button" styleClass="common_button" value="#{label.buttonClose}" onclick="document.location.href='adm.jsf';" rendered="#{(commonConfigurationWebAppBean.inSaving eq true)}" />
+                            </d:customProgramHeading>
+                            <h:panelGroup layout="block" styleClass="field_container" rendered="#{(commonConfigurationWebAppBean.inSaving eq true)}">
+                                <h:panelGroup layout="block" styleClass="field_container_inner">
+                                    <d:fieldRow>
+                                        <d:fieldColumn>
+                                            <d:informationBox content="#{defaultMessage.commonConfigurationSavingSuccess}" />
+                                        </d:fieldColumn>
+                                    </d:fieldRow>
+                                </h:panelGroup>
+                            </h:panelGroup>
+                            <d:messages rendered="#{(commonConfigurationWebAppBean.inSaving eq false)}" />
+                            <h:panelGroup layout="block" styleClass="field_container" rendered="#{(
+                                    commonConfigurationWebAppBean.inSaving eq false and
+                                    commonConfigurationWebAppBean.userType ne 'STAFF' and
+                                    commonConfigurationWebAppBean.userType ne 'CLIENT'
+                                )}">
+                                <h:panelGroup layout="block" styleClass="field_container_inner">
+                                    <d:fieldRow>
+                                        <d:fieldColumn>
+                                            <d:fieldLabel for="siteName" value="#{label.siteName}" />
+                                            <d:fieldInputBox>
+                                                <h:inputText id="siteName" value="#{commonConfigurationWebAppBean.siteName}" />
+                                            </d:fieldInputBox>
+                                        </d:fieldColumn>
+                                    </d:fieldRow>
+                                    <d:fieldRow>
+                                        <d:fieldColumn>
+                                            <d:fieldLabel for="domain" value="#{label.domain}" />
+                                            <d:fieldInputBox>
+                                                <h:inputText id="domain" value="#{commonConfigurationWebAppBean.domain}" />
+                                            </d:fieldInputBox>
+                                        </d:fieldColumn>
+                                    </d:fieldRow>
+                                    <d:fieldRow>
+                                        <d:fieldColumn>
+                                            <d:fieldInputCheckbox>
+                                                <h:selectBooleanCheckbox id="domainAsDefaultSite" value="#{commonConfigurationWebAppBean.domainAsDefaultSite}" />
+                                            </d:fieldInputCheckbox>
+                                            <d:fieldInputCheckboxLabel>
+                                                <h:outputText value="#{label.domainAsDefaultSite}" />
+                                            </d:fieldInputCheckboxLabel>
+                                        </d:fieldColumn>
+                                    </d:fieldRow>
+                                    <d:fieldRow>
+                                        <d:fieldColumn>
+                                            <d:fieldLabel for="webmasterEmail" value="#{label.webmasterEmail}" />
+                                            <d:fieldInputBox>
+                                                <h:inputText id="webmasterEmail" value="#{commonConfigurationWebAppBean.webmasterEmail}" />
+                                            </d:fieldInputBox>
+                                        </d:fieldColumn>
+                                    </d:fieldRow>
+                                    <d:fieldRow>
+                                        <d:fieldColumn>
+                                            <d:fieldLabel for="siteDescription" value="#{label.siteDescription}" />
+                                            <d:fieldInputBox>
+                                                <h:inputTextarea id="siteDescription" value="#{commonConfigurationWebAppBean.siteDescription}" />
+                                            </d:fieldInputBox>
+                                        </d:fieldColumn>
+                                    </d:fieldRow>
+                                    <d:fieldRow>
+                                        <d:fieldColumn>
+                                            <d:fieldLabel for="regionalLanguage" value="#{label.regionalLanguage}" />
+                                            <d:fieldInputBox>
+                                                <h:selectOneMenu id="gender" value="#{commonConfigurationWebAppBean.regionalLanguage}">
+                                                    <f:selectItems value="#{languageOption.items}" var="selectItem"
+                                                            itemValue="#{selectItem.value}" itemLabel="#{selectItem.label}" />
+                                                </h:selectOneMenu>
+                                            </d:fieldInputBox>
+                                        </d:fieldColumn>
+                                    </d:fieldRow>
+                                    <d:fieldRow>
+                                        <d:fieldColumn>
+                                            <d:fieldLabel for="companyName" value="#{label.companyName}" />
+                                            <d:fieldInputBox>
+                                                <h:inputText id="companyName" value="#{commonConfigurationWebAppBean.companyName}" />
+                                            </d:fieldInputBox>
+                                        </d:fieldColumn>
+                                    </d:fieldRow>
+                                    <d:fieldRow>
+                                        <d:fieldColumn>
+                                            <d:fieldLabel for="companyDescription" value="#{label.companyDescription}" />
+                                            <d:fieldInputBox>
+                                                <h:inputTextarea id="companyDescription" value="#{commonConfigurationWebAppBean.companyDescription}" />
+                                            </d:fieldInputBox>
+                                        </d:fieldColumn>
+                                    </d:fieldRow>
+                                    <d:fieldRow>
+                                        <d:fieldColumn>
+                                            <d:fieldLabel for="companyAddress1" value="#{label.companyAddress1}" />
+                                            <d:fieldInputBox>
+                                                <h:inputTextarea id="companyAddress1" value="#{commonConfigurationWebAppBean.companyAddress1}" />
+                                            </d:fieldInputBox>
+                                        </d:fieldColumn>
+                                        <d:fieldColumn>
+                                            <d:fieldLabel for="companyAddress2" value="#{label.companyAddress2}" />
+                                            <d:fieldInputBox>
+                                                <h:inputTextarea id="companyAddress2" value="#{commonConfigurationWebAppBean.companyAddress2}" />
+                                            </d:fieldInputBox>
+                                        </d:fieldColumn>
+                                    </d:fieldRow>
+                                    <d:fieldRow>
+                                        <d:fieldColumn>
+                                            <d:fieldLabel for="companyPhone1" value="#{label.companyPhone1}" />
+                                            <d:fieldInputBox>
+                                                <h:inputText id="companyPhone1" value="#{commonConfigurationWebAppBean.companyPhone1}" />
+                                            </d:fieldInputBox>
+                                        </d:fieldColumn>
+                                        <d:fieldColumn>
+                                            <d:fieldLabel for="companyPhone2" value="#{label.companyPhone2}" />
+                                            <d:fieldInputBox>
+                                                <h:inputText id="companyPhone2" value="#{commonConfigurationWebAppBean.companyPhone2}" />
+                                            </d:fieldInputBox>
+                                        </d:fieldColumn>
+                                    </d:fieldRow>
+                                    <d:fieldRow rendered="#{commonConfigurationWebAppBean.isLoggedOn eq false}">
+                                        <d:fieldColumn>
+                                            <d:informationBox>
+                                                <h:outputText value="#{defaultMessage.commonConfigurationUnlockPasswordPredefinition} " />
+                                                <br />
+                                                <h:outputText value="#{commonConfigurationWebAppBean.getMasterPasswordFileAddr()}" />
+                                            </d:informationBox>
+                                        </d:fieldColumn>
+                                    </d:fieldRow>
+                                    <d:fieldRow rendered="#{commonConfigurationWebAppBean.isLoggedOn eq false}">
+                                        <d:fieldColumn>
+                                            <d:fieldLabel for="unlockPassword" value="#{label.masterPassword}" />
+                                            <d:fieldInputBox>
+                                                <h:inputSecret id="unlockPassword" value="#{commonConfigurationWebAppBean.unlockPassword}">
+                                                    <f:validateBean disabled="#{true}" />
+                                                </h:inputSecret>
+                                            </d:fieldInputBox>
+                                        </d:fieldColumn>
+                                    </d:fieldRow>
+                                </h:panelGroup>
+                            </h:panelGroup>
+                            <d:altProgramRestrictionWarningBox rendered="#{commonConfigurationWebAppBean.userType eq 'CLIENT' or commonConfigurationWebAppBean.userType eq 'STAFF'}" />
+                            <d:mainPanelFooter webAppBean="#{commonConfigurationWebAppBean}" />
+                        </d:pageContainer>
+                </d:mainPanel>
+                <d:rightPanel>
+                    <d:customRightPanel webAppBean="#{commonConfigurationWebAppBean}" />
+                </d:rightPanel>
+            </h:panelGroup>
+            <d:customBottomForm webAppBean="#{commonConfigurationWebAppBean}" />
+        </h:form>
+        <d:customBottomBody webAppBean="#{commonConfigurationWebAppBean}" />
+    </h:body>
+</html>
