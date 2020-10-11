@@ -29,6 +29,7 @@
 package fdaf.webapp.bean.system;
 
 import fdaf.base.AdministratorAccountCheckerInterface;
+import fdaf.base.CommonConfigurationInterface;
 import fdaf.base.DatabaseServiceCheckerInterface;
 import fdaf.base.FacadeInterface;
 import fdaf.base.MailerInterface;
@@ -88,6 +89,9 @@ public class MailerConfigurationWebAppBean extends AbstractBaseWebAppBean implem
     @EJB(lookup = "java:global/__EJB_LOOKUP_DIR__/Mailer")
     private MailerInterface mailer;
     
+    @EJB(lookup = "java:global/__EJB_LOOKUP_DIR__/CommonConfiguration")
+    private CommonConfigurationInterface commonConfiguration;
+    
     private String masterPasswordFileAddr;
     private String masterPassword;
     private String unlockPassword;
@@ -113,6 +117,10 @@ public class MailerConfigurationWebAppBean extends AbstractBaseWebAppBean implem
     
     public MailerConfigurationWebAppBean() {
         // NO-OP
+    }
+    
+    protected CommonConfigurationInterface getCommonConfiguration() {
+        return commonConfiguration;
     }
     
     public void initMailerConfiguration(ComponentSystemEvent event) throws AbortProcessingException {

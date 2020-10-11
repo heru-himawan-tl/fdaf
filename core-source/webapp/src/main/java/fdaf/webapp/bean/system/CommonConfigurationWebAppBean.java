@@ -203,6 +203,10 @@ public class CommonConfigurationWebAppBean extends AbstractBaseWebAppBean implem
         }
     }
     
+    protected CommonConfigurationInterface getCommonConfiguration() {
+        return config;
+    }
+    
     private void generatePassword() throws Exception {
         StringBuilder password = new StringBuilder(12);
         for (int i = 0; i < 12; i++) {

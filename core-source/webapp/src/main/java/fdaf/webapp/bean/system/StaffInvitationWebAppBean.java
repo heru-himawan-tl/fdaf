@@ -29,6 +29,7 @@
 package fdaf.webapp.bean.common;
 
 import fdaf.base.AdministratorAccountCheckerInterface;
+import fdaf.base.CommonConfigurationInterface;
 import fdaf.base.DatabaseServiceCheckerInterface;
 import fdaf.base.MailerInterface;
 import fdaf.base.StaffInvitationInterface;
@@ -50,6 +51,7 @@ import javax.inject.Named;
 @ViewScoped
 @Named
 public class StaffInvitationWebAppBean extends AbstractWebAppBean implements Serializable {
+
     private static final long serialVersionUID = 1L;
     
     private static final Logger LOGGER = Logger.getLogger(StaffInvitationWebAppBean.class.getName());
@@ -69,6 +71,9 @@ public class StaffInvitationWebAppBean extends AbstractWebAppBean implements Ser
     @EJB(lookup = "java:global/__EJB_LOOKUP_DIR__/DatabaseServiceCheckerFacade")
     private DatabaseServiceCheckerInterface dbServiceChecker;
     
+    @EJB(lookup = "java:global/__EJB_LOOKUP_DIR__/CommonConfiguration")
+    private CommonConfigurationInterface commonConfiguration;
+    
     private boolean mailerFailure;
 
     public StaffInvitationWebAppBean() {
@@ -77,6 +82,10 @@ public class StaffInvitationWebAppBean extends AbstractWebAppBean implements Ser
 
     protected AdministratorAccountCheckerInterface getAdministratorAccountChecker() {
         return admAccountChecker;
+    }
+    
+    protected CommonConfigurationInterface getCommonConfiguration() {
+        return commonConfiguration;
     }
 
     protected StaffInvitationInterface getFacade() {

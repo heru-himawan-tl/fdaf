@@ -29,6 +29,7 @@
 package fdaf.webapp.bean.common;
 
 import fdaf.base.AdministratorAccountCheckerInterface;
+import fdaf.base.CommonConfigurationInterface;
 import fdaf.base.DatabaseServiceCheckerInterface;
 import fdaf.base.FacadeInterface;
 import fdaf.base.UserSessionManagerInterface;
@@ -36,8 +37,8 @@ import fdaf.webapp.base.AbstractWebAppBean;
 import java.io.Serializable;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
-import javax.inject.Named;
 import javax.inject.Inject;
+import javax.inject.Named;
 
 @SessionScoped
 @Named
@@ -56,6 +57,9 @@ public class __NAME__WebAppBean extends AbstractWebAppBean implements Serializab
     
     @EJB(lookup = "java:global/__EJB_LOOKUP_DIR__/DatabaseServiceCheckerFacade")
     private DatabaseServiceCheckerInterface dbServiceChecker;
+    
+    @EJB(lookup = "java:global/__EJB_LOOKUP_DIR__/CommonConfiguration")
+    private CommonConfigurationInterface commonConfiguration;
 
     public __NAME__WebAppBean() {
         // NO-OP
@@ -63,6 +67,10 @@ public class __NAME__WebAppBean extends AbstractWebAppBean implements Serializab
 
     protected AdministratorAccountCheckerInterface getAdministratorAccountChecker() {
         return admAccountChecker;
+    }
+    
+    protected CommonConfigurationInterface getCommonConfiguration() {
+        return commonConfiguration;
     }
 
     protected FacadeInterface getFacade() {

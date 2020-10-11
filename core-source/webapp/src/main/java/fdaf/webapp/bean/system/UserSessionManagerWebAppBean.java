@@ -29,6 +29,7 @@
 package fdaf.webapp.bean.system;
 
 import fdaf.base.AdministratorAccountCheckerInterface;
+import fdaf.base.CommonConfigurationInterface;
 import fdaf.base.FacadeInterface;
 import fdaf.base.UserSessionManagerInterface;
 import fdaf.webapp.base.AbstractWebAppBean;
@@ -55,6 +56,9 @@ public class UserSessionManagerWebAppBean extends AbstractWebAppBean implements 
     @EJB(lookup = "java:global/__EJB_LOOKUP_DIR__/UserSessionManagerFacade")
     private UserSessionManagerInterface userSessionManager;
     
+    @EJB(lookup = "java:global/__EJB_LOOKUP_DIR__/CommonConfiguration")
+    private CommonConfigurationInterface commonConfiguration;
+    
     private boolean inProcessLogin;
     private boolean loginRefused;
     private String password;
@@ -78,6 +82,10 @@ public class UserSessionManagerWebAppBean extends AbstractWebAppBean implements 
         } else {
             referer = "index.jsf";
         }
+    }
+    
+    protected CommonConfigurationInterface getCommonConfiguration() {
+        return commonConfiguration;
     }
 
     @Override

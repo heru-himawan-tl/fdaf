@@ -28,9 +28,11 @@
  */
 package fdaf.webapp.bean.system;
 
+import fdaf.base.CommonConfigurationInterface;
 import fdaf.webapp.base.AbstractDummyWebAppBean;
 import java.io.Serializable;
 import java.util.Map;
+import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
@@ -42,7 +44,12 @@ import javax.inject.Named;
 @SessionScoped
 @Named
 public class ExpirationPageWebAppBean extends AbstractDummyWebAppBean implements Serializable {
+
     private static final long serialVersionUID = 1L;
+    
+    @EJB(lookup = "java:global/__EJB_LOOKUP_DIR__/CommonConfiguration")
+    private CommonConfigurationInterface commonConfiguration;
+    
     private String referer;
 
     public ExpirationPageWebAppBean() {
@@ -61,6 +68,10 @@ public class ExpirationPageWebAppBean extends AbstractDummyWebAppBean implements
                 referer = currentReferer[0];
             }
         }
+    }
+    
+    protected CommonConfigurationInterface getCommonConfiguration() {
+        return commonConfiguration;
     }
 
     public String getReferer() {

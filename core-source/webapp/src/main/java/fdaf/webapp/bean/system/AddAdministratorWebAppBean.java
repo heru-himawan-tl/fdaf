@@ -30,6 +30,7 @@ package fdaf.webapp.bean.system;
 
 import fdaf.base.AddAdministratorInterface;
 import fdaf.base.AdministratorAccountCheckerInterface;
+import fdaf.base.CommonConfigurationInterface;
 import fdaf.base.MailerInterface;
 import fdaf.base.UserSessionManagerInterface;
 import fdaf.base.UserType;
@@ -84,6 +85,9 @@ public class AddAdministratorWebAppBean extends AbstractWebAppBean implements Se
     @EJB(lookup = "java:global/__EJB_LOOKUP_DIR__/Mailer")
     private MailerInterface mailer;
     
+    @EJB(lookup = "java:global/__EJB_LOOKUP_DIR__/CommonConfiguration")
+    private CommonConfigurationInterface commonConfiguration;
+    
     private String masterPasswordFileAddr;
     private String masterPassword;
     private String unlockPassword;
@@ -96,6 +100,10 @@ public class AddAdministratorWebAppBean extends AbstractWebAppBean implements Se
 
     protected AdministratorAccountCheckerInterface getAdministratorAccountChecker() {
         return rootAccountChecker;
+    }
+    
+    protected CommonConfigurationInterface getCommonConfiguration() {
+        return commonConfiguration;
     }
     
     public UserSessionManagerInterface getUserSessionManager() {

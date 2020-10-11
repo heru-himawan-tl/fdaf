@@ -28,18 +28,27 @@
  */
 package fdaf.webapp.bean.system;
 
-import fdaf.base.UserSessionManagerInterface;
+import fdaf.base.CommonConfigurationInterface;
 import fdaf.webapp.base.AbstractDummyWebAppBean;
 import java.io.Serializable;
+import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 
 @SessionScoped
 @Named
 public class ErrorPageWebAppBean extends AbstractDummyWebAppBean implements Serializable {
+
     private static final long serialVersionUID = 1L;
+    
+    @EJB(lookup = "java:global/__EJB_LOOKUP_DIR__/CommonConfiguration")
+    private CommonConfigurationInterface commonConfiguration;
 
     public ErrorPageWebAppBean() {
         // NO-OP
+    }
+    
+    protected CommonConfigurationInterface getCommonConfiguration() {
+        return commonConfiguration;
     }
 }

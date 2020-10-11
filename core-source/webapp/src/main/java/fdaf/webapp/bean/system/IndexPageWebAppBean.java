@@ -39,6 +39,7 @@ import javax.inject.Inject;
 @SessionScoped
 @Named
 public class IndexPageWebAppBean extends ApplicationIdentifier implements Serializable {
+
     private static final long serialVersionUID = 1L;
 
     public IndexPageWebAppBean() {

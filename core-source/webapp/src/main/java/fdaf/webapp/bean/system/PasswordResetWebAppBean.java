@@ -29,6 +29,7 @@
 package fdaf.webapp.bean.system;
 
 import fdaf.base.AdministratorAccountCheckerInterface;
+import fdaf.base.CommonConfigurationInterface;
 import fdaf.base.PasswordResetInterface;
 import fdaf.base.FacadeInterface;
 import fdaf.base.UserSessionManagerInterface;
@@ -66,6 +67,9 @@ public class PasswordResetWebAppBean extends AbstractWebAppBean implements Seria
     @EJB(lookup = "java:global/__EJB_LOOKUP_DIR__/Mailer")
     private MailerInterface mailer;
     
+    @EJB(lookup = "java:global/__EJB_LOOKUP_DIR__/CommonConfiguration")
+    private CommonConfigurationInterface commonConfiguration;
+    
     private String resetPassword;
     private boolean success;
     private String email;
@@ -79,6 +83,10 @@ public class PasswordResetWebAppBean extends AbstractWebAppBean implements Seria
 
     protected AdministratorAccountCheckerInterface getAdministratorAccountChecker() {
         return rootAccountChecker;
+    }
+    
+    protected CommonConfigurationInterface getCommonConfiguration() {
+        return commonConfiguration;
     }
     
     public UserSessionManagerInterface getUserSessionManager() {

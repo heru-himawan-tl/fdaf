@@ -29,11 +29,14 @@
 package fdaf.webapp.base;
 
 import fdaf.base.AdministratorAccountCheckerInterface;
+import fdaf.base.CommonConfigurationInterface;
 import fdaf.base.DatabaseServiceCheckerInterface;
 import fdaf.base.FacadeInterface;
 import fdaf.base.UserSessionManagerInterface;
 import fdaf.base.UserType;
 import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -44,10 +47,9 @@ import javax.faces.event.ComponentSystemEvent;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.Part;
-import java.util.logging.Logger;
-import java.util.logging.Level;
 
 public abstract class AbstractBaseWebAppBean extends AbstractWebAppCommon {
+
     private static final Logger LOGGER = Logger.getLogger(AbstractBaseWebAppBean.class.getName());
     protected static final FacesMessage.Severity SV_ERROR = FacesMessage.SEVERITY_ERROR;
     protected static final FacesMessage.Severity SV_INFO = FacesMessage.SEVERITY_INFO;
@@ -78,6 +80,8 @@ public abstract class AbstractBaseWebAppBean extends AbstractWebAppCommon {
     protected AbstractBaseWebAppBean() {
         // NO-OP
     }
+    
+    protected abstract CommonConfigurationInterface getCommonConfiguration();
     
     protected void addCustomCallbackMessage(FacesMessage.Severity severity, String key, String addInfo) {
         try {

@@ -29,6 +29,7 @@
 package fdaf.webapp.bean.system;
 
 import fdaf.base.AdministratorAccountCheckerInterface;
+import fdaf.base.CommonConfigurationInterface;
 import fdaf.base.DatabaseServiceCheckerInterface;
 import fdaf.base.MailerInterface;
 import fdaf.base.UserRegistrationInterface;
@@ -75,6 +76,9 @@ public class UserRegistrationWebAppBean extends AbstractWebAppBean implements Se
     @EJB(lookup = "java:global/__EJB_LOOKUP_DIR__/Mailer")
     private MailerInterface mailer;
     
+    @EJB(lookup = "java:global/__EJB_LOOKUP_DIR__/CommonConfiguration")
+    private CommonConfigurationInterface commonConfiguration;
+    
     private UserType userType;
     
     @Pattern(regexp = "^[a-zA-Z0-9 ]+$", message = "Invalid format for user name (allowed: a-z, A-Z, 0-9 and spaces).")
@@ -104,6 +108,10 @@ public class UserRegistrationWebAppBean extends AbstractWebAppBean implements Se
     
     protected AdministratorAccountCheckerInterface getAdministratorAccountChecker() {
         return admAccountChecker;
+    }
+    
+    protected CommonConfigurationInterface getCommonConfiguration() {
+        return commonConfiguration;
     }
 
     @Override
