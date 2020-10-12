@@ -169,7 +169,7 @@ public abstract class AbstractBaseWebAppBean extends AbstractWebAppCommon {
         String domain = getCommonConfiguration().getDomain();
         requestAddress = websocketURL.replaceAll("ws(s)?\\:\\/\\/", "").replaceAll("([\\/]+.*|\\:.*)", "");
         requestPort = request.getLocalPort();
-        if (!requestAddress.matches("^(localhost|127\\.0\\..*|0\\.0\\.0\\.0|10\\.42\\..*|192\\.168\\.(100|1|88)\\..*|172\\.20\\..*)$")
+        if (!requestAddress.matches("^(localhost|127\\..*|0\\.0\\.0\\.0|10\\..*|192\\.168\\..*|172\\.[16-31]\\..*)$")
             && getCommonConfiguration().isEnabled() && domain != null && !domain.isEmpty() && !domain.equals("localhost")
             && getCommonConfiguration().getDomainAsDefaultSite()) {
             websocketURL = websocketURL.replaceAll("(^.*\\:\\/\\/)(.*)(\\:[0-9]+)?(\\/.*)", "$1" + domain + ((requestPort != 80 && requestPort != 443) ? ":" + requestPort : "") + "$4");
