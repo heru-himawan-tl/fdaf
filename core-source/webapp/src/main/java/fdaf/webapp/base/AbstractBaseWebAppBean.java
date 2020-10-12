@@ -166,11 +166,17 @@ public abstract class AbstractBaseWebAppBean extends AbstractWebAppCommon {
         HttpServletRequest request = getRequest();
         requestURL = request.getRequestURL().toString();
         websocketURL = requestURL.replaceAll("^http", "ws").replaceAll("\\/[a-zA-Z0-9\\-\\_]+\\.(jsf|xhtml)$", "").replaceAll("[\\/]+$", "");
+        String domain = getCommonConfiguration().getDomain();
         requestAddress = websocketURL.replaceAll("ws(s)?\\:\\/\\/", "").replaceAll("([\\/]+.*|\\:.*)", "");
+        requestPort = request.getLocalPort();
+        if (!requestAddress.matches("^(localhost|127\\.0\\..*|0\\.0\\.0\\.0|10\\.42\\..*|192\\.168\\.(100|1|88)\\..*|172\\.20\\..*)$")
+            && getCommonConfiguration().isEnabled() && domain != null && !domain.isEmpty() && !domain.equals("localhost")
+            && getCommonConfiguration().getDomainAsDefaultSite()) {
+            websocketURL = websocketURL.replaceAll("(^.*\\:\\/\\/)(.*)(\\:[0-9]+)?(\\/.*)", "$1" + domain + ((requestPort != 80 && requestPort != 443) ? ":" + requestPort : "") + "$4");
+        }
         requestScheme = requestURL.replaceAll("\\:.*", "");
         contextPath = request.getContextPath();
-        requestPort = request.getLocalPort();
-        webappURL = requestScheme + "://" + requestAddress + ":" + requestPort + contextPath;
+        webappURL = requestScheme + "://" + requestAddress + ((requestPort != 80 && requestPort != 443) ? ":" + requestPort : "") + contextPath;
     }
 
     public void checkAdministratorAccount(ComponentSystemEvent event) throws AbortProcessingException {
