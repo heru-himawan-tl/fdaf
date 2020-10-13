@@ -76,6 +76,7 @@ public abstract class AbstractBaseWebAppBean extends AbstractWebAppCommon {
     protected int requestPort;
     protected Part dummyFile;
     protected Object dummy;
+    protected String viewLayerName;
 
     protected AbstractBaseWebAppBean() {
         // NO-OP
@@ -166,10 +167,11 @@ public abstract class AbstractBaseWebAppBean extends AbstractWebAppCommon {
         HttpServletRequest request = getRequest();
         requestURL = request.getRequestURL().toString();
         websocketURL = requestURL.replaceAll("^http", "ws").replaceAll("\\/[a-zA-Z0-9\\-\\_]+\\.(jsf|xhtml)$", "").replaceAll("[\\/]+$", "");
+        viewLayerName = requestURL.replaceAll(".*\\/", "").replaceAll("\\.(jsf|xhtml).*", "");
         String domain = getCommonConfiguration().getDomain();
         requestAddress = websocketURL.replaceAll("ws(s)?\\:\\/\\/", "").replaceAll("([\\/]+.*|\\:.*)", "");
         requestPort = request.getLocalPort();
-        if (!requestAddress.matches("^(localhost|127\\..*|0\\.0\\.0\\.0|10\\..*|192\\.168\\..*|172\\.[16-31]\\..*)$")
+        if (!requestAddress.matches("^(localhost|127\\..*|0\\.0\\.0\\.0|10\\..*|192\\.168\\..*|172\\.(1[6-9]|2[0-9]|3[0-1])\\..*)$")
             && getCommonConfiguration().isEnabled() && domain != null && !domain.isEmpty() && !domain.equals("localhost")
             && getCommonConfiguration().getDomainAsDefaultSite()) {
             websocketURL = websocketURL.replaceAll("(^.*\\:\\/\\/)(.*)(\\:[0-9]+)?(\\/.*)", "$1" + domain + ((requestPort != 80 && requestPort != 443) ? ":" + requestPort : "") + "$4");
@@ -177,6 +179,10 @@ public abstract class AbstractBaseWebAppBean extends AbstractWebAppCommon {
         requestScheme = requestURL.replaceAll("\\:.*", "");
         contextPath = request.getContextPath();
         webappURL = requestScheme + "://" + requestAddress + ((requestPort != 80 && requestPort != 443) ? ":" + requestPort : "") + contextPath;
+    }
+    
+    public String getViewLayerName() {
+        return viewLayerName;
     }
 
     public void checkAdministratorAccount(ComponentSystemEvent event) throws AbortProcessingException {

@@ -34,6 +34,7 @@ import fdaf.base.DatabaseServiceCheckerInterface;
 import fdaf.base.FacadeInterface;
 import fdaf.base.UserSessionManagerInterface;
 import fdaf.webapp.base.AbstractWebAppBean;
+import fdaf.webapp.bean.system.ListUpdaterBean;
 import java.io.Serializable;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
@@ -60,9 +61,17 @@ public class __NAME__WebAppBean extends AbstractWebAppBean implements Serializab
     
     @EJB(lookup = "java:global/__EJB_LOOKUP_DIR__/CommonConfiguration")
     private CommonConfigurationInterface commonConfiguration;
+    
+    @Inject
+    private ListUpdaterBean listUpdater;
 
     public __NAME__WebAppBean() {
         // NO-OP
+    }
+    
+    @Override
+    public ListUpdaterBean getListUpdater() {
+        return listUpdater;
     }
 
     protected AdministratorAccountCheckerInterface getAdministratorAccountChecker() {

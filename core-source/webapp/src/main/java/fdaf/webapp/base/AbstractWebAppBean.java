@@ -32,6 +32,7 @@ import fdaf.base.FacadeInterface;
 import fdaf.base.OrderingMode;
 import fdaf.base.Permission;
 import fdaf.base.UserType;
+import fdaf.webapp.bean.system.ListUpdaterBean;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -157,6 +158,14 @@ public abstract class AbstractWebAppBean extends AbstractBaseWebAppBean {
         // NO-OP
     }
     
+    public ListUpdaterBean getListUpdater() {
+        return null;
+    }
+    
+    protected boolean isNullListUpdater() {
+        return (getListUpdater() == null);
+    }
+    
     public void unsetCheckOrphanDataMode(AjaxBehaviorEvent event) throws AbortProcessingException {
         checkOrphanDataMode = false;
     }
@@ -258,6 +267,12 @@ public abstract class AbstractWebAppBean extends AbstractBaseWebAppBean {
     protected void feedBackEntity() {
         getFacade().setEntity(entity);
     }
+    
+    protected void notifiyListUpdate() {
+        if (!isNullListUpdater()) {
+            getListUpdater().triggerNotifyUpdate(viewLayerName);
+        }
+    }
 
     public void executeCreate(AjaxBehaviorEvent event) throws AbortProcessingException {
         try {
@@ -294,7 +309,9 @@ public abstract class AbstractWebAppBean extends AbstractBaseWebAppBean {
         } catch (Exception e) {
             indicateServiceError(e);
             rollbackCreateTask();
+            return;
         }
+        notifiyListUpdate();
     }
     
     protected void addPreUpdateCheckWarnCustomMessage() {
@@ -720,10 +737,13 @@ public abstract class AbstractWebAppBean extends AbstractBaseWebAppBean {
             }
         } catch (Exception e) {
             indicateServiceError(e);
+            return;
         }
+        notifiyListUpdate();
     }
     
     public void executeInlineUpdate(AjaxBehaviorEvent event) throws AbortProcessingException {
+        boolean isError = false;
         try {
             if (primaryKey != null && !String.valueOf(primaryKey).equals("0")) {
                 if (getFacade().isDataExists(primaryKey)) {
@@ -736,9 +756,13 @@ public abstract class AbstractWebAppBean extends AbstractBaseWebAppBean {
             }
         } catch (Exception e) {
             indicateServiceError(e);
+            isError = true;
         }
         inlineUpdateMode = false;
         extEntity = null;
+        if (!isError) {
+            notifiyListUpdate();
+        }
     }
     
     public void prepareInlineUpdate(Object extEntity) {
@@ -787,7 +811,9 @@ public abstract class AbstractWebAppBean extends AbstractBaseWebAppBean {
             disposeEntity();
         } catch (Exception e) {
             indicateServiceError(e);
+            return;
         }
+        notifiyListUpdate();
     }
 
     public void cancelTakeover() {
@@ -809,6 +835,7 @@ public abstract class AbstractWebAppBean extends AbstractBaseWebAppBean {
     }
 
     public void executeRemove(AjaxBehaviorEvent event) throws AbortProcessingException {
+        boolean isError = false;
         try {
             if (primaryKey != null && !String.valueOf(primaryKey).equals("0")) {
                 if (getFacade().isDataExists(primaryKey)) {
@@ -820,8 +847,12 @@ public abstract class AbstractWebAppBean extends AbstractBaseWebAppBean {
             }
         } catch (Exception e) {
             indicateServiceError(e);
+            isError = true;
         }
         prepareRemoveOp = false;
+        if (!isError) {
+            notifiyListUpdate();
+        }
     }
 
     public void resetMassiveSelection(ComponentSystemEvent event) throws AbortProcessingException {
@@ -917,11 +948,11 @@ public abstract class AbstractWebAppBean extends AbstractBaseWebAppBean {
     }
 
     public void executeMassiveRemoval(AjaxBehaviorEvent event) throws AbortProcessingException {
+        boolean partiallyRemoved = false;
+        boolean partiallyLocated = false;
+        boolean getRemoved = false;
         if (!primaryKeyMap.isEmpty()) {
             List<Object> primaryKeyIdList = new ArrayList<Object>();
-            boolean partiallyRemoved = false;
-            boolean partiallyLocated = false;
-            boolean getRemoved = false;
             for (Object primaryKeyId : primaryKeyMap.keySet()) {
                 Object[] primaryKeys = primaryKeyMap.get(primaryKeyId);
                 if (primaryKeys != null && primaryKeys.length != 0) {
@@ -962,6 +993,9 @@ public abstract class AbstractWebAppBean extends AbstractBaseWebAppBean {
         }
         clearMassiveRemovalReadyState();
         prepareRemoveOp = false;
+        if (getRemoved || partiallyRemoved) {
+            notifiyListUpdate();
+        }
     }
 
     public void cancelRemoval() {

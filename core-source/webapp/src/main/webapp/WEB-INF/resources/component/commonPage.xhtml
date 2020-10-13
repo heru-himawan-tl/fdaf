@@ -48,6 +48,7 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
             <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
             <h:outputStylesheet library="css" name="style.css" />
             <h:outputScript library="js" name="function.js" />
+            <h:outputScript library="js" name="list-updater.js" />
             <d:customHeadTag />
         </h:head>
         <h:body>
@@ -102,6 +103,14 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                 <d:customBottomPanel webAppBean="#{cc.attrs.webAppBean}" />
                 <d:multipartCompatCmp webAppBean="#{cc.attrs.webAppBean}" rendered="#{cc.attrs.webAppBean.enctype eq 'multipart/form-data'}" />
                 <d:customBottomForm webAppBean="#{cc.attrs.webAppBean}" />
+                <h:outputScript rendered="#{(cc.attrs.webAppBean.opMode eq 'LISTING')}">
+                    initListUpdaterWS(
+                        "#{cc.attrs.webAppBean.websocketURL}/list-updater",
+                        "#{cc.attrs.webAppBean.listUpdater.serviceUUID}",
+                        "#{cc.attrs.webAppBean.viewLayerName}",
+                        ""
+                    );
+                </h:outputScript>
             </h:form>
             <d:customBottomBody webAppBean="#{cc.attrs.webAppBean}" />
         </h:body>

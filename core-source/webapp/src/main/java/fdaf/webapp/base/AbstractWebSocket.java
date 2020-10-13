@@ -62,10 +62,10 @@ public abstract class AbstractWebSocket implements WebSocketInterface {
     @OnMessage
     public void onMessage(Session session, String message) throws IOException {
         setSession(session);
-        onMessageTask();
+        onMessageTask(message);
     }
     
-    protected void onMessageTask() {
+    protected void onMessageTask(String message) {
         // NO-OP
     }
  
