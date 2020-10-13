@@ -104,7 +104,6 @@ public class ListUpdaterBean implements Serializable {
                             if (ws.isOpen() && ws.getNotifyUpdate()) {
                                 ws.setNotifyUpdate(false);
                                 ws.sendText(serviceUUID);
-                                System.out.println(">>>>>>>>>>>>> List has changed ...");
                             }
                         }
                         Thread.sleep(1000);
