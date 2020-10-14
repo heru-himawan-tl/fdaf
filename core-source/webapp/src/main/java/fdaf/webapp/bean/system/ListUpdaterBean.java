@@ -42,10 +42,8 @@ import javax.inject.Named;
 @Named
 public class ListUpdaterBean implements Serializable {
 
-    private static final List<ListUpdaterWS> websockets = new ArrayList<ListUpdaterWS>();
-
     private static final long serialVersionUID = 1L;
-    
+    private static final List<ListUpdaterWS> websockets = new ArrayList<ListUpdaterWS>();    
     private ExecutorService executorService;
     private String serviceUUID = UUID.randomUUID().toString();
     
@@ -53,15 +51,21 @@ public class ListUpdaterBean implements Serializable {
         // NO-OP
     }
     
-    public void triggerNotifyUpdate(String viewLayerName) {
+    public void triggerNotifyUpdate(final String viewLayerName) {
         if (websockets.isEmpty()) {
             return;
         }
-        for (ListUpdaterWS ws : websockets) {
-            if (ws.isOpen() && ws.getViewLayerName().equals(viewLayerName)) {
-                ws.setNotifyUpdate(true);
+        final ExecutorService localService = Executors.newSingleThreadExecutor();
+        localService.submit(new Runnable() {
+            public void run() {
+                for (ListUpdaterWS ws : websockets) {
+                    if (ws.isOpen() && ws.getViewLayerName().equals(viewLayerName)) {
+                        ws.sendText(serviceUUID);
+                    }
+                }
+                localService.shutdownNow();
             }
-        }
+        });
     }
     
     public void addWebSocket(ListUpdaterWS websocket) {
@@ -92,20 +96,17 @@ public class ListUpdaterBean implements Serializable {
                         }
                     }
                     if (!continueRun && executorService != null && !executorService.isShutdown()) {
-                        websockets.clear();
-                        executorService.shutdownNow();
-                        return;
+                        try {
+                            websockets.clear();
+                            executorService.shutdownNow();
+                            return;
+                        } catch (Exception e) {
+                        }
                     }
                     if (executorService.isShutdown()) {
                         return;
                     }
                     try {
-                        for (ListUpdaterWS ws : websockets) {
-                            if (ws.isOpen() && ws.getNotifyUpdate()) {
-                                ws.setNotifyUpdate(false);
-                                ws.sendText(serviceUUID);
-                            }
-                        }
                         Thread.sleep(1000);
                     } catch (Exception e) {
                         return;
