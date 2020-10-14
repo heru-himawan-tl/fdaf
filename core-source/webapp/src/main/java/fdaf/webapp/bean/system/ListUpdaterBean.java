@@ -43,7 +43,7 @@ import javax.inject.Named;
 public class ListUpdaterBean implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    private static final List<ListUpdaterWS> websockets = new ArrayList<ListUpdaterWS>();    
+    private static final List<ListUpdaterWS> webSockets = new ArrayList<ListUpdaterWS>();    
     private ExecutorService executorService;
     private String serviceUUID = UUID.randomUUID().toString();
     
@@ -52,25 +52,28 @@ public class ListUpdaterBean implements Serializable {
     }
     
     public void triggerNotifyUpdate(final String viewLayerName) {
-        if (websockets.isEmpty()) {
+        if (webSockets.isEmpty()) {
             return;
         }
-        final ExecutorService localService = Executors.newSingleThreadExecutor();
-        localService.submit(new Runnable() {
+        final ExecutorService localExecutorService = Executors.newSingleThreadExecutor();
+        localExecutorService.submit(new Runnable() {
             public void run() {
-                for (ListUpdaterWS ws : websockets) {
-                    if (ws.isOpen() && ws.getViewLayerName().equals(viewLayerName)) {
-                        ws.sendText(serviceUUID);
+                for (ListUpdaterWS webSocket : webSockets) {
+                    if (webSocket.isOpen() && webSocket.getViewLayerName().equals(viewLayerName)) {
+                        try {
+                            webSocket.sendText(serviceUUID);
+                        } catch (Exception e) {
+                        }
                     }
                 }
-                localService.shutdownNow();
+                localExecutorService.shutdownNow();
             }
         });
     }
     
     public void addWebSocket(ListUpdaterWS websocket) {
         if (websocket != null && websocket.isOpen()) {
-            websockets.add(websocket);
+            webSockets.add(websocket);
         }
     }
     
@@ -87,9 +90,9 @@ public class ListUpdaterBean implements Serializable {
             public void run() {
                 while (true) {
                     boolean continueRun = false;
-                    if (!websockets.isEmpty()) {
-                        for (ListUpdaterWS ws : websockets) {
-                            if (ws.isOpen()) {
+                    if (!webSockets.isEmpty()) {
+                        for (ListUpdaterWS webSocket : webSockets) {
+                            if (webSocket.isOpen()) {
                                 continueRun = true;
                                 break;
                             }
@@ -97,7 +100,7 @@ public class ListUpdaterBean implements Serializable {
                     }
                     if (!continueRun && executorService != null && !executorService.isShutdown()) {
                         try {
-                            websockets.clear();
+                            webSockets.clear();
                             executorService.shutdownNow();
                             return;
                         } catch (Exception e) {
