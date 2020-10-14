@@ -296,6 +296,7 @@ public abstract class AbstractWebAppBean extends AbstractBaseWebAppBean {
                     saveAndClose = false;
                     onCreateFinishTask();
                     disposeEntity();
+                    notifiyListUpdate();
                     return;
                 }
                 getFacade().reloadNewEntity();
@@ -726,6 +727,7 @@ public abstract class AbstractWebAppBean extends AbstractBaseWebAppBean {
                     saveAndClose = false;
                     onUpdateFinishTask();
                     disposeEntity();
+                    notifiyListUpdate();
                     return;
                 }
                 getFacade().reloadEntity();
