@@ -37,15 +37,25 @@ import fdaf.webapp.base.AbstractWebAppBean;
 import fdaf.webapp.bean.system.ListUpdaterBean;
 import java.io.Serializable;
 import javax.ejb.EJB;
+// --------------------------------------------------------------------------
 // In case you prefer the SessionScoped:
-//import javax.enterprise.context.SessionScoped;
+// import javax.enterprise.context.SessionScoped;
+// --------------------------------------------------------------------------
+// By default, the ViewScoped is preferred for realtime data changes
+// monitoring from within the web application.
 import javax.faces.view.ViewScoped;
+// --------------------------------------------------------------------------
 import javax.inject.Inject;
 import javax.inject.Named;
 
+// --------------------------------------------------------------------------
 // In case you prefer the SessionScoped:
-//@SessionScoped
+// @SessionScoped
+// --------------------------------------------------------------------------
+// By default, the ViewScoped is preferred for realtime data changes
+// monitoring from within the web application.
 @ViewScoped
+// --------------------------------------------------------------------------
 @Named
 public class __NAME__WebAppBean extends AbstractWebAppBean implements Serializable {
 
