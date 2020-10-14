@@ -73,7 +73,7 @@ public class ListUpdaterBean implements Serializable {
     public String getServiceUUID() {
         return serviceUUID;
     }
-    
+   
     public void runService() {
         if (executorService != null && !executorService.isShutdown()) {
             return;

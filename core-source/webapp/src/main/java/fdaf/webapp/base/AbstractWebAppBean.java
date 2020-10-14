@@ -119,6 +119,8 @@ public abstract class AbstractWebAppBean extends AbstractBaseWebAppBean {
     protected String lastKnownNewRecordId;
     protected String infoMessage;
 
+    protected Object currentViewDataId;
+
     protected AbstractWebAppBean() {
         // NO-OP
     }
@@ -581,6 +583,7 @@ public abstract class AbstractWebAppBean extends AbstractBaseWebAppBean {
     
     public void view(Object primaryKey) {
         try {
+            currentViewDataId = primaryKey;
             getFacade().prepareUpdate(primaryKey);
             presetEntity();
             DataPropertiesReflect dataProperties = new DataPropertiesReflect(entity);
@@ -599,6 +602,10 @@ public abstract class AbstractWebAppBean extends AbstractBaseWebAppBean {
         }
     }
     
+    public Object getCurrentViewDataId() {
+        return currentViewDataId;
+    }
+    
     public ResultObject getResultObject() {
         return resultObject;
     }
@@ -606,6 +613,7 @@ public abstract class AbstractWebAppBean extends AbstractBaseWebAppBean {
     public void exitView() {
         opMode = WebAppOpMode.LISTING;
         resultObject = null;
+        currentViewDataId = null;
         disposeEntity();
     }
     

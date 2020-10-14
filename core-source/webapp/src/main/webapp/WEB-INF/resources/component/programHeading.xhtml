@@ -77,7 +77,12 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                                 <f:ajax event="click" execute="@form" render="@form" />
                             </h:commandButton>
                             <h:commandButton type="button" styleClass="list_update_button" style="display:none;" immediate="true" value=""
-                                rendered="#{(cc.attrs.webAppBean.allowRender eq true and (cc.attrs.webAppBean.opMode eq 'LISTING' or cc.attrs.webAppBean.opMode eq 'VIEW'))}">
+                                rendered="#{(cc.attrs.webAppBean.allowRender eq true and cc.attrs.webAppBean.opMode eq 'VIEW')}">
+                                <f:actionListener binding="#{cc.attrs.webAppBean.view(cc.attrs.webAppBean.currentViewDataId)}" />
+                                <f:ajax event="click" execute="@form" render="@form" />
+                            </h:commandButton>
+                            <h:commandButton type="button" styleClass="list_update_button" style="display:none;" immediate="true" value=""
+                                rendered="#{(cc.attrs.webAppBean.allowRender eq true and cc.attrs.webAppBean.opMode eq 'LISTING')}">
                                 <f:ajax event="click" execute="@form" render="@form" />
                             </h:commandButton>
                             <h:commandButton type="button" styleClass="grouped_button_inner" immediate="true" value="#{label.listExitSearch}" rendered="#{(cc.attrs.webAppBean.allowRender eq true and cc.attrs.webAppBean.allowRender eq true and cc.attrs.webAppBean.opMode eq 'LISTING' and cc.attrs.webAppBean.searchMode eq true and cc.attrs.simpleMode eq false)}">
