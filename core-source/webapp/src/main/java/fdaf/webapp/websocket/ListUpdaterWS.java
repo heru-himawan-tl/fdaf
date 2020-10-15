@@ -38,17 +38,7 @@ public class ListUpdaterWS extends AbstractWebSocket {
 
     @Inject
     private ListUpdaterBean listUpdater;
-    
-    private boolean notifiyUpdate;
     private String viewLayerName;
-    
-    public void setNotifyUpdate(boolean notifiyUpdate) {
-        this.notifiyUpdate = notifiyUpdate;
-    }
-    
-    public boolean getNotifyUpdate() {
-        return notifiyUpdate;
-    }
     
     public String getViewLayerName() {
         return viewLayerName;
