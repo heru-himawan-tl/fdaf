@@ -102,11 +102,18 @@ public class CommonConfigurationWebAppBean extends AbstractBaseWebAppBean implem
     private String siteName;
     
     @Pattern(regexp = "^[a-zA-Z0-9\\.\\-]+$", message = "Invalid format for domain name (allowed: a-z, A-Z, 0-9, ., and -).")
-    @Size(min = 4, max = 128, message = "Domain name length out of range (min = 3, max = 128).")
+    @Size(min = 3, max = 128, message = "Domain name length out of range (min = 3, max = 128).")
     @NotBlank(message = "Domain name not specified.")
     private String domain;
     
     private boolean domainAsDefaultSite;
+    
+    private boolean allowPerUserMultipleLogins;
+    
+    @Pattern(regexp = "^[a-zA-Z0-9\\.\\-]+$", message = "Invalid format for web socket client secure key (allowed: a-z, A-Z, 0-9, ., and -).")
+    @Size(min = 6, max = 128, message = "Web socket client secure key length out of range (min = 6, max = 128).")
+    @NotBlank(message = "Web socket client secure key not specified.")
+    private String webSocketClientSecureKey;
     
     @Pattern(regexp = "^[a-zA-Z0-9\\-\\.]+@[a-zA-Z0-9\\-\\.]+$", message = "Invalid format of e-mail address.")
     @NotBlank(message = "E-mail address not specified.")
@@ -191,6 +198,8 @@ public class CommonConfigurationWebAppBean extends AbstractBaseWebAppBean implem
             setSiteName(config.getSiteName());
             setDomain(config.getDomain());
             setDomainAsDefaultSite(config.getDomainAsDefaultSite());
+            setAllowPerUserMultipleLogins(config.getAllowPerUserMultipleLogins());
+            setWebSocketClientSecureKey(config.getWebSocketClientSecureKey());
             setWebmasterEmail(config.getWebmasterEmail());
             setSiteDescription(config.getSiteDescription());
             setRegionalLanguage(config.getRegionalLanguage());
@@ -265,6 +274,8 @@ public class CommonConfigurationWebAppBean extends AbstractBaseWebAppBean implem
         config.setSiteName(siteName);
         config.setDomain(domain);
         config.setDomainAsDefaultSite(domainAsDefaultSite);
+        config.setAllowPerUserMultipleLogins(allowPerUserMultipleLogins);
+        config.setWebSocketClientSecureKey(webSocketClientSecureKey);
         config.setWebmasterEmail(webmasterEmail);
         config.setSiteDescription(siteDescription);
         config.setRegionalLanguage(regionalLanguage);
@@ -311,6 +322,22 @@ public class CommonConfigurationWebAppBean extends AbstractBaseWebAppBean implem
 
     public String getDomain() {
         return domain;
+    }
+    
+    public void setWebSocketClientSecureKey(String webSocketClientSecureKey) {
+        this.webSocketClientSecureKey = webSocketClientSecureKey;
+    }
+
+    public String getWebSocketClientSecureKey() {
+        return webSocketClientSecureKey;
+    }
+    
+    public void setAllowPerUserMultipleLogins(boolean allowPerUserMultipleLogins) {
+        this.allowPerUserMultipleLogins = allowPerUserMultipleLogins;
+    }
+    
+    public boolean getAllowPerUserMultipleLogins() {
+        return allowPerUserMultipleLogins;
     }
 
     public void setDomainAsDefaultSite(boolean domainAsDefaultSite) {

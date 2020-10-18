@@ -139,7 +139,7 @@ public class UserSessionManagerWebAppBean extends AbstractWebAppBean implements 
         loggedOn = false;
         loginRefused = false;
         try {
-            if (userSessionManager.login(userName, password, userAgent)) {
+            if (userSessionManager.login(userName, password, userAgent, commonConfiguration.getAllowPerUserMultipleLogins())) {
                 userSessionID = userSessionManager.getUserSessionID();
                 if (!presetUserSessionIDCookie(userSessionID, (keepLogin) ? 24*365*3600 : -1)) {
                     userSessionManager.rollbackLogin(userSessionID, userAgent);

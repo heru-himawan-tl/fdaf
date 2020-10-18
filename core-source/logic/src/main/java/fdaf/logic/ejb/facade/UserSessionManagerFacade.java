@@ -55,19 +55,27 @@ import javax.ejb.Stateful;
 @Remote({UserSessionManagerInterface.class})
 @Stateful
 public class UserSessionManagerFacade implements Serializable {
+
     private static final long serialVersionUID = 1L;
+    
     @EJB
     private UserGroupMemberRepository userGroupMemberRepository;
+    
     @EJB
     private UserLoginRepository userLoginRepository;
+    
     @EJB
     private UserRepository userRepository;
+    
     @EJB
     private AuthorRepository authorRepository;
+    
     @EJB
     private ModifierRepository modifierRepository;
+    
     @EJB
     private EmployeeRepository employeeRepository;
+    
     private UserLogin userLoginEntity;
     private User userEntity;
     private boolean loggedOn;
@@ -122,23 +130,25 @@ public class UserSessionManagerFacade implements Serializable {
         return (userLoginEntity != null);
     }
 
-    public boolean login(String userName, String password, String userAgent) throws Exception {
+    public boolean login(String userName, String password, String userAgent, boolean multipleLogins) throws Exception {
         Specification<User> userSpec = userRepository.presetSpecification();
         userSpec.setPredicate(userSpec.getBuilder().equal(userSpec.getRoot().get("userName"), userName));
         userEntity = userRepository.find(userSpec);
         if ((userEntity == null) || ((userEntity != null) && !PBKDF2Tool.validate(password, userEntity.getPassword()))) {
             return false;
         }
-        Specification<UserLogin> userLoginSpec = userLoginRepository.presetSpecification();
-        userLoginSpec.setPredicate(userLoginSpec.getBuilder().and(
-            userLoginSpec.getBuilder().equal(userLoginSpec.getRoot().get("logoutState"), false),
-            userLoginSpec.getBuilder().equal(userLoginSpec.getRoot().get("userId"), userEntity.getId())));
-        List<UserLogin> uls = userLoginRepository.findAll(userLoginSpec);
-        if ((uls != null) && !uls.isEmpty()) {
-            for (UserLogin ul : uls) {
-                ul.setLogoutState(true);
-                ul.setLogoutFlag(1);
-                userLoginRepository.update(ul);
+        if (!multipleLogins) {
+            Specification<UserLogin> userLoginSpec = userLoginRepository.presetSpecification();
+            userLoginSpec.setPredicate(userLoginSpec.getBuilder().and(
+                userLoginSpec.getBuilder().equal(userLoginSpec.getRoot().get("logoutState"), false),
+                userLoginSpec.getBuilder().equal(userLoginSpec.getRoot().get("userId"), userEntity.getId())));
+            List<UserLogin> uls = userLoginRepository.findAll(userLoginSpec);
+            if ((uls != null) && !uls.isEmpty()) {
+                for (UserLogin ul : uls) {
+                    ul.setLogoutState(true);
+                    ul.setLogoutFlag(1);
+                    userLoginRepository.update(ul);
+                }
             }
         }
         String inTimeStamp = CommonTool.getTextualInstantDateTime();

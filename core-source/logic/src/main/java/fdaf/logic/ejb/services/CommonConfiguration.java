@@ -62,6 +62,9 @@ public class CommonConfiguration extends ApplicationIdentifier implements Serial
     private String configPath;
     private boolean enabled;
     
+    private boolean allowPerUserMultipleLogins;
+    private String webSocketClientSecureKey;
+    
     private boolean offlineSite;
     private String siteName;
     private String domain;
@@ -141,6 +144,8 @@ public class CommonConfiguration extends ApplicationIdentifier implements Serial
             offlineSite = Boolean.parseBoolean(prop.getProperty("offlineSite"));
             siteName = prop.getProperty("siteName");
             domain = prop.getProperty("domain");
+            allowPerUserMultipleLogins = Boolean.parseBoolean(prop.getProperty("allowPerUserMultipleLogins"));
+            webSocketClientSecureKey = prop.getProperty("webSocketClientSecureKey");
             domainAsDefaultSite = Boolean.parseBoolean(prop.getProperty("domainAsDefaultSite"));
             webmasterEmail = prop.getProperty("webmasterEmail");
             siteDescription = prop.getProperty("siteDescription");
@@ -169,6 +174,9 @@ public class CommonConfiguration extends ApplicationIdentifier implements Serial
             prop.setProperty("siteName", siteName);
             prop.setProperty("domain", domain);
             prop.setProperty("domainAsDefaultSite", (domainAsDefaultSite) ? "true" : "false");
+            prop.setProperty("allowPerUserMultipleLogins", (allowPerUserMultipleLogins) ? "true" : "false");
+            prop.setProperty("webSocketClientSecureKey", webSocketClientSecureKey);
+            prop.setProperty("webmasterEmail", webmasterEmail);
             prop.setProperty("webmasterEmail", webmasterEmail);
             prop.setProperty("siteDescription", siteDescription);
             prop.setProperty("regionalLanguage", regionalLanguage);
@@ -218,6 +226,22 @@ public class CommonConfiguration extends ApplicationIdentifier implements Serial
 
     public boolean getDomainAsDefaultSite() {
         return domainAsDefaultSite;
+    }
+    
+    public void setWebSocketClientSecureKey(String webSocketClientSecureKey) {
+        this.webSocketClientSecureKey = webSocketClientSecureKey;
+    }
+
+    public String getWebSocketClientSecureKey() {
+        return webSocketClientSecureKey;
+    }
+    
+    public void setAllowPerUserMultipleLogins(boolean allowPerUserMultipleLogins) {
+        this.allowPerUserMultipleLogins = allowPerUserMultipleLogins;
+    }
+    
+    public boolean getAllowPerUserMultipleLogins() {
+        return allowPerUserMultipleLogins;
     }
 
     public void setWebmasterEmail(String webmasterEmail) {

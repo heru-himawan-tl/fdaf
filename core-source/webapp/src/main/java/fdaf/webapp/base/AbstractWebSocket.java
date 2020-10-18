@@ -37,13 +37,14 @@ import javax.websocket.OnOpen;
 import javax.websocket.Session;
 
 /**
- * The fdaf's Web Socket server endpoint model implemented in case
- * the JSF v.2.x Mojarra's Push still has serious bug. If use JSF v.2.x
- * Mojarra's Push, the web socket will be unexpectedly stopped upon the web
- * application reloaded. We also need the more customizable web socket
- * server endpoint, for instance to work with ExecutorService.
+ * This Web Socket server model is implemented in FDAF in case the JSF v.2.x
+ * Mojarra's Push still has serious bug. If use JSF v.2.x Mojarra's Push,
+ * the web socket will be unexpectedly stopped upon the web application
+ * reloaded. We also need the more customizable web socket server endpoint,
+ * for instance to work with ExecutorService.
  */
 public abstract class AbstractWebSocket implements WebSocketInterface {
+
     protected String uuid = UUID.randomUUID().toString();
     protected Session session;
     protected boolean open;

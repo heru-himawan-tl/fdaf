@@ -45,6 +45,14 @@ public interface CommonConfigurationInterface {
     public void setDomainAsDefaultSite(boolean domainAsDefaultSite);
 
     public boolean getDomainAsDefaultSite();
+    
+    public void setWebSocketClientSecureKey(String webSocketClientSecureKey);
+
+    public String getWebSocketClientSecureKey();
+    
+    public void setAllowPerUserMultipleLogins(boolean allowPerUserMultipleLogins);
+    
+    public boolean getAllowPerUserMultipleLogins();
 
     public void setWebmasterEmail(String webmasterEmail);
 
