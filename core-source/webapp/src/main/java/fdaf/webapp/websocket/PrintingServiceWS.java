@@ -30,7 +30,10 @@ package fdaf.webapp.websocket;
 
 import fdaf.webapp.base.AbstractWebSocket;
 import fdaf.webapp.bean.system.PrintingServiceBean;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ExecutorService;
 import javax.inject.Inject;
+import javax.websocket.CloseReason;
 import javax.websocket.server.ServerEndpoint;
 
 @ServerEndpoint(value = "/printing-service")
@@ -39,11 +42,40 @@ public class PrintingServiceWS extends AbstractWebSocket {
     @Inject
     private PrintingServiceBean printingService;
 
+    private String webSocketClientSecureKey;
+    private ExecutorService executorService;
+    private boolean locked;
     private String address;
-
-    @Override    
-    protected void onMessageTask(String message) {
-        // NO-OP
+    
+    @Override
+    protected void onOpenTask() {
+        webSocketClientSecureKey = printingService.getWebSocketClientSecureKey();
+        printingService.addWebSocket(this);
+        printingService.runService();
+        // TODO: add code to configure IPv4 address
+        executorService = Executors.newSingleThreadExecutor();
+        executorService.submit(new Runnable() {
+            public void run() {
+                try {
+                    Thread.sleep(10000);
+                } catch (Exception e) {
+                }
+                if (executorService != null && !executorService.isShutdown()) {
+                    try {
+                        executorService.shutdownNow();
+                        return;
+                    } catch (Exception e) {
+                    }
+                }
+                try {
+                    if (session != null && session.isOpen()) {
+                        session.close(new CloseReason(CloseReason.CloseCodes.UNEXPECTED_CONDITION, "Secure key veryfication timeout."));
+                    }
+                    open = false;
+                } catch (Exception e) {
+                }
+            }
+        });
     }
     
     public String getAddress() {
@@ -51,8 +83,16 @@ public class PrintingServiceWS extends AbstractWebSocket {
     }
 
     @Override
-    protected void onOpenTask() {
-        printingService.addWebSocket(this);
-        printingService.runService();
+    protected void onMessageTask(String message) {
+        if (locked == false && !message.equals(webSocketClientSecureKey)) {
+            try {
+                if (session != null && session.isOpen()) {
+                    session.close(new CloseReason(CloseReason.CloseCodes.UNEXPECTED_CONDITION, "Wrong secure key."));
+                }
+                open = false;
+            } catch (Exception e) {
+            }
+        }
+        locked = true;
     }
 }

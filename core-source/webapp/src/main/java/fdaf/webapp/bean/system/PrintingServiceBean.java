@@ -70,10 +70,7 @@ public class PrintingServiceBean implements Serializable {
             public void run() {
                 for (PrintingServiceWS webSocket : webSockets) {
                     if (webSocket.isOpen() && webSocket.getAddress().equals(address)) {
-                        try {
-                            webSocket.sendText(serviceUUID);
-                        } catch (Exception e) {
-                        }
+                        // TODO: add printing code
                     }
                 }
                 localExecutorService.shutdownNow();
