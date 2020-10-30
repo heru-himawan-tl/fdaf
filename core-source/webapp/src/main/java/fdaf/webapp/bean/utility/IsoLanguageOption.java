@@ -64,7 +64,7 @@ public class IsoLanguageOption implements Serializable {
         Map<String, String> ltm = new TreeMap<String, String>(languageMap);
         for (Map.Entry<String, String> entry : ltm.entrySet()) {
             SelectItem selectItem = new SelectItem();
-            selectItem.setValue(entry.getKey());
+            selectItem.setValue(entry.getValue());
             selectItem.setLabel(entry.getKey() + " (" + entry.getValue().toUpperCase() + ")");
             itemsTemp.add(selectItem);
         }
