@@ -93,9 +93,23 @@ public class CommonConfiguration extends ApplicationIdentifier implements Serial
             return;
         }
         
+        try {
+            Path configDirPath = null;
+            if (isUNIX) {
+                configDirPath = Paths.get(userHome + fsp + "." + getApplicationCodeName());
+            } else {
+                configDirPath = Paths.get("C:\\" + getApplicationCodeName());
+            }
+            if (!Files.exists(configDirPath)) {
+                Files.createDirectory(configDirPath);
+            }
+        } catch (Exception e) {
+            LOGGER.log(Level.SEVERE, null, e);
+        }
+        
         if (!isUNIX) {
             try {
-                configPath = "C:\\" + getApplicationCodeName() + "\\" + getApplicationCodeName() + "-mail.conf";
+                configPath = "C:\\" + getApplicationCodeName() + "\\" + getApplicationCodeName() + "-common.conf";
                 if (Files.exists(Paths.get(configPath))) {
                     loadConfig();
                     return;
@@ -132,7 +146,7 @@ public class CommonConfiguration extends ApplicationIdentifier implements Serial
         if (isUNIX) {
             configPath = userHome + fsp + "." + getApplicationCodeName() + fsp + getApplicationCodeName() + "-common.conf";
         } else {
-            configPath = "C:\\" + getApplicationCodeName() + "\\" + getApplicationCodeName() + "-mail.conf";
+            configPath = "C:\\" + getApplicationCodeName() + "\\" + getApplicationCodeName() + "-common.conf";
         }
     }
     
@@ -141,6 +155,7 @@ public class CommonConfiguration extends ApplicationIdentifier implements Serial
             InputStream input = new FileInputStream(configPath);
             Properties prop = new Properties();
             prop.load(input);
+            
             offlineSite = Boolean.parseBoolean(prop.getProperty("offlineSite"));
             siteName = prop.getProperty("siteName");
             domain = prop.getProperty("domain");
@@ -155,9 +170,12 @@ public class CommonConfiguration extends ApplicationIdentifier implements Serial
             companyAddress1 = prop.getProperty("companyAddress1");
             companyAddress2 = prop.getProperty("companyAddress2");
             companyPhone1 = prop.getProperty("companyPhone1");
-            companyPhone2 = prop.getProperty("companyPhone2");            
+            companyPhone2 = prop.getProperty("companyPhone2");
+                
+            input.close();       
         } catch (Exception e) {
             LOGGER.log(Level.SEVERE, null, e);
+            saveConfig();
             return;
         }
         enabled = true;

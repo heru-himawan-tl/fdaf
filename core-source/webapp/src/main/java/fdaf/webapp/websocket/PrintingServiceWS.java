@@ -60,19 +60,19 @@ public class PrintingServiceWS extends AbstractWebSocket {
                     Thread.sleep(10000);
                 } catch (Exception e) {
                 }
+                try {
+                    if (session != null && session.isOpen() && !locked) {
+                        session.close(new CloseReason(CloseReason.CloseCodes.UNEXPECTED_CONDITION, "Secure key veryfication timeout."));
+                    }
+                    open = false;
+                } catch (Exception e) {
+                }
                 if (executorService != null && !executorService.isShutdown()) {
                     try {
                         executorService.shutdownNow();
                         return;
                     } catch (Exception e) {
                     }
-                }
-                try {
-                    if (session != null && session.isOpen()) {
-                        session.close(new CloseReason(CloseReason.CloseCodes.UNEXPECTED_CONDITION, "Secure key veryfication timeout."));
-                    }
-                    open = false;
-                } catch (Exception e) {
                 }
             }
         });
@@ -85,6 +85,7 @@ public class PrintingServiceWS extends AbstractWebSocket {
     @Override
     protected void onMessageTask(String message) {
         if (locked == false && !message.equals(webSocketClientSecureKey)) {
+            sendText("Wrong secure key.");
             try {
                 if (session != null && session.isOpen()) {
                     session.close(new CloseReason(CloseReason.CloseCodes.UNEXPECTED_CONDITION, "Wrong secure key."));
@@ -93,6 +94,10 @@ public class PrintingServiceWS extends AbstractWebSocket {
             } catch (Exception e) {
             }
         }
-        locked = true;
+        if (locked == false && message.equals(webSocketClientSecureKey)) {
+            sendText(webSocketClientSecureKey);
+            sendText("Welcome to printing service ...");
+            locked = true;
+        }
     }
 }

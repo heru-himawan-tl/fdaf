@@ -101,6 +101,7 @@ public class Initializer {
                             || fileName.equals("persistence.xml") || dirname.matches(".*webapp\\/bean.*")
                             || dirname.matches(".*logic\\/ejb\\/callback.*")
                             || dirname.matches(".*logic\\/ejb\\/facade.*")
+                            || dirname.matches(".*logic\\/ejb.*")
                             || fileName.matches(".*\\.(yaml|yml|properties)$")
                             || fileName.equals("invoker-pom.xml")
                             || fileName.equals("web.xml")
@@ -165,10 +166,10 @@ public class Initializer {
                         && !s.matches(".*\\<jta\\-data\\-source\\>java\\:jboss\\/datasources\\/.*")) {
                     s = s.replace("<jta-data-source>", "<jta-data-source>java:jboss/datasources/");
                 }
-                if (nodeAddr.matches(".*(webapp\\/bean|logic\\/ejb\\/callback|logic\\/ejb\\/facade).*") && nodeAddr.matches(".*thorntail.*")) {
+                if (nodeAddr.matches(".*(webapp\\/bean|logic\\/ejb\\/callback|logic\\/ejb\\/facade|logic\\/ejb\\/).*") && nodeAddr.matches(".*thorntail.*")) {
                     s = s.replace("__EJB_LOOKUP_DIR__", applicationCodeName);
                 }
-                if (nodeAddr.matches(".*(webapp\\/bean|logic\\/ejb\\/callback|logic\\/ejb\\/facade).*") && !nodeAddr.matches(".*thorntail.*")) {
+                if (nodeAddr.matches(".*(webapp\\/bean|logic\\/ejb\\/callback|logic\\/ejb\\/facade|logic\\/ejb\\/).*") && !nodeAddr.matches(".*thorntail.*")) {
                     s = s.replace("__EJB_LOOKUP_DIR__", ejbLookupDir);
                 }
                 if (nodeAddr.matches(".*with\\-eclipselink.*")) {

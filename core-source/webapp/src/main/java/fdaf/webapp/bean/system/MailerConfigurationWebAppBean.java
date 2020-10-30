@@ -154,6 +154,7 @@ public class MailerConfigurationWebAppBean extends AbstractBaseWebAppBean implem
             LOGGER.log(Level.SEVERE, null, e);
             return;
         }
+        
         try {
             if (!Files.exists(Paths.get(masterPasswordFileAddr))) {
                 generatePassword();

@@ -29,6 +29,7 @@
 package fdaf.webapp.base;
 
 import java.io.IOException;
+import java.nio.ByteBuffer;
 import java.util.UUID;
 import javax.websocket.OnClose;
 import javax.websocket.OnError;
@@ -59,11 +60,21 @@ public abstract class AbstractWebSocket implements WebSocketInterface {
     protected void onOpenTask() {
         // NO-OP
     }
+    
+    @OnMessage
+    public void onBinMessage(Session session, ByteBuffer message) throws IOException {
+        setSession(session);
+        onBinMessageTask(message);
+    }
  
     @OnMessage
     public void onMessage(Session session, String message) throws IOException {
         setSession(session);
         onMessageTask(message);
+    }
+    
+    protected void onBinMessageTask(ByteBuffer message) {
+        // NO-OP
     }
     
     protected void onMessageTask(String message) {

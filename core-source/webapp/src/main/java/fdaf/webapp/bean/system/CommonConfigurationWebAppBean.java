@@ -141,11 +141,10 @@ public class CommonConfigurationWebAppBean extends AbstractBaseWebAppBean implem
         boolean isUNIX = (!System.getProperty("os.name").matches(".*Windows.*"));
         String fsp = File.separator;
         Path configDirPath = null;
-        String userHome = null;
         
         try {
             if (isUNIX) {
-                userHome = System.getProperty("user.home");
+                String userHome = System.getProperty("user.home");
                 masterPasswordFileAddr  = userHome + fsp + "." + getApplicationCodeName() + fsp + "master-password.txt";
                 configDirPath = Paths.get(userHome + fsp + "." + getApplicationCodeName());
             } else {

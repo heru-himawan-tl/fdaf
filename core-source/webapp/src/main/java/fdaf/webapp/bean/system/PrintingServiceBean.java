@@ -31,6 +31,7 @@ package fdaf.webapp.bean.system;
 import fdaf.base.CommonConfigurationInterface;
 import fdaf.webapp.websocket.PrintingServiceWS;
 import java.io.Serializable;
+import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ExecutorService;
@@ -61,7 +62,7 @@ public class PrintingServiceBean implements Serializable {
         return config.getWebSocketClientSecureKey();
     }
     
-    public void askForPrinting(final String address) {
+    public void askForPrinting(final String address, final ByteBuffer data) {
         if (webSockets.isEmpty()) {
             return;
         }
@@ -121,7 +122,7 @@ public class PrintingServiceBean implements Serializable {
                         return;
                     }
                     try {
-                        Thread.sleep(1000);
+                        Thread.sleep(5000);
                     } catch (Exception e) {
                         return;
                     }

@@ -149,6 +149,7 @@ public class Mailer extends ApplicationIdentifier implements Serializable {
             port = prop.getProperty("port");
             domain = prop.getProperty("domain");
             
+            input.close();
         } catch (Exception e) {
             LOGGER.log(Level.SEVERE, null, e);
             return;

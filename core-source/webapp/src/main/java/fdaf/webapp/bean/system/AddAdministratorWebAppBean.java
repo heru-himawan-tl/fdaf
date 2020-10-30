@@ -111,6 +111,10 @@ public class AddAdministratorWebAppBean extends AbstractWebAppBean implements Se
     }
 
     public void initAddAdministrator(ComponentSystemEvent event) throws AbortProcessingException {
+        boolean isUNIX = (!System.getProperty("os.name").matches(".*Windows.*"));
+        String fsp = File.separator;
+        Path configDirPath = null;
+        
         if (opMode != WebAppOpMode.CREATE && opMode != WebAppOpMode.UPDATE) {
             opMode = WebAppOpMode.CREATE;
             disableValidation = false;
@@ -118,17 +122,22 @@ public class AddAdministratorWebAppBean extends AbstractWebAppBean implements Se
             getFacade().prepareCreate();
             presetEntity();
         }
-        String fsp = File.separator;
-        Path configDirPath = null;
+        
         try {
-            String userHome = System.getProperty("user.home");
-            masterPasswordFileAddr  = userHome + fsp + "." + getApplicationCodeName() + fsp + "master-password.txt";
-            configDirPath = Paths.get(userHome + fsp + "." + getApplicationCodeName());
+            if (isUNIX) {
+                String userHome = System.getProperty("user.home");
+                masterPasswordFileAddr  = userHome + fsp + "." + getApplicationCodeName() + fsp + "master-password.txt";
+                configDirPath = Paths.get(userHome + fsp + "." + getApplicationCodeName());
+            } else {
+                masterPasswordFileAddr  = "C:\\" + getApplicationCodeName() + "\\master-password.txt";
+                configDirPath = Paths.get("C:\\" + getApplicationCodeName());
+            }
         } catch (Exception e) {
             addMessage(SV_ERROR, "readHomeDirectoryFailed");
             LOGGER.log(Level.SEVERE, null, e);
             return;
         }
+        
         try {
             if (!Files.exists(configDirPath)) {
                 Files.createDirectory(configDirPath);
@@ -138,6 +147,7 @@ public class AddAdministratorWebAppBean extends AbstractWebAppBean implements Se
             LOGGER.log(Level.SEVERE, null, e);
             return;
         }
+        
         try {
             if (!Files.exists(Paths.get(masterPasswordFileAddr))) {
                 generatePassword();
