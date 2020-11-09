@@ -166,7 +166,7 @@ public abstract class AbstractBaseWebAppBean extends AbstractWebAppCommon {
     public void initMain(ComponentSystemEvent event) throws AbortProcessingException {
         HttpServletRequest request = getRequest();
         requestURL = request.getRequestURL().toString();
-        websocketURL = requestURL.replaceAll("^http", "ws").replaceAll("\\/[a-zA-Z0-9\\-\\_]+\\.(jsf|xhtml)$", "").replaceAll("[\\/]+$", "");
+        websocketURL = requestURL.replaceAll("^http", "ws").replaceAll("\\/[a-zA-Z0-9\\-\\_]+\\.(jsf|xhtml).*", "").replaceAll("[\\/]+$", "");
         viewLayerName = requestURL.replaceAll(".*\\/", "").replaceAll("\\.(jsf|xhtml).*", "");
         String domain = getCommonConfiguration().getDomain();
         requestAddress = websocketURL.replaceAll("ws(s)?\\:\\/\\/", "").replaceAll("([\\/]+.*|\\:.*)", "");
