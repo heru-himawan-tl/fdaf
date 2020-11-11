@@ -691,9 +691,6 @@ a:hover
 .common_button_ltr:hover, common_button_rtl:hover,
 .common_button_std:hover
 {
-    /*background: url(../web-resources/ui-bg/button-bg-hover.png);
-    background-repeat: repeat-x;
-    background-size: contain;*/
 }
 
 .grouped_button_left:hover, .grouped_button_inner:hover,
@@ -701,10 +698,6 @@ a:hover
 .common_button_ltr:hover, common_button_rtl:hover,
 .common_button_std:hover
 {
-    /*background: url(../web-resources/ui-bg/button-bg-hover.png);
-    background-repeat: repeat-x;
-    background-size: contain;
-    color: #000000;*/
     background: #003BB8;
 }
 
@@ -717,10 +710,6 @@ a:hover
 .common_button_ltr[disabled], .common_button_rtl[disabled],
 .common_button_std[disabled]
 {
-    /*background: url(../web-resources/ui-bg/button-bg-hover.png);
-    background-repeat: repeat-x;
-    background-size: contain;
-    color: #969993;*/
     color: #babdb6;
 }
 
