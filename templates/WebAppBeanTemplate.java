@@ -76,6 +76,8 @@ public class __NAME__WebAppBean extends AbstractWebAppBean implements Serializab
     @EJB(lookup = "java:global/__EJB_LOOKUP_DIR__/CommonConfiguration")
     private CommonConfigurationInterface commonConfiguration;
     
+    // UI_UPDATER_INJECT_HERE
+    
     @Inject
     private ListUpdaterBean listUpdater;
 
@@ -109,4 +111,6 @@ public class __NAME__WebAppBean extends AbstractWebAppBean implements Serializab
     public UserSessionManagerInterface getUserSessionManager() {
         return userSessionManager;
     }
+    
+    // UI_UPDATER_ARRAY_GET_METHOD_HERE
 }

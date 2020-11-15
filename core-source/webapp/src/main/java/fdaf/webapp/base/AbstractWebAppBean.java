@@ -126,6 +126,25 @@ public abstract class AbstractWebAppBean extends AbstractBaseWebAppBean {
     }
     
     protected abstract FacadeInterface getFacade();
+    
+    protected FrontEndUIUpdaterInterface[] getFrontEndUIUpdaters() {
+        FrontEndUIUpdaterInterface f = new FrontEndUIUpdaterInterface() {
+            public void triggerNotifyUpdate() {
+            }
+            
+            public void addWebSocket(WebSocketInterface websocket) {
+            }
+            
+            public String getServiceUUID() {
+                return null;
+            }
+           
+            public void runService() {
+            }
+        };
+        
+        return new FrontEndUIUpdaterInterface[]{f};
+    }
 
     @SuppressWarnings("unchecked")
     @PostConstruct
@@ -273,6 +292,10 @@ public abstract class AbstractWebAppBean extends AbstractBaseWebAppBean {
     protected void notifiyListUpdate() {
         if (!isNullListUpdater()) {
             getListUpdater().triggerNotifyUpdate(viewLayerName);
+        }
+        FrontEndUIUpdaterInterface[] fs = getFrontEndUIUpdaters();
+        for (FrontEndUIUpdaterInterface f : fs) {
+            f.triggerNotifyUpdate();
         }
     }
 

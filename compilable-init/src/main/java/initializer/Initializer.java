@@ -61,6 +61,7 @@ public class Initializer {
     public static final String ANSI_WHITE = "\u001B[37m";
     public static final String ANSI_BOLD = "\u001B[1m";
 
+    private final Map<String, List<String>> frontEndUIUpdaterMap = new HashMap<String, List<String>>();
     private final Map<String, String> propertyMap = new HashMap<String, String>();
     private final String temporaryCompilationDir;
     private final String applicationSourceDirectory;
@@ -172,6 +173,17 @@ public class Initializer {
                 if (nodeAddr.matches(".*(webapp\\/bean|logic\\/ejb\\/callback|logic\\/ejb\\/facade|logic\\/ejb\\/).*") && !nodeAddr.matches(".*thorntail.*")) {
                     s = s.replace("__EJB_LOOKUP_DIR__", ejbLookupDir);
                 }
+                if (nodeAddr.matches(".*webapp\\/bean.*") && s.matches(".*\\/\\/[\t ]+UI_UPDATER_FOR[\t ]+.*")) {
+                    String webAppTarget = s.replaceAll("(.*\\/\\/[\t ]+UI_UPDATER_FOR[\t ]+)([a-zA-Z\\_]+.*)", "$2").trim();
+                    if (!frontEndUIUpdaterMap.containsKey(webAppTarget)) {
+                        frontEndUIUpdaterMap.put(webAppTarget, new ArrayList<String>());
+                    }
+                    String updaterClassName = nodeAddr.replaceAll(".*\\/fdaf", "fdaf").replaceAll("\\/", ".").replaceAll(".java$", "");
+                    List<String> fl = frontEndUIUpdaterMap.get(webAppTarget);
+                    if (!fl.contains(updaterClassName)) {
+                        frontEndUIUpdaterMap.get(webAppTarget).add(updaterClassName);
+                    }
+                }
                 if (nodeAddr.matches(".*with\\-eclipselink.*")) {
                     s = s.replaceAll("__JPA_PROVIDER_NAME__", "EclipseLink").replaceAll("__JPA_PROVIDER__", "eclipselink");
                 }
@@ -194,6 +206,26 @@ public class Initializer {
             }
             r.close();
         } catch (Exception e) {
+        }
+        if (nodeAddr.matches(".*webapp\\/bean\\/.*WebAppBean\\.java")) {
+            String webAppClassName = nodeAddr.replaceAll("(.*\\/|.java$)", "");
+            if (!frontEndUIUpdaterMap.isEmpty() && frontEndUIUpdaterMap.containsKey(webAppClassName)) {
+                String fia = "";
+                String fiv = "";
+                int fivc = 0;
+                for (String s : frontEndUIUpdaterMap.get(webAppClassName)) {
+                    fiv += "    @Inject\n    " + s + " frontEndUIUpdater" + fivc + ";\n";
+                    fia += "frontEndUIUpdater" + fivc + ",\n";
+                    fivc++;
+                }
+                source = source.replace("// UI_UPDATER_INJECT_HERE", fiv.trim());
+                String fgm = "@Override\n    protected fdaf.webapp.base.FrontEndUIUpdaterInterface[] getFrontEndUIUpdaters() {\n"
+                    +   "        return new fdaf.webapp.base.FrontEndUIUpdaterInterface[] {\n"
+                    +   "            " + fia.trim().replaceAll(",$", "") + "\n"
+                    +   "        };\n"
+                    +   "    }\n";
+                source = source.replace("// UI_UPDATER_ARRAY_GET_METHOD_HERE", fgm);
+            }
         }
         if (!originalSource.equals(source)) {
             try {
