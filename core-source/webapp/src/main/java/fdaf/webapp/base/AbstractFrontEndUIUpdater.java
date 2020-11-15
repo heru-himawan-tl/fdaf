@@ -34,7 +34,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.List;
 import java.util.UUID;
 
-public abstract class AbstractFrontEndUIUpdater {
+public abstract class AbstractFrontEndUIUpdater implements FrontEndUIUpdaterInterface {
 
     protected final List<WebSocketInterface> webSockets = new ArrayList<WebSocketInterface>();
     
