@@ -40,7 +40,7 @@ public abstract class AbstractFrontEndUIUpdater implements FrontEndUIUpdaterInte
     
     protected ExecutorService executorService;
     
-    protected String serviceUUID = UUID.randomUUID().toString();
+    protected final String serviceUUID = UUID.randomUUID().toString();
     
     public void triggerNotifyUpdate() {
         if (webSockets.isEmpty()) {
