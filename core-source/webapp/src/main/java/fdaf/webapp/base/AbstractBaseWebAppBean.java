@@ -154,7 +154,7 @@ public abstract class AbstractBaseWebAppBean extends AbstractWebAppCommon {
     }
     
     protected void indicateServiceError(Throwable t) {
-        LOGGER.log(Level.SEVERE, "Web application error", t);
+        LOGGER.log(Level.SEVERE, "Service error", t);
         addMessage(SV_ERROR, "serviceErrorWarning");
         serviceIsError = true;
     }

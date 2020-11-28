@@ -86,6 +86,9 @@ public class Modeler {
         boolean columnAnnotationClassImported = false;
         boolean notFoundAnnotationClassImported = false;
         boolean withoutDataProperty = false;
+        boolean withoutToString = false;
+        boolean useSimpleToString = false;
+        boolean withoutEquals = false;
         String toStringInfo = "";
         try {
             BufferedReader r = Files.newBufferedReader(Paths.get(templateFile));
@@ -98,6 +101,15 @@ public class Modeler {
                 }
                 if (l.trim().matches("^// WITHOUT_DATA_PROPERTY$")) {
                     withoutDataProperty = true;
+                }
+                if (l.trim().matches("^// WITHOUT_EQUALS")) {
+                    withoutEquals = true;
+                }
+                if (l.trim().matches("^// USE_SIMPLE_TO_STRING$")) {
+                    useSimpleToString = true;
+                }
+                if (l.trim().matches("^// WITHOUT_TO_STRING$")) {
+                    withoutToString = true;
                 }
             }
             r.close();
@@ -125,7 +137,7 @@ public class Modeler {
             if (field.toString().matches(".*static final.*")) {
                 continue;
             }
-            String fieldTypeName = field.getGenericType().getTypeName().replaceAll(".*\\.", "");
+            String fieldTypeName = field.getGenericType().getTypeName().replaceAll("[a-z]+\\.", "");
             String fieldName = field.getName();
             if (field.isAnnotationPresent(NotFound.class)) {
                 notFoundAnnotationClassImported = true;
@@ -153,6 +165,7 @@ public class Modeler {
                 String rbv = toJavaClassNaming(fieldName.replaceAll("([a-z])([A-Z]|[0-9])", "$1 $2")
                     .toLowerCase())
                     .replace("Id", "ID").replace(" id", " ID").replace("Dob ", "D.O.B ")
+                    .replace("IDle", "Idle").replace("Ipv 4", "IPv4 ")
                     .replace("Email", "E-mail").replace(" email", " e-mail")
                     .replace("uuid", "UUID").replace("Ssn", "SSN").replace("ssn", "SSN");
                 if (!uiLabelFromEntity.containsKey(rbk)) {
@@ -172,23 +185,27 @@ public class Modeler {
                     }
                 }
             } else {
-                Class efc = Class.forName(field.getGenericType().getTypeName(), false, getClass().getClassLoader());
-                for (Field efcf : efc.getDeclaredFields()) {
-                    if (efcf.toString().matches(".*static final.*") || efcf.isAnnotationPresent(ManyToOne.class)
-                            || efcf.isAnnotationPresent(OneToMany.class)
-                            || efcf.isAnnotationPresent(OneToOne.class)
-                            || efcf.isAnnotationPresent(ManyToMany.class)) {
-                        continue;
+                try {
+                    Class efc = Class.forName(field.getGenericType().getTypeName(), false, getClass().getClassLoader());
+                    for (Field efcf : efc.getDeclaredFields()) {
+                        if (efcf.toString().matches(".*static final.*") || efcf.isAnnotationPresent(ManyToOne.class)
+                                || efcf.isAnnotationPresent(OneToMany.class)
+                                || efcf.isAnnotationPresent(OneToOne.class)
+                                || efcf.isAnnotationPresent(ManyToMany.class)) {
+                            continue;
+                        }
+                        String fn = efc.getName().replaceAll(".*\\.", "") + toJavaClassNaming(efcf.getName());
+                        String rbk = toJavaFieldNaming(fn);
+                        String rbv = toJavaClassNaming(fn.replaceAll("([a-z])([A-Z]|[0-9])", "$1 $2")
+                            .toLowerCase()).replace("Id", "ID").replace(" id", " ID").replace("dob", "D.O.B ")
+                            .replace("IDle", "Idle").replace("Ipv 4", "IPv4 ")
+                            .replace("uuid", "UUID").replace("Ssn", "SSN").replace("ssn", "SSN")
+                            .replaceAll("[ ]+", " ");
+                        if (!uiLabelFromEntity.containsKey(rbk)) {
+                            uiLabelFromEntity.put(rbk, rbv);
+                        }
                     }
-                    String fn = efc.getName().replaceAll(".*\\.", "") + toJavaClassNaming(efcf.getName());
-                    String rbk = toJavaFieldNaming(fn);
-                    String rbv = toJavaClassNaming(fn.replaceAll("([a-z])([A-Z]|[0-9])", "$1 $2")
-                        .toLowerCase()).replace("Id", "ID").replace(" id", " ID").replace("dob", "D.O.B ")
-                        .replace("uuid", "UUID").replace("Ssn", "SSN").replace("ssn", "SSN")
-                        .replaceAll("[ ]+", " ");
-                    if (!uiLabelFromEntity.containsKey(rbk)) {
-                        uiLabelFromEntity.put(rbk, rbv);
-                    }
+                } catch (Exception e) {
                 }
             }
             entityBody += ""
@@ -307,25 +324,34 @@ public class Modeler {
             + "        hash += (id != null) ? id.hashCode() : 0;\n"
             + "        return hash;\n"
             + "    }\n\n"
-            + "    @Override\n"
+            + ((withoutEquals)
+            ? ""
+            : "    @Override\n"
             + "    public boolean equals(Object object) {\n"
             + "        if (!(object instanceof %s)) {\n"
             + "            return false;\n"
             + "        }\n"
             + "        %s other = (%s) object;\n"
-            + "        if (((this.id == null) && (other.id != null))\n"
-            + "                || ((this.id != null) && !this.id.equals(other.id))) {\n"
+            + "        if (((this.getId() == null) && (other.getId() != null))\n"
+            + "                || ((this.getId() != null) && !this.getId().equals(other.getId()))) {\n"
             + "            return false;\n"
             + "        }\n"
             + "        return true;\n"
-            + "    }\n\n"
-            + "    @Override\n"
+            + "    }\n\n")
+            + ((withoutToString)
+            ? ""
+            : ((useSimpleToString)
+            ? "    @Override\n"
+            + "    public String toString() {\n"
+            + "        return getId().toString();\n"
+            + "    }\n"
+            : "    @Override\n"
             + "    public String toString() {\n"
             + "        return getClass().getName()\n"
             + "            + \"[id=\" + id + \"]\\n\"\n"
             + ((!toStringInfo.trim().isEmpty()) ? "            " + toStringInfo.trim() + "\n" : "")
             + "            + \"[uuid=\" + uuid + \"]\";\n"
-            + "    }\n", modelName, modelName, modelName);
+            + "    }\n")), modelName, modelName, modelName);
         String currentModel = reformatPath(temporaryDirectory + "/modeling-output/generated/" + ((withEclipseLink) ? "with-eclipselink" : "with-hibernate") + "/logic/src/main/java/fdaf/logic/entity/" + modelName + ".java");
         String modelSourceDestContents = "";
         try {
@@ -333,7 +359,9 @@ public class Modeler {
             String l = null;
             int cmc = 0;
             while ((l = r.readLine()) != null) {
-                if (l.trim().matches("^// WITHOUT_DATA_PROPERTY$") || l.trim().matches("^// NO_WEB_APP_BEAN_GEN$")) {
+                if (l.trim().matches("^// WITHOUT_DATA_PROPERTY$") || l.trim().matches("^// NO_WEB_APP_BEAN_GEN$")
+                    || l.trim().matches("^// WITHOUT_TO_STRING$") || l.trim().matches("^// WITHOUT_EQUALS$")
+                    || l.trim().matches("^// USE_SIMPLE_TO_STRING$")) {
                     continue;
                 }
                 if (l.trim().matches("^import java.io.Serializable;$")) {
@@ -394,6 +422,7 @@ public class Modeler {
         }
         uiLabelFromEntity.put("id", "ID");
         modelSourceContents = modelSourceContents.trim();
+
         if (modelSourceContents.isEmpty()) {
             return;
         }
@@ -816,24 +845,28 @@ public class Modeler {
                 try {
                     buildModelSource(modelName, "core-primitive-entity-model");
                 } catch (Exception e) {
+                    e.printStackTrace(System.out);
                 }
             }
             for (String modelName : defaultModelNames) {
                 try {
                     buildWebAppBeanSource(modelName);
                 } catch (Exception e) {
+                    e.printStackTrace(System.out);
                 }
             }
             for (String modelName : defaultModelNames) {
                 try {
                     buildRepositorySource(modelName);
                 } catch (Exception e) {
+                    e.printStackTrace(System.out);
                 }
             }
             for (String modelName : defaultModelNames) {
                 try {
                     buildFacadeSource(modelName, "core-source", "core-primitive-entity-model");
                 } catch (Exception e) {
+                    e.printStackTrace(System.out);
                 }
             }
         }
@@ -842,24 +875,28 @@ public class Modeler {
                 try {
                     buildModelSource(modelName, "application-primitive-entity-model");
                 } catch (Exception e) {
+                    e.printStackTrace(System.out);
                 }
             }
             for (String modelName : applicationModelNames) {
                 try {
                     buildWebAppBeanSource(modelName);
                 } catch (Exception e) {
+                    e.printStackTrace(System.out);
                 }
             }
             for (String modelName : applicationModelNames) {
                 try {
                     buildRepositorySource(modelName);
                 } catch (Exception e) {
+                    e.printStackTrace(System.out);
                 }
             }
             for (String modelName : applicationModelNames) {
                 try {
                     buildFacadeSource(modelName, "custom-core-source", "application-primitive-entity-model");
                 } catch (Exception e) {
+                    e.printStackTrace(System.out);
                 }
             }
         }
