@@ -476,7 +476,6 @@ public class Modeler {
                 + "    private String createdDate;\n"
                 + "    @Column(name = \"modification_date\", nullable = true)\n"
                 + "    private String modificationDate;\n"
-                + "    @Enumerated(EnumType.STRING)\n"
                 + ((!withEclipseLink) ? "    @NotFound(action = NotFoundAction.IGNORE)\n" : "")
                 + "    @OneToOne\n"
                 + "    @JoinColumn(name = \"author_id\", insertable = false, updatable = false)\n"
