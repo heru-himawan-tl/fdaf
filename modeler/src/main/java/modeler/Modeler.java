@@ -49,6 +49,8 @@ public class Modeler {
 
     private LinkedHashMap<String, String> uiLabelFromEntity = new LinkedHashMap<String, String>();
     private LinkedList<String> modelAsEntityOnly = new LinkedList<String>();
+    private LinkedList<String> applicationModelNames = new LinkedList<String>();
+    private LinkedList<String> defaultModelNames = new LinkedList<String>();
     private String entityResourceBundleMessage = "";
     private boolean withEclipseLink;
     private String temporaryDirectory;
@@ -208,9 +210,21 @@ public class Modeler {
                 } catch (Exception e) {
                 }
             }
+            String additionalSetterProc = "";
+            if (fieldTypeName.matches("^(List|Set|ArrayList)([\t ]+)?\\<.*")) {
+                String relationClass = fieldTypeName.replaceAll("(.*\\<)(.*)(\\>$)", "$2");
+                if ((!applicationModelNames.isEmpty() && applicationModelNames.contains(relationClass))
+                    || (!defaultModelNames.isEmpty() && defaultModelNames.contains(relationClass))) {
+                    additionalSetterProc = ""
+                        + "        for (" + relationClass + " " + fieldName + "Item : " + fieldName + ") {\n" 
+                        + "            " + fieldName + "Item.set" + modelName + "(this);\n"
+                        + "        }\n";
+                }
+            }
             entityBody += ""
                 +   "    public void " + setterName + "(" + fieldTypeName + " " + fieldName + ") {\n"
                 +   "        this." + fieldName + " = " + fieldName + ";\n"
+                +   additionalSetterProc
                 +   "    }\n\n"
                 +   "    public " + fieldTypeName + " " + getterName + "() {\n"
                 +   "        return " + fieldName + ";\n"
@@ -774,8 +788,6 @@ public class Modeler {
 
     public void proceed() {
         LinkedList<String> sqlScriptFileNames = new LinkedList<String>();
-        LinkedList<String> applicationModelNames = new LinkedList<String>();
-        LinkedList<String> defaultModelNames = new LinkedList<String>();
         String persistenceXmlLoadScriptParamDef = "            <property name=\"javax.persistence.schema-generation.create-script-source\" value=\"META-INF/sql/create-tables.sql\" />\n";;
         try {
             DirectoryStream<Path> directoryStream = Files.newDirectoryStream(Paths.get(reformatPath(templatesDirectory + "/logic-resource-template/src/main/resources/META-INF/sql")));
@@ -839,7 +851,7 @@ public class Modeler {
             } catch (Exception e) {
             }
         }
-        if (!defaultModelNames.isEmpty()) {
+        if (!defaultModelNames.isEmpty()) {            
             for (String modelName : defaultModelNames) {
                 try {
                     buildModelSource(modelName, "core-primitive-entity-model");
