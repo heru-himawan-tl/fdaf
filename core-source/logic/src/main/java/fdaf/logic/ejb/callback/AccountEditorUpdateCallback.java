@@ -42,7 +42,9 @@ import javax.ejb.Stateful;
 
 @Remote({UpdateCallbackInterface.class})
 @Stateful
-public class AccountEditorUpdateCallback extends AbstractUpdateCallback implements UpdateCallbackInterface<UserRepository, User>, Serializable {
+public class AccountEditorUpdateCallback extends AbstractUpdateCallback
+        implements UpdateCallbackInterface<UserRepository, User>, Serializable {
+        
     private static final long serialVersionUID = 1L;
     private UserRepository repository;
     private User entity;
@@ -58,6 +60,10 @@ public class AccountEditorUpdateCallback extends AbstractUpdateCallback implemen
 
     public void setEntity(User entity) {
         this.entity = entity;
+    }
+    
+    public User getEntity() {
+        return entity;
     }
 
     @Override

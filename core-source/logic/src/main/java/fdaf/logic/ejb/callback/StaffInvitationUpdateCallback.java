@@ -65,6 +65,10 @@ public class StaffInvitationUpdateCallback extends AbstractUpdateCallback
     public void setEntity(StaffInvitation entity) {
         this.entity = entity;
     }
+    
+    public StaffInvitation getEntity() {
+        return entity;
+    }
 
     public boolean preCreateCheck() {
         Specification<User> userSpec = userRepository.presetSpecification();

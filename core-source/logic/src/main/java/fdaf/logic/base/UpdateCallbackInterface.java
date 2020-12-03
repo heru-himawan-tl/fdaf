@@ -31,6 +31,7 @@ package fdaf.logic.base;
 public interface UpdateCallbackInterface<R extends AbstractRepository<E>, E> {
     public void setRepository(R repository);
     public void setEntity(E entity);
+    public E getEntity();
     public void onPrepareUpdateTask();
     public void onSaveCreateTask();
     public void onSaveUpdateTask();

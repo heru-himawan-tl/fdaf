@@ -58,6 +58,10 @@ public class RoleUpdateCallback extends AbstractUpdateCallback
     public void setEntity(Role entity) {
         this.entity = entity;
     }
+    
+    public Role getEntity() {
+        return entity;
+    }
 
     public boolean preCreateCheck() {
         Specification<Role> spec = repository.presetSpecification();

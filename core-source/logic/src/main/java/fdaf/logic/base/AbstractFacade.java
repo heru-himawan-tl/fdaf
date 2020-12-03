@@ -81,9 +81,14 @@ public abstract class AbstractFacade<R extends AbstractRepository<E>, E extends 
         updateCallback = new UpdateCallbackInterface<R, E>() {
             private String customMessage;
             private String message;
+            private E entity;
             public void setRepository(R repository) {
             }
             public void setEntity(E entity) {
+                this.entity = entity;
+            }
+            public E getEntity() {
+                return entity;
             }
             public void onPrepareUpdateTask() {
                 // NO-OP
@@ -253,11 +258,14 @@ public abstract class AbstractFacade<R extends AbstractRepository<E>, E extends 
         entity = getRepository().find(primaryKey);
         updateCallback.setEntity(entity);
         updateCallback.onPrepareUpdateTask();
+        entity = updateCallback.getEntity();
     }
 
     public boolean preUpdateCheck() {
         updateCallback.setEntity(entity);
-        return updateCallback.preUpdateCheck();
+        boolean ret = updateCallback.preUpdateCheck();
+        entity = updateCallback.getEntity();
+        return ret;
     }
 
     public void update() {
@@ -265,11 +273,13 @@ public abstract class AbstractFacade<R extends AbstractRepository<E>, E extends 
         getRepository().update(entity);
         updateCallback.setEntity(entity);
         updateCallback.onSaveUpdateTask();
+        entity = updateCallback.getEntity();
     }
 
     public void postUpdateTask() {
         updateCallback.setEntity(entity);
         updateCallback.postUpdateTask();
+        entity = updateCallback.getEntity();
     }
 
     public void takeover() {

@@ -62,6 +62,10 @@ public class UserUpdateCallback extends AbstractUpdateCallback
         this.entity = entity;
     }
     
+    public User getEntity() {
+        return entity;
+    }
+    
     public void onPrepareUpdateTask() {
         passwordBackup = entity.getPassword();
     }

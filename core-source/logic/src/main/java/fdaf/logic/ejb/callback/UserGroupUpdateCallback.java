@@ -58,6 +58,10 @@ public class UserGroupUpdateCallback extends AbstractUpdateCallback
     public void setEntity(UserGroup entity) {
         this.entity = entity;
     }
+    
+    public UserGroup getEntity() {
+        return entity;
+    }
 
     public boolean preCreateCheck() {
         Specification<UserGroup> spec = repository.presetSpecification();

@@ -58,6 +58,10 @@ public class EmployeeUpdateCallback extends AbstractUpdateCallback
     public void setEntity(Employee entity) {
         this.entity = entity;
     }
+    
+    public Employee getEntity() {
+        return entity;
+    }
 
     public boolean preCreateCheck() {
         Specification<Employee> spec1 = repository.presetSpecification();

@@ -58,6 +58,10 @@ public class DepartmentUpdateCallback extends AbstractUpdateCallback
     public void setEntity(Department entity) {
         this.entity = entity;
     }
+    
+    public Department getEntity() {
+        return entity;
+    }
 
     public boolean preCreateCheck() {
         Specification<Department> spec = repository.presetSpecification();
