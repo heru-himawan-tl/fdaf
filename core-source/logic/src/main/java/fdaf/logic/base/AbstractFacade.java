@@ -114,6 +114,9 @@ public abstract class AbstractFacade<R extends AbstractRepository<E>, E extends 
             public void postUpdateTask() {
                 // NO-OP
             }
+            public void onReloadEntityTask() {
+                // NO-OP
+            }
             public void setMessage(String message) {
                 this.message = message;
             }
@@ -291,6 +294,9 @@ public abstract class AbstractFacade<R extends AbstractRepository<E>, E extends 
         Specification<E> spec = getRepository().presetSpecification();
         spec.setPredicate(spec.getBuilder().equal(spec.getRoot().get("id"), primaryKey));
         entity = getRepository().find(spec);
+        updateCallback.setEntity(entity);
+        updateCallback.onReloadEntityTask();
+        entity = updateCallback.getEntity();
     }
 
     public void remove(Object primaryKey) {
