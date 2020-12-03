@@ -145,6 +145,14 @@ textarea:read-only
     padding-right: 28px;
 }
 
+select[multiple]
+{
+    background: none !important;
+    max-height: 512px !important;
+    min-height: 64px !important;
+    padding-right: 6px;
+}
+
 .checkbox
 {
     border: 0px;
