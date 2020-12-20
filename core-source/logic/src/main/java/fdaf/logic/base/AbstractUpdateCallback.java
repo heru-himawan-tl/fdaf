@@ -76,6 +76,10 @@ public abstract class AbstractUpdateCallback {
         // NO-OP
     }
     
+    public void onPreRemoveTask(Object primaryKey) {
+        // NO-OP
+    }
+    
     public void setCustomMessage(String customMessage) {
         if (this.customMessage != null) {
             this.customMessage += "-" + customMessage;

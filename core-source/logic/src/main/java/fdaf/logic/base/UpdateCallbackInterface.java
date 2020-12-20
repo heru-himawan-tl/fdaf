@@ -40,6 +40,7 @@ public interface UpdateCallbackInterface<R extends AbstractRepository<E>, E> {
     public void rollbackCreateTask();
     public boolean preUpdateCheck();
     public void postUpdateTask();
+    public void onPreRemoveTask(Object primaryKey);
     public void onReloadEntityTask();
     public void setCustomMessage(String customMessage);
     public String getCustomMessage();

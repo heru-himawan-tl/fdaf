@@ -102,6 +102,9 @@ public abstract class AbstractFacade<R extends AbstractRepository<E>, E extends 
             public boolean preCreateCheck() {
                 return true;
             }
+            public void onPreRemoveTask(Object primaryKey) {
+                // NO-OP
+            }
             public void rollbackCreateTask() {
                 // NO-OP
             }
@@ -300,6 +303,7 @@ public abstract class AbstractFacade<R extends AbstractRepository<E>, E extends 
     }
 
     public void remove(Object primaryKey) {
+        updateCallback.onPreRemoveTask(primaryKey);
         E entity = getRepository().find(primaryKey);
         if (entity != null) {
             getRepository().remove(entity);
