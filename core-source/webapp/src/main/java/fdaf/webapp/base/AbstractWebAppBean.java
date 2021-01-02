@@ -313,8 +313,9 @@ public abstract class AbstractWebAppBean extends AbstractBaseWebAppBean {
                 presetEntity();
                 feedBackEntity();
                 getFacade().postCreateTask();
-                addMessage(SV_INFO, "createRecordSuccess", String.valueOf(getFacade().getNewRecordId()));
-                lastKnownNewRecordId = String.valueOf(getFacade().getNewRecordId());
+                Object recordId = getFacade().getNewRecordId();
+                lastKnownNewRecordId = String.valueOf(recordId);
+                addMessage(SV_INFO, "createRecordSuccess", lastKnownNewRecordId);
                 infoMessage = "createRecordSuccess";
                 if (saveAndClose) {
                     opMode = WebAppOpMode.LISTING;
@@ -326,8 +327,9 @@ public abstract class AbstractWebAppBean extends AbstractBaseWebAppBean {
                 }
                 getFacade().reloadNewEntity();
                 presetEntity();
-                opMode = WebAppOpMode.UPDATE;
                 onCreateFinishTask();
+                disposeEntity();
+                prepareUpdate(recordId);
             } else {
                 addPreUpdateCheckWarnCustomMessage();
                 addPreUpdateCheckWarnMessage();

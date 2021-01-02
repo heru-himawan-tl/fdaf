@@ -203,6 +203,9 @@ public abstract class AbstractFacade<R extends AbstractRepository<E>, E extends 
         Specification<E> spec = getRepository().presetSpecification();
         spec.setPredicate(spec.getBuilder().equal(spec.getRoot().get("uuid"), uuid));
         entity = getRepository().find(spec);
+        updateCallback.setEntity(entity);
+        updateCallback.onReloadEntityTask();
+        entity = updateCallback.getEntity();
     }
 
     public abstract Object getNewRecordId();
@@ -295,7 +298,12 @@ public abstract class AbstractFacade<R extends AbstractRepository<E>, E extends 
 
     public void reloadEntity() {
         Specification<E> spec = getRepository().presetSpecification();
-        spec.setPredicate(spec.getBuilder().equal(spec.getRoot().get("id"), primaryKey));
+        if (primaryKey != null) {
+            spec.setPredicate(spec.getBuilder().equal(spec.getRoot().get("id"), primaryKey));
+        }
+        if (primaryKey == null && uuid != null) {
+            spec.setPredicate(spec.getBuilder().equal(spec.getRoot().get("uuid"), uuid));
+        }
         entity = getRepository().find(spec);
         updateCallback.setEntity(entity);
         updateCallback.onReloadEntityTask();
