@@ -42,7 +42,7 @@ problem, the web-tier will keep interact to the user by informing current
 states to let the user take reasonable decision in working with the
 web-application in current situation.
 
-## FDAF Completions
+## FDAF Gears
 
 FDAF provides ready-to-implement API and JSF components to reduce the
 complexity in creating a Java EE web application. The API collections include
