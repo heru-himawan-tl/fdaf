@@ -7,7 +7,7 @@ implementing the standard Java EE. It favors both convention and
 configuration, makes implementation and configuration to be more simple,
 and lets the programmer write less of codes.
 
-## Engineering View: From The CRUD Principle Into The Modern Web-Application Design
+## Engineering Views Behind FDAF Invention
 
 A Java web-application to handle dynamic contents is basically a _database
 access application_ relies on CRUD (Create - Read - Update - Delete) operations.
@@ -42,7 +42,7 @@ problem, the web-tier will keep interact to the user by informing current
 states to let the user take reasonable decision in working with the
 web-application in current situation.
 
-## Reducing Complexity In Creating Java EE Web Application
+## FDAF Completions
 
 FDAF provides ready-to-implement API and JSF components to reduce the
 complexity in creating a Java EE web application. The API collections include
