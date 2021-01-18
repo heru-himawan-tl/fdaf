@@ -82,7 +82,7 @@ modules source codes:
   - Employee [1]
 - Mailer Configuration Board
 
-Modules marked as [1] builtin with listing, editor (to add new record & alter),
+Modules marked as [1] are builtin with listing, editor (to add new record & alter),
 view, remove, mass remove, and check orphan data)
 
 Besides the above listed builtin sources, you will find ready-to-use
