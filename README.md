@@ -80,6 +80,7 @@ modules source codes:
   - User Group [1] 
   - User Group Member [1] 
   - Employee [1]
+- Common Configuration Board
 - Mailer Configuration Board
 
 Modules marked as [1] are builtin with the following functions:
