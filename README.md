@@ -84,10 +84,11 @@ modules source codes:
 - Mailer Configuration Board
 
 Modules marked as [1] are builtin with the following functions:
-- listing
+- listing (with search tool, ordering tool, pagination)
 - editor (to add new record & alter),
 - single record viewer
 - single record removal
+- search tool
 - mass removal
 - orphan data check
 
