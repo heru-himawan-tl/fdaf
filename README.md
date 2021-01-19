@@ -9,8 +9,8 @@ and lets the programmer write less of codes.
 
 ## Engineering Views Behind FDAF Invention
 
-A Java web-application to handle dynamic contents is basically a _database
-access application_ relies on CRUD (Create - Read - Update - Delete) operations.
+A Java web-application to handle dynamic contents basically a _database
+access application_ relies on CRUD operations (Create - Read - Update - Delete).
 It applies the _Model-View-Control_ or _MVC_ architecture, in which the
 _Model_ represents the business or database code, the _View_ represents the
 page design code, and the _Controller_ represents the navigational code.
@@ -44,22 +44,22 @@ web-application in current situation.
 
 ## FDAF Gears
 
-FDAF provides ready-to-implement API and JSF components to reduce the
-complexity in creating a Java EE web application. The API collections include
-the abstractions and interfaces to apply modern & advanced web-application's
-_View_ layer, _Controller_ and complex _Model_ of business logic application.
+FDAF provides the gears to simplify the build of Java EE web application and
+business logic application:
 
-FDAF also includes the compilation-tools to reduce the compilation
-complexities. For example, you no need to write the complicated JPA
-entity-classes with their complicated bunch of "setter" and "getter"
-methods, but you need only to write the _primitive model of JPA
-entity-classes_ and let FDAF do the rest things to do. FDAF organizes your
-web-application & business-logic-application source-codes
-to be a  _ready-to-distribute-and-compilable-source-code_. And, if you want,
-FDAF will help you to compile your web-application &
-business-logic-application into _ready-to-deploy-application_ in the form
-of _WAR (Web Application Archive)_, _EAR (Enterprise Application Archive)_,
-or a standalone JAR (if apply FDAF as a Thorntail application).
+- FDAF Web Application API's - abstraction to base and simplify web application
+  backing beans, web application controllers, and web socket application.
+- FDAF JSF Components - reusable JSF components to simplify creation of view
+  layers such as data record list, data record viewer, data record editor,
+  configuration editor board, and any web page models.
+- FDAF Business Logic API's - abstraction to base business logic application
+  or business tear that can be easy to integrate with the web tear. 
+- FDAF Compilation Tools:
+  - Initializer - tool to initialize and organize the compilable source
+  - Modeler - tool to model the JPA entity class based the primitive entity
+    class
+  - Build Invoker - tool to invoke build processes to finalize the compilable
+    source into ready-to-deploy application
 
 ## Builtin Ready-To-Use-Application-Modules Source Codes
 
