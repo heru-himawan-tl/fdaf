@@ -121,7 +121,7 @@ initial release.
 
 ## License
 
-Copyright (c) [Heru Himawan Tejo Laksono](https://www.linkedin.com/in/heru-himawan-tejo-laksono-65485716/).
+Copyright (c) [Heru Himawan Tejo Laksono](https://github.com/heru-himawan-tl).
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
