@@ -42,7 +42,9 @@ problem, the web-tier will keep interact to the user by informing current
 states to let the user take reasonable decision in working with the
 web-application in current situation.
 
-## FDAF Gears
+## FDAF Features
+
+### FDAF Gears
 
 FDAF provides the gears to simplify the build of Java EE web application and
 business logic application:
@@ -61,7 +63,7 @@ business logic application:
   - Build Invoker - tool to invoke build processes to finalize the compilable
     source into ready-to-deploy application
 
-## Builtin Ready-To-Use-Application-Modules Source Codes
+### Builtin Ready-To-Use-Application-Modules Source Codes
 
 The distribution of FDAF includes the following ready-to-use web application
 modules source codes:
@@ -95,7 +97,7 @@ Modules marked as [1] are builtin with the following functions:
 Besides the above listed builtin sources, you will find ready-to-use
 business-logic-application-modules source codes within FDAF.
 
-## Supported Application Server Platform
+### Supported Application Server Platform
 
 FDAF supports the following application server platforms for deployment:
 
@@ -107,7 +109,7 @@ FDAF supports the following application server platforms for deployment:
 Notice: Thorntail development was discontinued, the support for Thorntail
 probably will be unexpectedly defective in the future.
 
-## Supported JPA Providers
+### Supported JPA Providers
 
 FDAF for this initial release supports only the following JPA providers:
 
