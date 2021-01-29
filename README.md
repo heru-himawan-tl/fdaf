@@ -68,31 +68,31 @@ business logic application:
 The distribution of FDAF includes the following ready-to-use web application
 modules source codes:
 
-- Administrator Dashboard
-- User Session Management Boards:
-  - Login
-  - User Account Registration
-  - Password Reset
-- Account Management Boards:
-  - Add Administrator
-  - Staff Invitation
-  - User [1]
-  - Department [1]
-  - Role [1]
-  - User Group [1] 
-  - User Group Member [1] 
-  - Employee [1]
-- Common Configuration Board
-- Mailer Configuration Board
+- Administrator Dashboard  
+- User Session Management Boards:  
+  - Login  
+  - User Account Registration  
+  - Password Reset  
+- Account Management Boards:  
+  - Add Administrator  
+  - Staff Invitation  
+  - User [1]  
+  - Department [1]  
+  - Role [1]  
+  - User Group [1]  
+  - User Group Member [1]  
+  - Employee [1]  
+- Common Configuration Board  
+- Mailer Configuration Board  
 
-Modules marked as [1] are builtin with the following functions:
-- listing (with search tool, ordering tool, pagination)
-- editor (to add new record & alter),
-- single record viewer
-- single record removal
-- search tool
-- mass removal
-- orphan data check
+Modules marked as [1] are builtin with the following functions:  
+- listing (with search tool, ordering tool, pagination)  
+- editor (to add new record & alter)  
+- single record viewer  
+- single record removal  
+- search tool  
+- mass removal  
+- orphan data check  
 
 Besides the above listed builtin sources, you will find ready-to-use
 business-logic-application-modules source codes within FDAF.
@@ -101,10 +101,10 @@ business-logic-application-modules source codes within FDAF.
 
 FDAF supports the following application server platforms for deployment:
 
-- [WildFly](https://www.wildfly.org/)
-- [GlashFish](https://javaee.github.io/glassfish/)
-- [Payara](https://www.payara.fish/)
-- [Thorntail](https://thorntail.io/)
+- [WildFly](https://www.wildfly.org/)  
+- [GlashFish](https://javaee.github.io/glassfish/)  
+- [Payara](https://www.payara.fish/)  
+- [Thorntail](https://thorntail.io/)  
 
 Notice: Thorntail development was discontinued, the support for Thorntail
 probably will be unexpectedly defective in the future.
@@ -113,8 +113,14 @@ probably will be unexpectedly defective in the future.
 
 FDAF for this initial release supports only the following JPA providers:
 
-- [Hibernate](https://hibernate.org/orm/)
-- [EclipseLink](https://www.eclipse.org/eclipselink/)
+- [Hibernate](https://hibernate.org/orm/)  
+- [EclipseLink](https://www.eclipse.org/eclipselink/)  
+
+## Source Code
+
+FDAF source code is available at GITHUB:
+
+[https://github.com/heru-himawan-tl/fdaf](https://github.com/heru-himawan-tl/fdaf)
 
 ## Documentation
 
