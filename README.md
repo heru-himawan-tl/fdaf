@@ -118,9 +118,7 @@ FDAF for this initial release supports only the following JPA providers:
 
 ## Source Code
 
-FDAF source code is available at GITHUB:
-
-[https://github.com/heru-himawan-tl/fdaf](https://github.com/heru-himawan-tl/fdaf)
+FDAF source code is available at GITHUB: [https://github.com/heru-himawan-tl/fdaf](https://github.com/heru-himawan-tl/fdaf)
 
 ## Documentation
 
