@@ -32,7 +32,7 @@ technical considerations in applying this kind of design pattern,
 for example:
 
 - Security matter: In order to achieve some security norms, the business
-layer has to reside in a more secure place that will not exposed directly to
+layer has to reside in a more secure place that will not be exposed directly to
 Internet.
 
 - Interactivity matter: A web-application must keep its function interactively
@@ -119,11 +119,6 @@ FDAF for this initial release supports only the following JPA providers:
 ## Source Code
 
 FDAF source code is available at GITHUB: [https://github.com/heru-himawan-tl/fdaf](https://github.com/heru-himawan-tl/fdaf)
-
-## Documentation
-
-Documentation (API, Manuals, & Getting Started) not available yet within this
-initial release.
 
 ## License
 
