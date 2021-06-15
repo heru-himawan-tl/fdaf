@@ -47,6 +47,13 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     <packaging>ejb</packaging>
 
     <name>${fdaf.applicationName} Business Logic Application</name>
+   
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+    </properties>
     
     <build>
         <directory>${java.io.tmpdir}${file.separator}${project.groupId}${file.separator}${project.parent.artifactId}${file.separator}${project.artifactId}</directory>
