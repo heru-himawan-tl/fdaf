@@ -59,7 +59,10 @@ public abstract class AbstractRepository<E> {
 
     @Transactional
     public void create(E entity) {
+        try {
         getEntityManager().persist(entity);
+        } catch (Exception e) {
+        }
     }
 
     @Transactional
