@@ -39,20 +39,21 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         <composite:attribute required="true" name="pageTitle" type="java.lang.String" />
     </composite:interface>
     <composite:implementation>
-        <h:panelGroup layout="block" styleClass="panel_menu_mobile_mode">
-            <h:panelGroup layout="block" styleClass="panel_menu_mobile_mode_inner">
-            </h:panelGroup>
-        </h:panelGroup>
-        <h:panelGroup layout="block" styleClass="panel_menu_wrapper">
-            <h:panelGroup layout="block" styleClass="panel_menu_container">
                 <!--
-                    This is custom left panel with default vertical program navigation.
+                    This is custom left panel with default vertical program navigation
+                    and panel menu for mobile-device view mode.
                     If you wants to design your own left panel, then you may create
                     one inside /custom-core-source/webapp/src/main/webapp/WEB-INF/resources/component/
                     directory.
                     This default design is intended to make the default FDAF administrator
                     dashboard to be "just working".
                 -->
+        <h:panelGroup layout="block" styleClass="panel_menu_mobile_mode">
+            <h:panelGroup layout="block" styleClass="panel_menu_mobile_mode_inner">
+            </h:panelGroup>
+        </h:panelGroup>
+        <h:panelGroup layout="block" styleClass="panel_menu_wrapper">
+            <h:panelGroup layout="block" styleClass="panel_menu_container">
                 <d:defaultVerticalProgramNavigation webAppBean="#{cc.attrs.webAppBean}"/>
                 <h:panelGroup layout="block" styleClass="panel_menu_bottom_gap" />
             </h:panelGroup>
