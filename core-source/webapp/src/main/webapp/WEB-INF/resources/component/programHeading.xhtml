@@ -50,15 +50,29 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                                     <h:outputText value="#{cc.attrs.pageTitle}" />
                                 </h:panelGroup>
                                 <h:panelGroup layout="block" styleClass="program_heading_mobile_mode_action_menu_cell">
-                                    <h:commandButton type="button" styleClass="common_button" value="#{label.buttonAction}" 
-                                        onclick="" />
+                                    <h:commandButton type="button" styleClass="common_button blue_button mobile_menu_button"
+                                        value="#{label.buttonAction}" 
+                                        onclick="var elx = document.getElementsByClassName('program_heading_mobile_action_tool_box')[0];
+                                            var el1 = document.getElementsByClassName('program_heading_button_box')[0];
+                                            var el2 = document.getElementsByClassName('list_control_top')[0];
+                                            if (el2 != null) {
+                                                elx.innerHTML = el1.innerHTML + el2.innerHTML;
+                                            } else {
+                                                elx.innerHTML = el1.innerHTML;
+                                            }
+                                            if (elx.style.display == 'none' || elx.style.display == '') {
+                                                elx.style='display:block';
+                                                this.value = 'X';
+                                            } else {
+                                                this.value = '#{label.buttonAction}';
+                                                elx.style='display:none';
+                                            };" />
                                 </h:panelGroup>
                             </h:panelGroup>
                         </h:panelGroup>
                     </h:panelGroup>
                     <h:panelGroup layout="block" styleClass="program_heading_mobile_action_tool_box_outer">
-                        <h:panelGroup layout="block" styleClass="program_heading_mobile_action_tool_box">
-                        </h:panelGroup>
+                        <h:panelGroup layout="block" styleClass="program_heading_mobile_action_tool_box" />
                     </h:panelGroup>
                     <h:panelGroup layout="block" styleClass="program_heading_button_box">
                         <h:panelGroup layout="block" styleClass="program_heading_button_box_flex" rendered="#{(cc.attrs.webAppBean.isLoggedOn eq true and cc.attrs.webAppBean.isBrokenUserSession eq false)}">

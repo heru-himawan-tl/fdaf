@@ -2193,6 +2193,11 @@ a:hover
         padding: 0px;
     }
     
+    .list_control_top
+    {
+        display: none;
+    }
+    
     .list_control_page_switch_button_box .grouped_button_left,
     .list_control_page_switch_button_box .grouped_button_inne,
     .list_control_page_switch_button_box .grouped_button_right,
@@ -2249,6 +2254,7 @@ a:hover
     .list_control_deeper_label
     {
         padding-bottom: 4px;
+        color: #ffffff !important;
     }
     
     .list_control_deeper_gap,
@@ -2257,10 +2263,33 @@ a:hover
         padding-bottom: 8px;
     }
     
+    .list_control_deeper_gap input,
     .list_control_deeper input,
     .list_control_deeper select
     {
         width: 100%;
+        box-sizing: border-box;
+        padding: 4px;
+        border: 1px solid #ffffff;
+        border-radius: 2px;
+        -webkit-appearance: none !important;
+        -moz-appearance: none !important;
+        -ms-appearance: none !important;
+        -o-appearance: none !important;
+        appearance: none !important;
+        background: #ffffff;
+        font-size: 14px;
+        color: #000000;
+    }
+    
+    .list_control_deeper select
+    {
+        background: url(../web-resources/ui-bg/selection-arrow.png);
+        background-color: #ffffff;
+        background-repeat: no-repeat;
+        background-position: center right;
+        background-size: 32px 32px;
+        padding-right: 28px;
     }
     
     .login_info_flexbox
@@ -2329,9 +2358,38 @@ a:hover
         vertical-align: middle;
     }
     
+    .program_heading_mobile_mode_title_cell
+    {
+        width: 100%;
+    }
+    
+    .program_heading_title
+    {
+        padding: 0px;
+    }
+    
     .program_heading_mobile_action_tool_box_outer
     {
         display: block;   
+    }
+    
+    .program_heading_button_box
+    {
+        display: none;
+    }
+    
+    .program_heading_container
+    {
+        border-top: 1px solid #ffffff;
+        padding-top: 8px;
+    }
+    
+    *
+    {
+      text-size-adjust: none;
+      -webkit-text-size-adjust: none;
+      -moz-text-size-adjust: none;
+      -ms-text-size-adjust: none;
     }
 }
 
