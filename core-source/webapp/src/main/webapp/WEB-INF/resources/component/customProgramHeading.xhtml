@@ -39,10 +39,48 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         <composite:attribute required="false" name="webAppBean" type="java.lang.Object" />
     </composite:interface>
     <composite:implementation>
+                <!--
+                    This is custom program heading with default design made by FDAF developer team.
+                    If you want to design your own program heading, then you may create
+                    one inside /custom-core-source/webapp/src/main/webapp/WEB-INF/resources/component/
+                    directory.
+                    This default design is intended to make the default FDAF administrator
+                    dashboard to be "just working".
+                -->
         <h:panelGroup layout="block" styleClass="program_heading_container">
             <h:panelGroup layout="block" styleClass="program_heading_box">
                 <h:panelGroup layout="block" styleClass="program_heading_inner">
-                    <h:panelGroup layout="block" styleClass="program_heading_title">#{cc.attrs.pageTitle}</h:panelGroup>
+                    <h:panelGroup layout="block" styleClass="program_heading_title">
+                        <h:panelGroup layout="block" styleClass="program_heading_mobile_mode_table">
+                            <h:panelGroup layout="block" styleClass="program_heading_mobile_mode_row">
+                                <h:panelGroup layout="block" styleClass="program_heading_mobile_mode_title_cell">
+                                    <h:outputText value="#{cc.attrs.pageTitle}" />
+                                </h:panelGroup>
+                                <h:panelGroup layout="block" styleClass="program_heading_mobile_mode_action_menu_cell">
+                                    <h:commandButton type="button" styleClass="common_button blue_button mobile_menu_button"
+                                        value="#{label.buttonAction}" 
+                                        onclick="var elx = document.getElementsByClassName('program_heading_mobile_action_tool_box')[0];
+                                            var el1 = document.getElementsByClassName('program_heading_button_box')[0];
+                                            var el2 = document.getElementsByClassName('list_control_top')[0];
+                                            if (el2 != null) {
+                                                elx.innerHTML = el1.innerHTML + el2.innerHTML;
+                                            } else {
+                                                elx.innerHTML = el1.innerHTML;
+                                            }
+                                            if (elx.style.display == 'none' || elx.style.display == '') {
+                                                elx.style='display:block';
+                                                this.value = 'X';
+                                            } else {
+                                                this.value = '#{label.buttonAction}';
+                                                elx.style='display:none';
+                                            };" />
+                                </h:panelGroup>
+                            </h:panelGroup>
+                        </h:panelGroup>
+                    </h:panelGroup>
+                    <h:panelGroup layout="block" styleClass="program_heading_mobile_action_tool_box_outer">
+                        <h:panelGroup layout="block" styleClass="program_heading_mobile_action_tool_box" />
+                    </h:panelGroup>
                     <h:panelGroup layout="block" styleClass="program_heading_button_box">
                         <h:panelGroup layout="block" styleClass="program_heading_button_box_flex">
                             <composite:insertChildren />
