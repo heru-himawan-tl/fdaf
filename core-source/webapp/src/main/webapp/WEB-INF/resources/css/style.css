@@ -2021,6 +2021,11 @@ a:hover
     padding: 6px;
 }
 
+.program_heading_mobile_mode_action_menu_cell
+{
+    display: none;
+}
+
 @media (max-width: 1080px)
 {
     body
@@ -2304,6 +2309,23 @@ a:hover
     .panel_menu_group
     {
         margin: 0px;
+    }
+    
+    .program_heading_mobile_mode_table
+    {
+        display: table;
+    }
+    
+    .program_heading_mobile_mode_row
+    {
+        display: table-row;
+    }
+    
+    .program_heading_mobile_mode_title_cell,
+    .program_heading_mobile_mode_action_menu_cell
+    {
+        display: table-cell;
+        vertical-align: middle;
     }
 }
 
