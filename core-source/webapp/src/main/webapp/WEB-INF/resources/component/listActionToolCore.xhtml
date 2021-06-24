@@ -1,0 +1,68 @@
+<!--
+
+Copyright (c) Heru Himawan Tejo Laksono. All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+
+1. Redistributions of source code must retain the above copyright notice,
+   this list of conditions and the following disclaimer.
+
+2. Redistributions in binary form must reproduce the above copyright notice,
+   this list of conditions and the following disclaimer in the documentation
+   and/or other materials provided with the distribution.
+
+3. Neither the name of the copyright holders nor the names of its
+   contributors may be used to endorse or promote products derived from this
+   software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ARE DISCLAIMED. IN NO EVENT SHALL THE REGENTS OR CONTRIBUTORS BE LIABLE FOR
+ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE
+USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:composite="http://java.sun.com/jsf/composite"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:h="http://java.sun.com/jsf/html">
+    <composite:interface>
+        <composite:attribute required="true" name="webAppBean" type="java.lang.Object" />
+        <composite:attribute required="true" name="listObject" type="java.lang.Object" />
+        <composite:attribute required="false" name="editable" type="java.lang.Boolean" default="true" />
+        <composite:attribute required="false" name="removable" type="java.lang.Boolean" default="true" />
+    </composite:interface>
+    <composite:implementation>
+            <h:panelGroup layout="block" styleClass="list_action_column_flex">
+                <h:commandButton styleClass="grouped_button_left" immediate="true" value="#{label.listActionView}">
+                    <f:actionListener binding="#{cc.attrs.webAppBean.view(cc.attrs.listObject.data.id)}" />
+                    <f:ajax event="click" execute="@form" render="@form" />
+                </h:commandButton>
+                <h:commandButton styleClass="grouped_button_inner" readonly="#{true}" value="#{label.listActionEdit}" rendered="#{(cc.attrs.listObject.editable eq false or cc.attrs.editable eq false)}" onclick="document.querySelector('.restricted_editing_warning_dialog').style.cssText='display: -webkit-box; display: -moz-box; display: -ms-flexbox; display: -webkit-flex; display: flex;';return false;"/>
+                <h:commandButton styleClass="grouped_button_inner" immediate="true" value="#{label.listActionEdit}" rendered="#{(cc.attrs.listObject.editable eq true and cc.attrs.webAppBean.allowEdit eq true and cc.attrs.editable eq true)}">
+                    <f:actionListener binding="#{cc.attrs.webAppBean.prepareUpdate(cc.attrs.listObject.data.id)}" />
+                    <f:ajax event="click" execute="@form" render="@form" />
+                </h:commandButton>
+                <composite:insertChildren />
+                <h:commandButton styleClass="grouped_button_inner" immediate="true" value="#{label.buttonTakeover}" rendered="#{(cc.attrs.listObject.takeoverable eq true and cc.attrs.webAppBean.allowRender eq true and cc.attrs.webAppBean.inCheckOrphanDataMode and cc.attrs.webAppBean.userType eq 'ADMINISTRATOR')}">
+                    <f:actionListener binding="#{cc.attrs.webAppBean.prepareTakeover(cc.attrs.listObject.data.id)}" />
+                    <f:ajax event="click" execute="@form" render="@form" />
+                </h:commandButton>
+                <h:commandButton readonly="#{true}" styleClass="grouped_button_inner" value="#{label.buttonTakeover}" rendered="#{(cc.attrs.listObject.takeoverable eq false and cc.attrs.webAppBean.inCheckOrphanDataMode and cc.attrs.webAppBean.userType eq 'ADMINISTRATOR' and cc.attrs.listObject.authorId ne cc.attrs.webAppBean.authorId)}" onclick="document.querySelector('.another_admins_record_takeover_warning_dialog').style.cssText='display: -webkit-box; display: -moz-box; display: -ms-flexbox; display: -webkit-flex; display: flex;';return false;"/>
+                <h:commandButton readonly="#{true}" styleClass="grouped_button_inner" value="#{label.buttonTakeover}" rendered="#{(cc.attrs.listObject.takeoverable eq false and cc.attrs.webAppBean.inCheckOrphanDataMode and cc.attrs.webAppBean.userType eq 'ADMINISTRATOR' and cc.attrs.listObject.authorId eq cc.attrs.webAppBean.authorId)}" onclick="document.querySelector('.own_record_takeover_warning_dialog').style.cssText='display: -webkit-box; display: -moz-box; display: -ms-flexbox; display: -webkit-flex; display: flex;';return false;"/>
+                <h:commandButton styleClass="grouped_button_right pink_button" immediate="true" readonly="#{true}" value="#{label.listActionRemove}" rendered="#{(cc.attrs.listObject.removable eq false or cc.attrs.removable eq false or cc.attrs.removable eq false)}" onclick="document.querySelector('.restricted_deletion_warning_dialog').style.cssText='display: -webkit-box; display: -moz-box; display: -ms-flexbox; display: -webkit-flex; display: flex;';return false;"/>
+                <h:commandButton styleClass="grouped_button_right pink_button" immediate="true" value="#{label.listActionRemove}" rendered="#{(cc.attrs.listObject.removable eq true and cc.attrs.removable eq true)}">
+                    <f:actionListener binding="#{cc.attrs.webAppBean.setPrepareRemoveOp(true)}" />
+                    <f:actionListener binding="#{cc.attrs.webAppBean.setPrimaryKey(cc.attrs.listObject.data.id)}" />
+                    <f:ajax event="click" execute="@form" render="@form" />
+                </h:commandButton>
+            </h:panelGroup>
+    </composite:implementation>
+</html>

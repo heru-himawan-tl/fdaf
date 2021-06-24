@@ -30,24 +30,16 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 -->
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-        xmlns:d="http://java.sun.com/jsf/composite/component"
         xmlns:composite="http://java.sun.com/jsf/composite"
-        xmlns:f="http://java.sun.com/jsf/core"
-        xmlns:h="http://java.sun.com/jsf/html">
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions">
     <composite:interface>
-        <composite:attribute required="true" name="webAppBean" type="java.lang.Object" />
-        <composite:attribute required="true" name="listObject" type="java.lang.Object" />
-        <composite:attribute required="false" name="editable" type="java.lang.Boolean" default="true" />
-        <composite:attribute required="false" name="removable" type="java.lang.Boolean" default="true" />
+        <composite:attribute required="false" name="value" type="java.lang.Object" />
     </composite:interface>
     <composite:implementation>
-        <h:panelGroup layout="block" styleClass="list_action_column">
-            <d:listActionToolCore
-                webAppBean="#{cc.attrs.webAppBean}"
-                listObject="#{cc.attrs.listObject}"
-                editable="#{cc.attrs.editable}"
-                removable="#{cc.attrs.removable}"
-            />
+        <h:panelGroup layout="block" styleClass="list_action_head_mobile_mode">
+            <h:outputText value="#{fn:toUpperCase(cc.attrs.value)}" />
+            <composite:insertChildren />
         </h:panelGroup>
     </composite:implementation>
 </html>
