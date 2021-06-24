@@ -2023,6 +2023,11 @@ a:hover
 
 @media (max-width: 1080px)
 {
+    body
+    {
+        font-size: 16px;
+    }
+    
     .body_flexbox
     {
         display: block;

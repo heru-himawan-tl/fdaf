@@ -44,7 +44,16 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
             <h:panelGroup layout="block" styleClass="program_heading_box">
                 <h:panelGroup layout="block" styleClass="program_heading_inner">
                     <h:panelGroup layout="block" styleClass="program_heading_title">
-                        <h:outputText value="#{cc.attrs.pageTitle}" />
+                        <h:panelGroup layout="block" styleClass="program_heading_mobile_mode_table">
+                            <h:panelGroup layout="block" styleClass="program_heading_mobile_mode_row">
+                                <h:panelGroup layout="block" styleClass="program_heading_mobile_mode_title_cell">
+                                    <h:outputText value="#{cc.attrs.pageTitle}" />
+                                </h:panelGroup>
+                                <h:panelGroup layout="block" styleClass="program_heading_mobile_mode_action_menu_cell">
+                                    
+                                </h:panelGroup>
+                            </h:panelGroup>
+                        </h:panelGroup>
                     </h:panelGroup>
                     <h:panelGroup layout="block" styleClass="program_heading_button_box">
                         <h:panelGroup layout="block" styleClass="program_heading_button_box_flex" rendered="#{(cc.attrs.webAppBean.isLoggedOn eq true and cc.attrs.webAppBean.isBrokenUserSession eq false)}">
