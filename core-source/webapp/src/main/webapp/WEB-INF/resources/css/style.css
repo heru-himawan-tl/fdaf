@@ -2021,6 +2021,7 @@ a:hover
     padding: 6px;
 }
 
+.program_heading_mobile_action_tool_box_outer,
 .program_heading_mobile_mode_action_menu_cell
 {
     display: none;
@@ -2326,6 +2327,11 @@ a:hover
     {
         display: table-cell;
         vertical-align: middle;
+    }
+    
+    .program_heading_mobile_action_tool_box_outer
+    {
+        display: block;   
     }
 }
 

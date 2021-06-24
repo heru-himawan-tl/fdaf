@@ -56,6 +56,10 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                             </h:panelGroup>
                         </h:panelGroup>
                     </h:panelGroup>
+                    <h:panelGroup layout="block" styleClass="program_heading_mobile_action_tool_box_outer">
+                        <h:panelGroup layout="block" styleClass="program_heading_mobile_action_tool_box">
+                        </h:panelGroup>
+                    </h:panelGroup>
                     <h:panelGroup layout="block" styleClass="program_heading_button_box">
                         <h:panelGroup layout="block" styleClass="program_heading_button_box_flex" rendered="#{(cc.attrs.webAppBean.isLoggedOn eq true and cc.attrs.webAppBean.isBrokenUserSession eq false)}">
                             <h:commandButton type="button" styleClass="grouped_button_left" value="#{label.buttonAddNewRecord}" rendered="#{(cc.attrs.webAppBean.allowRender eq true and cc.attrs.webAppBean.opMode eq 'LISTING' and cc.attrs.webAppBean.dataListIsInError eq false and cc.attrs.webAppBean.allowAdd eq true)}">
