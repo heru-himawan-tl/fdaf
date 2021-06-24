@@ -53,7 +53,7 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                 
                 <d:panelMenuGroup value="#{label.currentUserManagement}" />
                 <h:link value="#{label.editAccountLinkLabel}" outcome="edit-account" rendered="#{cc.attrs.webAppBean.isLoggedOn}"/>
-                <h:link value="#{label.editAccountLinkLabel}" outcome="edit-profile" rendered="#{cc.attrs.webAppBean.isLoggedOn}"/>
+                <h:link value="#{label.editProfileLinkLabel}" outcome="edit-profile" rendered="#{cc.attrs.webAppBean.isLoggedOn}"/>
                 <h:link value="#{label.logoutLinkLabel}" outcome="logout" rendered="#{cc.attrs.webAppBean.isLoggedOn}"/>
                 <h:link value="#{label.loginLinkLabel}" outcome="login" rendered="#{cc.attrs.webAppBean.isLoggedOn eq false}"/>
     </composite:implementation>
