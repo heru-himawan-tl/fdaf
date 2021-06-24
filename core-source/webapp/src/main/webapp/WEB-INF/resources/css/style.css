@@ -503,7 +503,7 @@ a:hover
     display: table-row;
 }
 
-.login_info_box_inner
+.login_info_box_deeper
 {
     display: table-cell;
     vertical-align: middle !important;
@@ -2053,6 +2053,7 @@ a:hover
         display: block;
         position: static;
         z-index: 0;
+        padding: 0px !important;
     }
 
     .main_panel_back_overlay
@@ -2249,6 +2250,55 @@ a:hover
     .list_control_deeper select
     {
         width: 100%;
+    }
+    
+    .login_info_flexbox
+    {
+        display: block;
+        background: #000000;
+    }
+    
+    .login_info_flexbox .grouped_button_left,
+    .login_info_flexbox .grouped_button_inner,
+    .login_info_flexbox .grouped_button_right,
+    .login_info_flexbox .common_button
+    {
+        display: block;
+        white-space: nowrap;
+        color: #0082FF !important;
+        padding: 8px;
+        border: none;
+        border-bottom: 1px solid #2E3436 !important;
+        background: #000000;
+        width: 100%;
+        border-radius: 0px !important;
+        text-align: left !important;
+    }
+    
+    .login_info_flexbox .grouped_button_left:hover,
+    .login_info_flexbox .grouped_button_inner:hover,
+    .login_info_flexbox .grouped_button_right:hover,
+    .login_info_flexbox .common_button:hover
+    {
+        background: #0052FF !important;
+        color: #ffffff !important;
+    }
+    
+    .login_info_box,
+    .login_info_box_inner,
+    {
+        display: block;
+    }
+    
+    .panel_menu_container a,
+    .panel_menu_group
+    {
+        padding: 8px;
+    }
+    
+    .panel_menu_group
+    {
+        margin: 0px;
     }
 }
 
