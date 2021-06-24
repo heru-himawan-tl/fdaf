@@ -35,14 +35,20 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         xmlns:h="http://java.sun.com/jsf/html">
     <composite:interface>
         <composite:attribute required="true" name="webAppBean" type="java.lang.Object" />
+        <composite:attribute required="true" name="pagePrefix" type="java.lang.String" />
+        <composite:attribute required="true" name="pageTitle" type="java.lang.String" />
     </composite:interface>
     <composite:implementation>
-        <!--
-        Hint:
-            Please create copy of this component and put the copy inside
-            custom-core-source/webapp/src/main/webapp/WEB-INF/resources/component/
-            ... and ...
-            add your own custom hyperlink menu's markup here ...
-        -->
+        <h:panelGroup layout="block" styleClass="panel_menu_mobile_mode">
+            <h:panelGroup layout="block" styleClass="panel_menu_mobile_mode_inner">
+            </h:panelGroup>
+        </h:panelGroup>
+        <h:panelGroup layout="block" styleClass="panel_menu_wrapper">
+            <h:panelGroup layout="block" styleClass="panel_menu_container">
+                <!-- This is custom left panel with default vertical program navigation -->
+                <d:defaultVerticalProgramNavigation webAppBean="#{cc.attrs.webAppBean}"/>
+                <h:panelGroup layout="block" styleClass="panel_menu_bottom_gap" />
+            </h:panelGroup>
+        </h:panelGroup>
     </composite:implementation>
 </html>

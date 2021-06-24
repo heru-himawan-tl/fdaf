@@ -28,21 +28,81 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE
 USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 -->
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
         xmlns:d="http://java.sun.com/jsf/composite/component"
         xmlns:composite="http://java.sun.com/jsf/composite"
-        xmlns:h="http://java.sun.com/jsf/html">
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
     <composite:interface>
         <composite:attribute required="true" name="webAppBean" type="java.lang.Object" />
     </composite:interface>
     <composite:implementation>
-        <!--
-        Hint:
-            Please create copy of this component and put the copy inside
-            custom-core-source/webapp/src/main/webapp/WEB-INF/resources/component/
-            ... and ...
-            add your own top panel model markup here ...
-        -->
+        <h:panelGroup layout="block" styleClass="top_panel">
+            <h:panelGroup layout="block" styleClass="top_panel_table">
+                <h:panelGroup layout="block" styleClass="top_panel_row">
+                    <h:panelGroup layout="block" styleClass="top_panel_left_cell">
+                        <h:outputText value="#{cc.attrs.webAppBean.applicationName} " />
+                        <h:outputText value="#{label.administrationDashboard}" />
+                    </h:panelGroup>
+                    <h:panelGroup layout="block" styleClass="top_panel_mobile_menu_cell">
+                        <h:commandButton type="button" styleClass="common_button blue_button mobile_menu_button"
+                                immediate="true" value="#{label.buttonPrograms}"
+                                onclick="var e = document.getElementsByClassName('panel_menu_mobile_mode')[0];
+                                var tpmc = document.getElementsByClassName('top_panel_mobile_menu_cell')[0];
+                                var e1 = document.getElementsByClassName('panel_menu_wrapper')[0];
+                                var e2 = document.getElementsByClassName('panel_menu_mobile_mode_inner')[0];
+                                e2.innerHTML = e1.innerHTML;
+                                var nm = 'top_panel_mobile_menu_cell_active';
+                                var ls1 = tpmc.className.split(' ');
+                                var ls2 = this.className.split(' ');
+                                if (ls1.indexOf(nm) == -1) {
+                                    tpmc.className += ' ' + nm;
+                                    this.className += ' ' + nm;
+                                };
+                                if (e.style.display == 'none' || e.style.display == '') {
+                                    e.style='display:block';
+                                    this.value = 'X';
+                                } else {
+                                    this.className = 'common_button blue_button mobile_menu_button';
+                                    tpmc.className = 'top_panel_mobile_menu_cell';
+                                    this.value = '#{label.buttonPrograms}';
+                                    e.style='display:none';
+                                };" />
+                    </h:panelGroup>
+                    <h:panelGroup layout="block" styleClass="top_panel_login_info_cell">
+                        <h:panelGroup layout="block" styleClass="top_panel_login_info_cell_inner">
+                            <h:panelGroup layout="block" styleClass="login_info_flexbox" rendered="#{cc.attrs.webAppBean.isLoggedOn eq false}">
+                                <h:commandButton type="button" styleClass="common_button blue_button"
+                                    immediate="true" value="#{label.buttonLogin}" onclick="document.location.href='login.jsf';" />
+                            </h:panelGroup>
+                            <!-- h:panelGroup layout="block" styleClass="login_info_flexbox" rendered="#{cc.attrs.webAppBean.isLoggedOn}">
+                                <h:panelGroup layout="block" styleClass="login_info_box">
+                                    <h:panelGroup layout="block" styleClass="login_info_box_inner">
+                                        <h:panelGroup layout="block" styleClass="login_info_box_deeper">
+                                        </h:panelGroup>
+                                        <h:panelGroup layout="block" styleClass="login_info_box_deeper">
+                                            <h:panelGroup layout="block" styleClass="login_info_label_box">
+                                                <h:outputText value="#{label.loggedBy}" />
+                                            </h:panelGroup>
+                                            <h:panelGroup layout="block" styleClass="login_info_value_box">
+                                                <h:link value="#{cc.attrs.webAppBean.userSessionManager.userName}" outcome="edit-account" />
+                                            </h:panelGroup>
+                                        </h:panelGroup>
+                                    </h:panelGroup>
+                                </h:panelGroup>
+                                <h:commandButton type="button" styleClass="grouped_button_left blue_button"
+                                    immediate="true" value="#{label.buttonEditAccount}" onclick="document.location.href='edit-account.jsf';" />
+                                <h:commandButton type="button" styleClass="grouped_button_inner blue_button"
+                                    immediate="true" value="#{label.buttonEditProfile}" onclick="document.location.href='edit-profile.jsf';" />
+                                <h:commandButton type="button" styleClass="grouped_button_right red_button"
+                                    immediate="true" value="#{label.buttonLogout}" onclick="document.location.href='logout.jsf';" />
+                            </h:panelGroup-->
+                        </h:panelGroup>
+                    </h:panelGroup>
+                </h:panelGroup>
+            </h:panelGroup>
+        </h:panelGroup>
     </composite:implementation>
 </html>
