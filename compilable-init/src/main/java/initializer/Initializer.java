@@ -125,34 +125,6 @@ public class Initializer {
         String originalSource = "";
         String source = "";
         String dest = "";
-        if (nodeAddr.matches(".*custom_callback_message\\.properties.*")) {
-            try {
-                BufferedReader r = Files.newBufferedReader(Paths.get(nodeAddr));
-                String l = null;
-                while ((l = r.readLine()) != null) {
-                    if (!l.trim().isEmpty()) {
-                        String s = l.replaceAll("=.*", "").trim();
-                        definedCustomCallbackMessage.add(s);
-                    }
-                }
-                r.close();
-            } catch (Exception e) {
-            }
-        }
-        if (nodeAddr.matches(".*\\/callback_message\\.properties.*")) {
-            try {
-                BufferedReader r = Files.newBufferedReader(Paths.get(nodeAddr));
-                String l = null;
-                while ((l = r.readLine()) != null) {
-                    if (!l.trim().isEmpty()) {
-                        String s = l.replaceAll("=.*", "").trim();
-                        definedCallbackMessage.add(s);
-                    }
-                }
-                r.close();
-            } catch (Exception e) {
-            }
-        }
         try {
             BufferedReader r = Files.newBufferedReader(Paths.get(nodeAddr));
             String l = null;
@@ -285,6 +257,36 @@ public class Initializer {
         System.out.println("[" + ANSI_BLUE + ANSI_BOLD + "FDAF INFO" + ANSI_RESET + "] -------------------------------------------------------------------------------");
         System.out.println("[" + ANSI_BLUE + ANSI_BOLD + "FDAF INFO" + ANSI_RESET + "] " + ANSI_BOLD + "Formatting specific compilable application source files ..." + ANSI_RESET);
         System.out.println("[" + ANSI_BLUE + ANSI_BOLD + "FDAF INFO" + ANSI_RESET + "] -------------------------------------------------------------------------------");
+        for (String nodeAddr : toFormatNodeList) {
+            if (nodeAddr.matches(".*custom_callback_message\\.properties.*")) {
+                try {
+                    BufferedReader r = Files.newBufferedReader(Paths.get(nodeAddr));
+                    String l = null;
+                    while ((l = r.readLine()) != null) {
+                        if (!l.trim().isEmpty()) {
+                            String s = l.replaceAll("=.*", "").trim();
+                            definedCustomCallbackMessage.add(s);
+                        }
+                    }
+                    r.close();
+                } catch (Exception e) {
+                }
+            }
+            if (nodeAddr.matches(".*\\/callback_message\\.properties.*")) {
+                try {
+                    BufferedReader r = Files.newBufferedReader(Paths.get(nodeAddr));
+                    String l = null;
+                    while ((l = r.readLine()) != null) {
+                        if (!l.trim().isEmpty()) {
+                            String s = l.replaceAll("=.*", "").trim();
+                            definedCallbackMessage.add(s);
+                        }
+                    }
+                    r.close();
+                } catch (Exception e) {
+                }
+            }
+        }
         for (String nodeAddr : toFormatNodeList) {
             format(nodeAddr);
         }
