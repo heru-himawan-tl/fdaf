@@ -2226,7 +2226,7 @@ a:hover
     }
     
     .list_control_page_switch_button_box .grouped_button_left,
-    .list_control_page_switch_button_box .grouped_button_inne,
+    .list_control_page_switch_button_box .grouped_button_inner,
     .list_control_page_switch_button_box .grouped_button_right,
     .program_heading_button_box_flex .grouped_button_left,
     .program_heading_button_box_flex .grouped_button_inner,
@@ -2249,7 +2249,7 @@ a:hover
     }
     
     .list_control_page_switch_button_box .grouped_button_left,
-    .list_control_page_switch_button_box .grouped_button_inne,
+    .list_control_page_switch_button_box .grouped_button_inner,
     .list_control_page_switch_button_box .grouped_button_right
     {
         margin-bottom: 8px !important;
@@ -2489,10 +2489,23 @@ a:hover
         min-width: 64px !important;
     }
     
+    .list_empty_warning
+    {
+        padding: 8px;
+    }
+    
     .main_panel_footer_inner,
     .main_panel_footer_inner a
     {
         font-size: 12px !important;
+    }
+    
+    .dialog_button_box .grouped_button_inner,
+    .dialog_button_box .grouped_button_left,
+    .dialog_button_box .grouped_button_right
+    {
+        border: none;
+        margin-left: 1px;
     }
     
     *
