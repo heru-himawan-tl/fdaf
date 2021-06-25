@@ -32,6 +32,7 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 <html xmlns="http://www.w3.org/1999/xhtml"
         xmlns:d="http://java.sun.com/jsf/composite/component"
         xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:h="http://java.sun.com/jsf/html"
         xmlns:f="http://java.sun.com/jsf/core">
     <ui:composition>
         <d:listContainer webAppBean="#{departmentWebAppBean}">
@@ -49,6 +50,11 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                     <d:listColumnMobileViewWithTool
                         webAppBean="#{departmentWebAppBean}"
                         listObject="#{department}">
+                        <d:dataListMobileViewContentBox>
+                            <h:outputText value="#{department.data.name}" /><br />
+                            <h:outputText value="#{elabel.id}" />:
+                            <h:outputText value="#{department.data.id}" />
+                        </d:dataListMobileViewContentBox>
                     </d:listColumnMobileViewWithTool>
                 </d:listRow>
             </ui:repeat>
