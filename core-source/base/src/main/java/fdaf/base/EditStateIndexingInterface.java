@@ -28,7 +28,8 @@
  */
 package fdaf.base;
 
-public interface DatabaseServiceCheckerInterface {
-
-    public void triggerCheck();
+public interface EditStateIndexingInterface {
+    public void addId(Object id);
+    public void removeId(Object id);
+    public boolean isInEditing(Object id);
 }

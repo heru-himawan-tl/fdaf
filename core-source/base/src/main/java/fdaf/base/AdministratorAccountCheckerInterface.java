@@ -28,19 +28,7 @@
  */
 package fdaf.base;
 
-/**
- * Remote interface for {@link fdaf.logic.ejb.facade.AdministratorAccountCheckerFacade}.
- *
- * @see         fdaf.logic.ejb.facade.AdministratorAccountCheckerFacade
- * @author      Heru Himawan Tejo Laksono 
- */
 public interface AdministratorAccountCheckerInterface {
 
-    /**
-     * Check whether administrator account exists within current running
-     * program.
-     *
-     * @return  {@code true} if administrator account exists
-     */
     public boolean isAdministratorAccountExists();
 }
