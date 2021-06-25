@@ -38,6 +38,7 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         <d:disallowAdd webAppBean="#{userWebAppBean}" />
         <d:listContainer webAppBean="#{userWebAppBean}">
             <d:listRowHead webAppBean="#{userWebAppBean}">
+                <d:listHeadMobileView value="#{label.contentsAndAction}" />
                 <d:listHead value="#{elabel.id}" />
                 <d:listHeadStrictWidth value="#{label.accountInformation}" />
             </d:listRowHead>
@@ -49,6 +50,21 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                             and
                             user.data.userType ne 'ADMINISTRATOR'
                         )}">
+                    <d:listColumnMobileViewWithTool
+                        webAppBean="#{userWebAppBean}"
+                        listObject="#{user}"
+                        removable="#{(userWebAppBean.userSessionManager.userId ne user.data.id)}"
+                        editable="#{(
+                            userWebAppBean.userSessionManager.userId ne user.data.id
+                            and
+                            user.data.userType ne 'ADMINISTRATOR'
+                        )}">
+                        <d:dataListMobileViewContentBox>
+                            <h:outputText value="#{user.data.userName}" /><br />
+                            <h:outputText value="#{elabel.id}" />:
+                            <h:outputText value="#{user.data.id}" />
+                        </d:dataListMobileViewContentBox>
+                    </d:listColumnMobileViewWithTool>
                     <d:listColumn value="#{user.data.id}" />
                     <d:listColumnText>
                         <d:dataDetailTable>

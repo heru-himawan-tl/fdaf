@@ -37,11 +37,21 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     <ui:composition>
         <d:listContainer webAppBean="#{employeeWebAppBean}">
             <d:listRowHead webAppBean="#{employeeWebAppBean}">
+                <d:listHeadMobileView value="#{label.contentsAndAction}" />
                 <d:listHead value="#{elabel.id}" />
                 <d:listHeadStrictWidth value="#{label.detailInformation}" />
             </d:listRowHead>
             <ui:repeat value="#{employeeWebAppBean.resultList}" var="employee">
                 <d:listRow webAppBean="#{employeeWebAppBean}" removePromptId="employee" listObject="#{employee}">
+                    <d:listColumnMobileViewWithTool
+                        webAppBean="#{employeeWebAppBean}"
+                        listObject="#{employee}">
+                        <d:dataListMobileViewContentBox>
+                            <h:outputText value="#{employee.data.firstName}" /><br />
+                            <h:outputText value="#{elabel.id}" />:
+                            <h:outputText value="#{employee.data.id}" />
+                        </d:dataListMobileViewContentBox>
+                    </d:listColumnMobileViewWithTool>
                     <d:listColumn value="#{employee.data.id}" />
                     <d:listColumnText>
                         <d:dataDetailTable>
@@ -51,7 +61,7 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                             <d:dataDetailSet label="#{elabel.address2}" value="#{employee.data.address2}" />
                             <d:dataDetailSet label="#{elabel.phone1}" value="#{employee.data.phone1}" />
                             <d:dataDetailSet label="#{elabel.phone2}" value="#{employee.data.phone2}" />
-                            <d:dataDetailSet label="#{elabel.department}" value="#{employee.data.department.name}" />
+                            <d:dataDetailSet label="#{elabel.employee}" value="#{employee.data.employee.name}" />
                             <d:dataDetailSet label="#{elabel.role}" value="#{employee.data.role.name}" />
                             <d:dataDetailSet label="#{elabel.employmentId}" value="#{employee.data.employmentId}" />
                         </d:dataDetailTable>

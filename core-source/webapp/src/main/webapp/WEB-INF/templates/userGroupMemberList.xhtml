@@ -32,16 +32,27 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 <html xmlns="http://www.w3.org/1999/xhtml"
         xmlns:d="http://java.sun.com/jsf/composite/component"
         xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:h="http://java.sun.com/jsf/html"
         xmlns:f="http://java.sun.com/jsf/core">
     <ui:composition>
         <d:listContainer webAppBean="#{userGroupMemberWebAppBean}">
             <d:listRowHead webAppBean="#{userGroupMemberWebAppBean}">
+                <d:listHeadMobileView value="#{label.contentsAndAction}" />
                 <d:listHead value="#{elabel.id}" />
                 <d:listHead value="#{elabel.user}" />
                 <d:listHeadStrictWidth value="#{elabel.userGroup}" />
             </d:listRowHead>
             <ui:repeat value="#{userGroupMemberWebAppBean.resultList}" var="userGroupMember">
                 <d:listRow webAppBean="#{userGroupMemberWebAppBean}" removePromptId="userGroupMember" listObject="#{userGroupMember}">
+                    <d:listColumnMobileViewWithTool
+                        webAppBean="#{userGroupMemberWebAppBean}"
+                        listObject="#{userGroupMember}">
+                        <d:dataListMobileViewContentBox>
+                            <h:outputText value="#{userGroupMember.data.user.userName}" /><br />
+                            <h:outputText value="#{elabel.id}" />:
+                            <h:outputText value="#{userGroupMember.data.id}" />
+                        </d:dataListMobileViewContentBox>
+                    </d:listColumnMobileViewWithTool>
                     <d:listColumn value="#{userGroupMember.data.id}" />
                     <d:listColumnLongText value="#{userGroupMember.data.user.userName}" />
                     <d:listColumnText value="#{userGroupMember.data.userGroup.name}" />
