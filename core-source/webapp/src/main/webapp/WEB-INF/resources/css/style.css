@@ -2525,6 +2525,11 @@ a:hover
         min-width: 72px !important;
     }
     
+    .list_control_container_alt .list_control_box .list_control_inner .list_control_deeper_gap
+    {
+        display: none;
+    }
+    
     *
     {
       text-size-adjust: none;
