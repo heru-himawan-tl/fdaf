@@ -30,28 +30,17 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 -->
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-        xmlns:d="http://java.sun.com/jsf/composite/component"
-        xmlns:ui="http://java.sun.com/jsf/facelets"
-        xmlns:f="http://java.sun.com/jsf/core">
-    <ui:composition>
-        <d:listContainer webAppBean="#{departmentWebAppBean}">
-            <d:listRowHead webAppBean="#{departmentWebAppBean}">
-                <d:listHeadMobileView value="#{label.contentsAndAction}" />
-                <d:listHead value="#{elabel.id}" />
-                <d:listHead value="#{elabel.name}" />
-                <d:listHeadStrictWidth value="#{elabel.description}" />
-            </d:listRowHead>
-            <ui:repeat value="#{departmentWebAppBean.resultList}" var="department">
-                <d:listRow webAppBean="#{departmentWebAppBean}" removePromptId="department" listObject="#{department}">
-                    <d:listColumn value="#{department.data.id}" />
-                    <d:listColumnLongText value="#{department.data.name}" />
-                    <d:listColumnText value="#{department.data.description}" />
-                    <d:listColumnMobileViewWithTool
-                        webAppBean="#{departmentWebAppBean}"
-                        listObject="#{department}">
-                    </d:listColumnMobileViewWithTool>
-                </d:listRow>
-            </ui:repeat>
-        </d:listContainer>
-    </ui:composition>
+        xmlns:composite="http://java.sun.com/jsf/composite"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions">
+    <composite:interface>
+        <composite:attribute required="false" name="addStyleClass" type="java.lang.String" />
+        <composite:attribute required="false" name="value" type="java.lang.Object" />
+    </composite:interface>
+    <composite:implementation>
+        <h:panelGroup layout="block" styleClass="list_head_mobile_view #{cc.attrs.addStyleClass}">
+            <h:outputText value="#{fn:toUpperCase(cc.attrs.value)}" />
+            <composite:insertChildren />
+        </h:panelGroup>
+    </composite:implementation>
 </html>
