@@ -2103,7 +2103,11 @@ a:hover
     {
         align-items: stretch;
         justify-content: space-between;
-        position: static;
+    }
+    
+    .login_container
+    {
+        position: static !important;
     }
     
     .login_box
@@ -2199,6 +2203,11 @@ a:hover
     .field_column
     {
         display: block;
+    }
+    
+    .field_label_box
+    {
+        padding-bottom: 2px;
     }
     
     .program_heading_box,
@@ -2300,6 +2309,8 @@ a:hover
         width: 100%;
         box-sizing: border-box;
         padding: 4px;
+        padding-top: 6px;
+        padding-bottom: 6px;
         border: 1px solid #ffffff;
         border-radius: 2px;
         -webkit-appearance: none !important;
@@ -2427,13 +2438,13 @@ a:hover
         -o-appearance: none !important;
         appearance: none !important; 
         color: #000000;
-        min-height: 20px !important;
-        max-height: 20px !important;
-        min-width: 20px !important;
-        max-width: 20px !important;
+        min-height: 16px !important;
+        max-height: 16px !important;
+        min-width: 16px !important;
+        max-width: 16px !important;
         text-align: center;
-        font-size: 18px;
-        line-height: 15px;
+        font-size: 14px;
+        line-height: 12px;
         border-radius: 2px;
         background: #ffffff;
     }
@@ -2503,11 +2514,13 @@ a:hover
     
     .dialog_button_box .grouped_button_inner,
     .dialog_button_box .grouped_button_left,
-    .dialog_button_box .grouped_button_right
+    .dialog_button_box .grouped_button_right,
+    .dialog_button_box .common_button_std
     {
         border: none !important;
         margin: 0px;
         margin-left: 1px !important;
+        min-width: 64px !important;
     }
     
     *
