@@ -1711,13 +1711,15 @@ a:hover
     display: flex;
     padding: 16px;
     padding-top: 0px;
+    justify-content: flex-end;
 }
 
 .dialog_button_box_gap
 {
-    width: 100%;
+    /*width: 100%;
     padding-top: 6px;
-    padding-bottom: 6px;
+    padding-bottom: 6px;*/
+    display: none;
 }
 
 .dialog_label
@@ -2520,7 +2522,7 @@ a:hover
         border: none !important;
         margin: 0px;
         margin-left: 1px !important;
-        min-width: 64px !important;
+        min-width: 72px !important;
     }
     
     *
