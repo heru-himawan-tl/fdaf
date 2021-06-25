@@ -2103,6 +2103,7 @@ a:hover
     {
         align-items: stretch;
         justify-content: space-between;
+        position: static;
     }
     
     .login_box

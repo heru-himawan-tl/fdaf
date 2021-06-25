@@ -55,45 +55,63 @@ import java.io.Serializable;
 @Entity
 public class Employee implements Serializable {
     private static final long serialVersionUID = 1L;
+    
     @Pattern(regexp = "^[a-zA-Z ]+$", message = "Invalid format first name.")
     @Size(min = 2, max = 24, message = "First name length out of range (min = 2, max = 24).")
     @NotBlank(message = "First name not specified.")
     @Column(name = "first_name")
     private String firstName;
+    
     @Column(name = "middle_name")
     private String middleName;
+    
     @Pattern(regexp = "^[a-zA-Z ]+$", message = "Invalid format family name.")
     @Size(min = 2, max = 24, message = "Last name length out of range (min = 2, max = 24).")
     @NotBlank(message = "Last name not specified.")
     @Column(name = "last_name")
     private String lastName;
+    
     @Max(value = 31, message = "D.O.B day must be smaller than 32.")
     @Min(value = 1, message = "D.O.B day must be greater than 0.")
     @Positive(message = "D.O.B day must be positive integer.")
     @Column(name = "dob_day")
     private Integer dobDay;
+    
     @Column(name = "dob_month")
     private Integer dobMonth;
+    
     @Positive(message = "D.O.B year must be positive integer.")
     @Column(name = "dob_year")
     private Integer dobYear;
+    
     @Column(name = "employment_id")
     private String employmentId;
+    
     private String ssn;
+    
     @Enumerated(EnumType.STRING)
     private Gender gender;
+    
     @Column(name = "department_id", nullable = true)
     private Long departmentId;
+    
     @Column(name = "role_id", nullable = true)
     private Long roleId;
+    
     private String address1;
     private String address2;
+    
+    @Pattern(regexp = "^(\\+[0-9\\-]+|[0-9\\-]+||[ ]+)$", message = "Invalid phone number format.")
     private String phone1;
+    
+    @Pattern(regexp = "^(\\+[0-9\\-]+|[0-9\\-]+||[ ]+)$", message = "Invalid phone number format.")
     private String phone2;
+    
     @NotFound(action = NotFoundAction.IGNORE)
     @OneToOne
     @JoinColumn(name = "department_id", insertable = false, updatable = false)
     private Department department;
+    
     @NotFound(action = NotFoundAction.IGNORE)
     @OneToOne
     @JoinColumn(name = "role_id", insertable = false, updatable = false)
