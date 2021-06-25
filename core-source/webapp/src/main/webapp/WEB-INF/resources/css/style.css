@@ -2230,7 +2230,8 @@ a:hover
     .list_control_page_switch_button_box .grouped_button_right,
     .program_heading_button_box_flex .grouped_button_left,
     .program_heading_button_box_flex .grouped_button_inner,
-    .program_heading_button_box_flex .grouped_button_right
+    .program_heading_button_box_flex .grouped_button_right,
+    .program_heading_button_box_flex .common_button
     {
         display: block;
         border: 1px solid #ffffff;
@@ -2240,7 +2241,8 @@ a:hover
     
     .program_heading_button_box_flex .grouped_button_left,
     .program_heading_button_box_flex .grouped_button_inner,
-    .program_heading_button_box_flex .grouped_button_right
+    .program_heading_button_box_flex .grouped_button_right,
+    .program_heading_button_box_flex .common_button
     {
         margin-top: 8px !important;
         margin-bottom: 8px !important;
