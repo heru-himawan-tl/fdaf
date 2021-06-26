@@ -28,6 +28,7 @@
  */
 package fdaf.logic.ejb.facade;
 
+import fdaf.base.EditStateIndexingInterface;
 import fdaf.base.FacadeInterface;
 import fdaf.logic.base.AbstractFacade;
 import fdaf.logic.base.Specification;
@@ -45,6 +46,9 @@ public class __NAME__Facade extends AbstractFacade<__NAME__Repository, __NAME__>
 
     private static final long serialVersionUID = 1L;
 
+    @EJB(lookup = "java:global/__EJB_LOOKUP_DIR__/EditStateIndexing")
+    EditStateIndexingInterface editStateIndexing;
+    
     @EJB
     private __NAME__Repository repository;
 
@@ -58,6 +62,11 @@ public class __NAME__Facade extends AbstractFacade<__NAME__Repository, __NAME__>
 
     protected __NAME__ newEntity() {
         return new __NAME__();
+    }
+    
+    @Override
+    protected EditStateIndexingInterface getEditStateIndexing() {
+        return editStateIndexing;
     }
 
     protected void setUuid() {

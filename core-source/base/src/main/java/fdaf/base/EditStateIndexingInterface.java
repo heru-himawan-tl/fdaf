@@ -26,34 +26,13 @@
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE
  * USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package fdaf.logic.ejb.services;
+package fdaf.base;
 
-import fdaf.base.EditStateIndexingInterface;
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-import javax.annotation.PostConstruct;
-import javax.ejb.Remote;
-import javax.ejb.Singleton;
-import javax.ejb.Startup;
+public interface EditStateIndexingInterface {
 
-@Remote({EditStateIndexingInterface.class})
-@Singleton
-@Startup
-public class EditStateIndexing implements Serializable {
-
-    private static final long serialVersionUID = 1L;
-    private static final List index = new ArrayList<Object>();
+    public void addId(Object id);
     
-    public void addId(Object id) {
-        index.add(id);
-    }
+    public void removeId(Object id);
     
-    public void removeId(Object id) {
-        index.remove(id);
-    }
-    
-    public boolean isInEditing(Object id) {
-        return index.contains(id);
-    }
+    public boolean isInEditing(Object id);
 }
