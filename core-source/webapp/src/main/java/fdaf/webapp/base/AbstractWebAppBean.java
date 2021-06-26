@@ -120,6 +120,7 @@ public abstract class AbstractWebAppBean extends AbstractBaseWebAppBean {
     protected String infoMessage;
 
     protected Object currentViewDataId;
+    protected Object currentEditedDataId;
 
     protected AbstractWebAppBean() {
         // NO-OP
@@ -713,6 +714,7 @@ public abstract class AbstractWebAppBean extends AbstractBaseWebAppBean {
         } else {
             resultList = new ResultObject[]{};
         }
+        removeEditingIndexId();
     }
 
     public boolean getDataListIsInError() {
@@ -726,12 +728,30 @@ public abstract class AbstractWebAppBean extends AbstractBaseWebAppBean {
     public void prepareUpdate(Object primaryKey) {
         try {
             getFacade().prepareUpdate(primaryKey);
+            currentEditedDataId = primaryKey;
+            getFacade().addEditingIndexId(primaryKey);
             presetEntity();
             opMode = WebAppOpMode.UPDATE;
             disableValidation = false;
             this.primaryKey = primaryKey;
+            if (isInEditing()) {
+                addMessage(SV_WARN, "currentRecordInEditedWarning");
+            }
         } catch (Exception e) {
             indicateServiceError(e);
+        }
+    }
+    
+    public boolean isInEditing() {
+        if (currentEditedDataId != null) {
+            return getFacade().isInEditing(currentEditedDataId);
+        }
+        return false;
+    }
+    
+    protected void removeEditingIndexId() {
+        if (currentEditedDataId != null) {
+            getFacade().removeEditingIndexId(currentEditedDataId);
         }
     }
 

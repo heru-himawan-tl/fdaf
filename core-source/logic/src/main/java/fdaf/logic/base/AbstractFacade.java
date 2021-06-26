@@ -75,6 +75,14 @@ public abstract class AbstractFacade<R extends AbstractRepository<E>, E extends 
         if (editStateIndexing != null) {
             editStateIndexing.removeId(id);
         }
+    }
+    
+    public boolean isInEditing(Object id) {
+        EditStateIndexingInterface editStateIndexing = getEditStateIndexing();
+        if (editStateIndexing != null) {
+            return editStateIndexing.isInEditing(id);
+        }
+        return false;
     } 
 
     @PostConstruct
