@@ -28,7 +28,6 @@
  */
 package fdaf.logic.ejb.services;
 
-import fdaf.base.EditStateIndexingInterface;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -37,7 +36,6 @@ import javax.ejb.Remote;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
 
-@Remote({EditStateIndexingInterface.class})
 @Singleton
 @Startup
 public class EditStateIndexing implements Serializable {
