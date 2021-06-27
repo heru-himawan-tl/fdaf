@@ -43,7 +43,28 @@ body
     font-size: 14px;
 }
 
-input[type="button"], input[type="submit"]
+* {
+  scrollbar-width: thin;
+  scrollbar-color: blue #2E3436;
+}
+
+/* Works on Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+  width: 6px !important;
+}
+
+*::-webkit-scrollbar-track {
+  background: #2E3436;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: blue;
+  border-radius: 0px;
+  border: none;
+}
+
+input[type="button"],
+input[type="submit"]
 {
     -webkit-appearance: none !important;
     -moz-appearance: none !important;
@@ -52,8 +73,12 @@ input[type="button"], input[type="submit"]
 }
 
 select,
-.input_select, input[type=text], input[type=password], textarea,
-input[type="file"], input[type="number"]
+.input_select,
+input[type=text],
+input[type=password],
+textarea,
+input[type="file"],
+input[type="number"]
 {
     box-sizing: border-box;
     padding: 6px;
@@ -79,14 +104,18 @@ input[type="file"]
 .free_field_column select,
 .field_input_box select,
 .input_select,
-input[type=text], input[type=password], textarea,
+input[type=text],
+input[type=password],
+textarea,
 input[type=number]
 {
     width: 100%;
     /*max-width: 560px !important;*/
 }
 
-input[type=text], input[type=password], input[type=number]
+input[type=text],
+input[type=password],
+input[type=number]
 {
     padding: 7px;
 }
@@ -138,7 +167,8 @@ textarea:read-only
 
 }
 
-.field_input_box select, select
+.field_input_box select,
+select
 {
     background: url(../web-resources/ui-bg/selection-arrow.png);
     background-color: #ffffff;
@@ -201,6 +231,7 @@ input[type="checkbox"]
     max-width: 14px !important;
     text-align: center;
     font-size: 12px;
+    line-height: 12px;
     border-radius: 2px;
 }
 
@@ -211,7 +242,7 @@ input[type="checkbox"]:after
 
 input[type=checkbox]:checked:after
 {
-    content: "\2714";
+    content: "x";
     font-weight: bold;
 }
 
@@ -226,7 +257,7 @@ input[type=checkbox]:checked:after
 
 a
 {
-    color: #0052FF;
+    color: #0000ff;
     text-decoration: none;
 }
 
@@ -347,7 +378,7 @@ a:hover
     top: 0px;
     left: 0px;
     overflow: auto;
-    scrollbar-width: none;
+    /*scrollbar-width: none;*/
     bottom: 0px;
     background: #000000;
     padding-top: 52px;
@@ -364,7 +395,7 @@ a:hover
 
 .panel_menu_container::-webkit-scrollbar
 {
-    width: 0px !important;
+    
 }
 
 .panel_menu_container a
@@ -375,12 +406,13 @@ a:hover
     padding: 8px;
     padding-left: 16px;
     padding-right: 16px;
-    border-bottom: 1px solid #2E3436;
+    border-top: 1px solid #2E3436;
 }
 
 .panel_menu_container a:hover
 {
-    background: #0052FF;
+    border-top: 1px solid #000000;
+    background: #0000ff;
     color: #ffffff;
 }
 
@@ -392,20 +424,20 @@ a:hover
     color: #ffffff;
     padding: 8px;
     padding-left: 16px;
-    border-bottom: 1px solid #2E3436;
+    /*border-bottom: 1px solid #2E3436; */
 }
 
 .panel_menu_bottom_gap
 {
     display: block;
-    height: 33%;
+    height: 75%;
 }
 
 /* TOP PANEL -------------------------------------------------------------- */
 
 .top_panel
 {
-    background: #0052FF;
+    background: #0000ff;
     padding: 8px;
     padding-left: 16px;
     padding-right: 16px;
@@ -678,7 +710,7 @@ a:hover
     box-sizing: border-box;
     padding: 8px;
     border: none;
-    background: #0052FF;
+    background: #0000ff;
     color: #ffffff;
 }
 
@@ -812,7 +844,7 @@ a:hover
 .program_heading_container
 {
     display: block;
-    background: #0052FF;
+    background: #0000ff;
 }
 
 .program_heading_box
@@ -1189,7 +1221,7 @@ a:hover
 .list_control_container
 {
     display: block;
-    background: #0052FF;
+    background: #0000ff;
     padding: 8px;
     color: #ffffff;
 }
@@ -1579,7 +1611,7 @@ a:hover
     padding: 8px;
     padding-top: 0px;
     position: relative;
-    background: #0052FF;
+    background: #0000ff;
 }
 
 .inline_messages_clear_button
@@ -1692,7 +1724,7 @@ a:hover
     padding: 16px;
     /*border-bottom: 2px solid #D9D9D9; */
     font-weight: bold;
-    background: #0052FF;
+    background: #0000ff;
     color: #ffffff;
 }
 
@@ -1910,7 +1942,7 @@ a:hover
     border: 0px;
     width: 100%;
     padding: 8px;
-    background: #0052FF;
+    background: #0000ff;
     color: #ffffff;
     border-radius: 2px;
     font-size: 14px;
@@ -1950,7 +1982,7 @@ a:hover
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #0052FF;
+    color: #0000ff;
 }
 
 .login_close_button_box
@@ -2363,7 +2395,7 @@ a:hover
     .login_info_flexbox .grouped_button_right:hover,
     .login_info_flexbox .common_button:hover
     {
-        background: #0052FF !important;
+        background: #0000ff !important;
         color: #ffffff !important;
     }
     
