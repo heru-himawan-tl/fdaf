@@ -32,6 +32,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.IOException;
+import java.nio.ByteBuffer;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -59,7 +60,7 @@ public class PrintingServiceWSC {
     	boolean isUNIX = (!System.getProperty("os.name").matches(".*Windows.*"));
         String fsp = File.separator;
         String userHome = null;
-        
+
         try {
             userHome = System.getProperty("user.home");
         } catch (Exception e) {
@@ -147,7 +148,7 @@ public class PrintingServiceWSC {
     public void onMessage(Session session, String message) throws IOException {
         setSession(session);
         if (message != null && !message.isEmpty()) {
-            if (!unlocked && message.trim().equals(webSocketClientSecureKey)) {
+            if (!unlocked && message.trim().equals(webSocketClientSecureKey.trim())) {
                 System.out.println("[Client] Connection successfully unlocked ...");
                 unlocked = true;
             }

@@ -119,7 +119,7 @@ public class PrintingServiceApp {
         initConfig();
         try {
             container = ContainerProvider.getWebSocketContainer();
-            session = container.connectToServer(PrintingServiceWSC.class, URI.create(webSocketServerURI));
+            session = container.connectToServer(PrintingServiceWSC.class, URI.create(webSocketServerURI.trim()));
             waitTermSignal();
         } catch (Exception e) {
             LOGGER.log(Level.SEVERE, null, e);

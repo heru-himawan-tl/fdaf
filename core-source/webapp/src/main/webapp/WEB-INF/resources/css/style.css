@@ -435,6 +435,7 @@ a:hover
     display: table-cell;
     vertical-align: middle !important;
     white-space: nowrap;
+    height: 28px;
 }
 
 .top_panel_left_cell
@@ -542,7 +543,7 @@ a:hover
 .main_panel
 {
     padding: 16px;
-    padding-top: 62px;
+    padding-top: 64px;
     z-index: 3;
 }
 
@@ -839,6 +840,8 @@ a:hover
     display: -ms-flexbox;
     display: -webkit-flex;
     display: flex;
+    align-items: center;
+    justify-content: flex-end;
 }
 
 .program_heading_title
@@ -849,14 +852,11 @@ a:hover
 .program_heading_container
 {
     padding: 8px;
-    padding-top: 4px;
 }
 
-.program_heading_title,
-.program_heading_button_box
+.program_heading_title
 {
     padding: 4px;
-    padding-bottom: 0px;
 }
 
 .program_heading_title
