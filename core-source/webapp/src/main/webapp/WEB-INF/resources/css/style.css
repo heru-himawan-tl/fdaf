@@ -45,7 +45,7 @@ body
 
 * {
   scrollbar-width: thin;
-  scrollbar-color: blue #2E3436;
+  scrollbar-color: #0000ff #2E3436;
 }
 
 /* Works on Chrome, Edge, and Safari */
