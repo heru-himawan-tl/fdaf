@@ -40,7 +40,6 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     </composite:interface>
     <composite:implementation>
         <h:panelGroup layout="block" rendered="#{(cc.attrs.webAppBean.opMode eq 'LISTING')}">
-            <d:removePrompt webAppBean="#{cc.attrs.webAppBean}" id="removePrompt" />
             <d:listControl webAppBean="#{cc.attrs.webAppBean}" />
             <ui:include src="/WEB-INF/templates/#{cc.attrs.pagePrefix}List.xhtml" />
             <d:listFetchErrorMessages />
