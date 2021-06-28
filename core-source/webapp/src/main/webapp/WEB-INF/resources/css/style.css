@@ -380,6 +380,7 @@ a:hover
     position: fixed;
     top: 0px;
     left: 0px;
+    bottom: 0px;
     overflow: auto;
     /*scrollbar-width: none;*/
     bottom: 0px;
@@ -429,13 +430,18 @@ a:hover
     padding-left: 16px;
     padding-right: 16px;
     border-top: 1px solid #2E3436;
+    border-bottom: 1px solid #2E3436;
+    margin-bottom: -1px;
+    margin-top: -1px;
 }
 
 .panel_menu_container a:hover
 {
-    border-top: 1px solid #000000;
+    border-top: 1px solid #0000ff;
     background: #0000ff;
     color: #ffffff;
+    border-bottom: 1px solid #0000ff;
+    z-index: 5 !important;
 }
 
 .panel_menu_group
@@ -1728,7 +1734,7 @@ a:hover
     bottom: 0px;
     right: 0px;
     left: 0px;
-    z-index: 100;
+    z-index: 100 !important;
     background: rgba(0, 0, 0, 0.4);
     align-items: center;
     justify-content: center;
