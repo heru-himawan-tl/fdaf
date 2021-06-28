@@ -60,14 +60,12 @@ public class PrintingServiceWSC {
     	boolean isUNIX = (!System.getProperty("os.name").matches(".*Windows.*"));
         String fsp = File.separator;
         String userHome = null;
-
         try {
             userHome = System.getProperty("user.home");
         } catch (Exception e) {
             LOGGER.log(Level.SEVERE, null, e);
             return;
         }
-        
         try {
             Path configDirPath = null;
             if (isUNIX) {
@@ -81,7 +79,6 @@ public class PrintingServiceWSC {
         } catch (Exception e) {
             LOGGER.log(Level.SEVERE, null, e);
         }
-        
         if (!isUNIX) {
             try {
                 configPath = "C:\\fdaf\\websocket-client.conf";

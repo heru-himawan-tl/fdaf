@@ -52,7 +52,6 @@ public class PrintingServiceWS extends AbstractWebSocket {
         webSocketClientSecureKey = printingService.getWebSocketClientSecureKey();
         printingService.addWebSocket(this);
         printingService.runService();
-        // TODO: add code to configure IPv4 address
         executorService = Executors.newSingleThreadExecutor();
         executorService.submit(new Runnable() {
             public void run() {

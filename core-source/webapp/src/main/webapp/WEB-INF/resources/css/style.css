@@ -43,22 +43,25 @@ body
     font-size: 14px;
 }
 
-* {
+html
+{
   scrollbar-width: thin;
-  scrollbar-color: #0000ff #2E3436;
+  scrollbar-color: #000000 #BABDB6;
 }
 
-/* Works on Chrome, Edge, and Safari */
-*::-webkit-scrollbar {
+html::-webkit-scrollbar
+{
   width: 6px !important;
 }
 
-*::-webkit-scrollbar-track {
-  background: #2E3436;
+html::-webkit-scrollbar-track
+{
+  background: #BABDB6;
 }
 
-*::-webkit-scrollbar-thumb {
-  background-color: blue;
+html::-webkit-scrollbar-thumb
+{
+  background-color: #000000;
   border-radius: 0px;
   border: none;
 }
@@ -383,6 +386,25 @@ a:hover
     background: #000000;
     padding-top: 52px;
     z-index: 4;
+    scrollbar-width: thin;
+    scrollbar-color: #0000ff #2E3436;
+}
+
+.panel_menu_container::-webkit-scrollbar
+{
+  width: 6px !important;
+}
+
+.panel_menu_container::-webkit-scrollbar-track
+{
+  background: #2E3436;
+}
+
+.panel_menu_container::-webkit-scrollbar-thumb
+{
+  background-color: blue;
+  border-radius: 0px;
+  border: none;
 }
 
 .panel_menu_wrapper,
