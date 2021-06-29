@@ -149,6 +149,12 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
             <version>1.6.2</version>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>javax.jms</groupId>
+            <artifactId>javax.jms-api</artifactId>
+            <version>2.0.1</version>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
     
 </project>

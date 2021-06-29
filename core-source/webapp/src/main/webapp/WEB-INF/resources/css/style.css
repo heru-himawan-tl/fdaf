@@ -394,19 +394,19 @@ a:hover
 
 .panel_menu_container::-webkit-scrollbar
 {
-  width: 6px !important;
+    width: 6px !important;
 }
 
 .panel_menu_container::-webkit-scrollbar-track
 {
-  background: #2E3436;
+    background: #2E3436;
 }
 
 .panel_menu_container::-webkit-scrollbar-thumb
 {
-  background-color: blue;
-  border-radius: 0px;
-  border: none;
+    background-color: blue;
+    border-radius: 0px;
+    border: none;
 }
 
 .panel_menu_wrapper,
@@ -414,12 +414,6 @@ a:hover
 {
     min-width: 216px;
     max-width: 216px;
-}
-
-
-.panel_menu_container::-webkit-scrollbar
-{
-    
 }
 
 .panel_menu_container a
@@ -432,8 +426,8 @@ a:hover
     padding-right: 16px;
     border-top: 1px solid #2E3436;
     border-bottom: 1px solid #2E3436;
-    margin-bottom: -1px;
-    margin-top: -1px;
+    margin-bottom: -1px !important;
+    margin-top: -1px !important;
 }
 
 .panel_menu_container a:hover
@@ -443,6 +437,8 @@ a:hover
     color: #ffffff;
     border-bottom: 1px solid #0000ff;
     z-index: 5 !important;
+    margin-bottom: -1px !important;
+    margin-top: -1px !important;
 }
 
 .panel_menu_group
@@ -2597,6 +2593,11 @@ a:hover
       -webkit-text-size-adjust: none;
       -moz-text-size-adjust: none;
       -ms-text-size-adjust: none;
+    }
+    
+    .panel_menu_container::-webkit-scrollbar
+    {
+        width: 0px !important;
     }
 }
 
