@@ -95,9 +95,10 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                             }
                             String[] propertyFields = [
                                 "fdaf.applicationCodeName",
+                                "fdaf.applicationName",
+                                "fdaf.applicationLongName",
                                 "fdaf.applicationDescription",
                                 "fdaf.applicationGroupId",
-                                "fdaf.applicationName",
                                 "fdaf.applicationSourceDirectory",
                                 "fdaf.applicationVersion",
                                 "fdaf.copyright",

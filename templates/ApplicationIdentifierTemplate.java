@@ -40,6 +40,14 @@ public abstract class ApplicationIdentifier {
         return "${fdaf.applicationCodeName}";
     }
     
+    public String getApplicationName() {
+        return "${fdaf.applicationName}";
+    }
+    
+    public String getApplicationLongName() {
+        return "${fdaf.applicationLongName}";
+    }
+    
     public String getApplicationDescription() {
         return "${fdaf.applicationDescription}";
     }
@@ -50,10 +58,6 @@ public abstract class ApplicationIdentifier {
     
     public String getApplicationDevelHomePage() {
         return "${fdaf.developerHomePage}";
-    }
-    
-    public String getApplicationName() {
-        return "${fdaf.applicationName}";
     }
     
     public String getApplicationVersion() {

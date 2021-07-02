@@ -40,5 +40,14 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         <h:outputStylesheet library="css" name="style.css" />
     </h:head>
     <h:body>
+        <h:panelGroup layout="block" styleClass="index_page_top_bar_container">
+            <h:panelGroup layout="block" styleClass="index_page_top_bar">
+                <h:panelGroup layout="block" styleClass="index_page_top_bar_inner">
+                    <h:panelGroup layout="block" styleClass="index_page_top_bar_title_box">
+                        <h:outputText value="#{indexPageWebAppBean.applicationLongName} " />
+                    </h:panelGroup>
+                </h:panelGroup>
+            </h:panelGroup>
+        </h:panelGroup>
     </h:body>
 </html>
