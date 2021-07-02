@@ -83,12 +83,6 @@ public interface FacadeInterface {
     public void prepareCreate();
 
     public void prepareUpdate(Object primaryKey);
-    
-    public void addEditingIndexId(Object id);
-    
-    public void removeEditingIndexId(Object id);
-    
-    public boolean isInEditing(Object id);
 
     public void reloadEntity();
 

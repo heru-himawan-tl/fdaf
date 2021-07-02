@@ -28,7 +28,6 @@
  */
 package fdaf.logic.base;
 
-import fdaf.base.EditStateIndexingInterface;
 import fdaf.base.OrderingMode;
 import fdaf.logic.base.AbstractRepository;
 import fdaf.logic.tools.EntityFieldChecker;
@@ -58,32 +57,6 @@ public abstract class AbstractFacade<R extends AbstractRepository<E>, E extends 
     }
 
     protected abstract R getRepository();
-    
-    protected EditStateIndexingInterface getEditStateIndexing() {
-        return null;
-    }
-    
-    public void addEditingIndexId(Object id) {
-        EditStateIndexingInterface editStateIndexing = getEditStateIndexing();
-        if (editStateIndexing != null) {
-            editStateIndexing.addId(id);
-        }
-    }
-    
-    public void removeEditingIndexId(Object id) {
-        EditStateIndexingInterface editStateIndexing = getEditStateIndexing();
-        if (editStateIndexing != null) {
-            editStateIndexing.removeId(id);
-        }
-    }
-    
-    public boolean isInEditing(Object id) {
-        EditStateIndexingInterface editStateIndexing = getEditStateIndexing();
-        if (editStateIndexing != null) {
-            return editStateIndexing.isInEditing(id);
-        }
-        return false;
-    } 
 
     @PostConstruct
     public void postConstruct() {
