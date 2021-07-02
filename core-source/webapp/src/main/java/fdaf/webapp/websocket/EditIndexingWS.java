@@ -60,8 +60,8 @@ public class EditIndexingWS extends AbstractWebSocket {
         if (message != null && !message.trim().isEmpty()) {
             String serviceUUID = message.replaceAll("^([a-zA-Z0-9\\-]+)([ ]+)([a-zA-Z]+)([ ]+)([0-9]+)$", "$1");
             if (serviceUUID.equals(editIndexing.getServiceUUID())) {
-                viewLayerName = message.replaceAll("^([a-zA-Z0-9\\-]+)([ ]+)([a-zA-Z]+)([ ]+)([0-9]+)$", "$2");
-                dataID = (Object) Long.parseLong(message.replaceAll("^([a-zA-Z0-9\\-]+)([ ]+)([a-zA-Z]+)([ ]+)([0-9]+)$", "$1"));
+                viewLayerName = message.replaceAll("^([a-zA-Z0-9\\-]+)([ ]+)([a-zA-Z]+)([ ]+)([0-9]+)$", "$3");
+                dataID = (Object) Long.parseLong(message.replaceAll("^([a-zA-Z0-9\\-]+)([ ]+)([a-zA-Z]+)([ ]+)([0-9]+)$", "$5"));
             }
         }
     }
