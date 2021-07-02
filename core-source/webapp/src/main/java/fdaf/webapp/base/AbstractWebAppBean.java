@@ -32,6 +32,7 @@ import fdaf.base.FacadeInterface;
 import fdaf.base.OrderingMode;
 import fdaf.base.Permission;
 import fdaf.base.UserType;
+import fdaf.webapp.bean.system.EditIndexingBean;
 import fdaf.webapp.bean.system.ListUpdaterBean;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -179,12 +180,12 @@ public abstract class AbstractWebAppBean extends AbstractBaseWebAppBean {
         // NO-OP
     }
     
-    public ListUpdaterBean getListUpdater() {
+    public EditIndexingBean getEditIndexing() {
         return null;
     }
     
-    protected boolean isNullListUpdater() {
-        return (getListUpdater() == null);
+    public ListUpdaterBean getListUpdater() {
+        return null;
     }
     
     public void unsetCheckOrphanDataMode(AjaxBehaviorEvent event) throws AbortProcessingException {
@@ -290,8 +291,9 @@ public abstract class AbstractWebAppBean extends AbstractBaseWebAppBean {
     }
     
     protected void notifiyListUpdate() {
-        if (!isNullListUpdater()) {
-            getListUpdater().triggerNotifyUpdate(viewLayerName);
+        ListUpdaterBean listUpdater = getListUpdater();
+        if (listUpdater != null) {
+            listUpdater.triggerNotifyUpdate(viewLayerName);
         }
         FrontEndUIUpdaterInterface[] fs = getFrontEndUIUpdaters();
         for (FrontEndUIUpdaterInterface f : fs) {
@@ -722,6 +724,17 @@ public abstract class AbstractWebAppBean extends AbstractBaseWebAppBean {
     public Object[] getResultList() {
         return resultList;
     }
+    
+    /*protected void notifiyListUpdate() {
+        ListUpdaterBean listUpdater = getListUpdater();
+        if (listUpdater != null) {
+            listUpdater.triggerNotifyUpdate(viewLayerName);
+        }
+        FrontEndUIUpdaterInterface[] fs = getFrontEndUIUpdaters();
+        for (FrontEndUIUpdaterInterface f : fs) {
+            f.triggerNotifyUpdate();
+        }
+    }*/
 
     public void prepareUpdate(Object primaryKey) {
         try {
@@ -732,6 +745,15 @@ public abstract class AbstractWebAppBean extends AbstractBaseWebAppBean {
             this.primaryKey = primaryKey;
         } catch (Exception e) {
             indicateServiceError(e);
+        }
+    }
+    
+    public void editIndexing(ComponentSystemEvent event) throws AbortProcessingException {
+        EditIndexingBean editIndexing = getEditIndexing();
+        if (editIndexing != null) {
+            if (editIndexing.isInEditing(viewLayerName, primaryKey)) {
+                addMessage(SV_WARN, "currentRecordInEditing");
+            }
         }
     }
 
