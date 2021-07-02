@@ -748,12 +748,12 @@ public abstract class AbstractWebAppBean extends AbstractBaseWebAppBean {
         }
     }
     
-    public void checkEditState(ComponentSystemEvent event) throws AbortProcessingException {
+    public void checkInEditState(ComponentSystemEvent event) throws AbortProcessingException {
         if (opMode == WebAppOpMode.UPDATE) {
             EditIndexingBean editIndexing = getEditIndexing();
             if (editIndexing != null) {
                 if (editIndexing.isInEditing(viewLayerName, primaryKey)) {
-                    addMessage(SV_WARN, "multiEditingWarning");
+                    addMessage(SV_WARN, "inEditStateWarning");
                 }
            }
         }

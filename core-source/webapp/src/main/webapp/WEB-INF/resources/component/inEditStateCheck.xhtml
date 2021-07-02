@@ -37,6 +37,6 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         <composite:attribute required="true" name="webAppBean" type="java.lang.Object" />
     </composite:interface>
     <composite:implementation>
-        <f:event listener="#{cc.attrs.webAppBean.checkEditState}" type="preRenderComponent" />
+        <f:event listener="#{cc.attrs.webAppBean.checkInEditState}" type="preRenderComponent" />
     </composite:implementation>
 </html>
