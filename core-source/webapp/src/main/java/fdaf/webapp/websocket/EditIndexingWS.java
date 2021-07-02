@@ -68,5 +68,6 @@ public class EditIndexingWS extends AbstractWebSocket {
     
     @Override
     protected void onCloseTask() {
+        editIndexing.removeWebSocket(this);
     }
 }

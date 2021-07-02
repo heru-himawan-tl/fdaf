@@ -34,6 +34,7 @@ import fdaf.base.DatabaseServiceCheckerInterface;
 import fdaf.base.FacadeInterface;
 import fdaf.base.UserSessionManagerInterface;
 import fdaf.webapp.base.AbstractWebAppBean;
+import fdaf.webapp.bean.system.EditIndexingBean;
 import fdaf.webapp.bean.system.ListUpdaterBean;
 import java.io.Serializable;
 import javax.ejb.EJB;
@@ -76,6 +77,9 @@ public class __NAME__WebAppBean extends AbstractWebAppBean implements Serializab
     @EJB(lookup = "java:global/__EJB_LOOKUP_DIR__/CommonConfiguration")
     private CommonConfigurationInterface commonConfiguration;
     
+    @Inject
+    private EditIndexingBean editIndexing;
+    
     // UI_UPDATER_INJECT_HERE
     
     @Inject
@@ -83,6 +87,11 @@ public class __NAME__WebAppBean extends AbstractWebAppBean implements Serializab
 
     public __NAME__WebAppBean() {
         // NO-OP
+    }
+    
+    @Override
+    public EditIndexingBean getEditIndexing() {
+        return editIndexing;
     }
     
     @Override

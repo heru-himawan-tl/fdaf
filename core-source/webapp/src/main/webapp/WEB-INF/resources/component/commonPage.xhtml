@@ -119,7 +119,7 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                 <h:outputScript rendered="#{(cc.attrs.webAppBean.opMode eq 'UPDATE')}">
                     initEditIndexingWS(
                         "#{cc.attrs.webAppBean.websocketURL}/edit-indexing",
-                        "#{cc.attrs.webAppBean.listUpdater.serviceUUID}",
+                        "#{cc.attrs.webAppBean.editIndexing.serviceUUID}",
                         "#{cc.attrs.webAppBean.viewLayerName}",
                         "#{cc.attrs.webAppBean.primaryKey}"
                     );

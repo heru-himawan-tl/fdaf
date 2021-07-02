@@ -753,7 +753,7 @@ public abstract class AbstractWebAppBean extends AbstractBaseWebAppBean {
             EditIndexingBean editIndexing = getEditIndexing();
             if (editIndexing != null) {
                 if (editIndexing.isInEditing(viewLayerName, primaryKey)) {
-                    addMessage(SV_WARN, "currentRecordInEditing");
+                    addMessage(SV_WARN, "multiEditingWarning");
                 }
            }
         }

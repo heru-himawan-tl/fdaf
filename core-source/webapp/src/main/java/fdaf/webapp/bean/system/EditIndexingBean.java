@@ -72,6 +72,20 @@ public class EditIndexingBean implements Serializable {
     public String getServiceUUID() {
         return serviceUUID;
     }
+    
+    public void removeWebSocket(EditIndexingWS editIndexingWS) {
+        if (!webSockets.isEmpty()) {
+            EditIndexingWS e = null;
+            for (EditIndexingWS webSocket : webSockets) {
+                if (webSocket.isOpen() && webSocket.getUuid().equals(editIndexingWS.getUuid())) {
+                    e = webSocket;
+                }
+            }
+            if (e != null) {
+                webSockets.remove(e);
+            }
+        }
+    }
    
     public void runService() {
         if (executorService != null && !executorService.isShutdown()) {
