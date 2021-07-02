@@ -749,12 +749,14 @@ public abstract class AbstractWebAppBean extends AbstractBaseWebAppBean {
     }
     
     public void checkEditState(ComponentSystemEvent event) throws AbortProcessingException {
-        EditIndexingBean editIndexing = getEditIndexing();
-        if (editIndexing != null) {
-            if (editIndexing.isInEditing(viewLayerName, primaryKey)) {
-                addMessage(SV_WARN, "currentRecordInEditing");
-            }
-       }
+        if (opMode == WebAppOpMode.UPDATE) {
+            EditIndexingBean editIndexing = getEditIndexing();
+            if (editIndexing != null) {
+                if (editIndexing.isInEditing(viewLayerName, primaryKey)) {
+                    addMessage(SV_WARN, "currentRecordInEditing");
+                }
+           }
+        }
     }
 
     public void executeUpdateAlt(AjaxBehaviorEvent event) throws AbortProcessingException {

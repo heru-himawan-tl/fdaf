@@ -48,6 +48,7 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
             <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
             <h:outputStylesheet library="css" name="style.css" />
             <h:outputScript library="js" name="function.js" />
+            <h:outputScript library="js" name="edit-indexing.js" />
             <h:outputScript library="js" name="list-updater.js" />
             <d:customHeadTag />
         </h:head>
@@ -75,29 +76,30 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                         <d:customLeftPanel webAppBean="#{cc.attrs.webAppBean}" />
                     </d:leftPanel>
                     <d:mainPanel>
-                            <d:pageContainer id="page" webAppBean="#{cc.attrs.webAppBean}">
-                                <d:takeoverPrompt webAppBean="#{cc.attrs.webAppBean}" />
-                                <d:massiveRemovalPrompt webAppBean="#{cc.attrs.webAppBean}" />
-                                <d:removePrompt webAppBean="#{cc.attrs.webAppBean}" />
-                                <d:listInit webAppBean="#{cc.attrs.webAppBean}" />
-                                <d:programHeading pageTitle="#{fn:toUpperCase(cc.attrs.pageTitle)}" webAppBean="#{cc.attrs.webAppBean}" simpleMode="" />
-                                <h:panelGroup layout="block" rendered="#{cc.attrs.webAppBean.allowRender eq true}">
-                                    <d:messages />
-                                    <ui:include src="/WEB-INF/templates/#{cc.attrs.pagePrefix}View.xhtml" />
-                                    <ui:include src="#{(cc.attrs.webAppBean.allowAdd eq true or (cc.attrs.webAppBean.opMode eq 'UPDATE' and cc.attrs.webAppBean.allowAdd eq false)) ? '/WEB-INF/templates/'.concat(cc.attrs.pagePrefix).concat('Edit.xhtml') : ''}" />
-                                    <h:panelGroup layout="block" rendered="#{(cc.attrs.webAppBean.opMode eq 'LISTING')}">
-                                        <f:passThroughAttribute name="autocomplete" value="off" />
-                                        <d:listControl webAppBean="#{cc.attrs.webAppBean}" />
-                                        <ui:include src="/WEB-INF/templates/#{cc.attrs.pagePrefix}List.xhtml" />
-                                        <d:listFetchErrorMessages />
-                                        <d:listControlAlt webAppBean="#{cc.attrs.webAppBean}" />
-                                        <d:massiveSelectReset webAppBean="#{cc.attrs.webAppBean}" />
-                                    </h:panelGroup>
+                        <d:pageContainer id="page" webAppBean="#{cc.attrs.webAppBean}">
+                            <d:takeoverPrompt webAppBean="#{cc.attrs.webAppBean}" />
+                            <d:massiveRemovalPrompt webAppBean="#{cc.attrs.webAppBean}" />
+                            <d:removePrompt webAppBean="#{cc.attrs.webAppBean}" />
+                            <d:listInit webAppBean="#{cc.attrs.webAppBean}" />
+                            <d:editStateCheck webAppBean="#{cc.attrs.webAppBean}" />
+                            <d:programHeading pageTitle="#{fn:toUpperCase(cc.attrs.pageTitle)}" webAppBean="#{cc.attrs.webAppBean}" simpleMode="" />
+                            <h:panelGroup layout="block" rendered="#{cc.attrs.webAppBean.allowRender eq true}">
+                                <d:messages />
+                                <ui:include src="/WEB-INF/templates/#{cc.attrs.pagePrefix}View.xhtml" />
+                                <ui:include src="#{(cc.attrs.webAppBean.allowAdd eq true or (cc.attrs.webAppBean.opMode eq 'UPDATE' and cc.attrs.webAppBean.allowAdd eq false)) ? '/WEB-INF/templates/'.concat(cc.attrs.pagePrefix).concat('Edit.xhtml') : ''}" />
+                                <h:panelGroup layout="block" rendered="#{(cc.attrs.webAppBean.opMode eq 'LISTING')}">
+                                    <f:passThroughAttribute name="autocomplete" value="off" />
+                                    <d:listControl webAppBean="#{cc.attrs.webAppBean}" />
+                                    <ui:include src="/WEB-INF/templates/#{cc.attrs.pagePrefix}List.xhtml" />
+                                    <d:listFetchErrorMessages />
+                                    <d:listControlAlt webAppBean="#{cc.attrs.webAppBean}" />
+                                    <d:massiveSelectReset webAppBean="#{cc.attrs.webAppBean}" />
                                 </h:panelGroup>
-                                <d:programRestrictionWarningBox webAppBean="#{cc.attrs.webAppBean}" rendered="#{cc.attrs.webAppBean.isLoggedOn eq false or cc.attrs.webAppBean.allowRender eq false}" />
-                                <d:mainPanelFooter webAppBean="#{cc.attrs.webAppBean}" />
-                            </d:pageContainer>
-                            <d:deinit webAppBean="#{cc.attrs.webAppBean}" />
+                            </h:panelGroup>
+                            <d:programRestrictionWarningBox webAppBean="#{cc.attrs.webAppBean}" rendered="#{cc.attrs.webAppBean.isLoggedOn eq false or cc.attrs.webAppBean.allowRender eq false}" />
+                            <d:mainPanelFooter webAppBean="#{cc.attrs.webAppBean}" />
+                        </d:pageContainer>
+                        <d:deinit webAppBean="#{cc.attrs.webAppBean}" />
                     </d:mainPanel>
                     <d:rightPanel>
                         <d:customRightPanel webAppBean="#{cc.attrs.webAppBean}" />
@@ -112,6 +114,14 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                         "#{cc.attrs.webAppBean.listUpdater.serviceUUID}",
                         "#{cc.attrs.webAppBean.viewLayerName}",
                         "list_update_button"
+                    );
+                </h:outputScript>
+                <h:outputScript rendered="#{(cc.attrs.webAppBean.opMode eq 'UPDATE')}">
+                    initEditIndexingWS(
+                        "#{cc.attrs.webAppBean.websocketURL}/edit-indexing",
+                        "#{cc.attrs.webAppBean.listUpdater.serviceUUID}",
+                        "#{cc.attrs.webAppBean.viewLayerName}",
+                        "#{cc.attrs.webAppBean.primaryKey}"
                     );
                 </h:outputScript>
             </h:form>
