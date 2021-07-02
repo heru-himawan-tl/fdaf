@@ -1688,6 +1688,7 @@ a:hover
 .inline_messages_item
 {
     display: list-item;
+    margin-right: 16px;
 }
 
 .inline_list_error_message_container
