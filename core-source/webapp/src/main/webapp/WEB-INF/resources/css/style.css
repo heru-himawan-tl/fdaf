@@ -852,7 +852,9 @@ a:hover
 .common_button_rtl[disabled],
 .common_button_std[disabled]
 {
-    color: #eeeeec;
+    color: #babdb6;
+    -webkit-text-fill-color: #babdb6;
+    opacity: 1;
 }
 
 .grouped_button_left,
