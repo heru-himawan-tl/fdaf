@@ -385,7 +385,7 @@ a:hover
     background: url(../web-resources/ui-bg/index-landing-box-bg.jpg);
     background-repeat: no-repeat;
     background-position: left top;
-    background-size: 100% 100%;
+    background-size: cover;
     align-items: center;
     justify-content: center;
 }
@@ -852,7 +852,7 @@ a:hover
 .common_button_rtl[disabled],
 .common_button_std[disabled]
 {
-    color: #babdb6;
+    color: #eeeeec;
 }
 
 .grouped_button_left,
@@ -2211,7 +2211,7 @@ a:hover
 
 .index_page_application_description_box
 {
-    background: rgba(0, 0, 0, 0.4);
+    background: rgba(0, 0, 0, 0.5);
     padding: 16px;
 }
 
@@ -2748,7 +2748,7 @@ a:hover
     {
         background: url(../web-resources/ui-bg/index-landing-box-bg.jpg);
         background-repeat: no-repeat;
-        background-position: bottom right;
+        background-position: top right;
         background-size: cover;
         align-items: center;
         justify-content: flex-start;
