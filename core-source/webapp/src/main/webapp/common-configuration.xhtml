@@ -81,6 +81,9 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                                     commonConfigurationWebAppBean.userType ne 'CLIENT'
                                 )}">
                                 <h:panelGroup layout="block" styleClass="field_container_inner">
+                                    <d:fieldNoteBox rendered="#{commonConfigurationWebAppBean.isLoggedOn eq false}">
+                                        <h:outputText value="#{defaultMessage.restrictedCommonConfigurationWarn}" />
+                                    </d:fieldNoteBox>
                                     <d:fieldGroupTitle title="#{label.siteState}" />
                                     <d:fieldNoteBox>
                                         <h:outputText value="#{defaultMessage.offlineSiteNote}" />
@@ -123,7 +126,7 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                                             </d:fieldInputBox>
                                         </d:fieldColumn>
                                     </d:fieldRow>
-                                    <d:fieldRow>
+                                    <d:fieldRow rendered="#{commonConfigurationWebAppBean.isLoggedOn eq true}">
                                         <d:fieldColumn>
                                             <d:fieldLabel for="webmasterEmail" value="#{label.webmasterEmail}" />
                                             <d:fieldInputBox>
@@ -165,10 +168,10 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                                             </d:fieldInputCheckboxLabel>
                                         </d:fieldColumn>
                                     </d:fieldRow>
-                                    <d:fieldNoteBox>
+                                    <d:fieldNoteBox rendered="#{commonConfigurationWebAppBean.isLoggedOn eq true}">
                                         <h:outputText value="#{defaultMessage.webSocketClientSecureKeyNote}" />
                                     </d:fieldNoteBox>
-                                    <d:fieldRow>
+                                    <d:fieldRow rendered="#{commonConfigurationWebAppBean.isLoggedOn eq true}">
                                         <d:fieldColumn>
                                             <d:fieldLabel for="webSocketClientSecureKey" value="#{label.webSocketClientSecureKey}" />
                                             <d:fieldInputBox>
