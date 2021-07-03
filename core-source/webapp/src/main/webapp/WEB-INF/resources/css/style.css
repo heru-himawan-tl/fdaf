@@ -546,26 +546,19 @@ a:hover
     display: table-row;
 }
 
-.top_panel_left_cell,
 .top_panel_login_info_cell,
 .top_panel_title_cell
 {
     display: table-cell;
     vertical-align: middle !important;
     white-space: nowrap;
-    height: 28px;
-}
-
-.top_panel_left_cell
-{
-    width: 10240px;
-    height: 24px;
-    font-weight: bold;
-    color: #ffffff;
+    height: 32px;
 }
 
 .top_panel_title_cell
 {
+    font-weight: bold;
+    color: #ffffff;
     width: 10240px;
 }
 
@@ -2321,10 +2314,10 @@ a:hover
         padding: 0px;
     }
     
-    .top_panel_left_cell,
     .top_panel_title_cell
     {
         padding: 8px;
+        width: 100%;
     }
     
     .panel_menu_wrapper,

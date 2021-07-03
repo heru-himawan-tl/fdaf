@@ -50,7 +50,7 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         <h:panelGroup layout="block" styleClass="top_panel">
             <h:panelGroup layout="block" styleClass="top_panel_table">
                 <h:panelGroup layout="block" styleClass="top_panel_row">
-                    <h:panelGroup layout="block" styleClass="top_panel_left_cell">
+                    <h:panelGroup layout="block" styleClass="top_panel_title_cell">
                         <h:outputText value="#{cc.attrs.webAppBean.applicationName} " />
                         <h:outputText value="#{label.administrationDashboard}" />
                     </h:panelGroup>
@@ -81,11 +81,11 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                     </h:panelGroup>
                     <h:panelGroup layout="block" styleClass="top_panel_login_info_cell">
                         <h:panelGroup layout="block" styleClass="top_panel_login_info_cell_inner">
-                            <h:panelGroup layout="block" styleClass="login_info_flexbox" rendered="#{cc.attrs.webAppBean.isLoggedOn eq false}">
+                            <!-- h:panelGroup layout="block" styleClass="login_info_flexbox" rendered="#{cc.attrs.webAppBean.isLoggedOn eq false}">
                                 <h:commandButton type="button" styleClass="common_button blue_button"
                                     immediate="true" value="#{label.buttonLogin}" onclick="document.location.href='login.jsf';" />
                             </h:panelGroup>
-                            <!-- h:panelGroup layout="block" styleClass="login_info_flexbox" rendered="#{cc.attrs.webAppBean.isLoggedOn}">
+                            <h:panelGroup layout="block" styleClass="login_info_flexbox" rendered="#{cc.attrs.webAppBean.isLoggedOn}">
                                 <h:panelGroup layout="block" styleClass="login_info_box">
                                     <h:panelGroup layout="block" styleClass="login_info_box_inner">
                                         <h:panelGroup layout="block" styleClass="login_info_box_deeper">
