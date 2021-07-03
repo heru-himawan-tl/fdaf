@@ -38,9 +38,9 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     <composite:implementation>
         <h:panelGroup layout="block" styleClass="main_panel_footer">
             <h:panelGroup layout="block" styleClass="main_panel_footer_inner">
-                <h:outputText value="#{cc.attrs.webAppBean.applicationDescription}" /> V.
-                <h:outputText value="#{cc.attrs.webAppBean.applicationVersion}" /> (compiled date:
-                <h:outputText value="#{cc.attrs.webAppBean.applicationCompiledDate}" />)
+                <h:outputText value="#{cc.attrs.webAppBean.applicationLongName}" /> V.
+                <h:outputText value="#{cc.attrs.webAppBean.applicationVersion}" />
+                (<h:outputText value="#{cc.attrs.webAppBean.applicationCompiledDate}" />)
                 <br />
                 <h:outputText value="#{cc.attrs.webAppBean.applicationDevelCopyright}" />
                 <br />

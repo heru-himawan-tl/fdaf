@@ -94,7 +94,7 @@ public abstract class AbstractRepository<E> {
         specification.setRoot(root);
         return specification;
     }
-    
+   
     public List<E> findAll(Specification<E> specification, String orderParameter, OrderingMode orderMode) {
         CriteriaBuilder criteriaBuilder = specification.getBuilder();
         CriteriaQuery<E> criteriaQuery = specification.getQuery();

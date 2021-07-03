@@ -28,19 +28,38 @@
  */
 package fdaf.webapp.bean.system;
 
-import fdaf.base.ApplicationIdentifier;
+import fdaf.base.AddAdministratorInterface;
+import fdaf.base.AdministratorAccountCheckerInterface;
+import fdaf.base.CommonConfigurationInterface;
+import fdaf.base.DatabaseServiceCheckerInterface;
+import fdaf.base.UserSessionManagerInterface;
+import fdaf.base.UserType;
+import fdaf.webapp.base.AbstractBaseWebAppBean;
 import java.io.Serializable;
+import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
-import javax.inject.Named;
 import javax.faces.event.AbortProcessingException;
 import javax.faces.event.ComponentSystemEvent;
 import javax.inject.Inject;
+import javax.inject.Named;
 
 @SessionScoped
 @Named
-public class IndexPageWebAppBean extends ApplicationIdentifier implements Serializable {
+public class IndexPageWebAppBean extends AbstractBaseWebAppBean implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    
+    @EJB(lookup = "java:global/__EJB_LOOKUP_DIR__/AdministratorAccountCheckerFacade")
+    private AdministratorAccountCheckerInterface rootAccountChecker;
+    
+    @EJB(lookup = "java:global/__EJB_LOOKUP_DIR__/UserSessionManagerFacade")
+    private UserSessionManagerInterface userSessionManager;
+    
+    @EJB(lookup = "java:global/__EJB_LOOKUP_DIR__/CommonConfiguration")
+    private CommonConfigurationInterface commonConfiguration;
+    
+    @EJB(lookup = "java:global/__EJB_LOOKUP_DIR__/DatabaseServiceCheckerFacade")
+    private DatabaseServiceCheckerInterface dbServiceChecker;
 
     public IndexPageWebAppBean() {
         // NO-OP
@@ -48,5 +67,22 @@ public class IndexPageWebAppBean extends ApplicationIdentifier implements Serial
     
     public void initIndexPage(ComponentSystemEvent event) throws AbortProcessingException {
         // NO-OP
+    }
+    
+    @Override
+    protected DatabaseServiceCheckerInterface getDatabaseServiceChecker() {
+        return dbServiceChecker;
+    }
+    
+    protected AdministratorAccountCheckerInterface getAdministratorAccountChecker() {
+        return rootAccountChecker;
+    }
+    
+    protected CommonConfigurationInterface getCommonConfiguration() {
+        return commonConfiguration;
+    }
+    
+    public UserSessionManagerInterface getUserSessionManager() {
+        return userSessionManager;
     }
 }

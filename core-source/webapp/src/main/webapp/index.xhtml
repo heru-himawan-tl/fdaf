@@ -38,16 +38,47 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <title><h:outputText value="#{indexPageWebAppBean.applicationName}" /></title>
         <h:outputStylesheet library="css" name="style.css" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0 maximum-scale=1, user-scalable=0" />
     </h:head>
     <h:body>
+        <d:mainInit webAppBean="#{indexPageWebAppBean}" />
+        <d:databaseServiceCheck webAppBean="#{indexPageWebAppBean}" />
+        <d:userSessionWatch webAppBean="#{indexPageWebAppBean}" />
+        <d:administratorAccountCheck webAppBean="#{indexPageWebAppBean}" />
+        <d:addAdministratorStartPage webAppBean="#{indexPageWebAppBean}" />
+        <d:loginRequirementDialog webAppBean="#{indexPageWebAppBean}" />
         <h:panelGroup layout="block" styleClass="index_page_top_bar_container">
             <h:panelGroup layout="block" styleClass="index_page_top_bar">
                 <h:panelGroup layout="block" styleClass="index_page_top_bar_inner">
                     <h:panelGroup layout="block" styleClass="index_page_top_bar_title_box">
                         <h:outputText value="#{indexPageWebAppBean.applicationLongName} " />
                     </h:panelGroup>
+                    <h:panelGroup layout="block" styleClass="index_page_top_bar_gap_box"></h:panelGroup>
+                    <h:panelGroup layout="block" styleClass="index_page_top_bar_tool_box">
+                        <h:commandButton type="button" styleClass="common_button index_page_log_button"
+                            immediate="true" value="#{label.buttonLogin}"
+                            rendered="#{indexPageWebAppBean.isLoggedOn eq false}"
+                            onclick="document.location.href='login.jsf';" />
+                        <h:commandButton type="button" styleClass="common_button index_page_log_button"
+                            immediate="true" value="#{label.buttonLogout}"
+                            rendered="#{indexPageWebAppBean.isLoggedOn eq true}"
+                            onclick="document.location.href='logout.jsf';" />
+                    </h:panelGroup>
                 </h:panelGroup>
             </h:panelGroup>
         </h:panelGroup>
+        <h:panelGroup layout="block" styleClass="index_page_landing_middle_container">
+            <h:panelGroup layout="block" styleClass="index_page_application_description_box">
+                <h:panelGroup layout="block" styleClass="index_page_application_description_inner_box">
+                    <h:outputText value="#{indexPageWebAppBean.applicationDescription}" />
+                </h:panelGroup>
+                <h:panelGroup layout="block" styleClass="index_page_button_box">
+                    <h:commandButton type="button" styleClass="common_button index_page_common_button"
+                        immediate="true" value="#{label.administrationDashboard}"
+                        onclick="document.location.href='adm.jsf';" />
+                </h:panelGroup>
+            </h:panelGroup>
+        </h:panelGroup>
+        <d:indexPageFooter webAppBean="#{indexPageWebAppBean}" />
     </h:body>
 </html>
