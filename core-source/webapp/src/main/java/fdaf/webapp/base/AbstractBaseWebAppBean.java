@@ -77,6 +77,7 @@ public abstract class AbstractBaseWebAppBean extends AbstractWebAppCommon {
     protected Part dummyFile;
     protected Object dummy;
     protected String viewLayerName;
+    protected boolean databaseIsError;
 
     protected AbstractBaseWebAppBean() {
         // NO-OP
@@ -150,7 +151,12 @@ public abstract class AbstractBaseWebAppBean extends AbstractWebAppCommon {
             }
         } catch (Exception e) {
             indicateServiceError(e);
+            databaseIsError = true;
         }
+    }
+    
+    public boolean getDatabaseIsError() {
+        return databaseIsError;
     }
     
     protected void indicateServiceError(Throwable t) {
