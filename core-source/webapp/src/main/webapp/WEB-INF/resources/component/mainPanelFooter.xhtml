@@ -38,15 +38,14 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     <composite:implementation>
         <h:panelGroup layout="block" styleClass="main_panel_footer">
             <h:panelGroup layout="block" styleClass="main_panel_footer_inner">
-                <h:outputText value="#{cc.attrs.webAppBean.applicationLongName}" /> V.
-                <h:outputText value="#{cc.attrs.webAppBean.applicationVersion}" />
-                (<h:outputText value="#{cc.attrs.webAppBean.applicationCompiledDate}" />)
+                <h:outputText value="#{cc.attrs.webAppBean.frameworkLongName}" /> V.
+                <h:outputText value="#{cc.attrs.webAppBean.frameworkVersion}" />
                 <br />
-                <h:outputText value="#{cc.attrs.webAppBean.applicationDevelCopyright}" />
+                <h:outputText value="#{cc.attrs.webAppBean.frameworkDevCopyright}" />
                 <br />
                 Homepage:
-                <h:outputLink value="#{cc.attrs.webAppBean.applicationDevelHomePage}">
-                    <h:outputText value="#{cc.attrs.webAppBean.applicationDevelHomePage}" />
+                <h:outputLink value="#{cc.attrs.webAppBean.frameworkDevSite}">
+                    <h:outputText value="#{cc.attrs.webAppBean.frameworkDevSite}" />
                 </h:outputLink>
             </h:panelGroup>
         </h:panelGroup>
