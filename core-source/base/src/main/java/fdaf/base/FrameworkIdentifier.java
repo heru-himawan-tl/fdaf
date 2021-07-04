@@ -28,43 +28,33 @@
  */
 package fdaf.base;
 
-public abstract class ApplicationIdentifier extends FrameworkIdentifier {
+public abstract class FrameworkIdentifier {
 
-    protected static final String USER_SESSION_ID_FIELD_NAME = "${fdaf.applicationName}";
-
-    protected ApplicationIdentifier() {
+    protected FrameworkIdentifier() {
         // NO-OP
     }
     
-    public String getApplicationCodeName() {
-        return "${fdaf.applicationCodeName}";
+    public String getFrameworkCodeName() {
+        return "FDAF";
     }
     
-    public String getApplicationName() {
-        return "${fdaf.applicationName}";
+    public String getFrameworkLongName() {
+        return "FDAF Framework";
     }
     
-    public String getApplicationLongName() {
-        return "${fdaf.applicationLongName}";
+    public String getFrameworkDescription() {
+        return "FDAF (or F.D.A.F) - a free, open-source, MVC framework for creating Java web applications based JSF (JavaServer Face), and also mainly designed for creating enterprise application, implementing the standard Java EE. It favors both convention and configuration, makes implementation and configuration to be more simple, and lets the programmer write less of codes.";
     }
     
-    public String getApplicationDescription() {
-        return "${fdaf.applicationDescription}";
+    public String getFrameworkDevCopyright() {
+        return "Copyright (C) Heru Himawan Tejo Laksono";
     }
     
-    public String getApplicationDevelCopyright() {
-        return "${fdaf.copyright}";
+    public String getFrameworkDevSite() {
+        return "https://github.com/heru-himawan-tl/fdaf";
     }
     
-    public String getApplicationDevelHomePage() {
-        return "${fdaf.developerHomePage}";
-    }
-    
-    public String getApplicationVersion() {
-        return "${fdaf.applicationVersion}";
-    }
-    
-    public String getApplicationCompiledDate() {
-        return "${fdaf.applicationCompiledDate}";
+    public String getFrameworkVersion() {
+        return "1.0";
     }
 }

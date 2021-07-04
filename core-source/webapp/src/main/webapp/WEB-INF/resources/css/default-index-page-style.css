@@ -1,0 +1,274 @@
+/*
+ * Copyright (c) Heru Himawan Tejo Laksono. All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ * 1. Redistributions of source code must retain the above copyright notice,
+ *    this list of conditions and the following disclaimer.
+ *
+ * 2. Redistributions in binary form must reproduce the above copyright notice,
+ *    this list of conditions and the following disclaimer in the documentation
+ *    and/or other materials provided with the distribution.
+ *
+ * 3. Neither the name of the copyright holders nor the names of its
+ *    contributors may be used to endorse or promote products derived from this
+ *    software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED. IN NO EVENT SHALL THE REGENTS OR CONTRIBUTORS BE LIABLE FOR
+ * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+ * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+ * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+ * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE
+ * USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+
+.index_page_top_bar_container
+{
+    background-image: linear-gradient(160deg, #4A84FF, #002C8A, #002C8A, #4A84FF);
+    position: fixed;
+    top: 0px;
+    right: 0px;
+    z-index: 64;
+}
+
+.index_page_top_bar
+{
+    display: table;
+}
+
+.index_page_top_bar_inner
+{
+    display: table-row;
+}
+
+.index_page_top_bar_logo_box
+{
+    padding-right: 8px;
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.index_page_top_bar_title_box
+{
+    display: table-cell;
+    vertical-align: middle;
+    color: #ffffff;
+    font-size: 24px;
+    padding-left: 24px;
+    white-space: nowrap;
+}
+
+.index_page_top_bar_gap_box
+{
+    height: 72px;
+    width: 10240px;
+    display: table-cell;
+}
+
+.index_page_top_bar_tool_box
+{
+    display: table-cell;
+    vertical-align: middle;
+    padding-right: 24px;
+}
+
+.index_page_top_bar_logo_box img
+{
+    width: 42px;
+    width: 42px;
+}
+
+.index_page_footer_container
+{
+    position: fixed;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    padding-left: 24px;
+    padding-right: 24px;
+    background: #000000;
+}
+
+.index_page_footer_box;
+{
+    display: table;
+}
+
+.index_page_footer_box_inner
+{
+    display: table-row;
+}
+
+.index_page_footer_box_deeper
+{
+    display: table-cell;
+    color: #ffffff;
+    vertical-align: middle !important;
+    height: 72px;
+    font-size: 12px;
+    line-height: 16px;
+}
+
+.index_page_footer_box_deeper a
+{
+    color: #ffffff !important;
+}
+
+.index_page_landing_middle_container
+{
+    position: fixed;
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    padding: 24px;
+    top: 64px;
+    left: 0px;
+    right: 0px;
+    bottom: 64px;
+    background: url(../web-resources/ui-bg/index-landing-box-bg.jpg);
+    background-repeat: no-repeat;
+    background-position: left top;
+    background-size: cover;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.index_page_log_button
+{
+    border: 1px solid #ffffff !important;
+    background: none !important;
+}
+
+.index_page_log_button:hover
+{
+    background: #0000C2 !important;
+}
+
+.index_page_common_button
+{
+    border: 1px solid #ffffff !important;
+    background: none !important;
+}
+
+.index_page_common_button:hover
+{
+    background: #ffffff !important;
+    color: #000000 !important;
+}
+
+.index_page_button_box
+{
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-top: 16px; 
+}
+
+.index_page_application_description_box
+{
+    background: rgba(0, 0, 0, 0.65);
+    padding: 16px;
+}
+
+.index_page_application_description_inner_box
+{
+    font-size: 24px;
+    color: #ffffff;
+    border-bottom: 1px solid #ffffff;
+    padding-bottom: 16px;
+}
+
+@media (max-width: 1080px)
+{
+    .index_page_top_bar_container
+    {
+    }
+
+    .index_page_top_bar
+    {
+    }
+
+    .index_page_top_bar_inner
+    {
+    }
+
+    .index_page_top_bar_logo_box
+    {
+        padding-right: 8px;
+    }
+
+    .index_page_top_bar_title_box
+    {
+        font-size: 20px;
+        padding-left: 12px;
+        width: 100% !important;
+        height: 64px;
+    }
+
+    .index_page_top_bar_gap_box
+    {
+        display: none;
+    }
+
+    .index_page_top_bar_tool_box
+    {
+        padding-right: 12px;
+    }
+
+    .index_page_top_bar_logo_box img
+    {
+        width: 42px;
+        width: 42px;
+    }
+    
+    .index_page_landing_middle_container
+    {
+        background: url(../web-resources/ui-bg/index-landing-box-bg.jpg);
+        background-repeat: no-repeat;
+        background-position: top right;
+        background-size: cover;
+        align-items: center;
+        justify-content: flex-start;
+        padding: 12px;
+    }
+    
+    .index_page_application_description_box
+    {
+        padding: 12px;
+    }
+    
+    .index_page_application_description_inner_box
+    {
+        font-size: 18px;
+        padding-bottom: 8px;
+    }
+    
+    .index_page_button_box
+    {
+        padding-top: 12px; 
+    }
+    
+    .index_page_footer_container
+    {
+        padding-left: 12px;
+        padding-right: 12px;
+    }
+
+    .index_page_footer_box_deeper,
+    .index_page_footer_box_deeper a
+    {
+        font-size: 11px;
+        line-height: 14px;
+    }
+}
