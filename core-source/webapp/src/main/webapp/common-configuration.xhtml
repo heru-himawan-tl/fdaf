@@ -245,7 +245,7 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                                     </d:fieldRow>
                                 </h:panelGroup>
                             </h:panelGroup>
-                            <d:altProgramRestrictionWarningBox rendered="#{commonConfigurationWebAppBean.userType eq 'CLIENT' or commonConfigurationWebAppBean.userType eq 'STAFF'}" />
+                            <d:altProgramRestrictionWarningBox rendered="#{(commonConfigurationWebAppBean.userType eq 'CLIENT' or commonConfigurationWebAppBean.userType eq 'STAFF') and commonConfigurationWebAppBean.databaseIsError eq false}" />
                             <d:mainPanelFooter webAppBean="#{commonConfigurationWebAppBean}" />
                         </d:pageContainer>
                 </d:mainPanel>

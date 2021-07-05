@@ -56,10 +56,10 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
             <h:form id="form" a:enctype="#{cc.attrs.webAppBean.enctype}">
                 <d:mainInit webAppBean="#{cc.attrs.webAppBean}" />
                 <d:databaseServiceCheck webAppBean="#{cc.attrs.webAppBean}" />
-                <d:userSessionWatch webAppBean="#{cc.attrs.webAppBean}" />
-                <d:administratorAccountCheck webAppBean="#{cc.attrs.webAppBean}" />
-                <d:addAdministratorStartPage webAppBean="#{cc.attrs.webAppBean}" />
-                <d:loginRequirementDialog webAppBean="#{cc.attrs.webAppBean}" />
+                <d:userSessionWatch webAppBean="#{cc.attrs.webAppBean}" rendered="#{cc.attrs.webAppBean.databaseIsError eq false}" />
+                <d:administratorAccountCheck webAppBean="#{cc.attrs.webAppBean}" rendered="#{cc.attrs.webAppBean.databaseIsError eq false}" />
+                <d:addAdministratorStartPage webAppBean="#{cc.attrs.webAppBean}" rendered="#{cc.attrs.webAppBean.databaseIsError eq false}" />
+                <d:loginRequirementDialog webAppBean="#{cc.attrs.webAppBean}" rendered="#{cc.attrs.webAppBean.databaseIsError eq false}" />
                 <d:massiveRemovalPrompt webAppBean="#{cc.attrs.webAppBean}" id="massiveRemovalPrompt"
                     rendered="#{(cc.attrs.webAppBean.opMode eq 'LISTING')}" />
                 <d:anotherAdminsRecordTakeoverWarningDialog />
@@ -96,7 +96,8 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                                     <d:massiveSelectReset webAppBean="#{cc.attrs.webAppBean}" />
                                 </h:panelGroup>
                             </h:panelGroup>
-                            <d:programRestrictionWarningBox webAppBean="#{cc.attrs.webAppBean}" rendered="#{cc.attrs.webAppBean.isLoggedOn eq false or cc.attrs.webAppBean.allowRender eq false}" />
+                            <d:programRestrictionWarningBox webAppBean="#{cc.attrs.webAppBean}" rendered="#{(cc.attrs.webAppBean.isLoggedOn eq false or cc.attrs.webAppBean.allowRender eq false) and (cc.attrs.webAppBean.databaseIsError eq false)}" />
+                            <d:databaseErrorWarningBox webAppBean="#{cc.attrs.webAppBean}" />
                             <d:mainPanelFooter webAppBean="#{cc.attrs.webAppBean}" />
                         </d:pageContainer>
                         <d:deinit webAppBean="#{cc.attrs.webAppBean}" />

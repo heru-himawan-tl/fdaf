@@ -53,7 +53,7 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
             <h:form id="form" enctype="#{cc.attrs.webAppBean.enctype}">
                 <d:mainInit webAppBean="#{cc.attrs.webAppBean}" />
                 <d:databaseServiceCheck webAppBean="#{cc.attrs.webAppBean}" />
-                <d:userSessionWatch webAppBean="#{cc.attrs.webAppBean}" />
+                <d:userSessionWatch webAppBean="#{cc.attrs.webAppBean}" rendered="#{cc.attrs.webAppBean.databaseIsError eq false}" />
                 <d:customTopPanel webAppBean="#{cc.attrs.webAppBean}" />
                 <h:panelGroup layout="block" styleClass="left_panel_back_overlay"></h:panelGroup>
                 <h:panelGroup layout="block" styleClass="right_panel_back_overlay"></h:panelGroup>

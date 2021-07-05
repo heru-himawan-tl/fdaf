@@ -150,7 +150,7 @@ public abstract class AbstractBaseWebAppBean extends AbstractWebAppCommon {
                 getDatabaseServiceChecker().triggerCheck();
             }
         } catch (Exception e) {
-            indicateServiceError(e);
+            LOGGER.log(Level.SEVERE, "Service error", e);
             databaseIsError = true;
         }
     }
@@ -161,8 +161,10 @@ public abstract class AbstractBaseWebAppBean extends AbstractWebAppCommon {
     
     protected void indicateServiceError(Throwable t) {
         LOGGER.log(Level.SEVERE, "Service error", t);
-        addMessage(SV_ERROR, "serviceErrorWarning");
-        serviceIsError = true;
+        if (!databaseIsError) {
+            addMessage(SV_ERROR, "serviceErrorWarning");
+            serviceIsError = true;
+        }
     }
     
     public boolean getIsServiceError() {

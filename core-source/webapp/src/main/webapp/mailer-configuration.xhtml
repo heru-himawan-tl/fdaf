@@ -162,7 +162,7 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                                     </d:fieldRow>
                                 </h:panelGroup>
                             </h:panelGroup>
-                            <d:altProgramRestrictionWarningBox rendered="#{mailerConfigurationWebAppBean.userType eq 'CLIENT' or mailerConfigurationWebAppBean.userType eq 'STAFF'}" />
+                            <d:altProgramRestrictionWarningBox rendered="#{(mailerConfigurationWebAppBean.userType eq 'CLIENT' or mailerConfigurationWebAppBean.userType eq 'STAFF') and mailerConfigurationWebAppBean.databaseIsError eq false}" />
                             <d:mainPanelFooter webAppBean="#{mailerConfigurationWebAppBean}" />
                         </d:pageContainer>
                 </d:mainPanel>

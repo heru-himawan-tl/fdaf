@@ -37,9 +37,9 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions"
 		xmlns:f="http://xmlns.jcp.org/jsf/core">
     <d:commonPageTemplate webAppBean="#{accountEditorWebAppBean}" pageTitle="#{label.editAccount}">
-        <d:loginRequirementDialog webAppBean="#{accountEditorWebAppBean}" />
-        <d:administratorAccountCheck webAppBean="#{accountEditorWebAppBean}" />
-        <d:addAdministratorStartPage webAppBean="#{accountEditorWebAppBean}" />
+        <d:loginRequirementDialog webAppBean="#{accountEditorWebAppBean}" rendered="#{accountEditorWebAppBean.databaseIsError eq false}" />
+        <d:administratorAccountCheck webAppBean="#{accountEditorWebAppBean}" rendered="#{accountEditorWebAppBean.databaseIsError eq false}" />
+        <d:addAdministratorStartPage webAppBean="#{accountEditorWebAppBean}" rendered="#{accountEditorWebAppBean.databaseIsError eq false}" />
         <d:accountEditorInit webAppBean="#{accountEditorWebAppBean}" />             
         <d:customProgramHeading pageTitle="#{fn:toUpperCase(label.editAccount)}">
             <h:commandButton type="button" styleClass="grouped_button_left" value="#{label.buttonSaveUpdate}">
@@ -48,7 +48,7 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
             <h:commandButton type="button" styleClass="grouped_button_right" onclick="document.location.href='adm.jsf'" value="#{label.buttonClose}" />
         </d:customProgramHeading>
         <d:messages />
-        <h:panelGroup layout="block" styleClass="field_container">
+        <h:panelGroup layout="block" styleClass="field_container" rendered="#{accountEditorWebAppBean.databaseIsError eq false}">
             <h:panelGroup layout="block" styleClass="field_container_inner">
                 <d:fieldRow>
                     <d:fieldColumn>

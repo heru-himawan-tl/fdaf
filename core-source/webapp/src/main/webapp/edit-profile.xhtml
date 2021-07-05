@@ -37,6 +37,9 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions"
 		xmlns:f="http://xmlns.jcp.org/jsf/core">
     <d:commonPageTemplate webAppBean="#{profileEditorWebAppBean}" pageTitle="#{label.editProfile}">
+        <d:loginRequirementDialog webAppBean="#{profileEditorWebAppBean}" rendered="#{profileEditorWebAppBean.databaseIsError eq false}" />
+        <d:administratorAccountCheck webAppBean="#{profileEditorWebAppBean}" rendered="#{profileEditorWebAppBean.databaseIsError eq false}" />
+        <d:addAdministratorStartPage webAppBean="#{profileEditorWebAppBean}" rendered="#{profileEditorWebAppBean.databaseIsError eq false}" />
         <d:profileEditorInit webAppBean="#{profileEditorWebAppBean}" />             
         <d:customProgramHeading pageTitle="#{fn:toUpperCase(label.editProfile)}">
             <h:commandButton type="button" styleClass="grouped_button_left" value="#{label.buttonSaveUpdate}">
@@ -45,7 +48,7 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
             <h:commandButton type="button" styleClass="grouped_button_right" onclick="document.location.href='adm.jsf'" value="#{label.buttonClose}" />
         </d:customProgramHeading>
         <d:messages />
-        <h:panelGroup layout="block" styleClass="field_container">
+        <h:panelGroup layout="block" styleClass="field_container" rendered="#{profileEditorWebAppBean.databaseIsError eq false}">
             <h:panelGroup layout="block" styleClass="field_container_inner">
                 <d:fieldRow>
                     <d:fieldColumn>

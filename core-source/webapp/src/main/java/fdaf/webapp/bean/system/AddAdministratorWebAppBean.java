@@ -31,6 +31,7 @@ package fdaf.webapp.bean.system;
 import fdaf.base.AddAdministratorInterface;
 import fdaf.base.AdministratorAccountCheckerInterface;
 import fdaf.base.CommonConfigurationInterface;
+import fdaf.base.DatabaseServiceCheckerInterface;
 import fdaf.base.MailerInterface;
 import fdaf.base.UserSessionManagerInterface;
 import fdaf.base.UserType;
@@ -88,6 +89,9 @@ public class AddAdministratorWebAppBean extends AbstractWebAppBean implements Se
     @EJB(lookup = "java:global/__EJB_LOOKUP_DIR__/CommonConfiguration")
     private CommonConfigurationInterface commonConfiguration;
     
+    @EJB(lookup = "java:global/__EJB_LOOKUP_DIR__/DatabaseServiceCheckerFacade")
+    private DatabaseServiceCheckerInterface dbServiceChecker;
+    
     private String masterPasswordFileAddr;
     private String masterPassword;
     private String unlockPassword;
@@ -96,6 +100,11 @@ public class AddAdministratorWebAppBean extends AbstractWebAppBean implements Se
 
     public AddAdministratorWebAppBean() {
         // NO-OP
+    }
+    
+    @Override
+    protected DatabaseServiceCheckerInterface getDatabaseServiceChecker() {
+        return dbServiceChecker;
     }
 
     protected AdministratorAccountCheckerInterface getAdministratorAccountChecker() {

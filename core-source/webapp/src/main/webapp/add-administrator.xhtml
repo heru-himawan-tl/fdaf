@@ -58,12 +58,12 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                 <d:mainPanel>
                         <d:pageContainer id="page" webAppBean="#{addAdministratorWebAppBean}">
                             <d:customProgramHeading pageTitle="#{fn:toUpperCase(label.addAdministrator)}">
-                                <h:commandButton type="button" styleClass="grouped_button_left" value="#{label.buttonSaveCreate}" rendered="#{(addAdministratorWebAppBean.opMode ne 'UPDATE' and addAdministratorWebAppBean.userType ne 'STAFF' and addAdministratorWebAppBean.userType ne 'CLIENT')}">
+                                <h:commandButton type="button" styleClass="grouped_button_left" value="#{label.buttonSaveCreate}" rendered="#{(addAdministratorWebAppBean.opMode ne 'UPDATE' and addAdministratorWebAppBean.userType ne 'STAFF' and addAdministratorWebAppBean.userType ne 'CLIENT' and addAdministratorWebAppBean.databaseIsError eq false)}">
                                     <f:ajax event="click" execute="@form" render="@form" listener="#{addAdministratorWebAppBean.executeCreate}" />
                                 </h:commandButton>
-                                <h:commandButton type="button" styleClass="#{(addAdministratorWebAppBean.userType eq 'CLIENT' or addAdministratorWebAppBean.userType eq 'STAFF') ? 'common_button' : 'grouped_button_right'}" onclick="document.location.href='adm.jsf'" value="#{label.buttonClose}" rendered="#{(addAdministratorWebAppBean.opMode ne 'UPDATE')}" />
+                                <h:commandButton type="button" styleClass="#{(addAdministratorWebAppBean.userType eq 'CLIENT' or addAdministratorWebAppBean.userType eq 'STAFF' or addAdministratorWebAppBean.databaseIsError eq true) ? 'common_button' : 'grouped_button_right'}" onclick="document.location.href='adm.jsf'" value="#{label.buttonClose}" rendered="#{(addAdministratorWebAppBean.opMode ne 'UPDATE')}" />
                             </d:customProgramHeading>
-                            <h:panelGroup layout="block" styleClass="field_container" rendered="#{(addAdministratorWebAppBean.opMode eq 'UPDATE')}">
+                            <h:panelGroup layout="block" styleClass="field_container" rendered="#{(addAdministratorWebAppBean.opMode eq 'UPDATE' and addAdministratorWebAppBean.databaseIsError eq false)}">
                                 <h:panelGroup layout="block" styleClass="field_container_inner">
                                     <d:fieldRow>
                                         <d:fieldColumn>
@@ -84,11 +84,12 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                                     </d:fieldRow>
                                 </h:panelGroup>
                             </h:panelGroup>
-                            <d:messages rendered="#{(addAdministratorWebAppBean.opMode ne 'UPDATE')}" />
+                            <d:messages rendered="#{(addAdministratorWebAppBean.opMode ne 'UPDATE' and addAdministratorWebAppBean.databaseIsError eq false)}" />
                             <h:panelGroup layout="block" styleClass="field_container" rendered="#{(
                                     addAdministratorWebAppBean.opMode ne 'UPDATE' and
                                     addAdministratorWebAppBean.userType ne 'STAFF' and
-                                    addAdministratorWebAppBean.userType ne 'CLIENT'
+                                    addAdministratorWebAppBean.userType ne 'CLIENT' and
+                                    addAdministratorWebAppBean.databaseIsError eq false
                                 )}">
                                 <h:panelGroup layout="block" styleClass="field_container_inner">
                                     <d:fieldRow>
@@ -157,7 +158,8 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                                     </d:fieldRow>
                                 </h:panelGroup>
                             </h:panelGroup>
-                            <d:altProgramRestrictionWarningBox rendered="#{addAdministratorWebAppBean.userType eq 'CLIENT' or addAdministratorWebAppBean.userType eq 'STAFF'}" />
+                            <d:altProgramRestrictionWarningBox rendered="#{(addAdministratorWebAppBean.userType eq 'CLIENT' or addAdministratorWebAppBean.userType eq 'STAFF') and addAdministratorWebAppBean.databaseIsError eq false}" />
+                            <d:databaseErrorWarningBox webAppBean="#{addAdministratorWebAppBean}" />
                             <d:mainPanelFooter webAppBean="#{addAdministratorWebAppBean}" />
                         </d:pageContainer>
                 </d:mainPanel>

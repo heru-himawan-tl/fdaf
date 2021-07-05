@@ -1650,6 +1650,19 @@ a:hover
     padding: 8px;
 }
 
+.db_error_warning_container
+{
+    padding: 8px;
+}
+
+.db_error_warning_box
+{
+    background: #A40000;
+    color: #ffffff;
+    font-weight: bold;
+    padding: 8px;
+}
+
 /* END OF INLINE MESSAGE BOX ============================================== */
 
 /* DIALOG BOX ============================================================= */
