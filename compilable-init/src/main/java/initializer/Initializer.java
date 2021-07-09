@@ -172,7 +172,7 @@ public class Initializer {
                 if (nodeAddr.matches(".*persistence.xml") && nodeAddr.matches(".*thorntail.*")
                         && s.matches(".*\\<jta\\-data\\-source\\>.*")
                         && !s.matches(".*\\<jta\\-data\\-source\\>java\\:jboss\\/datasources\\/.*")) {
-                    s = s.replace("<jta-data-source>", "<jta-data-source>java:jboss/datasources/");
+                    s = s.replace("jta-data-source>", "jta-data-source>java:jboss/datasources/");
                 }
                 if (nodeAddr.matches(".*(webapp\\/bean|logic\\/ejb\\/callback|logic\\/ejb\\/facade|logic\\/ejb\\/).*") && nodeAddr.matches(".*thorntail.*")) {
                     s = s.replace("__EJB_LOOKUP_DIR__", applicationCodeName);

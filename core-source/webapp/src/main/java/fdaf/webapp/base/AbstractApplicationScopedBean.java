@@ -44,5 +44,6 @@ public abstract class AbstractApplicationScopedBean extends AbstractWebAppCommon
         messageBundle = ResourceBundle.getBundle("fdaf.webapp.rc.messages.message");
         elabel = ResourceBundle.getBundle("fdaf.erc.label");
         label = ResourceBundle.getBundle("fdaf.webapp.rc.messages.label");
+        clabel = ResourceBundle.getBundle("fdaf.webapp.rc.messages.custom_label");
     }
 }

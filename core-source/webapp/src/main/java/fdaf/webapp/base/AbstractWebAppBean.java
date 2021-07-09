@@ -118,7 +118,6 @@ public abstract class AbstractWebAppBean extends AbstractBaseWebAppBean {
     protected Object extEntity;
     
     protected String lastKnownNewRecordId;
-    protected String infoMessage;
 
     protected Object currentViewDataId;
 
@@ -318,7 +317,6 @@ public abstract class AbstractWebAppBean extends AbstractBaseWebAppBean {
                 Object recordId = getFacade().getNewRecordId();
                 lastKnownNewRecordId = String.valueOf(recordId);
                 addMessage(SV_INFO, "createRecordSuccess", lastKnownNewRecordId);
-                infoMessage = "createRecordSuccess";
                 if (saveAndClose) {
                     opMode = WebAppOpMode.LISTING;
                     saveAndClose = false;
@@ -778,7 +776,6 @@ public abstract class AbstractWebAppBean extends AbstractBaseWebAppBean {
                 feedBackEntity();
                 getFacade().postUpdateTask();
                 addMessage(SV_INFO, "updateRecordSuccess");
-                infoMessage = "updateRecordSuccess";
                 if (saveAndClose) {
                     opMode = WebAppOpMode.LISTING;
                     saveAndClose = false;
@@ -808,7 +805,6 @@ public abstract class AbstractWebAppBean extends AbstractBaseWebAppBean {
                 if (getFacade().isDataExists(primaryKey)) {
                     getFacade().inlineUpdate(primaryKey, extEntity);
                     addMessage(SV_INFO, "updateRecordSuccess");
-                    infoMessage = "updateRecordSuccess";
                 } else {
                     addMessage(SV_WARN, "dataNotFound");
                 }
@@ -864,7 +860,6 @@ public abstract class AbstractWebAppBean extends AbstractBaseWebAppBean {
             getFacade().setAuthorId(authorId);
             getFacade().takeover();
             addMessage(SV_INFO, "TakeoverSuccess");
-            infoMessage = "TakeoverSuccess";
             saveAndClose = false;
             takeoverOp = false;
             disposeEntity();
@@ -1037,7 +1032,6 @@ public abstract class AbstractWebAppBean extends AbstractBaseWebAppBean {
             }
             if (!partiallyLocated && !partiallyRemoved && getRemoved) {
                 addMessage(SV_INFO, "massiveRemovalInfo");
-                infoMessage = "massiveRemovalInfo";
             }
             if (partiallyLocated && getRemoved) {
                 addMessage(SV_WARN, "massiveRemovalPartialLocatedWarn");

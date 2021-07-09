@@ -44,6 +44,7 @@ public abstract class AbstractWebAppCommon extends ApplicationIdentifier {
     protected ResourceBundle messageBundle;
     protected ResourceBundle elabel;
     protected ResourceBundle label;
+    protected ResourceBundle clabel;
 
     protected AbstractWebAppCommon() {
         // NO-OP
@@ -58,6 +59,7 @@ public abstract class AbstractWebAppCommon extends ApplicationIdentifier {
         messageBundle = context.getApplication().getResourceBundle(context, "defaultMessage");
         elabel = context.getApplication().getResourceBundle(context, "elabel");
         label = context.getApplication().getResourceBundle(context, "label");
+        clabel = context.getApplication().getResourceBundle(context, "clabel");
     }
     
     public String getLocalDateTime() {

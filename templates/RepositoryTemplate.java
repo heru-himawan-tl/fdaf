@@ -32,18 +32,28 @@ import fdaf.logic.base.AbstractRepository;
 import fdaf.logic.entity.__NAME__;
 import java.io.Serializable;
 import javax.ejb.Stateful;
-import javax.ejb.TransactionManagement;
-import javax.ejb.TransactionManagementType;
+// --------------------------------------------------------------------------
+// If you want to apply TransactionManagementType.BEAN
+//import javax.ejb.TransactionManagement;
+//import javax.ejb.TransactionManagementType;
+// --------------------------------------------------------------------------
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceContextType;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 
-@TransactionManagement(TransactionManagementType.BEAN)
+// --------------------------------------------------------------------------
+// If you want to apply TransactionManagementType.BEAN
+//@TransactionManagement(TransactionManagementType.BEAN)
+// --------------------------------------------------------------------------
+@TransactionAttribute(TransactionAttributeType.MANDATORY)
 @Stateful
 public class __NAME__Repository extends AbstractRepository<__NAME__> implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @PersistenceContext(unitName = "${fdaf.jpaUnitName}")
+    @PersistenceContext(unitName = "${fdaf.jpaUnitName}", type = PersistenceContextType.TRANSACTION)
     private EntityManager entityManager;
 
     public __NAME__Repository() {

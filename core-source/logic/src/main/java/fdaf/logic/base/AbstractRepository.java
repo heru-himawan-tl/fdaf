@@ -41,7 +41,7 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
-import javax.transaction.Transactional;
+//import javax.transaction.Transactional;
 
 public abstract class AbstractRepository<E> {
 
@@ -57,25 +57,21 @@ public abstract class AbstractRepository<E> {
         return getEntityManager();
     }
 
-    @Transactional
     public void create(E entity) {
-        try {
         getEntityManager().persist(entity);
-        } catch (Exception e) {
-        }
     }
 
-    @Transactional
+    //@Transactional
     public void update(E entity) {
         getEntityManager().merge(entity);
     }
 
-    @Transactional
+    //@Transactional
     public void remove(E entity) {
         getEntityManager().remove(getEntityManager().merge(entity));
     }
 
-    @Transactional
+    //@Transactional
     public void refresh(E entity) {
         getEntityManager().refresh(getEntityManager().merge(entity));
     }

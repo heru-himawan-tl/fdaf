@@ -39,6 +39,7 @@ import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.Map;
+import java.util.ResourceBundle;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.ExternalContext;
@@ -199,12 +200,18 @@ public abstract class AbstractBaseWebAppBean extends AbstractWebAppCommon {
         }
         FacesContext context = FacesContext.getCurrentInstance();
         context.getApplication().setDefaultLocale(locale);
-        customCallbackMessageBundle = context.getApplication().getResourceBundle(context, "customCallbackMessage");
-        customMessageBundle = context.getApplication().getResourceBundle(context, "customMessage");
-        callbackMessageBundle = context.getApplication().getResourceBundle(context, "callbackMessage");
-        messageBundle = context.getApplication().getResourceBundle(context, "defaultMessage");
-        elabel = context.getApplication().getResourceBundle(context, "elabel");
-        label = context.getApplication().getResourceBundle(context, "label");
+        ClassLoader loader = Thread.currentThread().getContextClassLoader();
+        customCallbackMessageBundle = ResourceBundle.getBundle("fdaf.webapp.rc.messages.custom_callback_message", locale, loader);
+        customMessageBundle = ResourceBundle.getBundle("fdaf.webapp.rc.messages.custom_message", locale, loader);
+        callbackMessageBundle = ResourceBundle.getBundle("fdaf.webapp.rc.messages.callback_message", locale, loader);
+        messageBundle = ResourceBundle.getBundle("fdaf.webapp.rc.messages.message", locale, loader);
+        elabel = ResourceBundle.getBundle("fdaf.erc.label", locale, loader);
+        label = ResourceBundle.getBundle("fdaf.webapp.rc.messages.label", locale, loader);
+        clabel = ResourceBundle.getBundle("fdaf.webapp.rc.messages.custom_label", locale, loader);
+    }
+    
+    public void initBundles(ComponentSystemEvent event) throws AbortProcessingException {
+
     }
     
     public String getViewLayerName() {
