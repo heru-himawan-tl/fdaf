@@ -73,6 +73,8 @@ public class Initializer {
     private final List<String> undefinedCallbackMessage = new ArrayList<String>();
     private final List<String> definedCallbackMessage = new ArrayList<String>();
     
+    private boolean validationMessageDefLocaleTailed;
+    
     public Initializer() throws Exception {
         Properties properties = new Properties();
         InputStream propertiesFileStream = new FileInputStream("develop.properties");
@@ -105,8 +107,10 @@ public class Initializer {
                             || dirname.matches(".*logic\\/ejb.*")
                             || fileName.matches(".*\\.(yaml|yml|properties)$")
                             || fileName.equals("invoker-pom.xml")
+                            || fileName.equals("faces-config.xml")
                             || fileName.equals("web.xml")
-                            || fileName.matches(".*Repository\\.java$")) {
+                            || fileName.matches(".*Repository\\.java$")
+                            || fileName.matches(".*ValidationMessage([a-zA-Z0-9_]+)?\\.properties$")) {
                         nodeList.add(dirname + File.separator + fileName);
                     }
                 } else {
@@ -125,6 +129,37 @@ public class Initializer {
         String originalSource = "";
         String source = "";
         String dest = "";
+        try {
+            if (nodeAddr.matches(".*ValidationMessage([a-zA-Z0-9_]+)?\\.properties$")) {
+                String validationMessageFileName = nodeAddr.replaceAll("(^.*)(ValidationMessage([a-zA-Z0-9_]+)?)(\\.properties$)", "$2");
+                //String defaultLocale = propertyMap.get("fdaf.defaultLocale");
+                //String validationMessageDefLocaleFileNameExt = validationMessageFileName + "_" + defaultLocale + ".properties";
+                String validationMessageFileNameExt = validationMessageFileName + ".properties";
+                Path validationMessageTailingFilePath = Paths.get("tailing-validation-messages/"
+                    + validationMessageFileNameExt).toAbsolutePath().normalize();
+                if (Files.exists(validationMessageTailingFilePath)) {
+                    BufferedReader r0 = Files.newBufferedReader(Paths.get(nodeAddr));
+                    String l0 = null;
+                    String mainContent = "";
+                    while ((l0 = r0.readLine()) != null) {
+                        mainContent += l0.trim() + "\n";
+                    }
+                    r0.close();
+                    BufferedReader r1 = Files.newBufferedReader(validationMessageTailingFilePath);
+                    String l1 = null;
+                    String tailContent = "";
+                    while ((l1 = r1.readLine()) != null) {
+                        tailContent += l1.trim() + "\n";
+                    }
+                    r1.close();
+                    FileWriter fw = new FileWriter(nodeAddr, false);
+                    fw.write(mainContent + tailContent);
+                    fw.close();
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         try {
             BufferedReader r = Files.newBufferedReader(Paths.get(nodeAddr));
             String l = null;

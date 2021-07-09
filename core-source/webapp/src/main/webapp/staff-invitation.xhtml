@@ -43,6 +43,7 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     <h:body>
         <h:form id="form">
             <d:mainInit webAppBean="#{staffInvitationWebAppBean}" />
+            <d:loadBundles />
             <d:databaseServiceCheck webAppBean="#{staffInvitationWebAppBean}" />
             <d:setUserSessionRequirement webAppBean="#{staffInvitationWebAppBean}" rendered="#{staffInvitationWebAppBean.databaseIsError eq false}" />
             <d:setForAdministratorOnly webAppBean="#{staffInvitationWebAppBean}" rendered="#{staffInvitationWebAppBean.databaseIsError eq false}" />

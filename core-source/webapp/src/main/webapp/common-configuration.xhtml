@@ -44,6 +44,7 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     <h:body>
         <h:form id="form">
             <d:mainInit webAppBean="#{commonConfigurationWebAppBean}" />
+            <d:loadBundles />
             <d:databaseServiceCheck webAppBean="#{commonConfigurationWebAppBean}" />
             <d:administratorAccountCheck webAppBean="#{commonConfigurationWebAppBean}" />
             <d:commonConfigurationInit webAppBean="#{commonConfigurationWebAppBean}" />

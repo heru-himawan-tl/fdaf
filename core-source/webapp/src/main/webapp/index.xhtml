@@ -43,11 +43,9 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     </h:head>
     <h:body>
         <d:mainInit webAppBean="#{indexPageWebAppBean}" />
+        <d:loadBundles />
         <d:databaseServiceCheck webAppBean="#{indexPageWebAppBean}" />
         <d:userSessionWatch webAppBean="#{indexPageWebAppBean}" />
-        <d:administratorAccountCheck webAppBean="#{indexPageWebAppBean}" />
-        <d:addAdministratorStartPage webAppBean="#{indexPageWebAppBean}" />
-        <d:loginRequirementDialog webAppBean="#{indexPageWebAppBean}" />
         <h:panelGroup layout="block" styleClass="index_page_top_bar_container">
             <h:panelGroup layout="block" styleClass="index_page_top_bar">
                 <h:panelGroup layout="block" styleClass="index_page_top_bar_inner">

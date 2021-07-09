@@ -101,6 +101,7 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                                 "fdaf.applicationGroupId",
                                 "fdaf.applicationSourceDirectory",
                                 "fdaf.applicationVersion",
+                                "fdaf.defaultLocale",
                                 "fdaf.copyright",
                                 "fdaf.dataSourceName",
                                 "fdaf.developerHomePage",

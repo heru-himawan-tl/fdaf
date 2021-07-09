@@ -35,6 +35,7 @@ import fdaf.base.FacadeInterface;
 import fdaf.base.UserSessionManagerInterface;
 import fdaf.base.UserType;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.Map;
@@ -187,6 +188,23 @@ public abstract class AbstractBaseWebAppBean extends AbstractWebAppCommon {
         requestScheme = requestURL.replaceAll("\\:.*", "");
         contextPath = request.getContextPath();
         webappURL = requestScheme + "://" + requestAddress + ((requestPort != 80 && requestPort != 443) ? ":" + requestPort : "") + contextPath;
+        Locale locale = null;
+        try {
+            locale = new Locale(getCommonConfiguration().getRegionalLanguage());
+        } catch (Exception e) {
+            LOGGER.log(Level.SEVERE, "Service error", e);
+        }
+        if (locale == null) {
+            locale = new Locale("en_US");
+        }
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.getApplication().setDefaultLocale(locale);
+        customCallbackMessageBundle = context.getApplication().getResourceBundle(context, "customCallbackMessage");
+        customMessageBundle = context.getApplication().getResourceBundle(context, "customMessage");
+        callbackMessageBundle = context.getApplication().getResourceBundle(context, "callbackMessage");
+        messageBundle = context.getApplication().getResourceBundle(context, "defaultMessage");
+        elabel = context.getApplication().getResourceBundle(context, "elabel");
+        label = context.getApplication().getResourceBundle(context, "label");
     }
     
     public String getViewLayerName() {

@@ -55,6 +55,7 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         <h:body>
             <h:form id="form" a:enctype="#{cc.attrs.webAppBean.enctype}">
                 <d:mainInit webAppBean="#{cc.attrs.webAppBean}" />
+                <d:loadBundles />
                 <d:databaseServiceCheck webAppBean="#{cc.attrs.webAppBean}" />
                 <d:userSessionWatch webAppBean="#{cc.attrs.webAppBean}" rendered="#{cc.attrs.webAppBean.databaseIsError eq false}" />
                 <d:administratorAccountCheck webAppBean="#{cc.attrs.webAppBean}" rendered="#{cc.attrs.webAppBean.databaseIsError eq false}" />

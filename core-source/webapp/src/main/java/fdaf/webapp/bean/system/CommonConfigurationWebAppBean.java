@@ -97,26 +97,26 @@ public class CommonConfigurationWebAppBean extends AbstractBaseWebAppBean implem
     
     private boolean offlineSite;
     
-    @Size(min = 1, max = 128, message = "Site name length out of range (min = 1, max = 128).")
-    @NotBlank(message = "Site name not specified.")
+    @Size(min = 1, max = 128, message = "{siteNameOutOfRange}")
+    @NotBlank(message = "{siteNameBlank}")
     private String siteName;
     
-    @Pattern(regexp = "^[a-zA-Z0-9\\.\\-]+$", message = "Invalid format for domain name (allowed: a-z, A-Z, 0-9, ., and -).")
-    @Size(min = 3, max = 128, message = "Domain name length out of range (min = 3, max = 128).")
-    @NotBlank(message = "Domain name not specified.")
+    @Pattern(regexp = "^[a-zA-Z0-9\\.\\-]+$", message = "{domainNameInvalidFormat}")
+    @Size(min = 3, max = 128, message = "{domainNameOutOfRange}")
+    @NotBlank(message = "{domainNameBlank}")
     private String domain;
     
     private boolean domainAsDefaultSite;
     
     private boolean allowPerUserMultipleLogins;
     
-    @Pattern(regexp = "^[a-zA-Z0-9\\.\\-]+$", message = "Invalid format for web socket client secure key (allowed: a-z, A-Z, 0-9, ., and -).")
-    @Size(min = 6, max = 128, message = "Web socket client secure key length out of range (min = 6, max = 128).")
-    @NotBlank(message = "Web socket client secure key not specified.")
+    @Pattern(regexp = "^[a-zA-Z0-9\\.\\-]+$", message = "{webSocketClientSecureKeyInvalidFormat}")
+    @Size(min = 6, max = 128, message = "{webSocketClientSecureKeyOutOfRange}")
+    @NotBlank(message = "{webSocketClientSecureKeyBlank}")
     private String webSocketClientSecureKey;
     
-    @Pattern(regexp = "^[a-zA-Z0-9\\-\\.]+@[a-zA-Z0-9\\-\\.]+$", message = "Invalid format of e-mail address.")
-    @NotBlank(message = "E-mail address not specified.")
+    @Pattern(regexp = "^[a-zA-Z0-9\\-\\.]+@[a-zA-Z0-9\\-\\.]+$", message = "{webmasterEmailInvalidFormat}")
+    @NotBlank(message = "{webmasterEmailBlank}")
     private String webmasterEmail;
     
     private String siteDescription;

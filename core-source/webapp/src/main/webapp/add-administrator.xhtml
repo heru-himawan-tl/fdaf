@@ -43,6 +43,7 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     <h:body>
         <h:form id="form">
             <d:mainInit webAppBean="#{addAdministratorWebAppBean}" />
+            <d:loadBundles />
             <d:databaseServiceCheck webAppBean="#{addAdministratorWebAppBean}" />
             <d:administratorAccountCheck webAppBean="#{addAdministratorWebAppBean}" />
             <d:addAdministratorInit webAppBean="#{addAdministratorWebAppBean}" />

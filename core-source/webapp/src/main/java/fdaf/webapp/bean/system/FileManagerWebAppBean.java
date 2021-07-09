@@ -26,56 +26,63 @@
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE
  * USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package fdaf.webapp.bean.utility;
+package fdaf.webapp.bean.system;
 
+import fdaf.base.AddAdministratorInterface;
+import fdaf.base.AdministratorAccountCheckerInterface;
+import fdaf.base.CommonConfigurationInterface;
+import fdaf.base.DatabaseServiceCheckerInterface;
+import fdaf.base.UserSessionManagerInterface;
+import fdaf.base.UserType;
+import fdaf.webapp.base.AbstractBaseWebAppBean;
 import java.io.Serializable;
-import java.text.DateFormat;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.TreeMap;
-import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
-import javax.faces.model.SelectItem;
+import javax.faces.event.AbortProcessingException;
+import javax.faces.event.ComponentSystemEvent;
+import javax.inject.Inject;
 import javax.inject.Named;
 
+// UNDER DEVELOPMENT !
 @SessionScoped
 @Named
-public class LanguageOption implements Serializable {
+public class FileManagerWebAppBean extends AbstractBaseWebAppBean implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    private SelectItem[] items = new SelectItem[]{};
-    private HashMap<String, String> info = new HashMap<String, String>();
     
-    public LanguageOption() {
+    @EJB(lookup = "java:global/__EJB_LOOKUP_DIR__/AdministratorAccountCheckerFacade")
+    private AdministratorAccountCheckerInterface rootAccountChecker;
+    
+    @EJB(lookup = "java:global/__EJB_LOOKUP_DIR__/UserSessionManagerFacade")
+    private UserSessionManagerInterface userSessionManager;
+    
+    @EJB(lookup = "java:global/__EJB_LOOKUP_DIR__/CommonConfiguration")
+    private CommonConfigurationInterface commonConfiguration;
+    
+    @EJB(lookup = "java:global/__EJB_LOOKUP_DIR__/DatabaseServiceCheckerFacade")
+    private DatabaseServiceCheckerInterface dbServiceChecker;
+
+    public FileManagerWebAppBean() {
         // NO-OP
     }
-
-    @SuppressWarnings("unchecked")
-    @PostConstruct
-    public void postConstruct() {
-        List<SelectItem> itemsTemp = new ArrayList<SelectItem>();
-        Locale locales[] = DateFormat.getAvailableLocales();
-        for (Locale locale : locales) {
-            info.put(locale.toString(), locale.getDisplayName());
-        }
-        Map<String, String> ltm = new TreeMap<String, String>(info);
-        for (Map.Entry<String, String> entry : ltm.entrySet()) {
-            SelectItem selectItem = new SelectItem();
-            selectItem.setValue(entry.getKey());
-            selectItem.setLabel(entry.getKey() + " (" + entry.getValue() + ")");
-            itemsTemp.add(selectItem);
-        }
-        items = itemsTemp.toArray(new SelectItem[]{});
+    
+    @Override
+    protected DatabaseServiceCheckerInterface getDatabaseServiceChecker() {
+        return dbServiceChecker;
     }
     
-    public SelectItem[] getItems() {
-        return items;
+    protected AdministratorAccountCheckerInterface getAdministratorAccountChecker() {
+        return rootAccountChecker;
     }
     
-    public String getLanguageInfo(String code) {
-        return info.get(code);
+    protected CommonConfigurationInterface getCommonConfiguration() {
+        return commonConfiguration;
+    }
+    
+    public UserSessionManagerInterface getUserSessionManager() {
+        return userSessionManager;
+    }
+   
+    public void populateNodes(ComponentSystemEvent event) throws AbortProcessingException {
     }
 }

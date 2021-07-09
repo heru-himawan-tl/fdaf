@@ -37,24 +37,26 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         <composite:attribute required="true" name="webAppBean" type="java.lang.Object" />
     </composite:interface>
     <composite:implementation>
-                <d:panelMenuGroup value="#{label.accountManagement}" />
-                <h:link value="#{label.addAdministrator}" outcome="add-administrator" />
-                <h:link value="#{elabel.staffInvitation}" outcome="staff-invitation" />
-                <h:link value="#{elabel.user}" outcome="user" />
-                <h:link value="#{elabel.department}" outcome="department" />
-                <h:link value="#{elabel.role}" outcome="role" />
-                <h:link value="#{elabel.userGroup}" outcome="user-group" />
-                <h:link value="#{elabel.userGroupMember}" outcome="user-group-member" />
-                <h:link value="#{elabel.employee}" outcome="employee" />
+    
+        <d:panelMenuGroup value="#{label.accountManagement}" />
+        <h:link value="#{label.addAdministrator}" outcome="add-administrator" />
+        <h:link value="#{elabel.staffInvitation}" outcome="staff-invitation" />
+        <h:link value="#{elabel.user}" outcome="user" />
+        <h:link value="#{elabel.department}" outcome="department" />
+        <h:link value="#{elabel.role}" outcome="role" />
+        <h:link value="#{elabel.userGroup}" outcome="user-group" />
+        <h:link value="#{elabel.userGroupMember}" outcome="user-group-member" />
+        <h:link value="#{elabel.employee}" outcome="employee" />
                 
-                <d:panelMenuGroup value="#{label.configuration}" />
-                <h:link value="#{label.commonConfiguration}" outcome="common-configuration" />
-                <h:link value="#{label.mailerConfiguration}" outcome="mailer-configuration" />
+        <d:panelMenuGroup value="#{label.configuration}" />
+        <h:link value="#{label.commonConfiguration}" outcome="common-configuration" />
+        <h:link value="#{label.mailerConfiguration}" outcome="mailer-configuration" />
                 
-                <d:panelMenuGroup value="#{label.currentUserManagement}" rendered="#{cc.attrs.webAppBean.databaseIsError eq false}" />
-                <h:link value="#{label.editAccountLinkLabel}" outcome="edit-account" rendered="#{cc.attrs.webAppBean.isLoggedOn}"/>
-                <h:link value="#{label.editProfileLinkLabel}" outcome="edit-profile" rendered="#{cc.attrs.webAppBean.isLoggedOn}"/>
-                <h:link value="#{label.logoutLinkLabel}" outcome="logout" rendered="#{cc.attrs.webAppBean.isLoggedOn}"/>
-                <h:link value="#{label.loginLinkLabel}" outcome="login" rendered="#{cc.attrs.webAppBean.isLoggedOn eq false and cc.attrs.webAppBean.databaseIsError eq false}"/>
+        <d:panelMenuGroup value="#{label.currentUserManagement}" rendered="#{cc.attrs.webAppBean.databaseIsError eq false}" />
+        <h:link value="#{label.editAccountLinkLabel}" outcome="edit-account" rendered="#{cc.attrs.webAppBean.isLoggedOn}"/>
+        <h:link value="#{label.editProfileLinkLabel}" outcome="edit-profile" rendered="#{cc.attrs.webAppBean.isLoggedOn}"/>
+        <h:link value="#{label.logoutLinkLabel}" outcome="logout" rendered="#{cc.attrs.webAppBean.isLoggedOn}"/>
+        <h:link value="#{label.loginLinkLabel}" outcome="login" rendered="#{cc.attrs.webAppBean.isLoggedOn eq false and cc.attrs.webAppBean.databaseIsError eq false}"/>
+        
     </composite:implementation>
 </html>

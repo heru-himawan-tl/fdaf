@@ -44,6 +44,8 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     <h:body>
         <h:form id="form">
             <d:mainInit webAppBean="#{userSessionManagerWebAppBean}" />
+            <d:loadBundles />
+            <d:databaseServiceCheck webAppBean="#{userSessionManagerWebAppBean}" />
             <d:userSessionWatch webAppBean="#{userSessionManagerWebAppBean}" />
             <h:panelGroup layout="block" styleClass="dialog_container login_container">
                 <h:panelGroup layout="block" styleClass="dialog_box login_box">

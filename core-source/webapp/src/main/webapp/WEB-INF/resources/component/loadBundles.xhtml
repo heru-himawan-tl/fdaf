@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <!--
 
 Copyright (c) Heru Himawan Tejo Laksono. All rights reserved.
@@ -29,11 +28,18 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE
 USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 -->
-<faces-config version="2.3" xmlns="http://xmlns.jcp.org/xml/ns/javaee" 
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
-            http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_3.xsd">
-    <factory>
-        <exception-handler-factory>fdaf.webapp.handler.WebAppExceptionHandlerFactory</exception-handler-factory>
-    </factory>
-</faces-config>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:f="http://xmlns.jcp.org/jsf/core"
+        xmlns:composite="http://java.sun.com/jsf/composite">
+    <composite:interface></composite:interface>
+    <composite:implementation>
+        <f:loadBundle basename="fdaf.webapp.rc.messages.message" var="defaultMessage" />
+        <f:loadBundle basename="fdaf.webapp.rc.messages.custom_message" var="customMessage" />
+        <f:loadBundle basename="fdaf.webapp.rc.messages.custom_callback_message" var="customCallbackMessage" />
+        <f:loadBundle basename="fdaf.webapp.rc.messages.callback_message" var="callbackMessage" />
+        <f:loadBundle basename="fdaf.webapp.rc.messages.label" var="label" />
+        <f:loadBundle basename="fdaf.webapp.rc.messages.custom_label" var="clabel" />
+        <f:loadBundle basename="fdaf.erc.label" var="elabel" />
+    </composite:implementation>
+</html>
