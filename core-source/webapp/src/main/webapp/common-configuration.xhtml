@@ -48,7 +48,8 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
             <d:databaseServiceCheck webAppBean="#{commonConfigurationWebAppBean}" />
             <d:administratorAccountCheck webAppBean="#{commonConfigurationWebAppBean}" />
             <d:commonConfigurationInit webAppBean="#{commonConfigurationWebAppBean}" />
-            <d:userSessionWatch webAppBean="#{commonConfigurationWebAppBean}" rendered="#{(commonConfigurationWebAppBean.administratorAccountExists eq true)}" />
+            <d:userSessionWatch webAppBean="#{commonConfigurationWebAppBean}" 
+                rendered="#{(commonConfigurationWebAppBean.administratorAccountExists eq true)}" />
             <d:customTopPanel webAppBean="#{commonConfigurationWebAppBean}" />
             <h:panelGroup layout="block" styleClass="left_panel_back_overlay"></h:panelGroup>
             <h:panelGroup layout="block" styleClass="right_panel_back_overlay"></h:panelGroup>
@@ -58,197 +59,216 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                     <d:customLeftPanel webAppBean="#{commonConfigurationWebAppBean}" />
                 </d:leftPanel>
                 <d:mainPanel>
-                        <d:pageContainer id="page" webAppBean="#{commonConfigurationWebAppBean}">
-                            <d:customProgramHeading pageTitle="#{fn:toUpperCase(label.commonConfiguration)}">
-                                <h:commandButton type="button" styleClass="grouped_button_left" value="#{label.buttonSaveCreate}" rendered="#{(commonConfigurationWebAppBean.inSaving eq false and commonConfigurationWebAppBean.userType ne 'STAFF' and commonConfigurationWebAppBean.userType ne 'CLIENT')}">
-                                    <f:ajax event="click" execute="@form" render="@form" listener="#{commonConfigurationWebAppBean.save}" />
-                                </h:commandButton>
-                                <h:commandButton type="button" styleClass="#{(commonConfigurationWebAppBean.userType eq 'CLIENT' or commonConfigurationWebAppBean.userType eq 'STAFF') ? 'common_button' : 'grouped_button_right'}" onclick="document.location.href='adm.jsf'" value="#{label.buttonClose}" rendered="#{(commonConfigurationWebAppBean.inSaving eq false)}" />
-                                <h:commandButton type="button" styleClass="common_button" value="#{label.buttonClose}" onclick="document.location.href='adm.jsf';" rendered="#{(commonConfigurationWebAppBean.inSaving eq true)}" />
-                            </d:customProgramHeading>
-                            <h:panelGroup layout="block" styleClass="field_container" rendered="#{(commonConfigurationWebAppBean.inSaving eq true)}">
-                                <h:panelGroup layout="block" styleClass="field_container_inner">
-                                    <d:fieldRow>
-                                        <d:fieldColumn>
-                                            <d:informationBox content="#{defaultMessage.commonConfigurationSavingSuccess}" />
-                                        </d:fieldColumn>
-                                    </d:fieldRow>
-                                </h:panelGroup>
-                            </h:panelGroup>
-                            <d:messages rendered="#{(commonConfigurationWebAppBean.inSaving eq false)}" />
-                            <h:panelGroup layout="block" styleClass="field_container" rendered="#{(
+                    <d:pageContainer id="page" webAppBean="#{commonConfigurationWebAppBean}">
+                        <d:customProgramHeading pageTitle="#{fn:toUpperCase(label.commonConfiguration)}">
+                            <h:commandButton type="button" styleClass="grouped_button_left" value="#{label.buttonSaveCreate}"
+                                rendered="#{(
                                     commonConfigurationWebAppBean.inSaving eq false and
                                     commonConfigurationWebAppBean.userType ne 'STAFF' and
                                     commonConfigurationWebAppBean.userType ne 'CLIENT'
                                 )}">
-                                <h:panelGroup layout="block" styleClass="field_container_inner">
-                                    <d:fieldNoteBox rendered="#{commonConfigurationWebAppBean.isLoggedOn eq false}">
-                                        <h:outputText value="#{defaultMessage.restrictedCommonConfigurationWarn}" />
-                                    </d:fieldNoteBox>
-                                    <d:fieldGroupTitle title="#{label.siteState}" />
-                                    <d:fieldNoteBox>
-                                        <h:outputText value="#{defaultMessage.offlineSiteNote}" />
-                                    </d:fieldNoteBox>
-                                    <d:fieldRow>
-                                        <d:fieldColumn>
-                                            <d:fieldInputCheckbox>
-                                                <h:selectBooleanCheckbox id="offlineSite" value="#{commonConfigurationWebAppBean.offlineSite}" />
-                                            </d:fieldInputCheckbox>
-                                            <d:fieldInputCheckboxLabel>
-                                                <h:outputText value="#{label.offlineSite}" />
-                                            </d:fieldInputCheckboxLabel>
-                                        </d:fieldColumn>
-                                    </d:fieldRow>
-                                    <d:fieldGroupTitle title="#{label.siteDomain}" />
-                                    <d:fieldRow>
-                                        <d:fieldColumn>
-                                            <d:fieldLabel for="domain" value="#{label.domain}" />
-                                            <d:fieldInputBox>
-                                                <h:inputText id="domain" value="#{commonConfigurationWebAppBean.domain}" />
-                                            </d:fieldInputBox>
-                                        </d:fieldColumn>
-                                    </d:fieldRow>
-                                    <d:fieldRow>
-                                        <d:fieldColumn>
-                                            <d:fieldInputCheckbox>
-                                                <h:selectBooleanCheckbox id="domainAsDefaultSite" value="#{commonConfigurationWebAppBean.domainAsDefaultSite}" />
-                                            </d:fieldInputCheckbox>
-                                            <d:fieldInputCheckboxLabel>
-                                                <h:outputText value="#{label.domainAsDefaultSite}" />
-                                            </d:fieldInputCheckboxLabel>
-                                        </d:fieldColumn>
-                                    </d:fieldRow>
-                                    <d:fieldGroupTitle title="#{label.generalSiteInformation}" />
-                                    <d:fieldRow>
-                                        <d:fieldColumn>
-                                            <d:fieldLabel for="siteName" value="#{label.siteName}" />
-                                            <d:fieldInputBox>
-                                                <h:inputText id="siteName" value="#{commonConfigurationWebAppBean.siteName}" />
-                                            </d:fieldInputBox>
-                                        </d:fieldColumn>
-                                    </d:fieldRow>
-                                    <d:fieldRow rendered="#{commonConfigurationWebAppBean.isLoggedOn eq true}">
-                                        <d:fieldColumn>
-                                            <d:fieldLabel for="webmasterEmail" value="#{label.webmasterEmail}" />
-                                            <d:fieldInputBox>
-                                                <h:inputText id="webmasterEmail" value="#{commonConfigurationWebAppBean.webmasterEmail}" />
-                                            </d:fieldInputBox>
-                                        </d:fieldColumn>
-                                    </d:fieldRow>
-                                    <d:fieldRow>
-                                        <d:fieldColumn>
-                                            <d:fieldLabel for="siteDescription" value="#{label.siteDescription}" />
-                                            <d:fieldInputBox>
-                                                <h:inputTextarea id="siteDescription" value="#{commonConfigurationWebAppBean.siteDescription}" />
-                                            </d:fieldInputBox>
-                                        </d:fieldColumn>
-                                    </d:fieldRow>
-                                    <d:fieldGroupTitle title="#{label.localeSetting}" />
-                                    <d:fieldRow>
-                                        <d:fieldColumn>
-                                            <d:fieldLabel for="regionalLanguage" value="#{label.regionalLanguage}" />
-                                            <d:fieldInputBox>
-                                                <h:selectOneMenu id="gender" value="#{commonConfigurationWebAppBean.regionalLanguage}">
-                                                    <f:selectItems value="#{languageOption.items}" var="selectItem"
-                                                            itemValue="#{selectItem.value}" itemLabel="#{selectItem.label}" />
-                                                </h:selectOneMenu>
-                                            </d:fieldInputBox>
-                                        </d:fieldColumn>
-                                    </d:fieldRow>
-                                    <d:fieldGroupTitle title="#{label.security}" />
-                                    <d:fieldNoteBox>
-                                        <h:outputText value="#{defaultMessage.allowPerUserMultipleLoginsNote}" />
-                                    </d:fieldNoteBox>
-                                    <d:fieldRow>
-                                        <d:fieldColumn>
-                                            <d:fieldInputCheckbox>
-                                                <h:selectBooleanCheckbox id="allowPerUserMultipleLogins" value="#{commonConfigurationWebAppBean.allowPerUserMultipleLogins}" />
-                                            </d:fieldInputCheckbox>
-                                            <d:fieldInputCheckboxLabel>
-                                                <h:outputText value="#{label.allowPerUserMultipleLogins}" />
-                                            </d:fieldInputCheckboxLabel>
-                                        </d:fieldColumn>
-                                    </d:fieldRow>
-                                    <d:fieldNoteBox rendered="#{commonConfigurationWebAppBean.isLoggedOn eq true}">
-                                        <h:outputText value="#{defaultMessage.webSocketClientSecureKeyNote}" />
-                                    </d:fieldNoteBox>
-                                    <d:fieldRow rendered="#{commonConfigurationWebAppBean.isLoggedOn eq true}">
-                                        <d:fieldColumn>
-                                            <d:fieldLabel for="webSocketClientSecureKey" value="#{label.webSocketClientSecureKey}" />
-                                            <d:fieldInputBox>
-                                                <h:inputText id="webSocketClientSecureKey" value="#{commonConfigurationWebAppBean.webSocketClientSecureKey}" />
-                                            </d:fieldInputBox>
-                                        </d:fieldColumn>
-                                    </d:fieldRow>
-                                    <d:fieldGroupTitle title="#{label.generalUserProfile}" />
-                                    <d:fieldRow>
-                                        <d:fieldColumn>
-                                            <d:fieldLabel for="companyName" value="#{label.companyName}" />
-                                            <d:fieldInputBox>
-                                                <h:inputText id="companyName" value="#{commonConfigurationWebAppBean.companyName}" />
-                                            </d:fieldInputBox>
-                                        </d:fieldColumn>
-                                    </d:fieldRow>
-                                    <d:fieldRow>
-                                        <d:fieldColumn>
-                                            <d:fieldLabel for="companyDescription" value="#{label.companyDescription}" />
-                                            <d:fieldInputBox>
-                                                <h:inputTextarea id="companyDescription" value="#{commonConfigurationWebAppBean.companyDescription}" />
-                                            </d:fieldInputBox>
-                                        </d:fieldColumn>
-                                    </d:fieldRow>
-                                    <d:fieldRow>
-                                        <d:fieldColumn>
-                                            <d:fieldLabel for="companyAddress1" value="#{label.companyAddress1}" />
-                                            <d:fieldInputBox>
-                                                <h:inputTextarea id="companyAddress1" value="#{commonConfigurationWebAppBean.companyAddress1}" />
-                                            </d:fieldInputBox>
-                                        </d:fieldColumn>
-                                        <d:fieldColumn>
-                                            <d:fieldLabel for="companyAddress2" value="#{label.companyAddress2}" />
-                                            <d:fieldInputBox>
-                                                <h:inputTextarea id="companyAddress2" value="#{commonConfigurationWebAppBean.companyAddress2}" />
-                                            </d:fieldInputBox>
-                                        </d:fieldColumn>
-                                    </d:fieldRow>
-                                    <d:fieldRow>
-                                        <d:fieldColumn>
-                                            <d:fieldLabel for="companyPhone1" value="#{label.companyPhone1}" />
-                                            <d:fieldInputBox>
-                                                <h:inputText id="companyPhone1" value="#{commonConfigurationWebAppBean.companyPhone1}" />
-                                            </d:fieldInputBox>
-                                        </d:fieldColumn>
-                                        <d:fieldColumn>
-                                            <d:fieldLabel for="companyPhone2" value="#{label.companyPhone2}" />
-                                            <d:fieldInputBox>
-                                                <h:inputText id="companyPhone2" value="#{commonConfigurationWebAppBean.companyPhone2}" />
-                                            </d:fieldInputBox>
-                                        </d:fieldColumn>
-                                    </d:fieldRow>
-                                    <d:fieldRow rendered="#{commonConfigurationWebAppBean.isLoggedOn eq false}">
-                                        <d:fieldColumn>
-                                            <d:informationBox>
-                                                <h:outputText value="#{defaultMessage.commonConfigurationUnlockPasswordPredefinition} " />
-                                                <br />
-                                                <h:outputText value="#{commonConfigurationWebAppBean.getMasterPasswordFileAddr()}" />
-                                            </d:informationBox>
-                                        </d:fieldColumn>
-                                    </d:fieldRow>
-                                    <d:fieldRow rendered="#{commonConfigurationWebAppBean.isLoggedOn eq false}">
-                                        <d:fieldColumn>
-                                            <d:fieldLabel for="unlockPassword" value="#{label.masterPassword}" />
-                                            <d:fieldInputBox>
-                                                <h:inputSecret id="unlockPassword" value="#{commonConfigurationWebAppBean.unlockPassword}">
-                                                    <f:validateBean disabled="#{true}" />
-                                                </h:inputSecret>
-                                            </d:fieldInputBox>
-                                        </d:fieldColumn>
-                                    </d:fieldRow>
-                                </h:panelGroup>
+                                <f:ajax event="click" execute="@form" render="@form" listener="#{commonConfigurationWebAppBean.save}" />
+                            </h:commandButton>
+                            <h:commandButton type="button" styleClass="#{(
+                                commonConfigurationWebAppBean.userType eq 'CLIENT' or
+                                commonConfigurationWebAppBean.userType eq 'STAFF')
+                                ? 'common_button' : 'grouped_button_right'}" onclick="document.location.href='adm.jsf'" 
+                                value="#{label.buttonClose}" rendered="#{(commonConfigurationWebAppBean.inSaving eq false)}" />
+                            <h:commandButton type="button" styleClass="common_button" value="#{label.buttonClose}" 
+                                onclick="document.location.href='adm.jsf';"
+                                rendered="#{(commonConfigurationWebAppBean.inSaving eq true)}" />
+                        </d:customProgramHeading>
+                        <h:panelGroup layout="block" styleClass="field_container" rendered="#{(commonConfigurationWebAppBean.inSaving eq true)}">
+                            <h:panelGroup layout="block" styleClass="field_container_inner">
+                                <d:fieldRow>
+                                    <d:fieldColumn>
+                                        <d:informationBox content="#{defaultMessage.commonConfigurationSavingSuccess}" />
+                                    </d:fieldColumn>
+                                </d:fieldRow>
                             </h:panelGroup>
-                            <d:altProgramRestrictionWarningBox rendered="#{(commonConfigurationWebAppBean.userType eq 'CLIENT' or commonConfigurationWebAppBean.userType eq 'STAFF') and commonConfigurationWebAppBean.databaseIsError eq false}" />
-                            <d:mainPanelFooter webAppBean="#{commonConfigurationWebAppBean}" />
-                        </d:pageContainer>
+                        </h:panelGroup>
+                        <d:messages rendered="#{(commonConfigurationWebAppBean.inSaving eq false)}" />
+                        <h:panelGroup layout="block" styleClass="field_container" rendered="#{(
+                                commonConfigurationWebAppBean.inSaving eq false and
+                                commonConfigurationWebAppBean.userType ne 'STAFF' and
+                                commonConfigurationWebAppBean.userType ne 'CLIENT'
+                            )}">
+                            <h:panelGroup layout="block" styleClass="field_container_inner">
+                                <d:fieldNoteBox rendered="#{commonConfigurationWebAppBean.isLoggedOn eq false}">
+                                    <h:outputText value="#{defaultMessage.restrictedCommonConfigurationWarn}" />
+                                </d:fieldNoteBox>
+                                <d:fieldGroupTitle title="#{label.siteState}" />
+                                <d:fieldNoteBox>
+                                    <h:outputText value="#{defaultMessage.offlineSiteNote}" />
+                                </d:fieldNoteBox>
+                                <d:fieldRow>
+                                    <d:fieldColumn>
+                                        <d:fieldInputCheckbox>
+                                            <h:selectBooleanCheckbox id="offlineSite" value="#{commonConfigurationWebAppBean.offlineSite}" />
+                                        </d:fieldInputCheckbox>
+                                        <d:fieldInputCheckboxLabel>
+                                            <h:outputText value="#{label.offlineSite}" />
+                                        </d:fieldInputCheckboxLabel>
+                                    </d:fieldColumn>
+                                </d:fieldRow>
+                                <d:fieldGroupTitle title="#{label.siteDomain}" />
+                                <d:fieldRow>
+                                    <d:fieldColumn>
+                                        <d:fieldLabel for="domain" value="#{label.domain}" />
+                                        <d:fieldInputBox>
+                                            <h:inputText id="domain" value="#{commonConfigurationWebAppBean.domain}" />
+                                        </d:fieldInputBox>
+                                    </d:fieldColumn>
+                                </d:fieldRow>
+                                <d:fieldRow>
+                                    <d:fieldColumn>
+                                        <d:fieldInputCheckbox>
+                                            <h:selectBooleanCheckbox id="domainAsDefaultSite" 
+                                                value="#{commonConfigurationWebAppBean.domainAsDefaultSite}" />
+                                        </d:fieldInputCheckbox>
+                                        <d:fieldInputCheckboxLabel>
+                                            <h:outputText value="#{label.domainAsDefaultSite}" />
+                                        </d:fieldInputCheckboxLabel>
+                                    </d:fieldColumn>
+                                </d:fieldRow>
+                                <d:fieldGroupTitle title="#{label.generalSiteInformation}" />
+                                <d:fieldRow>
+                                    <d:fieldColumn>
+                                        <d:fieldLabel for="siteName" value="#{label.siteName}" />
+                                        <d:fieldInputBox>
+                                            <h:inputText id="siteName" value="#{commonConfigurationWebAppBean.siteName}" />
+                                        </d:fieldInputBox>
+                                    </d:fieldColumn>
+                                </d:fieldRow>
+                                <d:fieldRow rendered="#{commonConfigurationWebAppBean.isLoggedOn eq true}">
+                                    <d:fieldColumn>
+                                        <d:fieldLabel for="webmasterEmail" value="#{label.webmasterEmail}" />
+                                        <d:fieldInputBox>
+                                            <h:inputText id="webmasterEmail" value="#{commonConfigurationWebAppBean.webmasterEmail}" />
+                                        </d:fieldInputBox>
+                                    </d:fieldColumn>
+                                </d:fieldRow>
+                                <d:fieldRow>
+                                    <d:fieldColumn>
+                                        <d:fieldLabel for="siteDescription" value="#{label.siteDescription}" />
+                                        <d:fieldInputBox>
+                                            <h:inputTextarea id="siteDescription" value="#{commonConfigurationWebAppBean.siteDescription}" />
+                                        </d:fieldInputBox>
+                                    </d:fieldColumn>
+                                </d:fieldRow>
+                                <d:fieldGroupTitle title="#{label.localeSetting}" />
+                                <d:fieldRow>
+                                    <d:fieldColumn>
+                                        <d:fieldLabel for="regionalLanguage" value="#{label.regionalLanguage}" />
+                                        <d:fieldInputBox>
+                                            <h:selectOneMenu id="gender" value="#{commonConfigurationWebAppBean.regionalLanguage}">
+                                                <f:selectItems value="#{languageOption.items}" var="selectItem"
+                                                        itemValue="#{selectItem.value}" itemLabel="#{selectItem.label}" />
+                                            </h:selectOneMenu>
+                                        </d:fieldInputBox>
+                                    </d:fieldColumn>
+                                </d:fieldRow>
+                                <d:fieldGroupTitle title="#{label.security}" />
+                                <d:fieldNoteBox>
+                                    <h:outputText value="#{defaultMessage.allowPerUserMultipleLoginsNote}" />
+                                </d:fieldNoteBox>
+                                <d:fieldRow>
+                                    <d:fieldColumn>
+                                        <d:fieldInputCheckbox>
+                                            <h:selectBooleanCheckbox id="allowPerUserMultipleLogins" 
+                                                value="#{commonConfigurationWebAppBean.allowPerUserMultipleLogins}" />
+                                        </d:fieldInputCheckbox>
+                                        <d:fieldInputCheckboxLabel>
+                                            <h:outputText value="#{label.allowPerUserMultipleLogins}" />
+                                        </d:fieldInputCheckboxLabel>
+                                    </d:fieldColumn>
+                                </d:fieldRow>
+                                <d:fieldNoteBox rendered="#{commonConfigurationWebAppBean.isLoggedOn eq true}">
+                                    <h:outputText value="#{defaultMessage.webSocketClientSecureKeyNote}" />
+                                </d:fieldNoteBox>
+                                <d:fieldRow rendered="#{commonConfigurationWebAppBean.isLoggedOn eq true}">
+                                    <d:fieldColumn>
+                                        <d:fieldLabel for="webSocketClientSecureKey" value="#{label.webSocketClientSecureKey}" />
+                                        <d:fieldInputBox>
+                                            <h:inputText id="webSocketClientSecureKey" 
+                                                value="#{commonConfigurationWebAppBean.webSocketClientSecureKey}" />
+                                        </d:fieldInputBox>
+                                    </d:fieldColumn>
+                                </d:fieldRow>
+                                <d:fieldGroupTitle title="#{label.generalUserProfile}" />
+                                <d:fieldRow>
+                                    <d:fieldColumn>
+                                        <d:fieldLabel for="companyName" value="#{label.companyName}" />
+                                        <d:fieldInputBox>
+                                            <h:inputText id="companyName" value="#{commonConfigurationWebAppBean.companyName}" />
+                                        </d:fieldInputBox>
+                                    </d:fieldColumn>
+                                </d:fieldRow>
+                                <d:fieldRow>
+                                    <d:fieldColumn>
+                                        <d:fieldLabel for="companyDescription" value="#{label.companyDescription}" />
+                                        <d:fieldInputBox>
+                                            <h:inputTextarea id="companyDescription"
+                                                value="#{commonConfigurationWebAppBean.companyDescription}" />
+                                        </d:fieldInputBox>
+                                    </d:fieldColumn>
+                                </d:fieldRow>
+                                <d:fieldRow>
+                                    <d:fieldColumn>
+                                        <d:fieldLabel for="companyAddress1" value="#{label.companyAddress1}" />
+                                        <d:fieldInputBox>
+                                            <h:inputTextarea id="companyAddress1" value="#{commonConfigurationWebAppBean.companyAddress1}" />
+                                        </d:fieldInputBox>
+                                    </d:fieldColumn>
+                                    <d:fieldColumn>
+                                        <d:fieldLabel for="companyAddress2" value="#{label.companyAddress2}" />
+                                        <d:fieldInputBox>
+                                            <h:inputTextarea id="companyAddress2" value="#{commonConfigurationWebAppBean.companyAddress2}" />
+                                        </d:fieldInputBox>
+                                    </d:fieldColumn>
+                                </d:fieldRow>
+                                <d:fieldRow>
+                                    <d:fieldColumn>
+                                        <d:fieldLabel for="companyPhone1" value="#{label.companyPhone1}" />
+                                        <d:fieldInputBox>
+                                            <h:inputText id="companyPhone1" value="#{commonConfigurationWebAppBean.companyPhone1}" />
+                                        </d:fieldInputBox>
+                                    </d:fieldColumn>
+                                    <d:fieldColumn>
+                                        <d:fieldLabel for="companyPhone2" value="#{label.companyPhone2}" />
+                                        <d:fieldInputBox>
+                                            <h:inputText id="companyPhone2" value="#{commonConfigurationWebAppBean.companyPhone2}" />
+                                        </d:fieldInputBox>
+                                    </d:fieldColumn>
+                                </d:fieldRow>
+                                <d:fieldRow rendered="#{commonConfigurationWebAppBean.isLoggedOn eq false}">
+                                    <d:fieldColumn>
+                                        <d:informationBox>
+                                            <h:outputText value="#{defaultMessage.commonConfigurationUnlockPasswordPredefinition} " />
+                                            <br />
+                                            <h:outputText value="#{commonConfigurationWebAppBean.getMasterPasswordFileAddr()}" />
+                                        </d:informationBox>
+                                    </d:fieldColumn>
+                                </d:fieldRow>
+                                <d:fieldRow rendered="#{commonConfigurationWebAppBean.isLoggedOn eq false}">
+                                    <d:fieldColumn>
+                                        <d:fieldLabel for="unlockPassword" value="#{label.masterPassword}" />
+                                        <d:fieldInputBox>
+                                            <h:inputSecret id="unlockPassword" value="#{commonConfigurationWebAppBean.unlockPassword}">
+                                                <f:validateBean disabled="#{true}" />
+                                            </h:inputSecret>
+                                        </d:fieldInputBox>
+                                    </d:fieldColumn>
+                                </d:fieldRow>
+                            </h:panelGroup>
+                        </h:panelGroup>
+                        <d:altProgramRestrictionWarningBox rendered="#{(
+                            commonConfigurationWebAppBean.userType eq 'CLIENT' or
+                            commonConfigurationWebAppBean.userType eq 'STAFF') and
+                            commonConfigurationWebAppBean.databaseIsError eq false
+                            }" />
+                        <d:mainPanelFooter webAppBean="#{commonConfigurationWebAppBean}" />
+                    </d:pageContainer>
                 </d:mainPanel>
                 <d:rightPanel>
                     <d:customRightPanel webAppBean="#{commonConfigurationWebAppBean}" />

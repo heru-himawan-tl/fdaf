@@ -63,10 +63,12 @@ public class LanguageOption implements Serializable {
         }
         Map<String, String> ltm = new TreeMap<String, String>(info);
         for (Map.Entry<String, String> entry : ltm.entrySet()) {
-            SelectItem selectItem = new SelectItem();
-            selectItem.setValue(entry.getKey());
-            selectItem.setLabel(entry.getKey() + " (" + entry.getValue() + ")");
-            itemsTemp.add(selectItem);
+            if (!entry.getKey().matches(".*\\#.*")) {
+                SelectItem selectItem = new SelectItem();
+                selectItem.setValue(entry.getKey());
+                selectItem.setLabel(entry.getValue() + " (" + entry.getKey().toUpperCase() + ")");
+                itemsTemp.add(selectItem);
+            }
         }
         items = itemsTemp.toArray(new SelectItem[]{});
     }
