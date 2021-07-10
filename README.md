@@ -124,6 +124,11 @@ FDAF for this initial release supports only the following JPA providers:
 
 FDAF source code is available at GITHUB: [https://github.com/heru-himawan-tl/fdaf](https://github.com/heru-himawan-tl/fdaf)
 
+## Application Example
+
+An FDAF application example source code is available at GITHUB:
+[https://github.com/heru-himawan-tl/fdaf-application-example](https://github.com/heru-himawan-tl/fdaf-application-example)
+
 ## License
 
 Copyright (c) [Heru Himawan Tejo Laksono](https://github.com/heru-himawan-tl).
