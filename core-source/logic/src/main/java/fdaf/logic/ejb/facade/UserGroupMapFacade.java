@@ -44,7 +44,9 @@ import javax.ejb.Stateful;
 @Remote({MapInterface.class})
 @Stateful
 public class UserGroupMapFacade implements Serializable {
+    
     private static final long serialVersionUID = 1L;
+    
     @EJB
     private UserGroupRepository repository;
 

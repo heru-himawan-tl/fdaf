@@ -41,7 +41,9 @@ import javax.ejb.Stateful;
 @Remote({FacadeInterface.class})
 @Stateful
 public class UserGroupMemberFacade extends AbstractFacade<UserGroupMemberRepository, UserGroupMember> implements Serializable {
+    
     private static final long serialVersionUID = 1L;
+    
     @EJB
     private UserGroupMemberRepository repository;
 

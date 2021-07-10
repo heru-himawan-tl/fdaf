@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<ejb-jar>
+    <enterprise-beans>
+        <session>
+            <stateful-timeout>
+                <timeout>-1</timeout>
+                <unit>Seconds</unit>
+            </stateful-timeout>
+        </session>
+    </enterprise-beans>
+</ejb-jar>
