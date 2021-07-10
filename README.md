@@ -109,10 +109,9 @@ Notice:
 - Thorntail development was discontinued, the support for Thorntail
 probably will be unexpectedly defective in the future.  
 - The newer [GlashFish](https://javaee.github.io/glassfish/) and
-[Payara](https://www.payara.fish/) are removed from the list of
-supported application server, since they are having bugs those
-will cause FDAF application will not able to work or even failing
-the FDAF application deployment.
+[Payara](https://www.payara.fish/) were removed from the list of
+supported application server, since they have bugs those
+prevent FDAF application to work with them.
 
 ### Supported JPA Providers
 
