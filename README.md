@@ -101,14 +101,18 @@ business-logic-application-modules source codes within FDAF.
 
 FDAF supports the following application server platforms for deployment:
 
-- [WildFly](https://www.wildfly.org/)  
-- [GlashFish](https://javaee.github.io/glassfish/)  
-- [Payara](https://www.payara.fish/)  
+- [WildFly](https://www.wildfly.org/)   
 - [Apache Tomee Plume >= V.8.x.x](https://tomee.apache.org/)  
 - [Thorntail](https://thorntail.io/)  
 
-Notice: Thorntail development was discontinued, the support for Thorntail
-probably will be unexpectedly defective in the future.
+Notice:
+- Thorntail development was discontinued, the support for Thorntail
+probably will be unexpectedly defective in the future.  
+- The newer [GlashFish](https://javaee.github.io/glassfish/) and
+[Payara](https://www.payara.fish/) are removed from the list of
+supported application server, since they are having bugs those
+will cause FDAF application will not able to work or even failing
+the FDAF application deployment.
 
 ### Supported JPA Providers
 

@@ -67,6 +67,7 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                     <defaultLibBundleDir>lib</defaultLibBundleDir>
                     <description>${fdaf.applicationDescription}</description>
                     <generateModuleId>false</generateModuleId>
+                    <generateApplicationXml>true</generateApplicationXml>
                     <modules>
                         <ejbModule>
                             <groupId>${fdaf.applicationGroupId}</groupId>
