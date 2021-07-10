@@ -104,6 +104,7 @@ FDAF supports the following application server platforms for deployment:
 - [WildFly](https://www.wildfly.org/)  
 - [GlashFish](https://javaee.github.io/glassfish/)  
 - [Payara](https://www.payara.fish/)  
+- [Apache Tomee Plume >= V.8.x.x](https://tomee.apache.org/)  
 - [Thorntail](https://thorntail.io/)  
 
 Notice: Thorntail development was discontinued, the support for Thorntail
