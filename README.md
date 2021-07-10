@@ -102,7 +102,7 @@ business-logic-application-modules source codes within FDAF.
 FDAF supports the following application server platforms for deployment:
 
 - [WildFly](https://www.wildfly.org/)   
-- [Apache Tomee Plume >= V.8.x.x](https://tomee.apache.org/)  
+- [Apache Tomee Plume/Plus >= V.8.x.x](https://tomee.apache.org/)  
 - [Thorntail](https://thorntail.io/)  
 
 Notice:
