@@ -37,7 +37,10 @@ import java.io.Serializable;
 import javax.ejb.EJB;
 import javax.ejb.Remote;
 import javax.ejb.Stateful;
+import java.util.concurrent.TimeUnit;
+import javax.ejb.StatefulTimeout;
 
+@StatefulTimeout(value = -1)
 @Remote({FacadeInterface.class})
 @Stateful
 public class __NAME__Facade extends AbstractFacade<__NAME__Repository, __NAME__>

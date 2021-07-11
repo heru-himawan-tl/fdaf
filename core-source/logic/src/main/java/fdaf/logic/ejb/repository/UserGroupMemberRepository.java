@@ -32,16 +32,22 @@ import fdaf.logic.base.AbstractRepository;
 import fdaf.logic.entity.UserGroupMember;
 import java.io.Serializable;
 import javax.ejb.Stateful;
-import javax.ejb.TransactionManagement;
-import javax.ejb.TransactionManagementType;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceContextType;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
+import java.util.concurrent.TimeUnit;
+import javax.ejb.StatefulTimeout;
 
-@TransactionManagement(TransactionManagementType.BEAN)
+@StatefulTimeout(value = -1)
+@TransactionAttribute(TransactionAttributeType.MANDATORY)
 @Stateful
 public class UserGroupMemberRepository extends AbstractRepository<UserGroupMember> implements Serializable {
+
     private static final long serialVersionUID = 1L;
-    @PersistenceContext(unitName = "${fdaf.jpaUnitName}")
+    
+    @PersistenceContext(unitName = "${fdaf.jpaUnitName}", type = PersistenceContextType.TRANSACTION)
     private EntityManager entityManager;
 
     public UserGroupMemberRepository() {

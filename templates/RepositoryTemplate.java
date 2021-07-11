@@ -32,21 +32,15 @@ import fdaf.logic.base.AbstractRepository;
 import fdaf.logic.entity.__NAME__;
 import java.io.Serializable;
 import javax.ejb.Stateful;
-// --------------------------------------------------------------------------
-// If you want to apply TransactionManagementType.BEAN
-//import javax.ejb.TransactionManagement;
-//import javax.ejb.TransactionManagementType;
-// --------------------------------------------------------------------------
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceContextType;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
+import java.util.concurrent.TimeUnit;
+import javax.ejb.StatefulTimeout;
 
-// --------------------------------------------------------------------------
-// If you want to apply TransactionManagementType.BEAN
-//@TransactionManagement(TransactionManagementType.BEAN)
-// --------------------------------------------------------------------------
+@StatefulTimeout(value = -1)
 @TransactionAttribute(TransactionAttributeType.MANDATORY)
 @Stateful
 public class __NAME__Repository extends AbstractRepository<__NAME__> implements Serializable {
