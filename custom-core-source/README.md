@@ -24,10 +24,10 @@ The following directories and/or files are intended to place or add custom web a
 - `/custom-core-source/webapp/src/main/resources/fdaf/webapp/rc/messages/custom_callback_message.properties` - resource bundle file to define custom callback messages.
 - `/custom-core-source/webapp/src/main/resources/fdaf/webapp/rc/messages/custom_label.properties` - resource bundle file to define custom web user interface labels.
 - `/custom-core-source/webapp/src/main/resources/fdaf/webapp/rc/messages/custom_message.properties` - resource bundle file to define custom messages.
+- `/custom-core-source/webapp/src/main/resources/META-INF/resources/component/` - directory to place custom JSF component files.
+- `/custom-core-source/webapp/src/main/resources/META-INF/resources/css/` - directory to place custom cascading style sheets files.
+- `/custom-core-source/webapp/src/main/resources/META-INF/resources/js/` - directory to place custom JavaScript files.
 - `/custom-core-source/webapp/src/main/webapp/` - directory to place custom JSF files of program pages.
-- `/custom-core-source/webapp/src/main/webapp/WEB-INF/resources/component/` - directory to place custom JSF component files.
-- `/custom-core-source/webapp/src/main/webapp/WEB-INF/resources/css/` - directory to place custom cascading style sheets files.
-- `/custom-core-source/webapp/src/main/webapp/WEB-INF/resources/js/` - directory to place custom JavaScript files.
 - `/custom-core-source/webapp/src/main/webapp/WEB-INF/templates/` - directory to place custom JSF program template files.
 - `/custom-core-source/webapp/src/main/webapp/web-resources/` - directory to place custom miscellaneous files.
 
