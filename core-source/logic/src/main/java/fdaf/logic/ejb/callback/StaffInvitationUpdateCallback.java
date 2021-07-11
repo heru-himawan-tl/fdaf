@@ -40,7 +40,10 @@ import java.io.Serializable;
 import javax.ejb.Remote;
 import javax.ejb.EJB;
 import javax.ejb.Stateful;
+import java.util.concurrent.TimeUnit;
+import javax.ejb.StatefulTimeout;
 
+@StatefulTimeout(value = -1)
 @Remote({UpdateCallbackInterface.class})
 @Stateful
 public class StaffInvitationUpdateCallback extends AbstractUpdateCallback
