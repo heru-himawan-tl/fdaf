@@ -41,7 +41,7 @@ public class ErrorPageWebAppBean extends AbstractDummyWebAppBean implements Seri
 
     private static final long serialVersionUID = 1L;
     
-    @EJB(lookup = "java:global/__EJB_LOOKUP_DIR__/CommonConfiguration")
+    @EJB(lookup = "java:global/__EJB_LOOKUP_DIR__/CommonConfigurationService")
     private CommonConfigurationInterface commonConfiguration;
 
     public ErrorPageWebAppBean() {

@@ -63,11 +63,11 @@ import javax.mail.Transport;
 @Remote({MailerInterface.class})
 @Singleton
 @Startup
-public class Mailer extends ApplicationIdentifier implements Serializable {
+public class MailerService extends ApplicationIdentifier implements Serializable {
 
     private static final long serialVersionUID = 1L;
     
-    private static final Logger LOGGER = Logger.getLogger(Mailer.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(MailerService.class.getName());
     
     private boolean enabled;
     private String configPath;

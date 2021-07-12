@@ -73,10 +73,10 @@ public class UserRegistrationWebAppBean extends AbstractWebAppBean implements Se
     @EJB(lookup = "java:global/__EJB_LOOKUP_DIR__/UserRegistrationFacade")
     private UserRegistrationInterface facade;
     
-    @EJB(lookup = "java:global/__EJB_LOOKUP_DIR__/Mailer")
+    @EJB(lookup = "java:global/__EJB_LOOKUP_DIR__/MailerService")
     private MailerInterface mailer;
     
-    @EJB(lookup = "java:global/__EJB_LOOKUP_DIR__/CommonConfiguration")
+    @EJB(lookup = "java:global/__EJB_LOOKUP_DIR__/CommonConfigurationService")
     private CommonConfigurationInterface commonConfiguration;
     
     private UserType userType;

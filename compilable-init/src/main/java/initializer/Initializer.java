@@ -164,8 +164,8 @@ public class Initializer {
             BufferedReader r = Files.newBufferedReader(Paths.get(nodeAddr));
             String l = null;
             while ((l = r.readLine()) != null) {
-                String s = l;
                 originalSource += l + "\n";
+                String s = l;
                 for (String k : propertyMap.keySet()) {
                     s = s.replaceAll("\\$\\{" + k + "\\}", propertyMap.get(k));
                 }
@@ -174,10 +174,10 @@ public class Initializer {
                         && !s.matches(".*\\<jta\\-data\\-source\\>java\\:jboss\\/datasources\\/.*")) {
                     s = s.replace("jta-data-source>", "jta-data-source>java:jboss/datasources/");
                 }
-                if (nodeAddr.matches(".*(webapp\\/bean|logic\\/ejb\\/callback|logic\\/ejb\\/facade|logic\\/ejb\\/).*") && nodeAddr.matches(".*thorntail.*")) {
+                if (nodeAddr.matches(".*(webapp\\/bean|logic\\/ejb\\/callback|logic\\/ejb\\/facade|logic\\/ejb\\/).*") && nodeAddr.matches(".*thorntail.*") && s.matches(".*__EJB_LOOKUP_DIR__.*")) {
                     s = s.replace("__EJB_LOOKUP_DIR__", applicationCodeName);
                 }
-                if (nodeAddr.matches(".*(webapp\\/bean|logic\\/ejb\\/callback|logic\\/ejb\\/facade|logic\\/ejb\\/).*") && !nodeAddr.matches(".*thorntail.*")) {
+                if (nodeAddr.matches(".*(webapp\\/bean|logic\\/ejb\\/callback|logic\\/ejb\\/facade|logic\\/ejb\\/).*") && !nodeAddr.matches(".*thorntail.*") && s.matches(".*__EJB_LOOKUP_DIR__.*")) {
                     s = s.replace("__EJB_LOOKUP_DIR__", ejbLookupDir);
                 }
                 if (nodeAddr.matches(".*webapp\\/bean.*") && s.matches(".*\\/\\/[\t ]+UI_UPDATER_FOR[\t ]+.*")) {
@@ -212,6 +212,8 @@ public class Initializer {
                 source += s + "\n";
             }
             r.close();
+
+
         } catch (Exception e) {
         }
         if (nodeAddr.matches(".*webapp\\/bean\\/.*WebAppBean\\.java")) {

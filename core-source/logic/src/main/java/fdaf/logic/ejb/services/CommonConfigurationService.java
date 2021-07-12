@@ -53,11 +53,11 @@ import javax.ejb.Startup;
 @Remote({CommonConfigurationInterface.class})
 @Singleton
 @Startup
-public class CommonConfiguration extends ApplicationIdentifier implements Serializable {
+public class CommonConfigurationService extends ApplicationIdentifier implements Serializable {
 
     private static final long serialVersionUID = 1L;
     
-    private static final Logger LOGGER = Logger.getLogger(CommonConfiguration.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(CommonConfigurationService.class.getName());
     
     private String configPath;
     private boolean enabled;

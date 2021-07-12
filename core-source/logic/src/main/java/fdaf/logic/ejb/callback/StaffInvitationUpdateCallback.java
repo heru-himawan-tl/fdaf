@@ -33,7 +33,6 @@ import fdaf.logic.base.Specification;
 import fdaf.logic.base.UpdateCallbackInterface;
 import fdaf.logic.ejb.repository.StaffInvitationRepository;
 import fdaf.logic.ejb.repository.UserRepository;
-import fdaf.logic.ejb.services.Mailer;
 import fdaf.logic.entity.StaffInvitation;
 import fdaf.logic.entity.User;
 import java.io.Serializable;
