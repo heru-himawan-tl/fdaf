@@ -37,10 +37,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceContextType;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
-import java.util.concurrent.TimeUnit;
-import javax.ejb.StatefulTimeout;
 
-@StatefulTimeout(value = -1)
 @TransactionAttribute(TransactionAttributeType.MANDATORY)
 @Stateful(passivationCapable = false)
 public class UserGroupMemberRepository extends AbstractRepository<UserGroupMember> implements Serializable {

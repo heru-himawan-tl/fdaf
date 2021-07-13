@@ -41,10 +41,7 @@ import java.io.Serializable;
 import javax.ejb.EJB;
 import javax.ejb.Remote;
 import javax.ejb.Stateful;
-import java.util.concurrent.TimeUnit;
-import javax.ejb.StatefulTimeout;
 
-@StatefulTimeout(value = -1)
 @Remote({FacadeInterface.class})
 @Stateful(passivationCapable = false)
 public class ProfileEditorFacade extends AbstractFacade<EmployeeRepository, Employee> implements Serializable {

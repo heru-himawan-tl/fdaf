@@ -57,10 +57,7 @@ import java.util.UUID;
 import javax.ejb.EJB;
 import javax.ejb.Remote;
 import javax.ejb.Stateful;
-import java.util.concurrent.TimeUnit;
-import javax.ejb.StatefulTimeout;
 
-@StatefulTimeout(value = -1)
 @Remote({UserRegistrationInterface.class})
 @Stateful(passivationCapable = false)
 public class UserRegistrationFacade extends AbstractFacade<UserRepository, User> implements Serializable {
