@@ -45,7 +45,7 @@ import javax.ejb.StatefulTimeout;
 
 @StatefulTimeout(value = -1)
 @Remote({MapInterface.class})
-@Stateful
+@Stateful(passivationCapable = false)
 public class UserMapFacade implements Serializable {
     
     private static final long serialVersionUID = 1L;

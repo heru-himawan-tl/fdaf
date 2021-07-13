@@ -42,7 +42,7 @@ import javax.ejb.StatefulTimeout;
 
 @StatefulTimeout(value = -1)
 @Remote({FacadeInterface.class})
-@Stateful
+@Stateful(passivationCapable = false)
 public class __NAME__Facade extends AbstractFacade<__NAME__Repository, __NAME__>
         implements Serializable {
 

@@ -45,7 +45,7 @@ import javax.ejb.StatefulTimeout;
 
 @StatefulTimeout(value = -1)
 @Remote({StaffInvitationInterface.class})
-@Stateful
+@Stateful(passivationCapable = false)
 public class StaffInvitationFacade extends AbstractFacade<StaffInvitationRepository, StaffInvitation> implements Serializable {
 
     private static final long serialVersionUID = 1L;

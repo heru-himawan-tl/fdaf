@@ -42,7 +42,7 @@ import javax.ejb.StatefulTimeout;
 
 @StatefulTimeout(value = -1)
 @Remote({UpdateCallbackInterface.class})
-@Stateful
+@Stateful(passivationCapable = false)
 public class DepartmentUpdateCallback extends AbstractUpdateCallback
         implements UpdateCallbackInterface<DepartmentRepository, Department>, Serializable {
         

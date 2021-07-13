@@ -42,7 +42,7 @@ import javax.ejb.StatefulTimeout;
 
 @StatefulTimeout(value = -1)
 @Remote({AdministratorAccountCheckerInterface.class})
-@Stateful
+@Stateful(passivationCapable = false)
 public class AdministratorAccountCheckerFacade implements Serializable {
     private static final long serialVersionUID = 1L;
     @EJB

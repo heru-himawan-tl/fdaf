@@ -58,7 +58,7 @@ import javax.ejb.StatefulTimeout;
 
 @StatefulTimeout(value = -1)
 @Remote({AddAdministratorInterface.class})
-@Stateful
+@Stateful(passivationCapable = false)
 public class AddAdministratorFacade extends AbstractFacade<UserRepository, User> implements Serializable {
 
     private static final long serialVersionUID = 1L;

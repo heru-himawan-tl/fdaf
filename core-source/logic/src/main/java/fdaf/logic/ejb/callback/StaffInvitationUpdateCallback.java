@@ -44,7 +44,7 @@ import javax.ejb.StatefulTimeout;
 
 @StatefulTimeout(value = -1)
 @Remote({UpdateCallbackInterface.class})
-@Stateful
+@Stateful(passivationCapable = false)
 public class StaffInvitationUpdateCallback extends AbstractUpdateCallback
         implements UpdateCallbackInterface<StaffInvitationRepository, StaffInvitation>, Serializable {
 

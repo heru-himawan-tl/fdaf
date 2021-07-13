@@ -56,7 +56,7 @@ import javax.ejb.StatefulTimeout;
 
 @StatefulTimeout(value = -1)
 @Remote({UserSessionManagerInterface.class})
-@Stateful
+@Stateful(passivationCapable = false)
 public class UserSessionManagerFacade implements Serializable {
 
     private static final long serialVersionUID = 1L;

@@ -47,7 +47,7 @@ import javax.ejb.StatefulTimeout;
 
 @StatefulTimeout(value = -1)
 @Remote({PasswordResetInterface.class})
-@Stateful
+@Stateful(passivationCapable = false)
 public class PasswordResetFacade extends AbstractFacade<UserRepository, User> implements Serializable {
 
     private static final Logger LOGGER = Logger.getLogger(PasswordResetFacade.class.getName());
