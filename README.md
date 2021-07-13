@@ -102,7 +102,7 @@ business-logic-application-modules source codes within FDAF.
 FDAF supports the following application server platforms for deployment:
 
 - [WildFly](https://www.wildfly.org/)   
-- [Apache Tomee Plume/Plus >= V.8.x.x](https://tomee.apache.org/)  
+- [Apache Tomee Plume >= V.8.x.x](https://tomee.apache.org/)  
 - [Thorntail](https://thorntail.io/)  
 
 Notice:
@@ -111,7 +111,9 @@ probably will be unexpectedly defective in the future.
 - The newer [GlashFish](https://javaee.github.io/glassfish/) and
 [Payara](https://www.payara.fish/) were removed from the list of
 supported application server, since they have bugs those
-prevent FDAF application to work with them.
+prevent FDAF application to work with them.  
+- Due [Apache Tomee Plus](https://tomee.apache.org/) applies OpenJPA
+& MyFaces, it prevents FDAF application for working properly. 
 
 ### Supported JPA Providers
 

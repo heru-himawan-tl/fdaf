@@ -43,6 +43,10 @@ import javax.faces.event.ComponentSystemEvent;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import java.util.Map;
+import java.util.TreeMap;
+import java.util.HashMap;
+
 // UNDER DEVELOPMENT !
 @SessionScoped
 @Named
@@ -61,6 +65,9 @@ public class FileManagerWebAppBean extends AbstractBaseWebAppBean implements Ser
     
     @EJB(lookup = "java:global/__EJB_LOOKUP_DIR__/DatabaseServiceCheckerFacade")
     private DatabaseServiceCheckerInterface dbServiceChecker;
+    
+    private boolean error;
+    private String baseDirectory;
 
     public FileManagerWebAppBean() {
         // NO-OP
@@ -84,5 +91,11 @@ public class FileManagerWebAppBean extends AbstractBaseWebAppBean implements Ser
     }
    
     public void populateNodes(ComponentSystemEvent event) throws AbortProcessingException {
+        try {
+            baseDirectory = System.getProperty("user.home");
+        } catch (Exception e) {
+            error = true;
+            return;
+        }
     }
 }
