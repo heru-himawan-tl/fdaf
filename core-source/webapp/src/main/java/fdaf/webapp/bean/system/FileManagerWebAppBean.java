@@ -37,18 +37,26 @@ import fdaf.base.UserType;
 import fdaf.webapp.base.AbstractBaseWebAppBean;
 import java.io.Serializable;
 import javax.ejb.EJB;
-import javax.enterprise.context.SessionScoped;
+import javax.faces.view.ViewScoped;
 import javax.faces.event.AbortProcessingException;
 import javax.faces.event.ComponentSystemEvent;
 import javax.inject.Inject;
 import javax.inject.Named;
-
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileWriter;
+import java.io.InputStream;
+import java.nio.file.DirectoryStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.HashMap;
 
 // UNDER DEVELOPMENT !
-@SessionScoped
+@ViewScoped
 @Named
 public class FileManagerWebAppBean extends AbstractBaseWebAppBean implements Serializable {
 
@@ -92,10 +100,20 @@ public class FileManagerWebAppBean extends AbstractBaseWebAppBean implements Ser
    
     public void populateNodes(ComponentSystemEvent event) throws AbortProcessingException {
         try {
-            baseDirectory = System.getProperty("user.home");
+            if (baseDirectory == null) {
+                baseDirectory = System.getProperty("user.home");
+            }
         } catch (Exception e) {
             error = true;
             return;
+        }
+        try {
+            DirectoryStream<Path> directoryStream = Files.newDirectoryStream(Paths.get(baseDirectory));
+            for (Path path : directoryStream) {
+
+            }
+            directoryStream.close();
+        } catch (Exception e) {
         }
     }
 }
