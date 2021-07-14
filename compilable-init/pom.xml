@@ -222,9 +222,9 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                         <copy overwrite="true" todir="${java.io.tmpdir}${file.separator}${fdaf.applicationGroupId}${file.separator}raw-compilation${file.separator}${fdaf.applicationCodeName}-with-hibernate-in-single-war${file.separator}${fdaf.applicationCodeName}-logic">
                             <fileset dir="${fdaf.baseDirectory}${file.separator}templates${file.separator}single-war-project-template${file.separator}logic" />
                         </copy>
-                        <copy overwrite="true" todir="${java.io.tmpdir}${file.separator}${fdaf.applicationGroupId}${file.separator}raw-compilation${file.separator}${fdaf.applicationCodeName}-with-hibernate-in-single-war${file.separator}${fdaf.applicationCodeName}-entity">
+                        <!-- copy overwrite="true" todir="${java.io.tmpdir}${file.separator}${fdaf.applicationGroupId}${file.separator}raw-compilation${file.separator}${fdaf.applicationCodeName}-with-hibernate-in-single-war${file.separator}${fdaf.applicationCodeName}-entity">
                             <fileset dir="${fdaf.baseDirectory}${file.separator}templates${file.separator}single-war-project-template${file.separator}entity" />
-                        </copy>
+                        </copy -->
                         <copy overwrite="true" todir="${java.io.tmpdir}${file.separator}${fdaf.applicationGroupId}${file.separator}raw-compilation${file.separator}${fdaf.applicationCodeName}-with-hibernate-in-single-war${file.separator}${fdaf.applicationCodeName}-webapp">
                             <fileset dir="${fdaf.baseDirectory}${file.separator}templates${file.separator}single-war-project-template${file.separator}webapp" />
                         </copy>
@@ -274,9 +274,9 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                         <copy overwrite="true" todir="${java.io.tmpdir}${file.separator}${fdaf.applicationGroupId}${file.separator}raw-compilation${file.separator}${fdaf.applicationCodeName}-with-eclipselink-in-single-war${file.separator}${fdaf.applicationCodeName}-logic">
                             <fileset dir="${fdaf.baseDirectory}${file.separator}templates${file.separator}single-war-project-template${file.separator}logic" />
                         </copy>
-                        <copy overwrite="true" todir="${java.io.tmpdir}${file.separator}${fdaf.applicationGroupId}${file.separator}raw-compilation${file.separator}${fdaf.applicationCodeName}-with-eclipselink-in-single-war${file.separator}${fdaf.applicationCodeName}-entity">
+                        <!-- copy overwrite="true" todir="${java.io.tmpdir}${file.separator}${fdaf.applicationGroupId}${file.separator}raw-compilation${file.separator}${fdaf.applicationCodeName}-with-eclipselink-in-single-war${file.separator}${fdaf.applicationCodeName}-entity">
                             <fileset dir="${fdaf.baseDirectory}${file.separator}templates${file.separator}single-war-project-template${file.separator}entity" />
-                        </copy>
+                        </copy !-->
                         <copy overwrite="true" todir="${java.io.tmpdir}${file.separator}${fdaf.applicationGroupId}${file.separator}raw-compilation${file.separator}${fdaf.applicationCodeName}-with-eclipselink-in-single-war${file.separator}${fdaf.applicationCodeName}-webapp">
                             <fileset dir="${fdaf.baseDirectory}${file.separator}templates${file.separator}single-war-project-template${file.separator}webapp" />
                         </copy>

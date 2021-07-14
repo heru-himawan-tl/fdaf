@@ -102,11 +102,6 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         </dependency>
         <dependency>
             <groupId>${fdaf.applicationGroupId}</groupId>
-            <artifactId>${fdaf.applicationCodeName}-entity</artifactId>
-            <version>${fdaf.applicationVersion}</version>
-        </dependency>
-        <dependency>
-            <groupId>${fdaf.applicationGroupId}</groupId>
             <artifactId>${fdaf.applicationCodeName}-logic</artifactId>
             <version>${fdaf.applicationVersion}</version>
         </dependency>

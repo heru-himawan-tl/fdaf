@@ -51,7 +51,6 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     <modules>
         <module>${fdaf.applicationCodeName}-base</module>
         <module>${fdaf.applicationCodeName}-erc</module>
-        <module>${fdaf.applicationCodeName}-entity</module>
         <module>${fdaf.applicationCodeName}-logic</module>
         <module>${fdaf.applicationCodeName}-webapp</module>
     </modules>
