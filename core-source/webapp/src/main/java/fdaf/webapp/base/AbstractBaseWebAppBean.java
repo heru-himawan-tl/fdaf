@@ -210,10 +210,6 @@ public abstract class AbstractBaseWebAppBean extends AbstractWebAppCommon {
         clabel = ResourceBundle.getBundle("fdaf.webapp.rc.messages.custom_label", locale, loader);
     }
     
-    public void initBundles(ComponentSystemEvent event) throws AbortProcessingException {
-
-    }
-    
     public String getViewLayerName() {
         return viewLayerName;
     }

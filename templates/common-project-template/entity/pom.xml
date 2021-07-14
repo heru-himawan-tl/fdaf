@@ -42,10 +42,10 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     </parent>
    
     <groupId>${fdaf.applicationGroupId}</groupId>
-    <artifactId>${fdaf.applicationCodeName}-entity-with-__JPA_PROVIDER__</artifactId>
+    <artifactId>${fdaf.applicationCodeName}-entity</artifactId>
     <version>${fdaf.applicationVersion}</version>
     <packaging>jar</packaging>
-    <name>${fdaf.applicationName} Logic Persistence Entity Library For Use With __JPA_PROVIDER_NAME__</name>
+    <name>${fdaf.applicationName} Logic Persistence Entity Library</name>
     
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

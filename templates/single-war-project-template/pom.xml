@@ -36,7 +36,7 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     <modelVersion>4.0.0</modelVersion>
    
     <groupId>${fdaf.applicationGroupId}</groupId>
-    <artifactId>${fdaf.applicationCodeName}-with-__JPA_PROVIDER__</artifactId>
+    <artifactId>${fdaf.applicationCodeName}-with-__JPA_PROVIDER__-in-single-war</artifactId>
     <version>${fdaf.applicationVersion}</version>
     <packaging>pom</packaging>
     <name>${fdaf.applicationName} Compilable Distribution For Use With __JPA_PROVIDER_NAME__</name>
@@ -51,10 +51,9 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     <modules>
         <module>${fdaf.applicationCodeName}-base</module>
         <module>${fdaf.applicationCodeName}-erc</module>
-        <module>${fdaf.applicationCodeName}-entity-with-__JPA_PROVIDER__</module>
-        <module>${fdaf.applicationCodeName}-logic-with-__JPA_PROVIDER__</module>
+        <module>${fdaf.applicationCodeName}-entity</module>
+        <module>${fdaf.applicationCodeName}-logic</module>
         <module>${fdaf.applicationCodeName}-webapp</module>
-        <module>${fdaf.applicationCodeName}-ear</module>
     </modules>
     
     <build>

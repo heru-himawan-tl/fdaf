@@ -72,6 +72,8 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                 <version>1.8</version>
                 <configuration>
                     <target>
+                        <delete dir="${fdaf.applicationSourceDirectory}${file.separator}${fdaf.applicationCodeName}-with-eclipselink-in-single-war" />
+                        <delete dir="${fdaf.applicationSourceDirectory}${file.separator}${fdaf.applicationCodeName}-with-hibernate-in-single-war" />
                         <delete dir="${fdaf.applicationSourceDirectory}${file.separator}${fdaf.applicationCodeName}-with-eclipselink" />
                         <delete dir="${fdaf.applicationSourceDirectory}${file.separator}${fdaf.applicationCodeName}-with-hibernate" />
                         <delete dir="${fdaf.applicationSourceDirectory}${file.separator}${fdaf.applicationCodeName}-thorntail" />

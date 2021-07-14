@@ -191,6 +191,23 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
             </modules>
         </profile>
         <profile>
+            <id>build-with-eclipselink-in-single-war</id>
+            <build>
+                <defaultGoal>package</defaultGoal>
+            </build>
+            <modules>
+                <module>compilable-init-preparation</module>
+                <module>custom-base</module>
+                <module>base</module>
+                <module>application-primitive-entity-model</module>
+                <module>core-primitive-entity-model</module>
+                <module>modeler</module>
+                <module>compilable-init</module>
+                <module>compilable-init-clear</module>
+                <module>with-eclipselink-in-single-war-build-invoker</module>
+            </modules>
+        </profile>
+        <profile>
             <id>build-with-hibernate</id>
             <build>
                 <defaultGoal>package</defaultGoal>
@@ -205,6 +222,23 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                 <module>compilable-init</module>
                 <module>compilable-init-clear</module>
                 <module>with-hibernate-build-invoker</module>
+            </modules>
+        </profile>
+        <profile>
+            <id>build-with-hibernate-in-single-war</id>
+            <build>
+                <defaultGoal>package</defaultGoal>
+            </build>
+            <modules>
+                <module>compilable-init-preparation</module>
+                <module>custom-base</module>
+                <module>base</module>
+                <module>application-primitive-entity-model</module>
+                <module>core-primitive-entity-model</module>
+                <module>modeler</module>
+                <module>compilable-init</module>
+                <module>compilable-init-clear</module>
+                <module>with-hibernate-in-single-war-build-invoker</module>
             </modules>
         </profile>
         <profile>
@@ -238,6 +272,8 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                 <module>modeler</module>
                 <module>compilable-init</module>
                 <module>compilable-init-clear</module>
+                <module>with-eclipselink-in-single-war-build-invoker</module>
+                <module>with-hibernate-in-single-war-build-invoker</module>
                 <module>with-eclipselink-build-invoker</module>
                 <module>with-hibernate-build-invoker</module>
             </modules>
@@ -256,6 +292,8 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                 <module>modeler</module>
                 <module>compilable-init</module>
                 <module>compilable-init-clear</module>
+                <module>with-eclipselink-in-single-war-build-invoker</module>
+                <module>with-hibernate-in-single-war-build-invoker</module>
                 <module>with-eclipselink-build-invoker</module>
                 <module>with-hibernate-build-invoker</module>
                 <module>thorntail-build-invoker</module>

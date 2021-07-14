@@ -174,11 +174,20 @@ public class Initializer {
                         && !s.matches(".*\\<jta\\-data\\-source\\>java\\:jboss\\/datasources\\/.*")) {
                     s = s.replace("jta-data-source>", "jta-data-source>java:jboss/datasources/");
                 }
-                if (nodeAddr.matches(".*(webapp\\/bean|logic\\/ejb\\/callback|logic\\/ejb\\/facade|logic\\/ejb\\/).*") && nodeAddr.matches(".*thorntail.*") && s.matches(".*__EJB_LOOKUP_DIR__.*")) {
+                if (nodeAddr.matches(".*(webapp\\/bean|logic\\/ejb\\/callback|logic\\/ejb\\/facade|logic\\/ejb\\/).*")
+                    && nodeAddr.matches(".*thorntail.*") && s.matches(".*__EJB_LOOKUP_DIR__.*")
+                    && !nodeAddr.matches(".*\\-in\\-single\\-war.*")) {
                     s = s.replace("__EJB_LOOKUP_DIR__", applicationCodeName);
                 }
-                if (nodeAddr.matches(".*(webapp\\/bean|logic\\/ejb\\/callback|logic\\/ejb\\/facade|logic\\/ejb\\/).*") && !nodeAddr.matches(".*thorntail.*") && s.matches(".*__EJB_LOOKUP_DIR__.*")) {
+                if (nodeAddr.matches(".*(webapp\\/bean|logic\\/ejb\\/callback|logic\\/ejb\\/facade|logic\\/ejb\\/).*")
+                    && !nodeAddr.matches(".*thorntail.*") && s.matches(".*__EJB_LOOKUP_DIR__.*")
+                    && !nodeAddr.matches(".*\\-in\\-single\\-war.*")) {
                     s = s.replace("__EJB_LOOKUP_DIR__", ejbLookupDir);
+                }
+                if (nodeAddr.matches(".*(webapp\\/bean|logic\\/ejb\\/callback|logic\\/ejb\\/facade|logic\\/ejb\\/).*")
+                    && !nodeAddr.matches(".*thorntail.*") && s.matches(".*__EJB_LOOKUP_DIR__.*")
+                    && nodeAddr.matches(".*\\-in\\-single\\-war.*")) {
+                    s = s.replace("__EJB_LOOKUP_DIR__", applicationCodeName + "-webapp");
                 }
                 if (nodeAddr.matches(".*webapp\\/bean.*") && s.matches(".*\\/\\/[\t ]+UI_UPDATER_FOR[\t ]+.*")) {
                     String webAppTarget = s.replaceAll("(.*\\/\\/[\t ]+UI_UPDATER_FOR[\t ]+)([a-zA-Z\\_]+.*)", "$2").trim();
@@ -215,8 +224,11 @@ public class Initializer {
                     if (nodeAddr.matches(".*entity.*\\/pom\\.xml")) {
                         depSourceName = "entity.deps";
                     }
-                    if (nodeAddr.matches(".*webapp.*\\/pom\\.xml")) {
+                    if (nodeAddr.matches(".*webapp.*\\/pom\\.xml") && !nodeAddr.matches(".*\\-in\\-single\\-war.*")) {
                         depSourceName = "webapp.deps";
+                    }
+                    if (nodeAddr.matches(".*webapp.*\\/pom\\.xml") && nodeAddr.matches(".*\\-in\\-single\\-war.*")) {
+                        depSourceName = "webapp-in-single-war.deps";
                     }
                     if (nodeAddr.matches(".*logic.*\\/pom\\.xml")) {
                         depSourceName = "logic.deps";

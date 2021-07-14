@@ -71,7 +71,7 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                     <modules>
                         <ejbModule>
                             <groupId>${fdaf.applicationGroupId}</groupId>
-                            <artifactId>${fdaf.applicationCodeName}-logic-with-__JPA_PROVIDER__</artifactId>
+                            <artifactId>${fdaf.applicationCodeName}-logic</artifactId>
                             <bundleFileName>${fdaf.applicationCodeName}-logic.jar</bundleFileName>
                         </ejbModule>
                         <jarModule>
@@ -115,7 +115,7 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         </dependency>
         <dependency>
             <groupId>${fdaf.applicationGroupId}</groupId>
-            <artifactId>${fdaf.applicationCodeName}-logic-with-__JPA_PROVIDER__</artifactId>
+            <artifactId>${fdaf.applicationCodeName}-logic</artifactId>
             <version>${fdaf.applicationVersion}</version>
             <type>ejb</type>
         </dependency>

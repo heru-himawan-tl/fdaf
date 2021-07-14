@@ -102,7 +102,7 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         </dependency>
         <dependency>
             <groupId>${fdaf.applicationGroupId}</groupId>
-            <artifactId>${fdaf.applicationCodeName}-entity-with-__JPA_PROVIDER__</artifactId>
+            <artifactId>${fdaf.applicationCodeName}-entity</artifactId>
             <version>${fdaf.applicationVersion}</version>
         </dependency>
         __DEPENDENCIES__

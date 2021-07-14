@@ -45,8 +45,6 @@ import javax.persistence.Enumerated;
 import javax.persistence.EnumType;
 import java.io.Serializable;
 
-// NO_WEB_APP_BEAN_GEN
-
 @Table(name = "user")
 @Entity
 public class User implements Serializable {
