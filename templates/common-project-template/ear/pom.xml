@@ -108,30 +108,6 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     
     <dependencies>
         <dependency>
-            <groupId>javax.mail</groupId>
-            <artifactId>javax.mail-api</artifactId>
-            <version>1.6.2</version>
-            <type>jar</type>
-        </dependency>
-        <dependency>
-            <groupId>javax.activation</groupId>
-            <artifactId>javax.activation-api</artifactId>
-            <version>1.2.0</version>
-            <type>jar</type>
-        </dependency>
-        <dependency>
-            <groupId>javax.annotation</groupId>
-            <artifactId>javax.annotation-api</artifactId>
-            <version>1.3.2</version>
-            <type>jar</type>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-compress</artifactId>
-            <version>1.20</version>
-            <type>jar</type>
-        </dependency>
-        <dependency>
             <groupId>${fdaf.applicationGroupId}</groupId>
             <artifactId>${fdaf.applicationCodeName}-base</artifactId>
             <version>${fdaf.applicationVersion}</version>
@@ -143,6 +119,7 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
             <version>${fdaf.applicationVersion}</version>
             <type>ejb</type>
         </dependency>
+        __DEPENDENCIES__
     </dependencies>
     
 </project>

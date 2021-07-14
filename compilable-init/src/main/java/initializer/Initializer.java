@@ -209,6 +209,39 @@ public class Initializer {
                         undefinedCallbackMessage.add(ccm + "=");
                     }
                 }
+                if (nodeAddr.matches(".*(logic|ear|webapp|entity).*\\/pom\\.xml") && s.matches(".*__DEPENDENCIES__.*")) {
+                    String depSourceName = "";
+                    String depContents = "";
+                    if (nodeAddr.matches(".*entity.*\\/pom\\.xml")) {
+                        depSourceName = "entity.deps";
+                    }
+                    if (nodeAddr.matches(".*webapp.*\\/pom\\.xml")) {
+                        depSourceName = "webapp.deps";
+                    }
+                    if (nodeAddr.matches(".*logic.*\\/pom\\.xml")) {
+                        depSourceName = "logic.deps";
+                    }
+                    if (nodeAddr.matches(".*ear.*\\/pom\\.xml")) {
+                        depSourceName = "ear.deps";
+                    }
+                    try {
+                        BufferedReader r0 = Files.newBufferedReader(Paths.get("dependencies-templates/" + depSourceName));
+                        String l0 = null;
+                        while ((l0 = r0.readLine()) != null) {
+                            depContents += l0.trim() + "\n";
+                        }
+                        r0.close();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    s = depContents;
+                    System.out.println("[" + ANSI_BLUE + ANSI_BOLD + "FDAF INFO" + ANSI_RESET + "] " + ANSI_GREEN
+                        + "=======================================" + ANSI_RESET);
+                    System.out.println("[" + ANSI_BLUE + ANSI_BOLD + "FDAF INFO" + ANSI_RESET + "] " + ANSI_GREEN
+                        + "Inserting dependency markups into file:" + ANSI_RESET + " " + nodeAddr);
+                    System.out.println("[" + ANSI_BLUE + ANSI_BOLD + "FDAF INFO" + ANSI_RESET + "] " + ANSI_GREEN
+                        + "=======================================" + ANSI_RESET);
+                }
                 source += s + "\n";
             }
             r.close();

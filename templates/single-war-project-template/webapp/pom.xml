@@ -34,20 +34,19 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     
     <modelVersion>4.0.0</modelVersion>
-
+    
     <parent>
         <groupId>${fdaf.applicationGroupId}</groupId>
-        <artifactId>${fdaf.applicationCodeName}-thorntail</artifactId>
+        <artifactId>${fdaf.applicationCodeName}-with-__JPA_PROVIDER__</artifactId>
         <version>${fdaf.applicationVersion}</version>
     </parent>
-    
-    <groupId>${fdaf.applicationGroupId}</groupId>
-    <artifactId>${fdaf.applicationCodeName}-logic-thorntail</artifactId>
-    <version>${fdaf.applicationVersion}</version>
-    <packaging>ejb</packaging>
-
-    <name>${fdaf.applicationName} Business Logic Application</name>
    
+    <groupId>${fdaf.applicationGroupId}</groupId>
+    <artifactId>${fdaf.applicationCodeName}-webapp</artifactId>
+    <version>${fdaf.applicationVersion}</version>
+    <packaging>war</packaging>
+    <name>${fdaf.applicationName} Web Application</name>
+    
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -57,28 +56,35 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     
     <build>
         <directory>${java.io.tmpdir}${file.separator}${project.groupId}${file.separator}${project.parent.artifactId}${file.separator}${project.artifactId}</directory>
-        <finalName>${project.artifactId}</finalName>
+        <finalName>${fdaf.applicationCodeName}-webapp</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-ejb-plugin</artifactId>
-                <version>3.0.1</version>
-                <configuration>
-                    <jarName>${fdaf.applicationCodeName}-logic</jarName>
-                    <ejbVersion>3.2</ejbVersion>
-                </configuration>
-                <executions>
-                    <execution>
-                        <phase>clean</phase>
-                        <goals>
-                            <goal>ejb</goal>
-                        </goals>
-                    </execution>
-                </executions>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>3.3.1</version>
             </plugin>
             <plugin>
                 <artifactId>maven-resources-plugin</artifactId>
-                <version>3.1.0</version>
+                <version>3.2.0</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <version>1.8</version>
+                <configuration>
+                    <target>
+                        <copy tofile="${finalBuildDir}${file.separator}${fdaf.applicationCodeName}-webapp.war"
+                                file="${java.io.tmpdir}${file.separator}${project.groupId}${file.separator}${project.parent.artifactId}${file.separator}${project.artifactId}${file.separator}${fdaf.applicationCodeName}-webapp.war" />
+                    </target>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
@@ -88,7 +94,21 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
             <groupId>${fdaf.applicationGroupId}</groupId>
             <artifactId>${fdaf.applicationCodeName}-base</artifactId>
             <version>${fdaf.applicationVersion}</version>
-            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>${fdaf.applicationGroupId}</groupId>
+            <artifactId>${fdaf.applicationCodeName}-erc</artifactId>
+            <version>${fdaf.applicationVersion}</version>
+        </dependency>
+        <dependency>
+            <groupId>${fdaf.applicationGroupId}</groupId>
+            <artifactId>${fdaf.applicationCodeName}-entity-with-__JPA_PROVIDER__</artifactId>
+            <version>${fdaf.applicationVersion}</version>
+        </dependency>
+        <dependency>
+            <groupId>${fdaf.applicationGroupId}</groupId>
+            <artifactId>${fdaf.applicationCodeName}-logic-with-__JPA_PROVIDER__</artifactId>
+            <version>${fdaf.applicationVersion}</version>
         </dependency>
         __DEPENDENCIES__
     </dependencies>
