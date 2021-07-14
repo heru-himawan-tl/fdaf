@@ -97,7 +97,10 @@ public class FileManagerWebAppBean extends AbstractBaseWebAppBean implements Ser
     public UserSessionManagerInterface getUserSessionManager() {
         return userSessionManager;
     }
-   
+    
+    private Map<String, String> directoriesMap = new HashMap<String, String>();
+    private Map<String, String> filesMap = new HashMap<String, String>();
+
     public void populateNodes(ComponentSystemEvent event) throws AbortProcessingException {
         try {
             if (baseDirectory == null) {
@@ -107,6 +110,10 @@ public class FileManagerWebAppBean extends AbstractBaseWebAppBean implements Ser
             error = true;
             return;
         }
+        Map<String, String> localDirectoriesShortByName = new HashMap<String, String>();
+        Map<String, String> localFilesShortByName = new HashMap<String, String>();
+        Map<String, String> localDirectoriesShortByDate = new HashMap<String, String>();
+        Map<String, String> localDilesShortByDate = new HashMap<String, String>();
         try {
             DirectoryStream<Path> directoryStream = Files.newDirectoryStream(Paths.get(baseDirectory));
             for (Path path : directoryStream) {
