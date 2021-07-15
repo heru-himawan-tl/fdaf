@@ -51,6 +51,7 @@ import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.LinkedList;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.HashMap;
@@ -98,6 +99,23 @@ public class FileManagerWebAppBean extends AbstractBaseWebAppBean implements Ser
         return userSessionManager;
     }
     
+    private LinkedList<String> nodeList = new LinkedList<String>();
+
+    private void recursiveReadDir(String dirname, LinkedList<String> nodeList) {
+        try {
+            DirectoryStream<Path> directoryStream = Files.newDirectoryStream(Paths.get(dirname));
+            for (Path path : directoryStream) {
+                String fileName = path.getFileName().toString();
+                nodeList.add(dirname + File.separator + fileName);
+                if (Files.isDirectory(path)) {
+                    recursiveReadDir(dirname + File.separator + fileName, nodeList);
+                }
+            }
+            directoryStream.close();
+        } catch (Exception e) {
+        }
+    }
+    
     private Map<String, String> directoriesMap = new HashMap<String, String>();
     private Map<String, String> filesMap = new HashMap<String, String>();
 
@@ -110,17 +128,29 @@ public class FileManagerWebAppBean extends AbstractBaseWebAppBean implements Ser
             error = true;
             return;
         }
+        
         Map<String, String> localDirectoriesShortByName = new HashMap<String, String>();
         Map<String, String> localFilesShortByName = new HashMap<String, String>();
         Map<String, String> localDirectoriesShortByDate = new HashMap<String, String>();
-        Map<String, String> localDilesShortByDate = new HashMap<String, String>();
+        Map<String, String> localFilesShortByDate = new HashMap<String, String>();
+        
         try {
             DirectoryStream<Path> directoryStream = Files.newDirectoryStream(Paths.get(baseDirectory));
             for (Path path : directoryStream) {
-
+                String name = path.getFileName().toString();
+                if (Files.isDirectory(path)) {
+                    localDirectoriesShortByName.put(name, baseDirectory + File.separator + name);
+                } else {
+                    localFilesShortByName.put(name, baseDirectory + File.separator + name);
+                }
             }
             directoryStream.close();
         } catch (Exception e) {
         }
+        
+        directoriesMap = new TreeMap<String, String>(localDirectoriesShortByDate);
+        filesMap = new TreeMap<String, String>(localFilesShortByName);
+        
+
     }
 }

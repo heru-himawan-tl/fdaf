@@ -36,7 +36,7 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions">
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <title><h:outputText value="#{fileManagerWebAppBean.applicationName} - #{fn:toUpperCase(label.addAdministrator)}" /></title>
+        <title><h:outputText value="#{fileManagerWebAppBean.applicationName} - #{fn:toUpperCase(label.fileManager)}" /></title>
         <h:outputStylesheet library="css" name="style.css"/>
         <d:customHeadTag />
     </h:head>
@@ -46,7 +46,7 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
             <d:loadBundles />
             <d:databaseServiceCheck webAppBean="#{fileManagerWebAppBean}" />
             <d:administratorAccountCheck webAppBean="#{fileManagerWebAppBean}" />
-            <d:addAdministratorInit webAppBean="#{fileManagerWebAppBean}" />
+            <d:populateNodes webAppBean="#{fileManagerWebAppBean}" />
             <d:userSessionWatch webAppBean="#{fileManagerWebAppBean}" rendered="#{(fileManagerWebAppBean.administratorAccountExists eq true)}" />
             <d:customTopPanel webAppBean="#{fileManagerWebAppBean}" />
             <h:panelGroup layout="block" styleClass="left_panel_back_overlay"></h:panelGroup>
