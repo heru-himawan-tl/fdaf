@@ -32,29 +32,17 @@ import fdaf.base.AddAdministratorInterface;
 import fdaf.base.AdministratorAccountCheckerInterface;
 import fdaf.base.CommonConfigurationInterface;
 import fdaf.base.DatabaseServiceCheckerInterface;
+import fdaf.base.FileManagerInterface;
 import fdaf.base.UserSessionManagerInterface;
 import fdaf.base.UserType;
 import fdaf.webapp.base.AbstractBaseWebAppBean;
 import java.io.Serializable;
 import javax.ejb.EJB;
-import javax.faces.view.ViewScoped;
 import javax.faces.event.AbortProcessingException;
 import javax.faces.event.ComponentSystemEvent;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileWriter;
-import java.io.InputStream;
-import java.nio.file.DirectoryStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.LinkedList;
-import java.util.Map;
-import java.util.TreeMap;
-import java.util.HashMap;
 
 // UNDER DEVELOPMENT !
 @ViewScoped
@@ -75,8 +63,8 @@ public class FileManagerWebAppBean extends AbstractBaseWebAppBean implements Ser
     @EJB(lookup = "java:global/__EJB_LOOKUP_DIR__/DatabaseServiceCheckerFacade")
     private DatabaseServiceCheckerInterface dbServiceChecker;
     
-    private boolean error;
-    private String baseDirectory;
+    @EJB(lookup = "java:global/__EJB_LOOKUP_DIR__/FileManagerUtil")
+    private FileManagerInterface fileManagerUtil;
 
     public FileManagerWebAppBean() {
         // NO-OP
@@ -99,68 +87,6 @@ public class FileManagerWebAppBean extends AbstractBaseWebAppBean implements Ser
         return userSessionManager;
     }
     
-    private LinkedList<String> nodeList = new LinkedList<String>();
-
-    private void recursiveReadDir(String dirname, LinkedList<String> nodeList) {
-        try {
-            DirectoryStream<Path> directoryStream = Files.newDirectoryStream(Paths.get(dirname));
-            for (Path path : directoryStream) {
-                String fileName = path.getFileName().toString();
-                nodeList.add(dirname + File.separator + fileName);
-                if (Files.isDirectory(path)) {
-                    recursiveReadDir(dirname + File.separator + fileName, nodeList);
-                }
-            }
-            directoryStream.close();
-        } catch (Exception e) {
-        }
-    }
-    
-    private Map<String, String> directoriesMap = new HashMap<String, String>();
-    private Map<String, String> filesMap = new HashMap<String, String>();
-
     public void populateNodes(ComponentSystemEvent event) throws AbortProcessingException {
-        try {
-            if (baseDirectory == null) {
-                baseDirectory = System.getProperty("user.home");
-            }
-        } catch (Exception e) {
-            error = true;
-            return;
-        }
-        
-        Map<String, String> localDirectoriesShortByName = new HashMap<String, String>();
-        Map<String, String> localFilesShortByName = new HashMap<String, String>();
-        Map<String, String> localDirectoriesShortByDate = new HashMap<String, String>();
-        Map<String, String> localFilesShortByDate = new HashMap<String, String>();
-        
-        try {
-            DirectoryStream<Path> directoryStream = Files.newDirectoryStream(Paths.get(baseDirectory));
-            for (Path path : directoryStream) {
-                String name = path.getFileName().toString();
-                if (Files.isDirectory(path)) {
-                    localDirectoriesShortByName.put(name, baseDirectory + File.separator + name);
-                } else {
-                    localFilesShortByName.put(name, baseDirectory + File.separator + name);
-                }
-            }
-            directoryStream.close();
-        } catch (Exception e) {
-        }
-        
-        directoriesMap = new TreeMap<String, String>(localDirectoriesShortByDate);
-        filesMap = new TreeMap<String, String>(localFilesShortByName);
-        
-        if (!directoriesMap.isEmpty()) {
-            for (String key : directoriesMap.keySet()) {
-                System.out.println(directoriesMap.get(key));
-            }
-        }
-        
-        if (!filesMap.isEmpty()) {
-            for (String key : filesMap.keySet()) {
-                System.out.println(filesMap.get(key));
-            }
-        }
     }
 }
