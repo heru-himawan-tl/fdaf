@@ -28,25 +28,10 @@
  */
 package fdaf.base;
 
-import java.io.InputStream;
-import java.util.LinkedHashMap;
-import java.util.List;
-
-public interface FileManagerInterface {
-
-    public void upload(List<InputStream> fileStreamList);
-    
-    public void move(List<String> fileAddressList, String destinationDirectory);
-    
-    public void remove(List<String> fileAddressList);
-    
-    public void populateNodes();
-    
-    public LinkedHashMap<String, String> getNodeMap();
-    
-    public void search(String keywords);
-    
-    public List<String> getSearchResultList();
-    
-    public void changeDirectory(String baseDirectory);
+public enum FileListSortMode {
+    BY_NAME,
+    BY_SIZE,
+    BY_LAST_MODIFIED_TIME,
+    BY_CREATION_TIME,
+    BY_LAST_ACCESS_TIME,
 }

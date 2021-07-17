@@ -44,7 +44,7 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-// UNDER DEVELOPMENT !
+// UNDER DEVELOPMENT!
 @ViewScoped
 @Named
 public class FileManagerWebAppBean extends AbstractBaseWebAppBean implements Serializable {
@@ -74,19 +74,26 @@ public class FileManagerWebAppBean extends AbstractBaseWebAppBean implements Ser
     protected DatabaseServiceCheckerInterface getDatabaseServiceChecker() {
         return dbServiceChecker;
     }
-    
+
     protected AdministratorAccountCheckerInterface getAdministratorAccountChecker() {
         return rootAccountChecker;
     }
-    
+
     protected CommonConfigurationInterface getCommonConfiguration() {
         return commonConfiguration;
     }
-    
+
     public UserSessionManagerInterface getUserSessionManager() {
         return userSessionManager;
     }
-    
+
     public void populateNodes(ComponentSystemEvent event) throws AbortProcessingException {
+        fileManagerUtil.populateNodes();
+        java.util.LinkedHashMap<String, String> nodeMap = fileManagerUtil.getNodeMap();
+        if (!nodeMap.isEmpty()) {
+            for (String k : nodeMap.keySet()) {
+                System.out.println(nodeMap.get(k));
+            }
+        }
     }
 }

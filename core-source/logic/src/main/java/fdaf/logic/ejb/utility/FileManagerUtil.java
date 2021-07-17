@@ -28,6 +28,7 @@
  */
 package fdaf.logic.ejb.utility;
 
+import fdaf.base.FileListSortMode;
 import fdaf.base.FileManagerInterface;
 import java.io.BufferedReader;
 import java.io.File;
@@ -36,11 +37,13 @@ import java.io.FileWriter;
 import java.io.InputStream;
 import java.io.Serializable;
 import java.nio.file.attribute.BasicFileAttributes;
+import java.nio.file.attribute.FileTime;
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -55,12 +58,11 @@ import javax.ejb.Stateful;
 public class FileManagerUtil {
         
     private static final long serialVersionUID = 1L;
-    
-    private Map<String, String> directoriesMap = new HashMap<String, String>();
-    private Map<String, String> filesMap = new HashMap<String, String>();
     private LinkedList<String> nodeList = new LinkedList<String>();
-    private String baseDirectory;
+    private LinkedHashMap<String, String> nodeMap = new LinkedHashMap<String, String>();
+    private String currentDirectory;
     private boolean error;
+    private FileListSortMode sortMode = FileListSortMode.BY_NAME; 
 
     public FileManagerUtil() {
         // NO-OP
@@ -82,55 +84,148 @@ public class FileManagerUtil {
     }
 
     public void populateNodes() {
-
+        String baseDirectory = "";
         try {
-            if (baseDirectory == null) {
+            if (currentDirectory == null) {
                 baseDirectory = System.getProperty("user.home");
+                currentDirectory = baseDirectory;
+            } else {
+                if (Files.exists(Paths.get(currentDirectory))) {
+                    baseDirectory = currentDirectory;
+                } else {
+                    return;
+                }
             }
         } catch (Exception e) {
             error = true;
             return;
         }
-        
-        Map<String, String> localDirectoriesShortByName = new HashMap<String, String>();
-        Map<String, String> localFilesShortByName = new HashMap<String, String>();
-        Map<String, String> localDirectoriesShortByDate = new HashMap<String, String>();
-        Map<String, String> localFilesShortByDate = new HashMap<String, String>();
-        
+        Map<String, String[]> localDirectoryMap = new HashMap<String, String[]>();
+        Map<String, String[]> localFileMap = new HashMap<String, String[]>();
+        Map<String, String[]> localDirectoriesSortByCreationTime = new HashMap<String, String[]>();
+        Map<String, String[]> localDirectoriesSortByLastAccessTime = new HashMap<String, String[]>();
+        Map<String, String[]> localDirectoriesSortByLastModifiedTime = new HashMap<String, String[]>();
+        Map<String, String[]> localDirectoriesSortByName = new HashMap<String, String[]>();
+        Map<String, String[]> localDirectoriesSortBySize = new HashMap<String, String[]>();
+        Map<String, String[]> localFilesSortByCreationTime = new HashMap<String, String[]>();
+        Map<String, String[]> localFilesSortByLastAccessTime = new HashMap<String, String[]>();
+        Map<String, String[]> localFilesSortByLastModifiedTime = new HashMap<String, String[]>();
+        Map<String, String[]> localFilesSortByName = new HashMap<String, String[]>();
+        Map<String, String[]> localFilesSortBySize = new HashMap<String, String[]>();
         try {
             DirectoryStream<Path> directoryStream = Files.newDirectoryStream(Paths.get(baseDirectory));
             for (Path path : directoryStream) {
+                BasicFileAttributes attribute = Files.readAttributes(path, BasicFileAttributes.class);
                 String name = path.getFileName().toString();
+                String address = baseDirectory + File.separator + name;
+                File file = new File(address);
+                if (file.isHidden()) {
+                    continue;
+                }
                 if (Files.isDirectory(path)) {
-                    localDirectoriesShortByName.put(name, baseDirectory + File.separator + name);
+                    localDirectoriesSortByCreationTime.put(attribute.creationTime().toString(), new String[]{name, address});
+                    localDirectoriesSortByLastAccessTime.put(attribute.lastAccessTime().toString(), new String[]{name, address});
+                    localDirectoriesSortByLastModifiedTime.put(attribute.lastModifiedTime().toString(), new String[]{name, address});
+                    localDirectoriesSortByName.put(name, new String[]{name.toLowerCase(), address});
+                    localDirectoriesSortBySize.put(String.valueOf(attribute.size()), new String[]{name, address});
                 } else {
-                    localFilesShortByName.put(name, baseDirectory + File.separator + name);
+                    localFilesSortByCreationTime.put(attribute.creationTime().toString(), new String[]{name, address});
+                    localFilesSortByLastAccessTime.put(attribute.lastAccessTime().toString(), new String[]{name, address});
+                    localFilesSortByLastModifiedTime.put(attribute.lastModifiedTime().toString(), new String[]{name, address});
+                    localFilesSortByName.put(name, new String[]{name.toLowerCase(), address});
+                    localFilesSortBySize.put(String.valueOf(attribute.size()), new String[]{name, address});
                 }
             }
             directoryStream.close();
         } catch (Exception e) {
         }
-        
-        directoriesMap = new TreeMap<String, String>(localDirectoriesShortByName);
-        filesMap = new TreeMap<String, String>(localFilesShortByName);
-        
-        if (!directoriesMap.isEmpty()) {
-            System.out.println("Directories: ");
-            for (String key : directoriesMap.keySet()) {
-                System.out.println(directoriesMap.get(key));
-            }
+        switch (sortMode) {
+            case BY_CREATION_TIME:
+                localDirectoryMap = new TreeMap<String, String[]>(localDirectoriesSortByCreationTime);
+                localFileMap = new TreeMap<String, String[]>(localFilesSortByCreationTime);
+                break;
+            case BY_LAST_MODIFIED_TIME:
+                localDirectoryMap = new TreeMap<String, String[]>(localDirectoriesSortByLastModifiedTime);
+                localFileMap = new TreeMap<String, String[]>(localFilesSortByLastModifiedTime);
+                break;
+            case BY_NAME:
+                localDirectoryMap = new TreeMap<String, String[]>(localDirectoriesSortByName);
+                localFileMap = new TreeMap<String, String[]>(localFilesSortByName);
+                break;
+            case BY_LAST_ACCESS_TIME:
+                localDirectoryMap = new TreeMap<String, String[]>(localDirectoriesSortByLastAccessTime);
+                localFileMap = new TreeMap<String, String[]>(localFilesSortByLastAccessTime);
+                break;
+            case BY_SIZE:
+                localDirectoryMap = new TreeMap<String, String[]>(localDirectoriesSortBySize);
+                localFileMap = new TreeMap<String, String[]>(localFilesSortBySize);
+                break;
         }
-        
-        if (!filesMap.isEmpty()) {
-            System.out.println("Files: ");
-            for (String key : filesMap.keySet()) {
-                System.out.println(filesMap.get(key));
+        nodeMap = new LinkedHashMap<String, String>();
+        if (!localDirectoryMap.isEmpty()) {
+            Map<String, String[]> tmpMap = new HashMap<String, String[]>();
+            for (String key : localDirectoryMap.keySet()) {
+                String[] nodeData = localDirectoryMap.get(key);
+                tmpMap.put(nodeData[0].toLowerCase(), new String[]{nodeData[0], nodeData[1]});
             }
+            Map<String, String[]> trm = new TreeMap<String, String[]>(tmpMap);
+            for (String key : trm.keySet()) {
+                String[] nodeData = trm.get(key);
+                nodeMap.put(nodeData[0], nodeData[1]);
+            }
+            tmpMap.clear();
+            trm.clear();
         }
+        if (!localFileMap.isEmpty()) {
+            Map<String, String[]> tmpMap = new HashMap<String, String[]>();
+            for (String key : localFileMap.keySet()) {
+                String[] nodeData = localFileMap.get(key);
+                tmpMap.put(nodeData[0].toLowerCase(), new String[]{nodeData[0], nodeData[1]});
+            }
+            Map<String, String[]> trm = new TreeMap<String, String[]>(tmpMap);
+            for (String key : trm.keySet()) {
+                String[] nodeData = trm.get(key);
+                nodeMap.put(nodeData[0], nodeData[1]);
+            }
+            tmpMap.clear();
+            trm.clear();
+        }
+        localDirectoryMap.clear();
+        localFileMap.clear();
+        localDirectoriesSortByCreationTime.clear();
+        localDirectoriesSortByLastAccessTime.clear();
+        localDirectoriesSortByLastModifiedTime.clear();
+        localDirectoriesSortByName.clear();
+        localDirectoriesSortBySize.clear();
+        localFilesSortByCreationTime.clear();
+        localFilesSortByLastAccessTime.clear();
+        localFilesSortByLastModifiedTime.clear();
+        localFilesSortByName.clear();
+        localFilesSortBySize.clear();
     }
     
-    public Map<String, String> getNodeMap() {
-        return null;
+    public void setCurrentDirectory(String currentDirectory) {
+        this.currentDirectory = currentDirectory;
+    }
+    
+    public LinkedHashMap<String, String> getNodeMap() {
+        return nodeMap;
+    }
+
+    public void changeDirectory(String currentDirectory) {
+        this.currentDirectory = currentDirectory;
+    }
+    
+    public void upload(List<InputStream> fileStreamList) {
+    }
+    
+    public void move(List<String> fileAddressList, String destinationDirectory) {
+        for (String fileAddress : fileAddressList) {
+            
+        }
+    }
+   
+    public void remove(List<String> fileAddressList) {
     }
     
     public void search(String keywords) {
@@ -138,17 +233,5 @@ public class FileManagerUtil {
     
     public List<String> getSearchResultList() {
         return null;
-    }
-
-    public void changeDirectory(String directoryAddress) {
-    }
-    
-    public void upload(List<InputStream> fileStreamList) {
-    }
-    
-    public void move(List<String> fileAddressList, String sourceDirectory, String destinationDirectory) {
-    }
-    
-    public void remove(List<String> fileAddressList) {
     }
 }
