@@ -53,11 +53,16 @@ public class FileManagerTool extends HttpServlet {
         
         if (address == null || (address != null && address.trim().isEmpty()) || invalid) {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST);
+            return;
         }
+        
         path = Paths.get(address);
+        
         if (!Files.exists(path)) {
             response.sendError(HttpServletResponse.SC_NOT_FOUND);
+            return;
         }
+        
         if (!Files.isDirectory(path)) {
             mimeType = new String(Files.probeContentType(path) + "").toLowerCase();
             if (!mimeType.matches(".*(png|jpg|jpeg|bmp|gif|jfif|tiff|wmf|ppm|pgm|pbm|pnm|webp|heif).*") && createView) {
@@ -66,20 +71,26 @@ public class FileManagerTool extends HttpServlet {
         } else {
             address = getServletContext().getRealPath("/web-resources/icons/folder.png");
         }
+        
         mimeType = Files.probeContentType(path);
         path = Paths.get(address);
+        
         if (!Files.exists(path)) {
             response.sendError(HttpServletResponse.SC_NOT_FOUND);
+            return;
         }
+        
         response.setContentType(mimeType);
         response.setHeader("Content-Disposition", "inline; filename=\"" + address.replaceAll(".*/", "") + "\"");
         OutputStream output = response.getOutputStream();
+        
         try {
             for (byte b : Files.readAllBytes(path)) {
                 output.write(b);
             }
         } catch (Exception e) {
         }
+        
         output.flush();
         output.close();
     }
