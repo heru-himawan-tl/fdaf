@@ -82,7 +82,9 @@ public class FilePreviewTool extends HttpServlet {
         if (!Files.isDirectory(path)) {
             mimeType = new String(Files.probeContentType(path) + "").toLowerCase();
             if (!mimeType.matches(".*(image|video|audio)\\/.*") && !createView && !createPrev) {
-                address = getServletContext().getRealPath("/web-resources/icons/file.png");
+                String iconName = mimeType.replaceAll("\\/", "-");
+                iconName = (iconName.equals("null")) ? "gnome-fs-regular" : iconName;
+                address = getServletContext().getRealPath("/web-resources/icons/mimetypes/" + iconName + ".svg");
             } else {
                 isImage = mimeType.matches(".*image\\/.*");
                 isVideo = mimeType.matches(".*video\\/.*");
@@ -138,17 +140,17 @@ public class FilePreviewTool extends HttpServlet {
             return;
         }
         
-        if (mimeType.matches(".*video\\/.*") && !createView && !isDirectory && !createPrev) {
-            address = getServletContext().getRealPath("/web-resources/icons/video.png");
+        if (mimeType.matches(".*(video|audio)\\/.*") && !createView && !isDirectory && !createPrev) {
+            String iconName = mimeType.replaceAll("\\/", "-");
+            address = getServletContext().getRealPath("/web-resources/icons/mimetypes/" + iconName + ".svg");
         }
-        
-        if (mimeType.matches(".*audio\\/.*") && !createView && !isDirectory && !createPrev) {
-            address = getServletContext().getRealPath("/web-resources/icons/audio.png");
-        }
-        
-        System.out.println(">>>>>>> " + mimeType);
         
         path = Paths.get(address);
+        
+        if (!Files.exists(path)) {
+            address = getServletContext().getRealPath("/web-resources/icons/mimetypes/gnome-fs-regular.svg");
+            path = Paths.get(address);
+        }
         
         mimeType = Files.probeContentType(path);
         

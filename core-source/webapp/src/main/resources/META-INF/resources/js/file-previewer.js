@@ -11,16 +11,12 @@ function procResizeIframe() {
 
 function resizeIframe() {
     var mv = document.getElementById('FilePreviewToolVideo');
-    var mi = document.getElementById('FilePreviewToolImage');
     if (mv != null) {
         mv.addEventListener('canplay', (event) => {
             procResizeIframe();
         });
+        return;
     }
-    if (mi != null) {
-        mi.onload = function() {
-            procResizeIframe();
-        };
-    }
+    procResizeIframe();
 }
 
