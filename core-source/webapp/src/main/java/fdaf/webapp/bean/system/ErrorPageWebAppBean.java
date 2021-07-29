@@ -28,27 +28,53 @@
  */
 package fdaf.webapp.bean.system;
 
+import fdaf.base.AddAdministratorInterface;
+import fdaf.base.AdministratorAccountCheckerInterface;
 import fdaf.base.CommonConfigurationInterface;
-import fdaf.webapp.base.AbstractDummyWebAppBean;
+import fdaf.base.DatabaseServiceCheckerInterface;
+import fdaf.base.UserSessionManagerInterface;
+import fdaf.webapp.base.AbstractBaseWebAppBean;
 import java.io.Serializable;
 import javax.ejb.EJB;
-import javax.enterprise.context.SessionScoped;
+import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
-@SessionScoped
+@ViewScoped
 @Named
-public class ErrorPageWebAppBean extends AbstractDummyWebAppBean implements Serializable {
+public class ErrorPageWebAppBean extends AbstractBaseWebAppBean implements Serializable {
 
     private static final long serialVersionUID = 1L;
     
+    @EJB(lookup = "java:global/__EJB_LOOKUP_DIR__/AdministratorAccountCheckerFacade")
+    private AdministratorAccountCheckerInterface rootAccountChecker;
+    
+    @EJB(lookup = "java:global/__EJB_LOOKUP_DIR__/UserSessionManagerFacade")
+    private UserSessionManagerInterface userSessionManager;
+    
     @EJB(lookup = "java:global/__EJB_LOOKUP_DIR__/CommonConfigurationService")
     private CommonConfigurationInterface commonConfiguration;
+    
+    @EJB(lookup = "java:global/__EJB_LOOKUP_DIR__/DatabaseServiceCheckerFacade")
+    private DatabaseServiceCheckerInterface dbServiceChecker;
 
     public ErrorPageWebAppBean() {
         // NO-OP
     }
     
+    @Override
+    protected DatabaseServiceCheckerInterface getDatabaseServiceChecker() {
+        return dbServiceChecker;
+    }
+
+    protected AdministratorAccountCheckerInterface getAdministratorAccountChecker() {
+        return rootAccountChecker;
+    }
+
     protected CommonConfigurationInterface getCommonConfiguration() {
         return commonConfiguration;
+    }
+
+    public UserSessionManagerInterface getUserSessionManager() {
+        return userSessionManager;
     }
 }

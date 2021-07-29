@@ -1,0 +1,97 @@
+<!--
+
+Copyright (c) Heru Himawan Tejo Laksono. All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+
+1. Redistributions of source code must retain the above copyright notice,
+   this list of conditions and the following disclaimer.
+
+2. Redistributions in binary form must reproduce the above copyright notice,
+   this list of conditions and the following disclaimer in the documentation
+   and/or other materials provided with the distribution.
+
+3. Neither the name of the copyright holders nor the names of its
+   contributors may be used to endorse or promote products derived from this
+   software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ARE DISCLAIMED. IN NO EVENT SHALL THE REGENTS OR CONTRIBUTORS BE LIABLE FOR
+ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE
+USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:composite="http://java.sun.com/jsf/composite"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:d="http://java.sun.com/jsf/composite/component">
+    <composite:interface>
+        <composite:attribute required="true" name="title" type="java.lang.String" />
+        <composite:attribute required="true" name="classId" type="java.lang.String" />
+        <composite:attribute required="true" name="iframeId" type="java.lang.String" />
+        <composite:attribute required="true" name="webAppBean" type="java.lang.Object" />
+        <composite:attribute required="true" name="rewitePageClass" type="java.lang.String" />
+    </composite:interface>
+    <composite:implementation>
+        <h:panelGroup layout="block" styleClass="file_previewer_container #{cc.attrs.classId}" style="display:none;">
+            <h:panelGroup layout="block" styleClass="file_previewer_heading_container">
+                <h:panelGroup layout="block" styleClass="file_previewer_heading_box">
+                    <h:panelGroup layout="block" styleClass="file_previewer_heading_inner">
+                        <h:panelGroup layout="block" styleClass="file_previewer_heading_title">
+                            <h:panelGroup layout="block" styleClass="file_previewer_heading_mobile_mode_table">
+                                <h:panelGroup layout="block" styleClass="file_previewer_heading_mobile_mode_row">
+                                    <h:panelGroup layout="block" styleClass="file_previewer_heading_mobile_mode_title_cell">
+                                        <h:outputText value="#{cc.attrs.title}" />
+                                    </h:panelGroup>
+                                    <h:panelGroup layout="block" styleClass="file_previewer_heading_mobile_mode_action_menu_cell">
+                                        <h:commandButton type="button" styleClass="common_button blue_button mobile_menu_button"
+                                            value="#{label.buttonAction}" 
+                                            onclick="var elx = document.getElementsByClassName('file_previewer_heading_mobile_action_tool_box')[0];
+                                                var el1 = document.getElementsByClassName('file_previewer_heading_button_box')[0];
+                                                if (elx.style.display == 'none' || elx.style.display == '') {
+                                                    elx.style='display:block';
+                                                    this.value = 'X';
+                                                    elx.innerHTML = el1.innerHTML;
+                                                } else {
+                                                    this.value = '#{label.buttonAction}';
+                                                    elx.style='display:none';
+                                                    elx.innerHTML = '';
+                                                };" />
+                                    </h:panelGroup>
+                                </h:panelGroup>
+                            </h:panelGroup>
+                        </h:panelGroup>
+                        <h:panelGroup layout="block" styleClass="file_previewer_heading_mobile_action_tool_box_outer">
+                            <h:panelGroup layout="block" styleClass="file_previewer_heading_mobile_action_tool_box" />
+                        </h:panelGroup>
+                        <h:panelGroup layout="block" styleClass="file_previewer_heading_button_box">
+                            <h:panelGroup layout="block" styleClass="file_previewer_heading_button_box_flex">
+                                <h:commandButton type="button" styleClass="common_button"
+                                    onclick="
+                                        document.getElementsByClassName('#{cc.attrs.classId}')[0].style='display:none;';
+                                        document.getElementById('#{cc.attrs.iframeId}').src='about:blank';
+                                        document.getElementsByClassName('#{cc.attrs.rewitePageClass}')[0].style='display:block;';
+                                    "
+                                    value="#{label.buttonClose}" />
+                            </h:panelGroup>
+                        </h:panelGroup>
+                    </h:panelGroup>
+                </h:panelGroup>
+            </h:panelGroup>
+            <h:panelGroup layout="block" styleClass="file_previewer_frame_box">
+                <iframe id="#{cc.attrs.iframeId}" frameborder="0" scrolling="auto" src="" class="file_manager_preview_frame">
+                    <p>Your browser does not support iframes.</p>
+                </iframe>
+            </h:panelGroup>
+        </h:panelGroup>
+    </composite:implementation>
+</html>

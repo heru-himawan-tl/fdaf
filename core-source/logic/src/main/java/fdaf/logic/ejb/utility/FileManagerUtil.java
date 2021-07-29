@@ -59,7 +59,7 @@ public class FileManagerUtil {
         
     private static final long serialVersionUID = 1L;
     private LinkedList<String> nodeList = new LinkedList<String>();
-    private LinkedHashMap<String, String> nodeMap = new LinkedHashMap<String, String>();
+    private LinkedHashMap<String, Map<String, Boolean>> nodeMap = new LinkedHashMap<String, Map<String, Boolean>>();
     private String currentDirectory;
     private boolean error;
     private FileListSortMode sortMode = FileListSortMode.BY_NAME; 
@@ -126,13 +126,13 @@ public class FileManagerUtil {
                     localDirectoriesSortByCreationTime.put(attribute.creationTime().toString(), new String[]{name, address});
                     localDirectoriesSortByLastAccessTime.put(attribute.lastAccessTime().toString(), new String[]{name, address});
                     localDirectoriesSortByLastModifiedTime.put(attribute.lastModifiedTime().toString(), new String[]{name, address});
-                    localDirectoriesSortByName.put(name, new String[]{name.toLowerCase(), address});
+                    localDirectoriesSortByName.put(name.toLowerCase(), new String[]{name, address});
                     localDirectoriesSortBySize.put(String.valueOf(attribute.size()), new String[]{name, address});
                 } else {
                     localFilesSortByCreationTime.put(attribute.creationTime().toString(), new String[]{name, address});
                     localFilesSortByLastAccessTime.put(attribute.lastAccessTime().toString(), new String[]{name, address});
                     localFilesSortByLastModifiedTime.put(attribute.lastModifiedTime().toString(), new String[]{name, address});
-                    localFilesSortByName.put(name, new String[]{name.toLowerCase(), address});
+                    localFilesSortByName.put(name.toLowerCase(), new String[]{name, address});
                     localFilesSortBySize.put(String.valueOf(attribute.size()), new String[]{name, address});
                 }
             }
@@ -161,34 +161,22 @@ public class FileManagerUtil {
                 localFileMap = new TreeMap<String, String[]>(localFilesSortBySize);
                 break;
         }
-        nodeMap = new LinkedHashMap<String, String>();
+        nodeMap = new LinkedHashMap<String, Map<String, Boolean>>();
         if (!localDirectoryMap.isEmpty()) {
-            Map<String, String[]> tmpMap = new HashMap<String, String[]>();
             for (String key : localDirectoryMap.keySet()) {
                 String[] nodeData = localDirectoryMap.get(key);
-                tmpMap.put(nodeData[0].toLowerCase(), new String[]{nodeData[0], nodeData[1]});
+                Map<String, Boolean> data = new HashMap<String, Boolean>();
+                data.put(nodeData[1], true);
+                nodeMap.put(nodeData[0], data);
             }
-            Map<String, String[]> trm = new TreeMap<String, String[]>(tmpMap);
-            for (String key : trm.keySet()) {
-                String[] nodeData = trm.get(key);
-                nodeMap.put(nodeData[0], nodeData[1]);
-            }
-            tmpMap.clear();
-            trm.clear();
         }
         if (!localFileMap.isEmpty()) {
-            Map<String, String[]> tmpMap = new HashMap<String, String[]>();
             for (String key : localFileMap.keySet()) {
                 String[] nodeData = localFileMap.get(key);
-                tmpMap.put(nodeData[0].toLowerCase(), new String[]{nodeData[0], nodeData[1]});
+                Map<String, Boolean> data = new HashMap<String, Boolean>();
+                data.put(nodeData[1], false);
+                nodeMap.put(nodeData[0], data);
             }
-            Map<String, String[]> trm = new TreeMap<String, String[]>(tmpMap);
-            for (String key : trm.keySet()) {
-                String[] nodeData = trm.get(key);
-                nodeMap.put(nodeData[0], nodeData[1]);
-            }
-            tmpMap.clear();
-            trm.clear();
         }
         localDirectoryMap.clear();
         localFileMap.clear();
@@ -208,7 +196,7 @@ public class FileManagerUtil {
         this.currentDirectory = currentDirectory;
     }
     
-    public LinkedHashMap<String, String> getNodeMap() {
+    public LinkedHashMap<String, Map<String, Boolean>> getNodeMap() {
         return nodeMap;
     }
 
@@ -221,7 +209,6 @@ public class FileManagerUtil {
     
     public void move(List<String> fileAddressList, String destinationDirectory) {
         for (String fileAddress : fileAddressList) {
-            
         }
     }
    

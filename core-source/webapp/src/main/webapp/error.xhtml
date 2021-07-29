@@ -42,7 +42,9 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         <d:customHeadTag />
     </h:head>
     <h:body>
-        <d:pageContainer id="page" webAppBean="#{expirationPageWebAppBean}" noFooter="true">
+        <d:mainInit webAppBean="#{errorPageWebAppBean}" />
+        <d:loadBundles />
+        <d:pageContainer id="page" webAppBean="#{errorPageWebAppBean}" noFooter="true">
             <h:form id="form">
                 <d:customProgramHeading pageTitle="#{errorPageWebAppBean.applicationName} - #{fn:toUpperCase(label.errorPageTitle)}">
                     <h:commandButton type="button" styleClass="grouped_button_left" value="#{label.buttonReload}" onclick="document.location.href='#{requestScope['fdaf.error.referer']}';" />

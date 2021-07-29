@@ -33,11 +33,14 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         xmlns:d="http://java.sun.com/jsf/composite/component"
         xmlns:f="http://java.sun.com/jsf/core"
         xmlns:h="http://java.sun.com/jsf/html"
-        xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions">
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions"
+        xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <title><h:outputText value="#{fileManagerWebAppBean.applicationName} - #{fn:toUpperCase(label.fileManager)}" /></title>
         <h:outputStylesheet library="css" name="style.css"/>
+        <h:outputScript library="js" name="function.js" />
         <d:customHeadTag />
     </h:head>
     <h:body>
@@ -57,20 +60,71 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                     <d:customLeftPanel webAppBean="#{fileManagerWebAppBean}" />
                 </d:leftPanel>
                 <d:mainPanel>
-                        <d:pageContainer id="page" webAppBean="#{fileManagerWebAppBean}">
+                    <d:pageContainer id="page" webAppBean="#{fileManagerWebAppBean}">
+                        <d:fileManagerPreviewer iframeId="fileManagerPreviewer" classId="file_manager_preview"
+                            title="#{fn:toUpperCase(label.filePreviewer)}"
+                            webAppBean="#{fileManagerWebAppBean}"
+                            rewitePageClass="file_manager_main_page_container" />
+                        <h:panelGroup layout="block" styleClass="file_manager_main_page_container">
                             <d:customProgramHeading pageTitle="#{fn:toUpperCase(label.fileManager)}">
-                                
-                                <h:commandButton type="button" styleClass="common_button" onclick="document.location.href='adm.jsf'" value="#{label.buttonClose}" />
+                                <h:commandButton type="button" styleClass="grouped_button_left" value="#{label.buttonHome}" immediate="true">
+                                    <f:actionListener binding="#{fileManagerWebAppBean.returnHome()}" />
+                                    <f:ajax event="click" execute="@form" render="@form" />
+                                </h:commandButton>
+                                <h:commandButton type="button" styleClass="grouped_button_right"
+                                    onclick="document.location.href='adm.jsf'" value="#{label.buttonClose}" />
                             </d:customProgramHeading>
                             <d:messages />
                             <h:panelGroup layout="block" styleClass="field_container">
                                 <h:panelGroup layout="block" styleClass="field_container_inner">
-                   
+                                    <h:panelGroup layout="block" styleClass="file_manager_image_box">
+                                        <ui:repeat value="#{fileManagerWebAppBean.nodes}" var="node">
+                                            <ui:repeat value="#{node.value}" var="data">
+                                                <h:panelGroup layout="block" styleClass="file_manager_image_item_box"
+                                                    rendered="#{data.value eq true}">
+                                                    <h:commandButton type="button" style="display:none;" immediate="true" value="" 
+                                                            a:name="#{node.key}">
+                                                        <f:actionListener binding="#{fileManagerWebAppBean.setCurrentDirectory(data.key)}" />
+                                                        <f:ajax event="click" execute="@form" render="@form" />
+                                                    </h:commandButton>
+                                                    <h:panelGroup layout="block" styleClass="file_manager_image_item_icon_box">
+                                                        <h:graphicImage value="file-preview-tool?address=#{data.key}&amp;view=0&amp;prev=0"
+                                                            alt="#{node.key}" styleClass="file_manager_image_item"
+                                                            a:onclick="var e = document.getElementsByName('#{node.key}');if(e!=null){e[0].click();};" />
+                                                    </h:panelGroup>
+                                                    <h:panelGroup layout="block" styleClass="file_manager_image_item_name_box">
+                                                        <a href="javascript:void(0);"
+                                                            onclick="var e = document.getElementsByName('#{node.key}');if(e!=null){e[0].click();};"
+                                                            ><h:outputText value="#{node.key}" /></a>
+                                                    </h:panelGroup>
+                                                </h:panelGroup>
+                                                <h:panelGroup layout="block" styleClass="file_manager_image_item_box"
+                                                    rendered="#{data.value eq false}">
+                                                    <h:panelGroup layout="block" styleClass="file_manager_image_item_icon_box">
+                                                        <h:graphicImage value="file-preview-tool?address=#{data.key}&amp;view=0&amp;prev=0"
+                                                            alt="#{node.key}" styleClass="file_manager_image_item"
+                                                            a:onclick="" />
+                                                    </h:panelGroup>
+                                                    <h:panelGroup layout="block" styleClass="file_manager_image_item_name_box">
+                                                        <a href="javascript:void(0);"
+                                                            onclick="document.querySelector('.file_manager_preview')
+                                                                .style='display:block';
+                                                                document.querySelector('.file_manager_main_page_container')
+                                                                .style='display:none';
+                                                                    document.getElementById('fileManagerPreviewer')
+                                                                    .src='file-preview-tool?prev=1&amp;view=0&amp;address=#{data.key}';"
+                                                            ><h:outputText value="#{node.key}" /></a>
+                                                    </h:panelGroup>
+                                                </h:panelGroup>
+                                            </ui:repeat>
+                                        </ui:repeat>
+                                    </h:panelGroup>
                                 </h:panelGroup>
                             </h:panelGroup>
-                            <d:databaseErrorWarningBox webAppBean="#{fileManagerWebAppBean}" />
-                            <d:mainPanelFooter webAppBean="#{fileManagerWebAppBean}" />
-                        </d:pageContainer>
+                        </h:panelGroup>
+                        <d:databaseErrorWarningBox webAppBean="#{fileManagerWebAppBean}" />
+                        <d:mainPanelFooter webAppBean="#{fileManagerWebAppBean}" />
+                    </d:pageContainer>
                 </d:mainPanel>
                 <d:rightPanel>
                     <d:customRightPanel webAppBean="#{fileManagerWebAppBean}" />

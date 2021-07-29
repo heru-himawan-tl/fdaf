@@ -244,7 +244,6 @@ public class Initializer {
                         }
                         r0.close();
                     } catch (Exception e) {
-                        e.printStackTrace();
                     }
                     s = depContents;
                     System.out.println("[" + ANSI_BLUE + ANSI_BOLD + "FDAF INFO" + ANSI_RESET + "] " + ANSI_GREEN

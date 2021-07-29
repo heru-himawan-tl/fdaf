@@ -37,6 +37,8 @@ import fdaf.base.UserSessionManagerInterface;
 import fdaf.base.UserType;
 import fdaf.webapp.base.AbstractBaseWebAppBean;
 import java.io.Serializable;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import javax.ejb.EJB;
 import javax.faces.event.AbortProcessingException;
 import javax.faces.event.ComponentSystemEvent;
@@ -65,6 +67,9 @@ public class FileManagerWebAppBean extends AbstractBaseWebAppBean implements Ser
     
     @EJB(lookup = "java:global/__EJB_LOOKUP_DIR__/FileManagerUtil")
     private FileManagerInterface fileManagerUtil;
+    
+    private LinkedHashMap<String, Map<String, Boolean>> nodes = new LinkedHashMap<String, Map<String, Boolean>>();
+    private String currentDirectory;
 
     public FileManagerWebAppBean() {
         // NO-OP
@@ -86,14 +91,26 @@ public class FileManagerWebAppBean extends AbstractBaseWebAppBean implements Ser
     public UserSessionManagerInterface getUserSessionManager() {
         return userSessionManager;
     }
+    
+    public void returnHome() {
+        currentDirectory = System.getProperty("user.home");
+    }
 
     public void populateNodes(ComponentSystemEvent event) throws AbortProcessingException {
+        fileManagerUtil.changeDirectory(currentDirectory);
         fileManagerUtil.populateNodes();
-        java.util.LinkedHashMap<String, String> nodeMap = fileManagerUtil.getNodeMap();
-        if (!nodeMap.isEmpty()) {
-            for (String k : nodeMap.keySet()) {
-                System.out.println(nodeMap.get(k));
-            }
-        }
+        nodes = fileManagerUtil.getNodeMap();
+    }
+    
+    public LinkedHashMap<String, Map<String, Boolean>> getNodes() {
+        return nodes;
+    }
+    
+    public void setCurrentDirectory(String currentDirectory) {
+        this.currentDirectory = currentDirectory;
+    }
+    
+    public String getCurrentDirectory() {
+        return currentDirectory;
     }
 }

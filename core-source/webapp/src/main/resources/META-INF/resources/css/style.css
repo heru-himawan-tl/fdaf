@@ -32,15 +32,17 @@
 body
 {
     margin: 0px;
+}
+
+body,
+input,
+select,
+textarea
+{
     font-size: 14px;
     background: #ffffff;
     color: #263340;
-}
-
-*
-{
     font-family: arial;
-    font-size: 14px;
 }
 
 html
@@ -52,6 +54,7 @@ html
 html::-webkit-scrollbar
 {
   width: 6px !important;
+  height: 6px !important;
 }
 
 html::-webkit-scrollbar-track
@@ -871,6 +874,76 @@ a:hover
     font-weight: bold;
 }
 
+.file_previewer_heading_container
+{
+    display: block;
+    background: #0000ff;
+}
+
+.file_previewer_heading_box
+{
+    display: table;
+}
+
+.file_previewer_heading_inner
+{
+    display: table-row;
+}
+
+.file_previewer_heading_title,
+.file_previewer_heading_button_box
+{
+    display: table-cell;
+    vertical-align: middle !important;
+    color: #ffffff;
+}
+
+.file_previewer_heading_button_box_flex
+{
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.file_previewer_heading_title
+{
+    white-space: nowrap;
+}
+
+.file_previewer_heading_container
+{
+    padding: 8px;
+}
+
+.file_previewer_heading_title
+{
+    padding: 4px;
+}
+
+.file_previewer_heading_title
+{
+    padding-left: 0px;
+}
+
+.file_previewer_heading_button_box
+{
+    padding-right: 0px;
+}
+
+.file_previewer_heading_title
+{
+    width: 10240px;
+}
+
+.file_previewer_heading_title
+{
+    font-weight: bold;
+}
+
 /* END OF PROGRAM HEADING ================================================= */
 
 /* LIST TABLE ============================================================= */
@@ -1306,6 +1379,10 @@ a:hover
 .program_heading_button_box_flex .grouped_button_inner,
 .program_heading_button_box_flex .grouped_button_right,
 .program_heading_button_box_flex .common_button,
+.file_previewer_heading_button_box_flex .grouped_button_left,
+.file_previewer_heading_button_box_flex .grouped_button_inner,
+.file_previewer_heading_button_box_flex .grouped_button_right,
+.file_previewer_heading_button_box_flex .common_button,
 .login_info_flexbox .grouped_button_left,
 .login_info_flexbox .grouped_button_inner,
 .login_info_flexbox .grouped_button_right,
@@ -1319,6 +1396,8 @@ a:hover
 .list_control_container .grouped_button_left,
 .program_heading_button_box_flex .grouped_button_inner,
 .program_heading_button_box_flex .grouped_button_left,
+.file_previewer_heading_button_box_flex .grouped_button_inner,
+.file_previewer_heading_button_box_flex .grouped_button_left,
 .login_info_flexbox .grouped_button_left,
 .login_info_flexbox .grouped_button_inner
 {
@@ -1777,6 +1856,80 @@ a:hover
 
 /* END OF DIALOG BOX ====================================================== */
 
+/* FILE MANAGER PARTS ===================================================== */
+
+.file_manager_main_page_container
+{
+    display: block;
+}
+
+.file_previewer_container
+{
+    display: block;
+    height: 100% !important;
+}
+
+.file_manager_image_box
+{
+    display: block;
+}
+
+.file_manager_image_box > .file_manager_image_item_box
+{
+    vertical-align: top;
+}
+
+.file_manager_image_item_box
+{
+    display: inline-block;
+    margin: 16px;
+}
+
+.file_manager_image_item_icon_box
+{
+    width: 64px;
+    height: 64px;
+    overflow: hidden;
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #0000ff;
+}
+
+.file_manager_image_item_name_box
+{
+    display: block;
+    max-width: 64px !important;
+    overflow: hidden;
+    padding-top: 8px;
+}
+
+.file_manager_image_item
+{
+    width: 100%;
+}
+
+.file_previewer_frame_box
+{
+    display: block;
+    height: 100%;
+    padding: 8px;
+}
+
+.file_manager_preview_frame
+{
+    display: block;
+    width: 100% !important;
+    height: 100% !important;
+    background: #ffffff;
+}
+
+/* END OF FILE MANAGER PARTS ============================================== */
+
 /* OVERALL MISC. CONTROL ================================================== */
 
 .information_box
@@ -2050,7 +2203,9 @@ a:hover
 }
 
 .program_heading_mobile_action_tool_box_outer,
-.program_heading_mobile_mode_action_menu_cell
+.program_heading_mobile_mode_action_menu_cell,
+.file_previewer_heading_mobile_action_tool_box_outer,
+.file_previewer_heading_mobile_mode_action_menu_cell
 {
     display: none;
 }
@@ -2218,6 +2373,11 @@ a:hover
         padding-bottom: 2px;
     }
     
+    .file_previewer_heading_box,
+    .file_previewer_heading_inner,
+    .file_previewer_heading_title,
+    .file_previewer_heading_button_box,
+    .file_previewer_heading_button_box_flex,
     .program_heading_box,
     .program_heading_inner,
     .program_heading_title,
@@ -2227,11 +2387,14 @@ a:hover
         display: block;
     }
     
+    .file_previewer_heading_title,
     .program_heading_title
     {
         width: 100%;
     }
     
+    .file_previewer_heading_button_box,
+    .file_previewer_heading_button_box_flex,
     .program_heading_button_box,
     .program_heading_button_box_flex
     {
@@ -2249,7 +2412,11 @@ a:hover
     .program_heading_button_box_flex .grouped_button_left,
     .program_heading_button_box_flex .grouped_button_inner,
     .program_heading_button_box_flex .grouped_button_right,
-    .program_heading_button_box_flex .common_button
+    .program_heading_button_box_flex .common_button,
+    .file_previewer_heading_button_box_flex .grouped_button_left,
+    .file_previewer_heading_button_box_flex .grouped_button_inner,
+    .file_previewer_heading_button_box_flex .grouped_button_right,
+    .file_previewer_heading_button_box_flex .common_button
     {
         display: block;
         border: 1px solid #ffffff;
@@ -2260,7 +2427,11 @@ a:hover
     .program_heading_button_box_flex .grouped_button_left,
     .program_heading_button_box_flex .grouped_button_inner,
     .program_heading_button_box_flex .grouped_button_right,
-    .program_heading_button_box_flex .common_button
+    .program_heading_button_box_flex .common_button,
+    .file_previewer_heading_button_box_flex .grouped_button_left,
+    .file_previewer_heading_button_box_flex .grouped_button_inner,
+    .file_previewer_heading_button_box_flex .grouped_button_right,
+    .file_previewer_heading_button_box_flex .common_button
     {
         margin-top: 8px !important;
         margin-bottom: 8px !important;
@@ -2428,6 +2599,49 @@ a:hover
     }
     
     .program_heading_container
+    {
+        border-top: 1px solid #ffffff;
+        padding-top: 8px;
+    }
+
+    .file_previewer_heading_mobile_mode_table
+    {
+        display: table;
+    }
+    
+    .file_previewer_heading_mobile_mode_row
+    {
+        display: table-row;
+    }
+    
+    .file_previewer_heading_mobile_mode_title_cell,
+    .file_previewer_heading_mobile_mode_action_menu_cell
+    {
+        display: table-cell;
+        vertical-align: middle;
+    }
+    
+    .file_previewer_heading_mobile_mode_title_cell
+    {
+        width: 100%;
+    }
+    
+    .file_previewer_heading_title
+    {
+        padding: 0px;
+    }
+    
+    .file_previewer_heading_mobile_action_tool_box_outer
+    {
+        display: block;   
+    }
+    
+    .file_previewer_heading_button_box
+    {
+        display: none;
+    }
+    
+    .file_previewer_heading_container
     {
         border-top: 1px solid #ffffff;
         padding-top: 8px;

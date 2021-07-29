@@ -30,6 +30,7 @@ package fdaf.base;
 
 import java.io.InputStream;
 import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.List;
 
 public interface FileManagerInterface {
@@ -42,7 +43,7 @@ public interface FileManagerInterface {
     
     public void populateNodes();
     
-    public LinkedHashMap<String, String> getNodeMap();
+    public LinkedHashMap<String, Map<String, Boolean>> getNodeMap();
     
     public void search(String keywords);
     
