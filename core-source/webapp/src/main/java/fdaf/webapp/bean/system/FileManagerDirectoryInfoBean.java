@@ -26,34 +26,29 @@
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE
  * USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package fdaf.base;
+package fdaf.webapp.bean.system;
 
-import java.io.InputStream;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.List;
+import java.io.Serializable;
+import javax.enterprise.context.SessionScoped;
+import javax.inject.Named;
 
-public interface FileManagerInterface {
+@SessionScoped
+@Named
+public class FileManagerDirectoryInfoBean implements Serializable {
 
-    public void upload(List<InputStream> fileStreamList);
+    private static final long serialVersionUID = 1L;
     
-    public void move(List<String> fileAddressList, String destinationDirectory);
+    private String currentDirectory;
     
-    public void remove(List<String> fileAddressList);
+    public FileManagerDirectoryInfoBean() {
+        // NO-OP
+    }
     
-    public void populateNodes();
+    public void setCurrentDirectory(String currentDirectory) {
+        this.currentDirectory = currentDirectory;
+    }
     
-    public LinkedHashMap<String, Map<String, Boolean>> getNodeMap();
-    
-    public void search(String keywords);
-    
-    public List<String> getSearchResultList();
-    
-    public void setCurrentDirectory(String baseDirectory);
-    
-    public String getCurrentDirectory();
-    
-    public void toParentDirectory();
-    
-    public void toHomeDirectory();
+    public String getCurrentDirectory() {
+        return currentDirectory;
+    }
 }

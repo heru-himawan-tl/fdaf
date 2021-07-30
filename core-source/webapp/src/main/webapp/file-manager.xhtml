@@ -68,7 +68,11 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                         <h:panelGroup layout="block" styleClass="file_manager_main_page_container">
                             <d:customProgramHeading pageTitle="#{fn:toUpperCase(label.fileManager)}">
                                 <h:commandButton type="button" styleClass="grouped_button_left" value="#{label.buttonHome}" immediate="true">
-                                    <f:actionListener binding="#{fileManagerWebAppBean.returnHome()}" />
+                                    <f:actionListener binding="#{fileManagerWebAppBean.toHomeDirectory()}" />
+                                    <f:ajax event="click" execute="@form" render="@form" />
+                                </h:commandButton>
+                                <h:commandButton type="button" styleClass="grouped_button_left" value="#{label.buttonParentDir}" immediate="true">
+                                    <f:actionListener binding="#{fileManagerWebAppBean.toParentDirectory()}" />
                                     <f:ajax event="click" execute="@form" render="@form" />
                                 </h:commandButton>
                                 <h:commandButton type="button" styleClass="grouped_button_right"
@@ -88,7 +92,7 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                                                         <f:ajax event="click" execute="@form" render="@form" />
                                                     </h:commandButton>
                                                     <h:panelGroup layout="block" styleClass="file_manager_image_item_icon_box">
-                                                        <h:graphicImage value="file-preview-tool?address=#{data.key}&amp;view=0&amp;prev=0"
+                                                        <h:graphicImage value="file-preview-tool?address=#{fileManagerWebAppBean.toURL(data.key)}&amp;view=0&amp;prev=0"
                                                             alt="#{node.key}" styleClass="file_manager_image_item"
                                                             a:onclick="var e = document.getElementsByName('#{node.key}');if(e!=null){e[0].click();};" />
                                                     </h:panelGroup>
@@ -101,7 +105,7 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                                                 <h:panelGroup layout="block" styleClass="file_manager_image_item_box"
                                                     rendered="#{data.value eq false}">
                                                     <h:panelGroup layout="block" styleClass="file_manager_image_item_icon_box">
-                                                        <h:graphicImage value="file-preview-tool?address=#{data.key}&amp;view=0&amp;prev=0"
+                                                        <h:graphicImage value="file-preview-tool?address=#{fileManagerWebAppBean.toURL(data.key)}&amp;view=0&amp;prev=0"
                                                             alt="#{node.key}" styleClass="file_manager_image_item"
                                                             a:onclick="" />
                                                     </h:panelGroup>
@@ -112,7 +116,7 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                                                                 document.querySelector('.file_manager_main_page_container')
                                                                 .style='display:none';
                                                                     document.getElementById('fileManagerPreviewer')
-                                                                    .src='file-preview-tool?prev=1&amp;view=0&amp;address=#{data.key}';"
+                                                                    .src='file-preview-tool?prev=1&amp;view=0&amp;address=#{fileManagerWebAppBean.toURL(data.key)}';"
                                                             ><h:outputText value="#{node.key}" /></a>
                                                     </h:panelGroup>
                                                 </h:panelGroup>

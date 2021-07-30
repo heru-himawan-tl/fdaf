@@ -37,6 +37,7 @@ import fdaf.base.UserSessionManagerInterface;
 import fdaf.base.UserType;
 import fdaf.webapp.base.AbstractBaseWebAppBean;
 import java.io.Serializable;
+import java.net.URLEncoder;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import javax.ejb.EJB;
@@ -69,7 +70,9 @@ public class FileManagerWebAppBean extends AbstractBaseWebAppBean implements Ser
     private FileManagerInterface fileManagerUtil;
     
     private LinkedHashMap<String, Map<String, Boolean>> nodes = new LinkedHashMap<String, Map<String, Boolean>>();
-    private String currentDirectory;
+    
+    @Inject
+    private FileManagerDirectoryInfoBean directoryInfo; 
 
     public FileManagerWebAppBean() {
         // NO-OP
@@ -92,14 +95,32 @@ public class FileManagerWebAppBean extends AbstractBaseWebAppBean implements Ser
         return userSessionManager;
     }
     
-    public void returnHome() {
-        currentDirectory = System.getProperty("user.home");
+    public void toHomeDirectory() {
+        fileManagerUtil.toHomeDirectory();
+        directoryInfo.setCurrentDirectory(fileManagerUtil.getCurrentDirectory());
+    }
+    
+    public void toParentDirectory() {
+        fileManagerUtil.toParentDirectory();
+        directoryInfo.setCurrentDirectory(fileManagerUtil.getCurrentDirectory());
     }
 
     public void populateNodes(ComponentSystemEvent event) throws AbortProcessingException {
-        fileManagerUtil.changeDirectory(currentDirectory);
+        if (directoryInfo.getCurrentDirectory() == null) {
+            directoryInfo.setCurrentDirectory(fileManagerUtil.getCurrentDirectory());
+        }
+        fileManagerUtil.setCurrentDirectory(directoryInfo.getCurrentDirectory());
+        directoryInfo.setCurrentDirectory(fileManagerUtil.getCurrentDirectory());
         fileManagerUtil.populateNodes();
         nodes = fileManagerUtil.getNodeMap();
+    }
+    
+    public String toURL(String src) {
+        try {
+            return URLEncoder.encode(src, "UTF-8");
+        } catch (Exception e) {
+        }
+        return src;
     }
     
     public LinkedHashMap<String, Map<String, Boolean>> getNodes() {
@@ -107,10 +128,10 @@ public class FileManagerWebAppBean extends AbstractBaseWebAppBean implements Ser
     }
     
     public void setCurrentDirectory(String currentDirectory) {
-        this.currentDirectory = currentDirectory;
+        directoryInfo.setCurrentDirectory(currentDirectory);
     }
     
     public String getCurrentDirectory() {
-        return currentDirectory;
+        return directoryInfo.getCurrentDirectory();
     }
 }

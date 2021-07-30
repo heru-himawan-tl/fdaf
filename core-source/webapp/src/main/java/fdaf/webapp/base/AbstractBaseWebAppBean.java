@@ -80,6 +80,8 @@ public abstract class AbstractBaseWebAppBean extends AbstractWebAppCommon {
     protected Object dummy;
     protected String viewLayerName;
     protected boolean databaseIsError;
+    protected String operatingSystemName;
+    protected boolean isUnixLikeOS;
 
     protected AbstractBaseWebAppBean() {
         // NO-OP
@@ -208,10 +210,20 @@ public abstract class AbstractBaseWebAppBean extends AbstractWebAppCommon {
         elabel = ResourceBundle.getBundle("fdaf.erc.label", locale, loader);
         label = ResourceBundle.getBundle("fdaf.webapp.rc.messages.label", locale, loader);
         clabel = ResourceBundle.getBundle("fdaf.webapp.rc.messages.custom_label", locale, loader);
+        operatingSystemName = System.getProperty("os.name");
+        isUnixLikeOS = !operatingSystemName.toLowerCase().matches(".*windows.*");
     }
     
     public String getViewLayerName() {
         return viewLayerName;
+    }
+    
+    public String getOperatingSystemName() {
+        return operatingSystemName;
+    }
+    
+    public boolean getIsUnixLikeOS() {
+        return isUnixLikeOS;
     }
 
     public void checkAdministratorAccount(ComponentSystemEvent event) throws AbortProcessingException {

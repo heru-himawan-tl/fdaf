@@ -1882,14 +1882,13 @@ a:hover
 .file_manager_image_item_box
 {
     display: inline-block;
-    margin: 16px;
+    margin: 8px;
 }
 
 .file_manager_image_item_icon_box
 {
-    width: 64px;
-    height: 64px;
-    overflow: hidden;
+    width: 82px;
+    height: 82px;
     display: -webkit-box;
     display: -moz-box;
     display: -ms-flexbox;
@@ -1897,15 +1896,20 @@ a:hover
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 1px solid #0000ff;
+    overflow-y: hidden;
+    background: #eeeeee;
+    /*border: 1px solid #0000ff;*/
+    border-radius: 2px;
 }
 
 .file_manager_image_item_name_box
 {
     display: block;
-    max-width: 64px !important;
+    max-width: 82px !important;
     overflow: hidden;
     padding-top: 8px;
+    text-align: center;
+    overflow-wrap: break-word;
 }
 
 .file_manager_image_item
@@ -2214,6 +2218,24 @@ a:hover
 {
     display: block;
     margin-bottom: 8px;
+}
+
+@media (min-width: 864px)
+{
+    .file_previewer_object
+    {
+        width: 98vw;
+        height: 100vh;
+    }
+}
+
+@media (max-width: 864px)
+{
+    .file_previewer_object
+    {
+        width: 100%;
+        height: 100% !important;
+    }
 }
 
 @media (max-width: 1080px)
@@ -2753,6 +2775,16 @@ a:hover
     .panel_menu_container::-webkit-scrollbar
     {
         width: 0px !important;
+    }
+    
+    pre
+    {
+        white-space: pre-wrap;
+        white-space: -moz-pre-wrap;
+        white-space: -pre-wrap;
+        white-space: -o-pre-wrap;
+        word-wrap: break-word;
+        word-break: break-word;
     }
  
     *

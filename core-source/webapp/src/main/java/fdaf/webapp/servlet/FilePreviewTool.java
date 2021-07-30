@@ -28,18 +28,22 @@
  */
 package fdaf.webapp.servlet;
 
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.OutputStream;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.nio.file.Path;
 import java.io.File;
-import javax.servlet.ServletException;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.PrintWriter;
+import java.io.RandomAccessFile;
+import java.net.URLEncoder;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.ServletException;
  
 @WebServlet(urlPatterns = {"/file-preview-tool"})
 public class FilePreviewTool extends HttpServlet {
@@ -99,6 +103,11 @@ public class FilePreviewTool extends HttpServlet {
             response.setContentType("text/html");
             String contextPath = request.getContextPath();
             PrintWriter out = response.getWriter();
+            String urlAddress = address;
+            try {
+                urlAddress = URLEncoder.encode(address, "UTF-8");
+            } catch (Exception e) {
+            }
             out.println("<!DOCTYPE html>");
             out.println("<html xmlns=\"http://www.w3.org/1999/xhtml\">");
             out.println("<head>");
@@ -116,23 +125,29 @@ public class FilePreviewTool extends HttpServlet {
             out.println("<b>" + address + "</b>\n<hr />");
             if (isImage) {
                 out.println("<img src=\"file-preview-tool?view=1&amp;prev=0&amp;address=" 
-                    + address + "\" width=\"100%\" alt=\"" + address + "\" id=\"FilePreviewToolImage\" />");
+                    + urlAddress + "\" width=\"100%\" alt=\"" + urlAddress + "\" id=\"FilePreviewToolImage\" />");
             }
             if (isVideo) {
-                out.println("<video width=\"100%\" controls autoplay id=\"FilePreviewToolVideo\">");
-                out.println("<source src=\"file-preview-tool?view=1&amp;prev=0&amp;address=" + address + "\" type=\"" + mimeType + "\">");
+                out.println("<video width=\"100%\" controls autoplay playsinline id=\"FilePreviewToolVideo\">");
+                out.println("<source src=\"file-preview-tool?view=1&amp;prev=0&amp;address=" + urlAddress + "\" type=\"" + mimeType + "\">");
                 out.println("</video>");
             }
             if (isAudio) {
-                out.println("<audio width=\"100%\" controls autoplay id=\"FilePreviewToolAudio\">");
-                out.println("<source src=\"file-preview-tool?view=1&amp;prev=0&amp;address=" + address + "\" type=\"" + mimeType + "\">");
+                out.println("<audio width=\"100%\" controls autoplay playsinline id=\"FilePreviewToolAudio\">");
+                out.println("<source src=\"file-preview-tool?view=1&amp;prev=0&amp;address=" + urlAddress + "\" type=\"" + mimeType + "\">");
                 out.println("</audio>");
             }
-            if (!isAudio && !isVideo && !isImage) {
+            if (!isAudio && !isVideo && !isImage && !mimeType.equals("application/pdf")) {
                 out.println("<pre>");
                 byte[] bc = Files.readAllBytes(Paths.get(address));
-                out.println(new String(bc));
+                String cnt = new String(bc);
+                out.println(cnt.replaceAll("\\<", "&lt;").replaceAll("\\>", "&gt;"));
                 out.println("</pre>");
+            }
+            if (!isAudio && !isVideo && !isImage && mimeType.equals("application/pdf")) {
+                //out.println("<object class=\"file_previewer_object\" height=\"100%\" data=\"file-preview-tool?view=1&amp;prev=0&amp;address=" + urlAddress + "\" type=\"application/pdf\">");
+                out.println("<embed class=\"file_previewer_object\" height=\"100%\" src=\"file-preview-tool?view=1&amp;prev=0&amp;address=" + urlAddress + "\" type=\"application/pdf\" />");
+                //out.println("</object>");
             }
             out.println("<script>resizeIframe();</script>");
             out.println("</body>");
@@ -152,16 +167,56 @@ public class FilePreviewTool extends HttpServlet {
             path = Paths.get(address);
         }
         
+        OutputStream output = response.getOutputStream();
         mimeType = Files.probeContentType(path);
         
-        response.setContentType(mimeType);
-        response.setHeader("Content-Disposition", "inline; filename=\"" + address.replaceAll(".*/", "") + "\"");
-        OutputStream output = response.getOutputStream();
-        byte[] contents = Files.readAllBytes(path);
-        response.setContentLength(contents.length);
-        output.write(contents);
-        output.flush();
-        output.close();
+        if (request.getHeader("range") != null) {
+            response.setStatus(206);
+            String rangeValue = request.getHeader("range").trim().substring("bytes=".length());
+            File sourceFile = new File(address);
+            long fileLength = sourceFile.length();
+            long start, end;
+            if (rangeValue.startsWith("-")) {
+                end = fileLength - 1;
+                start = fileLength - 1 - Long.parseLong(rangeValue.substring("-".length()));
+            } else {
+                String[] range = rangeValue.split("-");
+                start = Long.parseLong(range[0]);
+                end = range.length > 1 ? Long.parseLong(range[1]) : fileLength - 1;
+            }
+            if (end > fileLength - 1) {
+                end = fileLength - 1;
+            }
+            if (start <= end) {
+                long contentLength = end - start + 1;
+                response.setHeader("Content-Length", contentLength + "");
+                response.setHeader("Content-Range", "bytes " + start + "-" + end + "/" + fileLength);
+                response.setHeader("Content-Type", mimeType);
+                response.setHeader("Content-Disposition", "inline; filename=\"" + address.replaceAll(".*/", "") + "\"");
+                RandomAccessFile raf = new RandomAccessFile(sourceFile, "r");
+                raf.seek(start);
+                byte[] buffer = new byte[500000];
+                int bytesRead = 0;
+                int totalRead = 0;
+                while (totalRead < contentLength) {
+                    bytesRead = raf.read(buffer);
+                    totalRead += bytesRead;
+                    output.write(buffer, 0, bytesRead);
+                }
+            }
+        } else {
+            try {
+                response.setContentType(mimeType);
+                response.setHeader("Content-Disposition", "inline; filename=\"" + address.replaceAll(".*/", "") + "\"");
+                response.setStatus(200);
+                byte[] contents = Files.readAllBytes(path);
+                response.setContentLength(contents.length);
+                output.write(contents);
+                output.flush();
+                output.close();
+            } catch (Exception e) {
+            }
+        }
     }
  
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

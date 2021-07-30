@@ -60,9 +60,10 @@ public class FileManagerUtil {
     private static final long serialVersionUID = 1L;
     private LinkedList<String> nodeList = new LinkedList<String>();
     private LinkedHashMap<String, Map<String, Boolean>> nodeMap = new LinkedHashMap<String, Map<String, Boolean>>();
-    private String currentDirectory;
     private boolean error;
-    private FileListSortMode sortMode = FileListSortMode.BY_NAME; 
+    private FileListSortMode sortMode = FileListSortMode.BY_NAME;
+    private String currentDirectory = System.getProperty("user.home");
+    private String baseDirectory = System.getProperty("user.home");
 
     public FileManagerUtil() {
         // NO-OP
@@ -80,6 +81,22 @@ public class FileManagerUtil {
             }
             directoryStream.close();
         } catch (Exception e) {
+        }
+    }
+    
+    public void toHomeDirectory() {
+        currentDirectory = baseDirectory;
+    }
+    
+    public void toParentDirectory() {
+        if (!currentDirectory.equals(baseDirectory)) {
+            boolean isUnixLikeOS = System.getProperty("os.name").toLowerCase().matches(".*windows.*");
+            String[] dirs = currentDirectory.split(File.separator);
+            currentDirectory = "" + ((isUnixLikeOS) ? File.separator : "");
+            for (int i = 0; i < dirs.length-1; i++) {
+                currentDirectory += dirs[i].trim() + ((i < dirs.length-2) ? File.separator : "");
+            }
+            currentDirectory = (isUnixLikeOS) ? currentDirectory.replaceAll("[\\/]+", "/") : currentDirectory;
         }
     }
 
@@ -194,6 +211,10 @@ public class FileManagerUtil {
     
     public void setCurrentDirectory(String currentDirectory) {
         this.currentDirectory = currentDirectory;
+    }
+    
+    public String getCurrentDirectory() {
+        return currentDirectory;
     }
     
     public LinkedHashMap<String, Map<String, Boolean>> getNodeMap() {
