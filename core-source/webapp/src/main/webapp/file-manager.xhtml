@@ -52,7 +52,6 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
             <d:administratorAccountCheck webAppBean="#{fileManagerWebAppBean}" rendered="#{fileManagerWebAppBean.databaseIsError eq false}" />
             <d:addAdministratorStartPage webAppBean="#{fileManagerWebAppBean}" rendered="#{fileManagerWebAppBean.databaseIsError eq false}" />
             <d:userSessionWatch webAppBean="#{fileManagerWebAppBean}" rendered="#{(fileManagerWebAppBean.administratorAccountExists eq true)}" />
-            
             <d:populateNodes webAppBean="#{fileManagerWebAppBean}" />
             <d:customTopPanel webAppBean="#{fileManagerWebAppBean}" />
             <h:panelGroup layout="block" styleClass="left_panel_back_overlay"></h:panelGroup>
@@ -75,11 +74,14 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                                     <f:actionListener binding="#{fileManagerWebAppBean.toHomeDirectory()}" />
                                     <f:ajax event="click" execute="@form" render="@form" />
                                 </h:commandButton>
-                                <h:commandButton type="button" styleClass="grouped_button_left" value="#{label.buttonParentDir}"
+                                <h:commandButton type="button" styleClass="grouped_button_inner" value="#{label.buttonParentDir}"
                                     immediate="true" rendered="#{fileManagerWebAppBean.isLoggedOn eq true}">
                                     <f:actionListener binding="#{fileManagerWebAppBean.toParentDirectory()}" />
                                     <f:ajax event="click" execute="@form" render="@form" />
                                 </h:commandButton>
+                                <h:commandButton type="button" styleClass="grouped_button_inner" value="#{label.buttonNewDir}"
+                                    onclick=""
+                                    rendered="#{fileManagerWebAppBean.isLoggedOn eq true}"/>
                                 <h:commandButton type="button" styleClass="#{
                                     (fileManagerWebAppBean.isLoggedOn eq true) ? 'grouped_button_right' : 'common_button'}"
                                     onclick="document.location.href='adm.jsf'" value="#{label.buttonClose}" />
