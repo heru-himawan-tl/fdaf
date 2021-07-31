@@ -34,26 +34,27 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         xmlns:f="http://java.sun.com/jsf/core"
         xmlns:h="http://java.sun.com/jsf/html"
         xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions">
+    <d:controllerInit bean="#{expirationPageWebAppBean}" />
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <title>
-            <h:outputText value="#{expirationPageWebAppBean.applicationName}- #{fn:toUpperCase(label.expirePageTitle)}" />
+            <h:outputText value="#{controller.bean.applicationName}- #{fn:toUpperCase(label.expirePageTitle)}" />
         </title>
         <h:outputStylesheet library="css" name="style.css"/>
         <h:outputScript library="js" name="function.js" />
         <d:customHeadTag />
     </h:head>
     <h:body>
-        <d:expirationPageInit webAppBean="#{expirationPageWebAppBean}" />
+        <d:expirationPageInit />
         <h:form id="form">
             <d:customDialogBox title="#{fn:toUpperCase(label.expirePageTitle)}"
                     message="#{defaultMessage.expiredSessionWarn}">
                 <h:commandButton type="button" styleClass="grouped_button_left" value="#{label.buttonRetrieve}"
-                    onclick="document.location.href='#{expirationPageWebAppBean.referer}';" />
+                    onclick="document.location.href='#{controller.bean.referer}';" />
                 <h:commandButton type="button" styleClass="grouped_button_right" value="#{label.buttonClose}"
                     onclick="document.location.href='index.jsf';" />
             </d:customDialogBox>
         </h:form>
-        <d:customBottomBody webAppBean="#{expirationPageWebAppBean}" />
+        <d:customBottomBody />
     </h:body>
 </html>

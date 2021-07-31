@@ -34,14 +34,13 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         xmlns:composite="http://java.sun.com/jsf/composite"
         xmlns:h="http://java.sun.com/jsf/html">
     <composite:interface>
-        <composite:attribute required="true" name="webAppBean" type="java.lang.Object" />
         <composite:attribute required="false" name="addStyleClass" type="java.lang.String" />
         <composite:attribute required="false" name="withSelectAllTool" type="java.lang.Boolean" default="true" />
         <composite:attribute required="false" name="withListActionHeader" type="java.lang.Boolean" default="true" />
     </composite:interface>
     <composite:implementation>
         <h:panelGroup layout="block" styleClass="list_row_head #{cc.attrs.addStyleClass}">
-            <d:listSelectAll webAppBean="#{cc.attrs.webAppBean}" rendered="#{(cc.attrs.withSelectAllTool eq true)}" />
+            <d:listSelectAll rendered="#{(cc.attrs.withSelectAllTool eq true)}" />
             <composite:insertChildren />
             <d:listActionHead value="#{label.listActionHeading}" rendered="#{(cc.attrs.withListActionHeader eq true)}" />
         </h:panelGroup>

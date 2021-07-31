@@ -26,7 +26,7 @@
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE
  * USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package fdaf.webapp.bean.common;
+package fdaf.webapp.bean.system;
 
 import fdaf.base.AdministratorAccountCheckerInterface;
 import fdaf.base.CommonConfigurationInterface;
@@ -75,9 +75,16 @@ public class StaffInvitationWebAppBean extends AbstractWebAppBean implements Ser
     private CommonConfigurationInterface commonConfiguration;
     
     private boolean mailerFailure;
+    
+    @Inject
+    private Controller controller;
 
     public StaffInvitationWebAppBean() {
         // NO-OP
+    }
+    
+    protected Controller getController() {
+        return controller;
     }
 
     protected AdministratorAccountCheckerInterface getAdministratorAccountChecker() {

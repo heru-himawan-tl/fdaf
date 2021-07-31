@@ -35,18 +35,17 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         xmlns:h="http://java.sun.com/jsf/html">
     <composite:interface>
         <composite:attribute required="false" name="addStyleClass" type="java.lang.String" />
-        <composite:attribute required="true" name="webAppBean" type="java.lang.Object" />
     </composite:interface>
     <composite:implementation>
         <h:panelGroup layout="block" styleClass="list_container">
             <h:panelGroup layout="block" styleClass="list_table #{cc.attrs.addStyleClass}">
                 <composite:insertChildren />
             </h:panelGroup>
-            <h:panelGroup layout="block" styleClass="list_empty_warning #{cc.attrs.addStyleClass}" rendered="#{cc.attrs.webAppBean.totalRowCount eq 0}">
-                <h:outputText value="#{defaultMessage.emptyTableWarning}" rendered="#{(cc.attrs.webAppBean.searchMode eq false and cc.attrs.webAppBean.isBrokenUserSession eq false and cc.attrs.webAppBean.isLoggedOn eq true and cc.attrs.webAppBean.dataListIsInError eq false and cc.attrs.webAppBean.isServiceError eq false)}" />
-                <h:outputText value="#{defaultMessage.searchNotFound}" rendered="#{(cc.attrs.webAppBean.searchMode eq true and cc.attrs.webAppBean.isBrokenUserSession eq false and cc.attrs.webAppBean.isLoggedOn eq true and cc.attrs.webAppBean.dataListIsInError eq false and cc.attrs.webAppBean.isServiceError eq false)}" />
-                <h:outputText value="#{defaultMessage.dataListRequiresUserSession}" rendered="#{((cc.attrs.webAppBean.isLoggedOn eq false or cc.attrs.webAppBean.isBrokenUserSession eq true) and cc.attrs.webAppBean.dataListIsInError eq false and cc.attrs.webAppBean.isServiceError eq false)}" />
-                <h:outputText value="#{defaultMessage.dataListIsInErrorWarning}" rendered="#{(cc.attrs.webAppBean.dataListIsInError eq true or cc.attrs.webAppBean.isServiceError eq true)}" />
+            <h:panelGroup layout="block" styleClass="list_empty_warning #{cc.attrs.addStyleClass}" rendered="#{controller.bean.totalRowCount eq 0}">
+                <h:outputText value="#{defaultMessage.emptyTableWarning}" rendered="#{(controller.bean.searchMode eq false and controller.bean.isBrokenUserSession eq false and controller.bean.isLoggedOn eq true and controller.bean.dataListIsInError eq false and controller.bean.isServiceError eq false)}" />
+                <h:outputText value="#{defaultMessage.searchNotFound}" rendered="#{(controller.bean.searchMode eq true and controller.bean.isBrokenUserSession eq false and controller.bean.isLoggedOn eq true and controller.bean.dataListIsInError eq false and controller.bean.isServiceError eq false)}" />
+                <h:outputText value="#{defaultMessage.dataListRequiresUserSession}" rendered="#{((controller.bean.isLoggedOn eq false or controller.bean.isBrokenUserSession eq true) and controller.bean.dataListIsInError eq false and controller.bean.isServiceError eq false)}" />
+                <h:outputText value="#{defaultMessage.dataListIsInErrorWarning}" rendered="#{(controller.bean.dataListIsInError eq true or controller.bean.isServiceError eq true)}" />
             </h:panelGroup>
         </h:panelGroup>
     </composite:implementation>

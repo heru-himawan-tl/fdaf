@@ -35,17 +35,17 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         xmlns:f="http://java.sun.com/jsf/core"
         xmlns:d="http://java.sun.com/jsf/composite/component">
     <ui:composition>
-        <d:viewerContainer webAppBean="#{employeeWebAppBean}" caption="#{elabel.employee.toLowerCase()} #{label.with} #{elabel.fullName.toLowerCase()}: #{employeeWebAppBean.resultObject.data.firstName} #{employeeWebAppBean.resultObject.data.middleName} #{employeeWebAppBean.resultObject.data.lastName}">
+        <d:viewerContainer caption="#{elabel.employee.toLowerCase()} #{label.with} #{elabel.fullName.toLowerCase()}: #{controller.bean.resultObject.data.firstName} #{controller.bean.resultObject.data.middleName} #{controller.bean.resultObject.data.lastName}">
             <d:viewerTable>
-                <d:viewerRowSet label="#{elabel.fullName}" value="#{employeeWebAppBean.resultObject.data.firstName} #{employeeWebAppBean.resultObject.data.middleName} #{employeeWebAppBean.resultObject.data.lastName}" />
-                <d:viewerRowSet label="#{elabel.DOB}" value="#{employeeWebAppBean.resultObject.data.dobDay} #{employeeWebAppBean.resultObject.data.dobDay} #{employeeWebAppBean.resultObject.data.dobYear}" />
-                <d:viewerRowSet label="#{elabel.address1}" value="#{employeeWebAppBean.resultObject.data.address1}" />
-                <d:viewerRowSet label="#{elabel.address2}" value="#{employeeWebAppBean.resultObject.data.address2}" />
-                <d:viewerRowSet label="#{elabel.phone1}" value="#{employeeWebAppBean.resultObject.data.phone1}" />
-                <d:viewerRowSet label="#{elabel.phone2}" value="#{employeeWebAppBean.resultObject.data.phone2}" />
-                <d:viewerRowSet label="#{elabel.department}" value="#{employeeWebAppBean.resultObject.data.department.name}" />
-                <d:viewerRowSet label="#{elabel.role}" value="#{employeeWebAppBean.resultObject.data.role.name}" />
-                <d:viewerRowSet label="#{elabel.employmentId}" value="#{employeeWebAppBean.resultObject.data.employmentId}" />
+                <d:viewerRowSet label="#{elabel.fullName}" value="#{controller.bean.resultObject.data.firstName} #{controller.bean.resultObject.data.middleName} #{controller.bean.resultObject.data.lastName}" />
+                <d:viewerRowSet label="#{elabel.DOB}" value="#{controller.bean.resultObject.data.dobDay} #{controller.bean.resultObject.data.dobDay} #{controller.bean.resultObject.data.dobYear}" />
+                <d:viewerRowSet label="#{elabel.address1}" value="#{controller.bean.resultObject.data.address1}" />
+                <d:viewerRowSet label="#{elabel.address2}" value="#{controller.bean.resultObject.data.address2}" />
+                <d:viewerRowSet label="#{elabel.phone1}" value="#{controller.bean.resultObject.data.phone1}" />
+                <d:viewerRowSet label="#{elabel.phone2}" value="#{controller.bean.resultObject.data.phone2}" />
+                <d:viewerRowSet label="#{elabel.department}" value="#{controller.bean.resultObject.data.department.name}" />
+                <d:viewerRowSet label="#{elabel.role}" value="#{controller.bean.resultObject.data.role.name}" />
+                <d:viewerRowSet label="#{elabel.employmentId}" value="#{controller.bean.resultObject.data.employmentId}" />
             </d:viewerTable>
         </d:viewerContainer>
     </ui:composition>

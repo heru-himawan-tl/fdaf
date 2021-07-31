@@ -38,6 +38,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.context.FacesContext;
 
 public abstract class AbstractWebAppCommon extends ApplicationIdentifier {
+
     protected ResourceBundle customCallbackMessageBundle;
     protected ResourceBundle customMessageBundle;
     protected ResourceBundle callbackMessageBundle;

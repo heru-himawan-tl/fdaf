@@ -35,18 +35,16 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         xmlns:h="http://java.sun.com/jsf/html"
         xmlns:f="http://java.sun.com/jsf/core">
     <ui:composition>
-        <d:listContainer webAppBean="#{userGroupWebAppBean}">
-            <d:listRowHead webAppBean="#{userGroupWebAppBean}">
+        <d:listContainer>
+            <d:listRowHead>
                 <d:listHeadMobileView value="#{label.contentsAndAction}" />
                 <d:listHead value="#{elabel.id}" />
                 <d:listHead value="#{elabel.name}" />
                 <d:listHeadStrictWidth value="#{elabel.description}" />
             </d:listRowHead>
-            <ui:repeat value="#{userGroupWebAppBean.resultList}" var="userGroup">
-                <d:listRow webAppBean="#{userGroupWebAppBean}" removePromptId="userGroup" listObject="#{userGroup}">
-                    <d:listColumnMobileViewWithTool
-                        webAppBean="#{userGroupWebAppBean}"
-                        listObject="#{userGroup}">
+            <ui:repeat value="#{controller.bean.resultList}" var="userGroup">
+                <d:listRow removePromptId="userGroup" listObject="#{userGroup}">
+                    <d:listColumnMobileViewWithTool listObject="#{userGroup}">
                         <d:dataListMobileViewContentBox>
                             <h:outputText value="#{userGroup.data.name}" /><br />
                             <h:outputText value="#{elabel.id}" />:

@@ -36,72 +36,82 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         xmlns:ui="http://java.sun.com/jsf/facelets"
         xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions"
         xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+    <d:controllerInit bean="#{fileManagerWebAppBean}" />
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <title><h:outputText value="#{fileManagerWebAppBean.applicationName} - #{fn:toUpperCase(label.fileManager)}" /></title>
+        <title><h:outputText value="#{controller.bean.applicationName} - #{fn:toUpperCase(label.fileManager)}" /></title>
         <h:outputStylesheet library="css" name="style.css"/>
         <h:outputScript library="js" name="function.js" />
         <d:customHeadTag />
     </h:head>
     <h:body>
-        <d:setUserSessionRequirement webAppBean="#{fileManagerWebAppBean}" />
+        <d:setUserSessionRequirement />
         <h:form id="form">
-            <d:mainInit webAppBean="#{fileManagerWebAppBean}" />
+            <d:mainInit />
             <d:loadBundles />
-            <d:databaseServiceCheck webAppBean="#{fileManagerWebAppBean}" />
-            <d:administratorAccountCheck webAppBean="#{fileManagerWebAppBean}" rendered="#{fileManagerWebAppBean.databaseIsError eq false}" />
-            <d:addAdministratorStartPage webAppBean="#{fileManagerWebAppBean}" rendered="#{fileManagerWebAppBean.databaseIsError eq false}" />
-            <d:userSessionWatch webAppBean="#{fileManagerWebAppBean}" rendered="#{(fileManagerWebAppBean.administratorAccountExists eq true)}" />
-            <d:populateNodes webAppBean="#{fileManagerWebAppBean}" />
-            <d:customTopPanel webAppBean="#{fileManagerWebAppBean}" />
+            <d:databaseServiceCheck />
+            <d:administratorAccountCheck rendered="#{controller.bean.databaseIsError eq false}" />
+            <d:addAdministratorStartPage rendered="#{controller.bean.databaseIsError eq false}" />
+            <d:userSessionWatch rendered="#{(controller.bean.administratorAccountExists eq true)}" />
+            <d:populateNodes />
+            <d:customTopPanel />
             <h:panelGroup layout="block" styleClass="left_panel_back_overlay"></h:panelGroup>
             <h:panelGroup layout="block" styleClass="right_panel_back_overlay"></h:panelGroup>
             <h:panelGroup layout="block" styleClass="main_panel_back_overlay"></h:panelGroup>
             <h:panelGroup layout="block" styleClass="body_flexbox">
                 <d:leftPanel>
-                    <d:customLeftPanel webAppBean="#{fileManagerWebAppBean}" />
+                    <d:customLeftPanel />
                 </d:leftPanel>
                 <d:mainPanel>
-                    <d:pageContainer id="page" webAppBean="#{fileManagerWebAppBean}">
+                    <d:pageContainer id="page">
                         <d:fileManagerPreviewer iframeId="fileManagerPreviewer" classId="file_manager_preview"
                             title="#{fn:toUpperCase(label.filePreviewer)}"
-                            webAppBean="#{fileManagerWebAppBean}"
                             rewitePageClass="file_manager_main_page_container" />
                         <h:panelGroup layout="block" styleClass="file_manager_main_page_container">
                             <d:customProgramHeading pageTitle="#{fn:toUpperCase(label.fileManager)}">
                                 <h:commandButton type="button" styleClass="grouped_button_left" value="#{label.buttonHome}"
-                                    immediate="true" rendered="#{fileManagerWebAppBean.isLoggedOn eq true}">
-                                    <f:actionListener binding="#{fileManagerWebAppBean.toHomeDirectory()}" />
+                                    immediate="true" rendered="#{controller.bean.isLoggedOn eq true}">
+                                    <f:actionListener binding="#{controller.bean.toHomeDirectory()}" />
                                     <f:ajax event="click" execute="@form" render="@form" />
                                 </h:commandButton>
                                 <h:commandButton type="button" styleClass="grouped_button_inner" value="#{label.buttonParentDir}"
-                                    immediate="true" rendered="#{fileManagerWebAppBean.isLoggedOn eq true}">
-                                    <f:actionListener binding="#{fileManagerWebAppBean.toParentDirectory()}" />
+                                    immediate="true" rendered="#{controller.bean.isLoggedOn eq true}">
+                                    <f:actionListener binding="#{controller.bean.toParentDirectory()}" />
                                     <f:ajax event="click" execute="@form" render="@form" />
                                 </h:commandButton>
                                 <h:commandButton type="button" styleClass="grouped_button_inner" value="#{label.buttonNewDir}"
-                                    onclick=""
-                                    rendered="#{fileManagerWebAppBean.isLoggedOn eq true}"/>
+                                    immediate="true" rendered="#{controller.bean.isLoggedOn eq true}">
+                                    <f:actionListener binding="#{controller.bean.prepareCreateDirectory()}" />
+                                    <f:ajax event="click" execute="@form" render="@form" />
+                                </h:commandButton>
                                 <h:commandButton type="button" styleClass="#{
-                                    (fileManagerWebAppBean.isLoggedOn eq true) ? 'grouped_button_right' : 'common_button'}"
+                                    (controller.bean.isLoggedOn eq true) ? 'grouped_button_right' : 'common_button'}"
                                     onclick="document.location.href='adm.jsf'" value="#{label.buttonClose}" />
                             </d:customProgramHeading>
                             <d:messages />
-                            <d:loginRequirementInlineDialog webAppBean="#{fileManagerWebAppBean}" />
-                            <d:admFieldContainer webAppBean="#{fileManagerWebAppBean}">
+                            <d:loginRequirementInlineDialog />
+                            <d:admFieldContainer>
                                 <h:panelGroup layout="block" styleClass="field_container_inner">
+                                    <d:fieldRow rendered="#{controller.bean.inPrepareCreateDirectory}">
+                                        <d:fieldColumn>
+                                            <d:fieldLabel for="newDirectoryName" value="#{label.newDirectoryName}" />
+                                            <d:fieldInputBox>
+                                                <h:inputText id="newDirectoryName" value="#{controller.bean.newDirectoryName}" />
+                                            </d:fieldInputBox>
+                                        </d:fieldColumn>
+                                    </d:fieldRow>
                                     <h:panelGroup layout="block" styleClass="file_manager_image_box">
-                                        <ui:repeat value="#{fileManagerWebAppBean.nodes}" var="node">
+                                        <ui:repeat value="#{controller.bean.nodes}" var="node">
                                             <ui:repeat value="#{node.value}" var="data">
                                                 <h:panelGroup layout="block" styleClass="file_manager_image_item_box"
                                                     rendered="#{data.value eq true}">
                                                     <h:commandButton type="button" style="display:none;" immediate="true" value="" 
                                                             a:name="#{node.key}">
-                                                        <f:actionListener binding="#{fileManagerWebAppBean.setCurrentDirectory(data.key)}" />
+                                                        <f:actionListener binding="#{controller.bean.setCurrentDirectory(data.key)}" />
                                                         <f:ajax event="click" execute="@form" render="@form" />
                                                     </h:commandButton>
                                                     <h:panelGroup layout="block" styleClass="file_manager_image_item_icon_box">
-                                                        <h:graphicImage value="file-preview-tool?address=#{fileManagerWebAppBean.toURL(data.key)}&amp;view=0&amp;prev=0"
+                                                        <h:graphicImage value="file-preview-tool?address=#{controller.bean.toURL(data.key)}&amp;view=0&amp;prev=0"
                                                             alt="#{node.key}" styleClass="file_manager_image_item"
                                                             a:onclick="var e = document.getElementsByName('#{node.key}');if(e!=null){e[0].click();};" />
                                                     </h:panelGroup>
@@ -114,7 +124,7 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                                                 <h:panelGroup layout="block" styleClass="file_manager_image_item_box"
                                                     rendered="#{data.value eq false}">
                                                     <h:panelGroup layout="block" styleClass="file_manager_image_item_icon_box">
-                                                        <h:graphicImage value="file-preview-tool?address=#{fileManagerWebAppBean.toURL(data.key)}&amp;view=0&amp;prev=0"
+                                                        <h:graphicImage value="file-preview-tool?address=#{controller.bean.toURL(data.key)}&amp;view=0&amp;prev=0"
                                                             alt="#{node.key}" styleClass="file_manager_image_item"
                                                             a:onclick="" />
                                                     </h:panelGroup>
@@ -125,7 +135,7 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                                                                 document.querySelector('.file_manager_main_page_container')
                                                                 .style='display:none';
                                                                     document.getElementById('fileManagerPreviewer')
-                                                                    .src='file-preview-tool?prev=1&amp;view=0&amp;address=#{fileManagerWebAppBean.toURL(data.key)}';"
+                                                                    .src='file-preview-tool?prev=1&amp;view=0&amp;address=#{controller.bean.toURL(data.key)}';"
                                                             ><h:outputText value="#{node.key}" /></a>
                                                     </h:panelGroup>
                                                 </h:panelGroup>
@@ -135,16 +145,16 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                                 </h:panelGroup>
                             </d:admFieldContainer>
                         </h:panelGroup>
-                        <d:databaseErrorWarningBox webAppBean="#{fileManagerWebAppBean}" />
-                        <d:mainPanelFooter webAppBean="#{fileManagerWebAppBean}" />
+                        <d:databaseErrorWarningBox />
+                        <d:mainPanelFooter />
                     </d:pageContainer>
                 </d:mainPanel>
                 <d:rightPanel>
-                    <d:customRightPanel webAppBean="#{fileManagerWebAppBean}" />
+                    <d:customRightPanel />
                 </d:rightPanel>
             </h:panelGroup>
-            <d:customBottomForm webAppBean="#{fileManagerWebAppBean}" />
+            <d:customBottomForm />
         </h:form>
-        <d:customBottomBody webAppBean="#{fileManagerWebAppBean}" />
+        <d:customBottomBody />
     </h:body>
 </html>

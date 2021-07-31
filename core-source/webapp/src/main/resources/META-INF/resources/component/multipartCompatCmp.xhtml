@@ -37,11 +37,10 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions"
 		xmlns:f="http://xmlns.jcp.org/jsf/core">
     <composite:interface>
-        <composite:attribute required="true" name="webAppBean" type="java.lang.Object" />
     </composite:interface>
     <composite:implementation>
         <h:panelGroup display="block" style="display:none;">
-            <h:inputFile value="#{cc.attrs.webAppBean.dummyFile}" />
+            <h:inputFile value="#{controller.bean.dummyFile}" />
         </h:panelGroup>
     </composite:implementation>
 </html>

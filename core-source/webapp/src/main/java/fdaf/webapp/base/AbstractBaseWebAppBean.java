@@ -33,6 +33,7 @@ import fdaf.base.CommonConfigurationInterface;
 import fdaf.base.DatabaseServiceCheckerInterface;
 import fdaf.base.FacadeInterface;
 import fdaf.base.UserSessionManagerInterface;
+import fdaf.webapp.bean.system.Controller;
 import fdaf.base.UserType;
 import java.util.HashMap;
 import java.util.Locale;
@@ -49,6 +50,8 @@ import javax.faces.event.ComponentSystemEvent;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.Part;
+
+import java.util.UUID;
 
 public abstract class AbstractBaseWebAppBean extends AbstractWebAppCommon {
 
@@ -82,12 +85,24 @@ public abstract class AbstractBaseWebAppBean extends AbstractWebAppCommon {
     protected boolean databaseIsError;
     protected String operatingSystemName;
     protected boolean isUnixLikeOS;
+    
+    protected String controllerID = UUID.randomUUID().toString();
 
     protected AbstractBaseWebAppBean() {
         // NO-OP
     }
     
+    public String getControllerID() {
+        return controllerID;
+    }
+    
     protected abstract CommonConfigurationInterface getCommonConfiguration();
+    
+    protected abstract Controller getController();
+    
+    public void initController(ComponentSystemEvent event) throws AbortProcessingException {
+        getController().setBean((Object) this);
+    }
     
     protected void addCustomCallbackMessage(FacesMessage.Severity severity, String key, String addInfo) {
         try {

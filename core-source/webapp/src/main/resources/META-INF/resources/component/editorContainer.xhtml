@@ -35,10 +35,9 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         xmlns:f="http://java.sun.com/jsf/core"
         xmlns:h="http://java.sun.com/jsf/html">
     <composite:interface>
-        <composite:attribute required="true" name="webAppBean" type="java.lang.Object" />
     </composite:interface>
     <composite:implementation>
-        <h:panelGroup layout="block" styleClass="field_container" rendered="#{(cc.attrs.webAppBean.opMode eq 'CREATE' or cc.attrs.webAppBean.opMode eq 'UPDATE')}">
+        <h:panelGroup layout="block" styleClass="field_container" rendered="#{(controller.bean.opMode eq 'CREATE' or controller.bean.opMode eq 'UPDATE')}">
             <h:panelGroup layout="block" styleClass="field_container_inner">
                 <composite:insertChildren />
                 <d:fieldGroupTitle title="#{label.dataProperties}" />
@@ -49,26 +48,26 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                     <d:fieldColumn>
                         <d:fieldLabel for="createdDate" value="#{elabel.createdDate}" />
                         <d:fieldInputBox>
-                            <h:inputText readonly="#{true}" id="createdDate" value="#{cc.attrs.webAppBean.entity.createdDate}">
-                                <f:validateBean disabled="#{cc.attrs.webAppBean.disableValidation}" />
+                            <h:inputText readonly="#{true}" id="createdDate" value="#{controller.bean.entity.createdDate}">
+                                <f:validateBean disabled="#{controller.bean.disableValidation}" />
                             </h:inputText>
                         </d:fieldInputBox>
                     </d:fieldColumn>
                     <d:fieldColumn>
                         <d:fieldLabel for="modificationDate" value="#{elabel.modificationDate}" />
                         <d:fieldInputBox>
-                            <h:inputText readonly="#{true}" id="modificationDate" value="#{cc.attrs.webAppBean.entity.modificationDate}">
-                                <f:validateBean disabled="#{cc.attrs.webAppBean.disableValidation}" />
+                            <h:inputText readonly="#{true}" id="modificationDate" value="#{controller.bean.entity.modificationDate}">
+                                <f:validateBean disabled="#{controller.bean.disableValidation}" />
                             </h:inputText>
                         </d:fieldInputBox>
                     </d:fieldColumn>
                 </d:fieldRow>
-                <d:fieldRow rendered="#{(cc.attrs.webAppBean.noDataProperties eq false)}">
+                <d:fieldRow rendered="#{(controller.bean.noDataProperties eq false)}">
                     <d:fieldColumn>
                         <d:fieldLabel for="permission" value="#{elabel.permission}" />
                         <d:fieldInputBox>
-                            <h:selectOneMenu id="permission" value="#{cc.attrs.webAppBean.entity.permission}">
-                                <f:selectItems value="#{cc.attrs.webAppBean.permissions}" var="selectItem" itemValue="#{selectItem.value}" itemLabel="#{selectItem.label}" />
+                            <h:selectOneMenu id="permission" value="#{controller.bean.entity.permission}">
+                                <f:selectItems value="#{controller.bean.permissions}" var="selectItem" itemValue="#{selectItem.value}" itemLabel="#{selectItem.label}" />
                             </h:selectOneMenu>
                         </d:fieldInputBox>
                     </d:fieldColumn>

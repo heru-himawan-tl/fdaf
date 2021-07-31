@@ -36,7 +36,7 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         xmlns:d="http://java.sun.com/jsf/composite/component"
         xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
     <ui:composition>
-        <d:editorContainer webAppBean="#{userWebAppBean}">
+        <d:editorContainer>
             <d:fieldRow>
                 <d:fieldColumn>
                     <d:informationBox content="#{defaultMessage.userEditNoticeForAdmin}" />
@@ -46,16 +46,16 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                 <d:fieldColumn>
                     <d:fieldLabel for="name" value="#{elabel.name}" />
                     <d:fieldInputBox>
-                        <h:inputText id="name" value="#{userWebAppBean.entity.userName}" >
-                            <f:validateBean disabled="#{userWebAppBean.disableValidation}" />
+                        <h:inputText id="name" value="#{controller.bean.entity.userName}" >
+                            <f:validateBean disabled="#{controller.bean.disableValidation}" />
                         </h:inputText>
                     </d:fieldInputBox>
                 </d:fieldColumn>
                 <d:fieldColumn>
                     <d:fieldLabel for="email" value="#{elabel.email}" />
                     <d:fieldInputBox>
-                        <h:inputText id="email" value="#{userWebAppBean.entity.email}" >
-                            <f:validateBean disabled="#{userWebAppBean.disableValidation}" />
+                        <h:inputText id="email" value="#{controller.bean.entity.email}" >
+                            <f:validateBean disabled="#{controller.bean.disableValidation}" />
                         </h:inputText>
                     </d:fieldInputBox>
                 </d:fieldColumn>
@@ -64,11 +64,11 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                 <d:fieldColumn>
                     <d:fieldLabel for="userType" value="#{elabel.userType}" />
                     <d:fieldInputBox>
-                        <h:selectOneMenu id="userType" value="#{userWebAppBean.entity.userType}">
+                        <h:selectOneMenu id="userType" value="#{controller.bean.entity.userType}">
                             <f:selectItem itemValue="ADMINISTRATOR" itemLabel="ADMINISTRATOR" /> 
                             <f:selectItem itemValue="STAFF" itemLabel="STAFF" />
                             <f:selectItem itemValue="CLIENT" itemLabel="CLIENT" />
-                            <f:validateBean disabled="#{userWebAppBean.disableValidation}" />
+                            <f:validateBean disabled="#{controller.bean.disableValidation}" />
                         </h:selectOneMenu>
                     </d:fieldInputBox>
                 </d:fieldColumn>

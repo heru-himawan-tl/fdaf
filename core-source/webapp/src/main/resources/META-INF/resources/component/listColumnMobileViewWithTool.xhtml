@@ -36,7 +36,6 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     <composite:interface>
         <composite:attribute required="false" name="addStyleClass" type="java.lang.String" />
         <composite:attribute required="false" name="value" type="java.lang.Object" />
-        <composite:attribute required="true" name="webAppBean" type="java.lang.Object" />
         <composite:attribute required="true" name="listObject" type="java.lang.Object" />
         <composite:attribute required="false" name="editable" type="java.lang.Boolean" default="true" />
         <composite:attribute required="false" name="removable" type="java.lang.Boolean" default="true" />
@@ -46,7 +45,6 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
             <h:outputText value="#{cc.attrs.value}" />
             <composite:insertChildren />
             <d:listActionToolCore
-                webAppBean="#{cc.attrs.webAppBean}"
                 listObject="#{cc.attrs.listObject}"
                 editable="#{cc.attrs.editable}"
                 removable="#{cc.attrs.removable}"

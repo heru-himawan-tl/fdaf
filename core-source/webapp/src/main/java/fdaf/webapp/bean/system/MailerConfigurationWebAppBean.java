@@ -115,8 +115,15 @@ public class MailerConfigurationWebAppBean extends AbstractBaseWebAppBean implem
     
     private String configPath = "";
     
+    @Inject
+    private Controller controller;
+    
     public MailerConfigurationWebAppBean() {
         // NO-OP
+    }
+    
+    protected Controller getController() {
+        return controller;
     }
     
     protected CommonConfigurationInterface getCommonConfiguration() {

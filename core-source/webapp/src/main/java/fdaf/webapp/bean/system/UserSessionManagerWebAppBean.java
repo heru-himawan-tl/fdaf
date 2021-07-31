@@ -65,9 +65,16 @@ public class UserSessionManagerWebAppBean extends AbstractWebAppBean implements 
     private String referer;
     private String userName;
     private boolean keepLogin;
+    
+    @Inject
+    private Controller controller;
 
     public UserSessionManagerWebAppBean() {
         // NO-OP
+    }
+    
+    protected Controller getController() {
+        return controller;
     }
 
     protected AdministratorAccountCheckerInterface getAdministratorAccountChecker() {

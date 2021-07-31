@@ -35,50 +35,50 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         xmlns:h="http://java.sun.com/jsf/html"
         xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions"
         xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+    <d:controllerInit bean="#{commonConfigurationWebAppBean}" />
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <title><h:outputText value="#{commonConfigurationWebAppBean.applicationName} - #{fn:toUpperCase(label.commonConfiguration)}" /></title>
+        <title><h:outputText value="#{controller.bean.applicationName} - #{fn:toUpperCase(label.commonConfiguration)}" /></title>
         <h:outputStylesheet library="css" name="style.css"/>
         <d:customHeadTag />
     </h:head>
     <h:body>
         <h:form id="form">
-            <d:mainInit webAppBean="#{commonConfigurationWebAppBean}" />
+            <d:mainInit />
             <d:loadBundles />
-            <d:databaseServiceCheck webAppBean="#{commonConfigurationWebAppBean}" />
-            <d:administratorAccountCheck webAppBean="#{commonConfigurationWebAppBean}" />
-            <d:commonConfigurationInit webAppBean="#{commonConfigurationWebAppBean}" />
-            <d:userSessionWatch webAppBean="#{commonConfigurationWebAppBean}" 
-                rendered="#{(commonConfigurationWebAppBean.administratorAccountExists eq true)}" />
-            <d:customTopPanel webAppBean="#{commonConfigurationWebAppBean}" />
+            <d:databaseServiceCheck />
+            <d:administratorAccountCheck />
+            <d:userSessionWatch rendered="#{(controller.bean.administratorAccountExists eq true)}" />
+            <d:commonConfigurationInit />
+            <d:customTopPanel />
             <h:panelGroup layout="block" styleClass="left_panel_back_overlay"></h:panelGroup>
             <h:panelGroup layout="block" styleClass="right_panel_back_overlay"></h:panelGroup>
             <h:panelGroup layout="block" styleClass="main_panel_back_overlay"></h:panelGroup>
             <h:panelGroup layout="block" styleClass="body_flexbox">
                 <d:leftPanel>
-                    <d:customLeftPanel webAppBean="#{commonConfigurationWebAppBean}" />
+                    <d:customLeftPanel />
                 </d:leftPanel>
                 <d:mainPanel>
-                    <d:pageContainer id="page" webAppBean="#{commonConfigurationWebAppBean}">
+                    <d:pageContainer id="page">
                         <d:customProgramHeading pageTitle="#{fn:toUpperCase(label.commonConfiguration)}">
                             <h:commandButton type="button" styleClass="grouped_button_left" value="#{label.buttonSaveCreate}"
                                 rendered="#{(
-                                    commonConfigurationWebAppBean.inSaving eq false and
-                                    commonConfigurationWebAppBean.userType ne 'STAFF' and
-                                    commonConfigurationWebAppBean.userType ne 'CLIENT'
+                                    controller.bean.inSaving eq false and
+                                    controller.bean.userType ne 'STAFF' and
+                                    controller.bean.userType ne 'CLIENT'
                                 )}">
-                                <f:ajax event="click" execute="@form" render="@form" listener="#{commonConfigurationWebAppBean.save}" />
+                                <f:ajax event="click" execute="@form" render="@form" listener="#{controller.bean.save}" />
                             </h:commandButton>
                             <h:commandButton type="button" styleClass="#{(
-                                commonConfigurationWebAppBean.userType eq 'CLIENT' or
-                                commonConfigurationWebAppBean.userType eq 'STAFF')
+                                controller.bean.userType eq 'CLIENT' or
+                                controller.bean.userType eq 'STAFF')
                                 ? 'common_button' : 'grouped_button_right'}" onclick="document.location.href='adm.jsf'" 
-                                value="#{label.buttonClose}" rendered="#{(commonConfigurationWebAppBean.inSaving eq false)}" />
+                                value="#{label.buttonClose}" rendered="#{(controller.bean.inSaving eq false)}" />
                             <h:commandButton type="button" styleClass="common_button" value="#{label.buttonClose}" 
                                 onclick="document.location.href='adm.jsf';"
-                                rendered="#{(commonConfigurationWebAppBean.inSaving eq true)}" />
+                                rendered="#{(controller.bean.inSaving eq true)}" />
                         </d:customProgramHeading>
-                        <h:panelGroup layout="block" styleClass="field_container" rendered="#{(commonConfigurationWebAppBean.inSaving eq true)}">
+                        <h:panelGroup layout="block" styleClass="field_container" rendered="#{(controller.bean.inSaving eq true)}">
                             <h:panelGroup layout="block" styleClass="field_container_inner">
                                 <d:fieldRow>
                                     <d:fieldColumn>
@@ -87,14 +87,14 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                                 </d:fieldRow>
                             </h:panelGroup>
                         </h:panelGroup>
-                        <d:messages rendered="#{(commonConfigurationWebAppBean.inSaving eq false)}" />
+                        <d:messages rendered="#{(controller.bean.inSaving eq false)}" />
                         <h:panelGroup layout="block" styleClass="field_container" rendered="#{(
-                                commonConfigurationWebAppBean.inSaving eq false and
-                                commonConfigurationWebAppBean.userType ne 'STAFF' and
-                                commonConfigurationWebAppBean.userType ne 'CLIENT'
+                                controller.bean.inSaving eq false and
+                                controller.bean.userType ne 'STAFF' and
+                                controller.bean.userType ne 'CLIENT'
                             )}">
                             <h:panelGroup layout="block" styleClass="field_container_inner">
-                                <d:fieldNoteBox rendered="#{commonConfigurationWebAppBean.isLoggedOn eq false}">
+                                <d:fieldNoteBox rendered="#{controller.bean.isLoggedOn eq false}">
                                     <h:outputText value="#{defaultMessage.restrictedCommonConfigurationWarn}" />
                                 </d:fieldNoteBox>
                                 <d:fieldGroupTitle title="#{label.siteState}" />
@@ -104,7 +104,7 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                                 <d:fieldRow>
                                     <d:fieldColumn>
                                         <d:fieldInputCheckbox>
-                                            <h:selectBooleanCheckbox id="offlineSite" value="#{commonConfigurationWebAppBean.offlineSite}" />
+                                            <h:selectBooleanCheckbox id="offlineSite" value="#{controller.bean.offlineSite}" />
                                         </d:fieldInputCheckbox>
                                         <d:fieldInputCheckboxLabel>
                                             <h:outputText value="#{label.offlineSite}" />
@@ -116,7 +116,7 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                                     <d:fieldColumn>
                                         <d:fieldLabel for="domain" value="#{label.domain}" />
                                         <d:fieldInputBox>
-                                            <h:inputText id="domain" value="#{commonConfigurationWebAppBean.domain}" />
+                                            <h:inputText id="domain" value="#{controller.bean.domain}" />
                                         </d:fieldInputBox>
                                     </d:fieldColumn>
                                 </d:fieldRow>
@@ -124,7 +124,7 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                                     <d:fieldColumn>
                                         <d:fieldInputCheckbox>
                                             <h:selectBooleanCheckbox id="domainAsDefaultSite" 
-                                                value="#{commonConfigurationWebAppBean.domainAsDefaultSite}" />
+                                                value="#{controller.bean.domainAsDefaultSite}" />
                                         </d:fieldInputCheckbox>
                                         <d:fieldInputCheckboxLabel>
                                             <h:outputText value="#{label.domainAsDefaultSite}" />
@@ -136,15 +136,15 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                                     <d:fieldColumn>
                                         <d:fieldLabel for="siteName" value="#{label.siteName}" />
                                         <d:fieldInputBox>
-                                            <h:inputText id="siteName" value="#{commonConfigurationWebAppBean.siteName}" />
+                                            <h:inputText id="siteName" value="#{controller.bean.siteName}" />
                                         </d:fieldInputBox>
                                     </d:fieldColumn>
                                 </d:fieldRow>
-                                <d:fieldRow rendered="#{commonConfigurationWebAppBean.isLoggedOn eq true}">
+                                <d:fieldRow rendered="#{controller.bean.isLoggedOn eq true}">
                                     <d:fieldColumn>
                                         <d:fieldLabel for="webmasterEmail" value="#{label.webmasterEmail}" />
                                         <d:fieldInputBox>
-                                            <h:inputText id="webmasterEmail" value="#{commonConfigurationWebAppBean.webmasterEmail}" />
+                                            <h:inputText id="webmasterEmail" value="#{controller.bean.webmasterEmail}" />
                                         </d:fieldInputBox>
                                     </d:fieldColumn>
                                 </d:fieldRow>
@@ -152,7 +152,7 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                                     <d:fieldColumn>
                                         <d:fieldLabel for="siteDescription" value="#{label.siteDescription}" />
                                         <d:fieldInputBox>
-                                            <h:inputTextarea id="siteDescription" value="#{commonConfigurationWebAppBean.siteDescription}" />
+                                            <h:inputTextarea id="siteDescription" value="#{controller.bean.siteDescription}" />
                                         </d:fieldInputBox>
                                     </d:fieldColumn>
                                 </d:fieldRow>
@@ -161,7 +161,7 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                                     <d:fieldColumn>
                                         <d:fieldLabel for="regionalLanguage" value="#{label.regionalLanguage}" />
                                         <d:fieldInputBox>
-                                            <h:selectOneMenu id="gender" value="#{commonConfigurationWebAppBean.regionalLanguage}">
+                                            <h:selectOneMenu id="gender" value="#{controller.bean.regionalLanguage}">
                                                 <f:selectItems value="#{languageOption.items}" var="selectItem"
                                                         itemValue="#{selectItem.value}" itemLabel="#{selectItem.label}" />
                                             </h:selectOneMenu>
@@ -176,22 +176,22 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                                     <d:fieldColumn>
                                         <d:fieldInputCheckbox>
                                             <h:selectBooleanCheckbox id="allowPerUserMultipleLogins" 
-                                                value="#{commonConfigurationWebAppBean.allowPerUserMultipleLogins}" />
+                                                value="#{controller.bean.allowPerUserMultipleLogins}" />
                                         </d:fieldInputCheckbox>
                                         <d:fieldInputCheckboxLabel>
                                             <h:outputText value="#{label.allowPerUserMultipleLogins}" />
                                         </d:fieldInputCheckboxLabel>
                                     </d:fieldColumn>
                                 </d:fieldRow>
-                                <d:fieldNoteBox rendered="#{commonConfigurationWebAppBean.isLoggedOn eq true}">
+                                <d:fieldNoteBox rendered="#{controller.bean.isLoggedOn eq true}">
                                     <h:outputText value="#{defaultMessage.webSocketClientSecureKeyNote}" />
                                 </d:fieldNoteBox>
-                                <d:fieldRow rendered="#{commonConfigurationWebAppBean.isLoggedOn eq true}">
+                                <d:fieldRow rendered="#{controller.bean.isLoggedOn eq true}">
                                     <d:fieldColumn>
                                         <d:fieldLabel for="webSocketClientSecureKey" value="#{label.webSocketClientSecureKey}" />
                                         <d:fieldInputBox>
                                             <h:inputText id="webSocketClientSecureKey" 
-                                                value="#{commonConfigurationWebAppBean.webSocketClientSecureKey}" />
+                                                value="#{controller.bean.webSocketClientSecureKey}" />
                                         </d:fieldInputBox>
                                     </d:fieldColumn>
                                 </d:fieldRow>
@@ -200,7 +200,7 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                                     <d:fieldColumn>
                                         <d:fieldLabel for="companyName" value="#{label.companyName}" />
                                         <d:fieldInputBox>
-                                            <h:inputText id="companyName" value="#{commonConfigurationWebAppBean.companyName}" />
+                                            <h:inputText id="companyName" value="#{controller.bean.companyName}" />
                                         </d:fieldInputBox>
                                     </d:fieldColumn>
                                 </d:fieldRow>
@@ -209,7 +209,7 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                                         <d:fieldLabel for="companyDescription" value="#{label.companyDescription}" />
                                         <d:fieldInputBox>
                                             <h:inputTextarea id="companyDescription"
-                                                value="#{commonConfigurationWebAppBean.companyDescription}" />
+                                                value="#{controller.bean.companyDescription}" />
                                         </d:fieldInputBox>
                                     </d:fieldColumn>
                                 </d:fieldRow>
@@ -217,13 +217,13 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                                     <d:fieldColumn>
                                         <d:fieldLabel for="companyAddress1" value="#{label.companyAddress1}" />
                                         <d:fieldInputBox>
-                                            <h:inputTextarea id="companyAddress1" value="#{commonConfigurationWebAppBean.companyAddress1}" />
+                                            <h:inputTextarea id="companyAddress1" value="#{controller.bean.companyAddress1}" />
                                         </d:fieldInputBox>
                                     </d:fieldColumn>
                                     <d:fieldColumn>
                                         <d:fieldLabel for="companyAddress2" value="#{label.companyAddress2}" />
                                         <d:fieldInputBox>
-                                            <h:inputTextarea id="companyAddress2" value="#{commonConfigurationWebAppBean.companyAddress2}" />
+                                            <h:inputTextarea id="companyAddress2" value="#{controller.bean.companyAddress2}" />
                                         </d:fieldInputBox>
                                     </d:fieldColumn>
                                 </d:fieldRow>
@@ -231,30 +231,30 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                                     <d:fieldColumn>
                                         <d:fieldLabel for="companyPhone1" value="#{label.companyPhone1}" />
                                         <d:fieldInputBox>
-                                            <h:inputText id="companyPhone1" value="#{commonConfigurationWebAppBean.companyPhone1}" />
+                                            <h:inputText id="companyPhone1" value="#{controller.bean.companyPhone1}" />
                                         </d:fieldInputBox>
                                     </d:fieldColumn>
                                     <d:fieldColumn>
                                         <d:fieldLabel for="companyPhone2" value="#{label.companyPhone2}" />
                                         <d:fieldInputBox>
-                                            <h:inputText id="companyPhone2" value="#{commonConfigurationWebAppBean.companyPhone2}" />
+                                            <h:inputText id="companyPhone2" value="#{controller.bean.companyPhone2}" />
                                         </d:fieldInputBox>
                                     </d:fieldColumn>
                                 </d:fieldRow>
-                                <d:fieldRow rendered="#{commonConfigurationWebAppBean.isLoggedOn eq false}">
+                                <d:fieldRow rendered="#{controller.bean.isLoggedOn eq false}">
                                     <d:fieldColumn>
                                         <d:informationBox>
                                             <h:outputText value="#{defaultMessage.commonConfigurationUnlockPasswordPredefinition} " />
                                             <br />
-                                            <h:outputText value="#{commonConfigurationWebAppBean.getMasterPasswordFileAddr()}" />
+                                            <h:outputText value="#{controller.bean.getMasterPasswordFileAddr()}" />
                                         </d:informationBox>
                                     </d:fieldColumn>
                                 </d:fieldRow>
-                                <d:fieldRow rendered="#{commonConfigurationWebAppBean.isLoggedOn eq false}">
+                                <d:fieldRow rendered="#{controller.bean.isLoggedOn eq false}">
                                     <d:fieldColumn>
                                         <d:fieldLabel for="unlockPassword" value="#{label.masterPassword}" />
                                         <d:fieldInputBox>
-                                            <h:inputSecret id="unlockPassword" value="#{commonConfigurationWebAppBean.unlockPassword}">
+                                            <h:inputSecret id="unlockPassword" value="#{controller.bean.unlockPassword}">
                                                 <f:validateBean disabled="#{true}" />
                                             </h:inputSecret>
                                         </d:fieldInputBox>
@@ -263,19 +263,19 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                             </h:panelGroup>
                         </h:panelGroup>
                         <d:altProgramRestrictionWarningBox rendered="#{(
-                            commonConfigurationWebAppBean.userType eq 'CLIENT' or
-                            commonConfigurationWebAppBean.userType eq 'STAFF') and
-                            commonConfigurationWebAppBean.databaseIsError eq false
+                            controller.bean.userType eq 'CLIENT' or
+                            controller.bean.userType eq 'STAFF') and
+                            controller.bean.databaseIsError eq false
                             }" />
-                        <d:mainPanelFooter webAppBean="#{commonConfigurationWebAppBean}" />
+                        <d:mainPanelFooter />
                     </d:pageContainer>
                 </d:mainPanel>
                 <d:rightPanel>
-                    <d:customRightPanel webAppBean="#{commonConfigurationWebAppBean}" />
+                    <d:customRightPanel />
                 </d:rightPanel>
             </h:panelGroup>
-            <d:customBottomForm webAppBean="#{commonConfigurationWebAppBean}" />
+            <d:customBottomForm />
         </h:form>
-        <d:customBottomBody webAppBean="#{commonConfigurationWebAppBean}" />
+        <d:customBottomBody />
     </h:body>
 </html>

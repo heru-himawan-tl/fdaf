@@ -28,61 +28,27 @@
  */
 package fdaf.webapp.bean.system;
 
-import fdaf.base.AdministratorAccountCheckerInterface;
-import fdaf.base.CommonConfigurationInterface;
-import fdaf.base.DatabaseServiceCheckerInterface;
-import fdaf.base.UserSessionManagerInterface;
-import fdaf.webapp.base.AbstractBaseWebAppBean;
 import java.io.Serializable;
-import javax.ejb.EJB;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
 @ViewScoped
 @Named
-public class AdmWebAppBean extends AbstractBaseWebAppBean implements Serializable {
+public class Controller implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    
-    @EJB(lookup = "java:global/__EJB_LOOKUP_DIR__/AdministratorAccountCheckerFacade")
-    private AdministratorAccountCheckerInterface admAccountChecker;
-    
-    @EJB(lookup = "java:global/__EJB_LOOKUP_DIR__/UserSessionManagerFacade")
-    private UserSessionManagerInterface userSessionManager;
-    
-    @EJB(lookup = "java:global/__EJB_LOOKUP_DIR__/DatabaseServiceCheckerFacade")
-    private DatabaseServiceCheckerInterface dbServiceChecker;
-    
-    @EJB(lookup = "java:global/__EJB_LOOKUP_DIR__/CommonConfigurationService")
-    private CommonConfigurationInterface commonConfiguration;
-    
-    @Inject
-    private Controller controller;
+    private Object bean;
 
-    public AdmWebAppBean() {
+    public Controller() {
         // NO-OP
     }
     
-    protected Controller getController() {
-        return controller;
-    }
-
-    protected AdministratorAccountCheckerInterface getAdministratorAccountChecker() {
-        return admAccountChecker;
+    public void setBean(Object bean) {
+        this.bean = bean;
     }
     
-    protected CommonConfigurationInterface getCommonConfiguration() {
-        return commonConfiguration;
-    }
-    
-    @Override
-    protected DatabaseServiceCheckerInterface getDatabaseServiceChecker() {
-        return dbServiceChecker;
-    }
-
-    @Override
-    public UserSessionManagerInterface getUserSessionManager() {
-        return userSessionManager;
+    public Object getBean() {
+        return bean;
     }
 }

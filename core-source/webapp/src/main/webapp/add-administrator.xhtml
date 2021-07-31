@@ -34,44 +34,45 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         xmlns:f="http://java.sun.com/jsf/core"
         xmlns:h="http://java.sun.com/jsf/html"
         xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions">
+    <d:controllerInit bean="#{addAdministratorWebAppBean}" />
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <title><h:outputText value="#{addAdministratorWebAppBean.applicationName} - #{fn:toUpperCase(label.addAdministrator)}" /></title>
+        <title><h:outputText value="#{controller.bean.applicationName} - #{fn:toUpperCase(label.addAdministrator)}" /></title>
         <h:outputStylesheet library="css" name="style.css"/>
         <d:customHeadTag />
     </h:head>
     <h:body>
         <h:form id="form">
-            <d:mainInit webAppBean="#{addAdministratorWebAppBean}" />
+            <d:mainInit />
             <d:loadBundles />
-            <d:databaseServiceCheck webAppBean="#{addAdministratorWebAppBean}" />
-            <d:administratorAccountCheck webAppBean="#{addAdministratorWebAppBean}" />
-            <d:addAdministratorInit webAppBean="#{addAdministratorWebAppBean}" />
-            <d:userSessionWatch webAppBean="#{addAdministratorWebAppBean}" rendered="#{(addAdministratorWebAppBean.administratorAccountExists eq true)}" />
-            <d:customTopPanel webAppBean="#{addAdministratorWebAppBean}" />
+            <d:databaseServiceCheck />
+            <d:administratorAccountCheck />
+            <d:addAdministratorInit />
+            <d:userSessionWatch rendered="#{(controller.bean.administratorAccountExists eq true)}" />
+            <d:customTopPanel />
             <h:panelGroup layout="block" styleClass="left_panel_back_overlay"></h:panelGroup>
             <h:panelGroup layout="block" styleClass="right_panel_back_overlay"></h:panelGroup>
             <h:panelGroup layout="block" styleClass="main_panel_back_overlay"></h:panelGroup>
             <h:panelGroup layout="block" styleClass="body_flexbox">
                 <d:leftPanel>
-                    <d:customLeftPanel webAppBean="#{addAdministratorWebAppBean}" />
+                    <d:customLeftPanel />
                 </d:leftPanel>
                 <d:mainPanel>
-                        <d:pageContainer id="page" webAppBean="#{addAdministratorWebAppBean}">
+                        <d:pageContainer id="page">
                             <d:customProgramHeading pageTitle="#{fn:toUpperCase(label.addAdministrator)}">
-                                <h:commandButton type="button" styleClass="grouped_button_left" value="#{label.buttonSaveCreate}" rendered="#{(addAdministratorWebAppBean.opMode ne 'UPDATE' and addAdministratorWebAppBean.userType ne 'STAFF' and addAdministratorWebAppBean.userType ne 'CLIENT' and addAdministratorWebAppBean.databaseIsError eq false)}">
-                                    <f:ajax event="click" execute="@form" render="@form" listener="#{addAdministratorWebAppBean.executeCreate}" />
+                                <h:commandButton type="button" styleClass="grouped_button_left" value="#{label.buttonSaveCreate}" rendered="#{(controller.bean.opMode ne 'UPDATE' and controller.bean.userType ne 'STAFF' and controller.bean.userType ne 'CLIENT' and controller.bean.databaseIsError eq false)}">
+                                    <f:ajax event="click" execute="@form" render="@form" listener="#{controller.bean.executeCreate}" />
                                 </h:commandButton>
-                                <h:commandButton type="button" styleClass="#{(addAdministratorWebAppBean.userType eq 'CLIENT' or addAdministratorWebAppBean.userType eq 'STAFF' or addAdministratorWebAppBean.databaseIsError eq true) ? 'common_button' : 'grouped_button_right'}" onclick="document.location.href='adm.jsf'" value="#{label.buttonClose}" rendered="#{(addAdministratorWebAppBean.opMode ne 'UPDATE')}" />
+                                <h:commandButton type="button" styleClass="#{(controller.bean.userType eq 'CLIENT' or controller.bean.userType eq 'STAFF' or controller.bean.databaseIsError eq true) ? 'common_button' : 'grouped_button_right'}" onclick="document.location.href='adm.jsf'" value="#{label.buttonClose}" rendered="#{(controller.bean.opMode ne 'UPDATE')}" />
                             </d:customProgramHeading>
-                            <h:panelGroup layout="block" styleClass="field_container" rendered="#{(addAdministratorWebAppBean.opMode eq 'UPDATE' and addAdministratorWebAppBean.databaseIsError eq false)}">
+                            <h:panelGroup layout="block" styleClass="field_container" rendered="#{(controller.bean.opMode eq 'UPDATE' and controller.bean.databaseIsError eq false)}">
                                 <h:panelGroup layout="block" styleClass="field_container_inner">
                                     <d:fieldRow>
                                         <d:fieldColumn>
                                             <d:informationBox content="#{defaultMessage.addAdministratorAccountSuccess}" />
                                         </d:fieldColumn>
                                     </d:fieldRow>
-                                    <d:fieldRow rendered="#{(addAdministratorWebAppBean.mailerFailure eq true)}">
+                                    <d:fieldRow rendered="#{(controller.bean.mailerFailure eq true)}">
                                         <d:fieldColumn>
                                             <d:informationBox content="#{defaultMessage.mailerFailureWarning}" />
                                         </d:fieldColumn>
@@ -85,25 +86,25 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                                     </d:fieldRow>
                                 </h:panelGroup>
                             </h:panelGroup>
-                            <d:messages rendered="#{(addAdministratorWebAppBean.opMode ne 'UPDATE' and addAdministratorWebAppBean.databaseIsError eq false)}" />
+                            <d:messages rendered="#{(controller.bean.opMode ne 'UPDATE' and controller.bean.databaseIsError eq false)}" />
                             <h:panelGroup layout="block" styleClass="field_container" rendered="#{(
-                                    addAdministratorWebAppBean.opMode ne 'UPDATE' and
-                                    addAdministratorWebAppBean.userType ne 'STAFF' and
-                                    addAdministratorWebAppBean.userType ne 'CLIENT' and
-                                    addAdministratorWebAppBean.databaseIsError eq false
+                                    controller.bean.opMode ne 'UPDATE' and
+                                    controller.bean.userType ne 'STAFF' and
+                                    controller.bean.userType ne 'CLIENT' and
+                                    controller.bean.databaseIsError eq false
                                 )}">
                                 <h:panelGroup layout="block" styleClass="field_container_inner">
                                     <d:fieldRow>
                                         <d:fieldColumn>
-                                            <d:informationBox content="#{(addAdministratorWebAppBean.administratorAccountExists eq false) ? defaultMessage.addAdministratorAccountPredefinition : defaultMessage.addAdministratorAccountWarning}" />
+                                            <d:informationBox content="#{(controller.bean.administratorAccountExists eq false) ? defaultMessage.addAdministratorAccountPredefinition : defaultMessage.addAdministratorAccountWarning}" />
                                         </d:fieldColumn>
                                     </d:fieldRow>
                                     <d:fieldRow>
                                         <d:fieldColumn>
                                             <d:fieldLabel for="name" value="#{elabel.userName}" />
                                             <d:fieldInputBox>
-                                                <h:inputText id="name" value="#{addAdministratorWebAppBean.entity.userName}">
-                                                    <f:validateBean disabled="#{addAdministratorWebAppBean.disableValidation}" />
+                                                <h:inputText id="name" value="#{controller.bean.entity.userName}">
+                                                    <f:validateBean disabled="#{controller.bean.disableValidation}" />
                                                 </h:inputText>
                                             </d:fieldInputBox>
                                         </d:fieldColumn>
@@ -112,8 +113,8 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                                         <d:fieldColumn>
                                             <d:fieldLabel for="password" value="#{elabel.password}" />
                                             <d:fieldInputBox>
-                                                <h:inputSecret id="password" value="#{addAdministratorWebAppBean.entity.password}">
-                                                    <f:validateBean disabled="#{addAdministratorWebAppBean.disableValidation}" />
+                                                <h:inputSecret id="password" value="#{controller.bean.entity.password}">
+                                                    <f:validateBean disabled="#{controller.bean.disableValidation}" />
                                                 </h:inputSecret>
                                             </d:fieldInputBox>
                                         </d:fieldColumn>
@@ -122,8 +123,8 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                                         <d:fieldColumn>
                                             <d:fieldLabel for="passwordConfirm" value="#{elabel.passwordConfirm}" />
                                             <d:fieldInputBox>
-                                                <h:inputSecret id="passwordConfirm" value="#{addAdministratorWebAppBean.entity.passwordConfirm}">
-                                                    <f:validateBean disabled="#{addAdministratorWebAppBean.disableValidation}" />
+                                                <h:inputSecret id="passwordConfirm" value="#{controller.bean.entity.passwordConfirm}">
+                                                    <f:validateBean disabled="#{controller.bean.disableValidation}" />
                                                 </h:inputSecret>
                                             </d:fieldInputBox>
                                         </d:fieldColumn>
@@ -132,26 +133,26 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                                         <d:fieldColumn>
                                             <d:fieldLabel for="email" value="#{elabel.email}" />
                                             <d:fieldInputBox>
-                                                <h:inputText id="email" value="#{addAdministratorWebAppBean.entity.email}">
-                                                    <f:validateBean disabled="#{addAdministratorWebAppBean.disableValidation}" />
+                                                <h:inputText id="email" value="#{controller.bean.entity.email}">
+                                                    <f:validateBean disabled="#{controller.bean.disableValidation}" />
                                                 </h:inputText>
                                             </d:fieldInputBox>
                                         </d:fieldColumn>
                                     </d:fieldRow>
-                                    <d:fieldRow rendered="#{addAdministratorWebAppBean.userType ne 'ADMINISTRATOR'}">
+                                    <d:fieldRow rendered="#{controller.bean.userType ne 'ADMINISTRATOR'}">
                                         <d:fieldColumn>
                                             <d:informationBox>
                                                 <h:outputText value="#{defaultMessage.unlockPasswordPredefinition} " />
                                                 <br />
-                                                <h:outputText value="#{addAdministratorWebAppBean.getMasterPasswordFileAddr()}" />
+                                                <h:outputText value="#{controller.bean.getMasterPasswordFileAddr()}" />
                                             </d:informationBox>
                                         </d:fieldColumn>
                                     </d:fieldRow>
-                                    <d:fieldRow rendered="#{addAdministratorWebAppBean.userType ne 'ADMINISTRATOR'}">
+                                    <d:fieldRow rendered="#{controller.bean.userType ne 'ADMINISTRATOR'}">
                                         <d:fieldColumn>
                                             <d:fieldLabel for="unlockPassword" value="#{label.masterPassword}" />
                                             <d:fieldInputBox>
-                                                <h:inputSecret id="unlockPassword" value="#{addAdministratorWebAppBean.unlockPassword}">
+                                                <h:inputSecret id="unlockPassword" value="#{controller.bean.unlockPassword}">
                                                     <f:validateBean disabled="#{true}" />
                                                 </h:inputSecret>
                                             </d:fieldInputBox>
@@ -159,17 +160,17 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                                     </d:fieldRow>
                                 </h:panelGroup>
                             </h:panelGroup>
-                            <d:altProgramRestrictionWarningBox rendered="#{(addAdministratorWebAppBean.userType eq 'CLIENT' or addAdministratorWebAppBean.userType eq 'STAFF') and addAdministratorWebAppBean.databaseIsError eq false}" />
-                            <d:databaseErrorWarningBox webAppBean="#{addAdministratorWebAppBean}" />
-                            <d:mainPanelFooter webAppBean="#{addAdministratorWebAppBean}" />
+                            <d:altProgramRestrictionWarningBox rendered="#{(controller.bean.userType eq 'CLIENT' or controller.bean.userType eq 'STAFF') and controller.bean.databaseIsError eq false}" />
+                            <d:databaseErrorWarningBox />
+                            <d:mainPanelFooter />
                         </d:pageContainer>
                 </d:mainPanel>
                 <d:rightPanel>
-                    <d:customRightPanel webAppBean="#{addAdministratorWebAppBean}" />
+                    <d:customRightPanel />
                 </d:rightPanel>
             </h:panelGroup>
-            <d:customBottomForm webAppBean="#{addAdministratorWebAppBean}" />
+            <d:customBottomForm />
         </h:form>
-        <d:customBottomBody webAppBean="#{addAdministratorWebAppBean}" />
+        <d:customBottomBody />
     </h:body>
 </html>

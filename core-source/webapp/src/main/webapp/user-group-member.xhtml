@@ -30,8 +30,9 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 -->
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:d="http://java.sun.com/jsf/composite/component">
-    <d:setUserSessionRequirement webAppBean="#{userGroupMemberWebAppBean}" />
-    <d:setForAdministratorOnly webAppBean="#{userGroupMemberWebAppBean}" />
-    <d:disableDataProperties webAppBean="#{userGroupMemberWebAppBean}" />
-    <d:commonPage webAppBean="#{userGroupMemberWebAppBean}" pagePrefix="userGroupMember" pageTitle="#{elabel.userGroupMember}" id="userGroupMember" />
+    <d:controllerInit bean="#{userGroupMemberWebAppBean}" />
+    <d:setUserSessionRequirement />
+    <d:setForAdministratorOnly />
+    <d:disableDataProperties />
+    <d:commonPage pagePrefix="userGroupMember" pageTitle="#{elabel.userGroupMember}" id="userGroupMember" />
 </html>

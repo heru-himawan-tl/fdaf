@@ -37,14 +37,15 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         xmlns:ui="http://java.sun.com/jsf/facelets"
         xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions"
 		xmlns:f="http://xmlns.jcp.org/jsf/core">
-    <d:commonPageTemplate webAppBean="#{admWebAppBean}" pageTitle="#{label.admMainPage}">
-        <d:administratorAccountCheck webAppBean="#{admWebAppBean}" rendered="#{admWebAppBean.databaseIsError eq false}" />
-        <d:addAdministratorStartPage webAppBean="#{admWebAppBean}" rendered="#{admWebAppBean.databaseIsError eq false}" />
+    <d:controllerInit bean="#{admWebAppBean}" />
+    <d:commonPageTemplate pageTitle="#{label.admMainPage}">
+        <d:administratorAccountCheck rendered="#{controller.bean.databaseIsError eq false}" />
+        <d:addAdministratorStartPage rendered="#{controller.bean.databaseIsError eq false}" />
         <d:customProgramHeading pageTitle="#{fn:toUpperCase(label.admMainPage)}">
             <h:commandButton type="button" styleClass="common_button" onclick="document.location.href='index.jsf'" value="#{label.buttonClose}" />
         </d:customProgramHeading>
         <d:messages />
-        <d:pageContainer id="page" webAppBean="#{admWebAppBean}">
+        <d:pageContainer id="page">
             <h:panelGroup layout="block" styleClass="adm_notice_container">
                 <h:panelGroup layout="block" styleClass="adm_notice_box">
                     <h:outputText value="#{defaultMessage.admMainPageNotice}" />

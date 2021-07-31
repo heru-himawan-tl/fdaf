@@ -33,9 +33,8 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         xmlns:f="http://java.sun.com/jsf/core"
         xmlns:composite="http://java.sun.com/jsf/composite">
     <composite:interface>
-        <composite:attribute required="true" name="webAppBean" type="java.lang.Object" />
     </composite:interface>
     <composite:implementation>
-        <f:event listener="#{cc.attrs.webAppBean.initAccountEditor}" type="preRenderComponent" />
+        <f:event listener="#{controller.bean.initAccountEditor}" type="preRenderComponent" />
     </composite:implementation>
 </html>

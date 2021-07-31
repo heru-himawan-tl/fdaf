@@ -34,7 +34,6 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         xmlns:composite="http://java.sun.com/jsf/composite"
         xmlns:h="http://java.sun.com/jsf/html">
     <composite:interface>
-        <composite:attribute required="true" name="webAppBean" type="java.lang.Object" />
     </composite:interface>
     <composite:implementation>
     
@@ -55,11 +54,11 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         <h:link value="#{label.commonConfiguration}" outcome="common-configuration" />
         <h:link value="#{label.mailerConfiguration}" outcome="mailer-configuration" />
                 
-        <d:panelMenuGroup value="#{label.currentUserManagement}" rendered="#{cc.attrs.webAppBean.databaseIsError eq false}" />
-        <h:link value="#{label.editAccountLinkLabel}" outcome="edit-account" rendered="#{cc.attrs.webAppBean.isLoggedOn}"/>
-        <h:link value="#{label.editProfileLinkLabel}" outcome="edit-profile" rendered="#{cc.attrs.webAppBean.isLoggedOn}"/>
-        <h:link value="#{label.logoutLinkLabel}" outcome="logout" rendered="#{cc.attrs.webAppBean.isLoggedOn}"/>
-        <h:link value="#{label.loginLinkLabel}" outcome="login" rendered="#{cc.attrs.webAppBean.isLoggedOn eq false and cc.attrs.webAppBean.databaseIsError eq false}"/>
+        <d:panelMenuGroup value="#{label.currentUserManagement}" rendered="#{controller.bean.databaseIsError eq false}" />
+        <h:link value="#{label.editAccountLinkLabel}" outcome="edit-account" rendered="#{controller.bean.isLoggedOn}"/>
+        <h:link value="#{label.editProfileLinkLabel}" outcome="edit-profile" rendered="#{controller.bean.isLoggedOn}"/>
+        <h:link value="#{label.logoutLinkLabel}" outcome="logout" rendered="#{controller.bean.isLoggedOn}"/>
+        <h:link value="#{label.loginLinkLabel}" outcome="login" rendered="#{controller.bean.isLoggedOn eq false and controller.bean.databaseIsError eq false}"/>
         
     </composite:implementation>
 </html>

@@ -34,15 +34,14 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         xmlns:composite="http://java.sun.com/jsf/composite"
         xmlns:h="http://java.sun.com/jsf/html">
     <composite:interface>
-        <composite:attribute required="true" name="webAppBean" type="java.lang.Object" />
     </composite:interface>
     <composite:implementation>
         <h:panelGroup layout="block" styleClass="adm_notice_container"
                 rendered="#{
-                    (cc.attrs.webAppBean.isLoggedOn eq false or cc.attrs.webAppBean.allowRender eq false)
-                    and cc.attrs.webAppBean.databaseIsError eq false
-                    and cc.attrs.webAppBean.userType ne 'ADMINISTRATOR'
-                    and cc.attrs.webAppBean.forAdministratorOnly eq true
+                    (controller.bean.isLoggedOn eq false or controller.bean.allowRender eq false)
+                    and controller.bean.databaseIsError eq false
+                    and controller.bean.userType ne 'ADMINISTRATOR'
+                    and controller.bean.forAdministratorOnly eq true
                 }">
             <h:panelGroup layout="block" styleClass="program_restriction_warning_box">
                 <h:outputText value="#{defaultMessage.forAdministratorOnlyRestrictionWarning}" />

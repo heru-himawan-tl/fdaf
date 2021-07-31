@@ -63,9 +63,16 @@ public class AccountEditorWebAppBean extends AbstractWebAppBean implements Seria
     
     @EJB(lookup = "java:global/__EJB_LOOKUP_DIR__/CommonConfigurationService")
     private CommonConfigurationInterface commonConfiguration;
+    
+    @Inject
+    private Controller controller;
 
     public AccountEditorWebAppBean() {
         // NO-OP
+    }
+    
+    protected Controller getController() {
+        return controller;
     }
     
     public void initAccountEditor(ComponentSystemEvent event) throws AbortProcessingException {

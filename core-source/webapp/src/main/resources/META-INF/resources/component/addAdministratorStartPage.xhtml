@@ -35,14 +35,13 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         xmlns:h="http://java.sun.com/jsf/html"
         xmlns:f="http://java.sun.com/jsf/core">
     <composite:interface>
-        <composite:attribute required="true" name="webAppBean" type="java.lang.Object" />
     </composite:interface>
     <composite:implementation>
-        <h:panelGroup rendered="#{(cc.attrs.webAppBean.administratorAccountExists eq false and cc.attrs.webAppBean.isServiceError eq false)}">
+        <h:panelGroup rendered="#{(controller.bean.administratorAccountExists eq false and controller.bean.isServiceError eq false)}">
             <h:panelGroup layout="block" styleClass="dialog_container">
                 <h:panelGroup layout="block" styleClass="dialog_box">
                     <h:panelGroup layout="block" styleClass="dialog_title_box">
-                        <h:outputText value="#{cc.attrs.webAppBean.applicationName} - #{fn:toUpperCase(label.addAdministrator)}" />
+                        <h:outputText value="#{controller.bean.applicationName} - #{fn:toUpperCase(label.addAdministrator)}" />
                     </h:panelGroup>
                     <h:panelGroup layout="block" styleClass="dialog_content_box">
                         <h:outputText value="#{defaultMessage.addAdministratorStartPagePredefinition}" />

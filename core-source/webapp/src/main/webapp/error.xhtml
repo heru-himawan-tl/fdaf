@@ -34,19 +34,20 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         xmlns:f="http://java.sun.com/jsf/core"
         xmlns:h="http://java.sun.com/jsf/html"
         xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions">
+    <d:controllerInit bean="#{errorPageWebAppBean}" />
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <d:customTitleTag webAppBean="#{expirationPageWebAppBean}" pageTitle="ERROR" />
+        <d:customTitleTag pageTitle="ERROR" />
         <h:outputStylesheet library="css" name="style.css"/>
         <h:outputScript library="js" name="function.js" />
         <d:customHeadTag />
     </h:head>
     <h:body>
-        <d:mainInit webAppBean="#{errorPageWebAppBean}" />
+        <d:mainInit />
         <d:loadBundles />
-        <d:pageContainer id="page" webAppBean="#{errorPageWebAppBean}" noFooter="true">
+        <d:pageContainer id="page" noFooter="true">
             <h:form id="form">
-                <d:customProgramHeading pageTitle="#{errorPageWebAppBean.applicationName} - #{fn:toUpperCase(label.errorPageTitle)}">
+                <d:customProgramHeading pageTitle="#{controller.bean.applicationName} - #{fn:toUpperCase(label.errorPageTitle)}">
                     <h:commandButton type="button" styleClass="grouped_button_left" value="#{label.buttonReload}" onclick="document.location.href='#{requestScope['fdaf.error.referer']}';" />
                     <h:commandButton type="button" styleClass="grouped_button_right" value="#{label.buttonClose}" onclick="document.location.href='index.jsf';" />
                 </d:customProgramHeading>
@@ -57,7 +58,7 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                     <pre><h:outputText value="#{requestScope['fdaf.error.stackTraces']}" /></pre>
                 </h:panelGroup>
             </h:form>
-            <d:customBottomBody webAppBean="#{errorPageWebAppBean}" />
+            <d:customBottomBody />
         </d:pageContainer>
     </h:body>
 </html>

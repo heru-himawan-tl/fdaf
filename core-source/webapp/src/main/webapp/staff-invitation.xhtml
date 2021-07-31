@@ -34,59 +34,60 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         xmlns:f="http://java.sun.com/jsf/core"
         xmlns:h="http://java.sun.com/jsf/html"
         xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions">
+    <d:controllerInit bean="#{staffInvitationWebAppBean}" />
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <title><h:outputText value="#{staffInvitationWebAppBean.applicationName} - #{fn:toUpperCase(label.staffInvitation)}" /></title>
+        <title><h:outputText value="#{controller.bean.applicationName} - #{fn:toUpperCase(label.staffInvitation)}" /></title>
         <h:outputStylesheet library="css" name="style.css"/>
         <d:customHeadTag />
     </h:head>
     <h:body>
         <h:form id="form">
-            <d:mainInit webAppBean="#{staffInvitationWebAppBean}" />
+            <d:mainInit />
             <d:loadBundles />
-            <d:databaseServiceCheck webAppBean="#{staffInvitationWebAppBean}" />
-            <d:setUserSessionRequirement webAppBean="#{staffInvitationWebAppBean}" rendered="#{staffInvitationWebAppBean.databaseIsError eq false}" />
-            <d:setForAdministratorOnly webAppBean="#{staffInvitationWebAppBean}" rendered="#{staffInvitationWebAppBean.databaseIsError eq false}" />
-            <d:userSessionWatch webAppBean="#{staffInvitationWebAppBean}" rendered="#{staffInvitationWebAppBean.databaseIsError eq false}" />
-            <d:administratorAccountCheck webAppBean="#{staffInvitationWebAppBean}" rendered="#{staffInvitationWebAppBean.databaseIsError eq false}" />
-            <d:addAdministratorStartPage webAppBean="#{staffInvitationWebAppBean}" rendered="#{staffInvitationWebAppBean.databaseIsError eq false}" />
-            <d:staffInvitationInit webAppBean="#{staffInvitationWebAppBean}" />
-            <d:customTopPanel webAppBean="#{staffInvitationWebAppBean}" />
+            <d:databaseServiceCheck />
+            <d:setUserSessionRequirement rendered="#{controller.bean.databaseIsError eq false}" />
+            <d:setForAdministratorOnly rendered="#{controller.bean.databaseIsError eq false}" />
+            <d:userSessionWatch rendered="#{controller.bean.databaseIsError eq false}" />
+            <d:administratorAccountCheck rendered="#{controller.bean.databaseIsError eq false}" />
+            <d:addAdministratorStartPage rendered="#{controller.bean.databaseIsError eq false}" />
+            <d:staffInvitationInit />
+            <d:customTopPanel />
             <h:panelGroup layout="block" styleClass="left_panel_back_overlay"></h:panelGroup>
             <h:panelGroup layout="block" styleClass="right_panel_back_overlay"></h:panelGroup>
             <h:panelGroup layout="block" styleClass="main_panel_back_overlay"></h:panelGroup>
             <h:panelGroup layout="block" styleClass="body_flexbox">
                 <d:leftPanel>
-                    <d:customLeftPanel webAppBean="#{staffInvitationWebAppBean}" />
+                    <d:customLeftPanel />
                 </d:leftPanel>
                 <d:mainPanel>
-                        <d:customRightTopPanel webAppBean="#{staffInvitationWebAppBean}" />
-                        <d:pageContainer id="page" webAppBean="#{staffInvitationWebAppBean}">
+                        <d:customRightTopPanel />
+                        <d:pageContainer id="page">
                             <d:customProgramHeading pageTitle="#{fn:toUpperCase(elabel.staffInvitation)}">
-                                <h:commandButton type="button" styleClass="grouped_button_left" value="#{label.buttonSend}" rendered="#{(staffInvitationWebAppBean.opMode ne 'UPDATE' and staffInvitationWebAppBean.isLoggedOn eq true
-                                and staffInvitationWebAppBean.userType ne 'STAFF' and staffInvitationWebAppBean.userType ne 'CLIENT')}">
-                                    <f:ajax event="click" execute="@form" render="@form" listener="#{staffInvitationWebAppBean.executeCreate}" />
+                                <h:commandButton type="button" styleClass="grouped_button_left" value="#{label.buttonSend}" rendered="#{(controller.bean.opMode ne 'UPDATE' and controller.bean.isLoggedOn eq true
+                                and controller.bean.userType ne 'STAFF' and controller.bean.userType ne 'CLIENT')}">
+                                    <f:ajax event="click" execute="@form" render="@form" listener="#{controller.bean.executeCreate}" />
                                 </h:commandButton>
                                 <h:commandButton type="button" styleClass="#{(
-                                    staffInvitationWebAppBean.userType eq 'CLIENT' or
-                                    staffInvitationWebAppBean.userType eq 'STAFF' or
-                                    staffInvitationWebAppBean.databaseIsError eq true or
-                                    staffInvitationWebAppBean.isLoggedOn eq false) ?
+                                    controller.bean.userType eq 'CLIENT' or
+                                    controller.bean.userType eq 'STAFF' or
+                                    controller.bean.databaseIsError eq true or
+                                    controller.bean.isLoggedOn eq false) ?
                                     'common_button' : 'grouped_button_right'}"
                                     onclick="document.location.href='adm.jsf'" value="#{label.buttonClose}" />
                             </d:customProgramHeading>
-                            <h:panelGroup layout="block" rendered="#{staffInvitationWebAppBean.isLoggedOn eq true}">
-                                <h:panelGroup layout="block" styleClass="field_container" rendered="#{(staffInvitationWebAppBean.opMode eq 'UPDATE')}">
+                            <h:panelGroup layout="block" rendered="#{controller.bean.isLoggedOn eq true}">
+                                <h:panelGroup layout="block" styleClass="field_container" rendered="#{(controller.bean.opMode eq 'UPDATE')}">
                                     <h:panelGroup layout="block" styleClass="field_container_inner">
-                                        <d:fieldRow rendered="#{(staffInvitationWebAppBean.mailerFailure eq false)}">
+                                        <d:fieldRow rendered="#{(controller.bean.mailerFailure eq false)}">
                                             <d:fieldColumn>
                                                 <d:informationBox>
-                                                    <h:outputText value="#{defaultMessage.staffInvitationSuccess}" rendered="#{(staffInvitationWebAppBean.mailerEnabled eq true)}" />
-                                                    <h:outputText value="#{defaultMessage.staffInvitationUnsent}" rendered="#{(staffInvitationWebAppBean.mailerEnabled eq false)}" />
+                                                    <h:outputText value="#{defaultMessage.staffInvitationSuccess}" rendered="#{(controller.bean.mailerEnabled eq true)}" />
+                                                    <h:outputText value="#{defaultMessage.staffInvitationUnsent}" rendered="#{(controller.bean.mailerEnabled eq false)}" />
                                                 </d:informationBox>
                                             </d:fieldColumn>
                                         </d:fieldRow>
-                                        <d:fieldRow rendered="#{(staffInvitationWebAppBean.mailerFailure eq true)}">
+                                        <d:fieldRow rendered="#{(controller.bean.mailerFailure eq true)}">
                                             <d:fieldColumn>
                                                 <d:informationBox content="#{defaultMessage.staffInvitationUnsentByMailerFailure}" />
                                             </d:fieldColumn>
@@ -100,11 +101,11 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                                         </d:fieldRow>
                                     </h:panelGroup>
                                 </h:panelGroup>
-                                <d:messages rendered="#{(staffInvitationWebAppBean.opMode ne 'UPDATE')}" />
+                                <d:messages rendered="#{(controller.bean.opMode ne 'UPDATE')}" />
                                 <h:panelGroup layout="block" styleClass="field_container" rendered="#{(
-                                        staffInvitationWebAppBean.opMode ne 'UPDATE' and
-                                        staffInvitationWebAppBean.userType ne 'STAFF' and
-                                        staffInvitationWebAppBean.userType ne 'CLIENT'
+                                        controller.bean.opMode ne 'UPDATE' and
+                                        controller.bean.userType ne 'STAFF' and
+                                        controller.bean.userType ne 'CLIENT'
                                     )}">
                                     <h:panelGroup layout="block" styleClass="field_container_inner">
                                         <d:fieldRow>
@@ -116,24 +117,24 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                                             <d:fieldColumn>
                                                 <d:fieldLabel for="email" value="#{elabel.email}" />
                                                 <d:fieldInputBox>
-                                                    <h:inputText id="email" value="#{staffInvitationWebAppBean.entity.email}">
-                                                        <f:validateBean disabled="#{staffInvitationWebAppBean.disableValidation}" />
+                                                    <h:inputText id="email" value="#{controller.bean.entity.email}">
+                                                        <f:validateBean disabled="#{controller.bean.disableValidation}" />
                                                     </h:inputText>
                                                 </d:fieldInputBox>
                                             </d:fieldColumn>
                                             <d:fieldColumn>
                                                 <d:fieldLabel for="signature" value="#{elabel.signature}" />
                                                 <d:fieldInputBox>
-                                                    <h:inputText id="signature" value="#{staffInvitationWebAppBean.entity.signature}">
-                                                        <f:validateBean disabled="#{staffInvitationWebAppBean.disableValidation}" />
+                                                    <h:inputText id="signature" value="#{controller.bean.entity.signature}">
+                                                        <f:validateBean disabled="#{controller.bean.disableValidation}" />
                                                     </h:inputText>
                                                 </d:fieldInputBox>
                                             </d:fieldColumn>
                                             <d:fieldColumn>
                                                 <d:fieldLabel for="signature" value="#{elabel.subject}" />
                                                 <d:fieldInputBox>
-                                                    <h:inputText id="signature" value="#{staffInvitationWebAppBean.entity.subject}">
-                                                        <f:validateBean disabled="#{staffInvitationWebAppBean.disableValidation}" />
+                                                    <h:inputText id="signature" value="#{controller.bean.entity.subject}">
+                                                        <f:validateBean disabled="#{controller.bean.disableValidation}" />
                                                     </h:inputText>
                                                 </d:fieldInputBox>
                                             </d:fieldColumn>
@@ -142,8 +143,8 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                                             <d:fieldColumn>
                                                 <d:fieldLabel for="description" value="#{elabel.message}" />
                                                 <d:fieldInputBox>
-                                                    <h:inputTextarea id="description" value="#{staffInvitationWebAppBean.entity.message}">
-                                                        <f:validateBean disabled="#{staffInvitationWebAppBean.disableValidation}" />
+                                                    <h:inputTextarea id="description" value="#{controller.bean.entity.message}">
+                                                        <f:validateBean disabled="#{controller.bean.disableValidation}" />
                                                     </h:inputTextarea>
                                                 </d:fieldInputBox>
                                             </d:fieldColumn>
@@ -151,17 +152,17 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                                     </h:panelGroup>
                                 </h:panelGroup>
                             </h:panelGroup>
-                            <d:altProgramRestrictionWarningBox rendered="#{(staffInvitationWebAppBean.userType eq 'CLIENT' or staffInvitationWebAppBean.userType eq 'STAFF' or staffInvitationWebAppBean.isLoggedOn eq false) and (staffInvitationWebAppBean.databaseIsError eq false)}" />
-                            <d:databaseErrorWarningBox webAppBean="#{staffInvitationWebAppBean}" />
-                            <d:mainPanelFooter webAppBean="#{staffInvitationWebAppBean}" />
+                            <d:altProgramRestrictionWarningBox rendered="#{(controller.bean.userType eq 'CLIENT' or controller.bean.userType eq 'STAFF' or controller.bean.isLoggedOn eq false) and (controller.bean.databaseIsError eq false)}" />
+                            <d:databaseErrorWarningBox />
+                            <d:mainPanelFooter />
                         </d:pageContainer>
                 </d:mainPanel>
                 <d:rightPanel>
-                    <d:customRightPanel webAppBean="#{staffInvitationWebAppBean}" />
+                    <d:customRightPanel />
                 </d:rightPanel>
             </h:panelGroup>
-            <d:customBottomForm webAppBean="#{staffInvitationWebAppBean}" />
+            <d:customBottomForm />
         </h:form>
-        <d:customBottomBody webAppBean="#{staffInvitationWebAppBean}" />
+        <d:customBottomBody />
     </h:body>
 </html>

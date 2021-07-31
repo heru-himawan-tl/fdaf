@@ -35,27 +35,27 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         xmlns:h="http://java.sun.com/jsf/html"
         xmlns:f="http://java.sun.com/jsf/core">
     <ui:composition>
-        <d:disallowAdd webAppBean="#{userWebAppBean}" />
-        <d:listContainer webAppBean="#{userWebAppBean}">
-            <d:listRowHead webAppBean="#{userWebAppBean}">
+        <d:disallowAdd />
+        <d:listContainer>
+            <d:listRowHead>
                 <d:listHeadMobileView value="#{label.contentsAndAction}" />
                 <d:listHead value="#{elabel.id}" />
                 <d:listHeadStrictWidth value="#{label.accountInformation}" />
             </d:listRowHead>
-            <ui:repeat value="#{userWebAppBean.resultList}" var="user">
-                <d:listRow webAppBean="#{userWebAppBean}" removePromptId="user" listObject="#{user}"
-                        removable="#{(userWebAppBean.userSessionManager.userId ne user.data.id)}"
+            <ui:repeat value="#{controller.bean.resultList}" var="user">
+                <d:listRow removePromptId="user" listObject="#{user}"
+                        removable="#{(controller.bean.userSessionManager.userId ne user.data.id)}"
                         editable="#{(
-                            userWebAppBean.userSessionManager.userId ne user.data.id
+                            controller.bean.userSessionManager.userId ne user.data.id
                             and
                             user.data.userType ne 'ADMINISTRATOR'
                         )}">
                     <d:listColumnMobileViewWithTool
-                        webAppBean="#{userWebAppBean}"
+                       
                         listObject="#{user}"
-                        removable="#{(userWebAppBean.userSessionManager.userId ne user.data.id)}"
+                        removable="#{(controller.bean.userSessionManager.userId ne user.data.id)}"
                         editable="#{(
-                            userWebAppBean.userSessionManager.userId ne user.data.id
+                            controller.bean.userSessionManager.userId ne user.data.id
                             and
                             user.data.userType ne 'ADMINISTRATOR'
                         )}">

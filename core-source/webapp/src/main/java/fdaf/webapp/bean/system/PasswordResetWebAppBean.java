@@ -76,9 +76,16 @@ public class PasswordResetWebAppBean extends AbstractWebAppBean implements Seria
     private boolean resetting;
     
     private boolean mailerFailure;
+    
+    @Inject
+    private Controller controller;
 
     public PasswordResetWebAppBean() {
         // NO-OP
+    }
+    
+    protected Controller getController() {
+        return controller;
     }
 
     protected AdministratorAccountCheckerInterface getAdministratorAccountChecker() {

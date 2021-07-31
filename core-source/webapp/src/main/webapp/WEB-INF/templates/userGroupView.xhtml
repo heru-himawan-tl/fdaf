@@ -35,10 +35,10 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         xmlns:f="http://java.sun.com/jsf/core"
         xmlns:d="http://java.sun.com/jsf/composite/component">
     <ui:composition>
-        <d:viewerContainer webAppBean="#{userGroupWebAppBean}" caption="#{elabel.userGroup.toLowerCase()} #{label.with} #{elabel.name.toLowerCase()}: #{userGroupWebAppBean.resultObject.data.name}">
-            <d:viewerTable webAppBean="#{userGroupWebAppBean}">
-                <d:viewerRowSet label="#{elabel.name}" value="#{userGroupWebAppBean.resultObject.data.name}" />
-                <d:viewerRowSet label="#{elabel.description}" value="#{userGroupWebAppBean.resultObject.data.description}" />
+        <d:viewerContainer caption="#{elabel.userGroup.toLowerCase()} #{label.with} #{elabel.name.toLowerCase()}: #{controller.bean.resultObject.data.name}">
+            <d:viewerTable>
+                <d:viewerRowSet label="#{elabel.name}" value="#{controller.bean.resultObject.data.name}" />
+                <d:viewerRowSet label="#{elabel.description}" value="#{controller.bean.resultObject.data.description}" />
             </d:viewerTable>
         </d:viewerContainer>
     </ui:composition>

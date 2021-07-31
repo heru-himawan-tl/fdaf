@@ -35,14 +35,14 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         xmlns:f="http://java.sun.com/jsf/core"
         xmlns:d="http://java.sun.com/jsf/composite/component">
     <ui:composition>
-        <d:viewerContainer webAppBean="#{userWebAppBean}" caption="#{elabel.user.toLowerCase()} #{label.with} #{elabel.userName.toLowerCase()}: #{userWebAppBean.resultObject.data.userName}">
-            <d:viewerTable webAppBean="#{userWebAppBean}">
-                <d:viewerRowSet label="#{elabel.userName}" value="#{userWebAppBean.resultObject.data.userName}" />
-                <d:viewerRowSet label="#{elabel.email}" value="#{userWebAppBean.resultObject.data.email}" />
-                <d:viewerRowSet label="#{elabel.realName} / #{elabel.fullName}" value="#{userWebAppBean.resultObject.data.employee.firstName}&nbsp;#{userWebAppBean.resultObject.data.employee.middleName}&nbsp;#{userWebAppBean.resultObject.data.employee.lastName}" />
-                <d:viewerRowSet label="#{elabel.employmentId}" value="#{userWebAppBean.resultObject.data.employee.employmentId}" />
-                <d:viewerRowSet label="#{elabel.department}" value="#{userWebAppBean.resultObject.data.employee.department.name}" />
-                <d:viewerRowSet label="#{elabel.role}" value="#{userWebAppBean.resultObject.data.employee.role.name}" />
+        <d:viewerContainer caption="#{elabel.user.toLowerCase()} #{label.with} #{elabel.userName.toLowerCase()}: #{controller.bean.resultObject.data.userName}">
+            <d:viewerTable>
+                <d:viewerRowSet label="#{elabel.userName}" value="#{controller.bean.resultObject.data.userName}" />
+                <d:viewerRowSet label="#{elabel.email}" value="#{controller.bean.resultObject.data.email}" />
+                <d:viewerRowSet label="#{elabel.realName} / #{elabel.fullName}" value="#{controller.bean.resultObject.data.employee.firstName}&nbsp;#{controller.bean.resultObject.data.employee.middleName}&nbsp;#{controller.bean.resultObject.data.employee.lastName}" />
+                <d:viewerRowSet label="#{elabel.employmentId}" value="#{controller.bean.resultObject.data.employee.employmentId}" />
+                <d:viewerRowSet label="#{elabel.department}" value="#{controller.bean.resultObject.data.employee.department.name}" />
+                <d:viewerRowSet label="#{elabel.role}" value="#{controller.bean.resultObject.data.employee.role.name}" />
             </d:viewerTable>
         </d:viewerContainer>
     </ui:composition>

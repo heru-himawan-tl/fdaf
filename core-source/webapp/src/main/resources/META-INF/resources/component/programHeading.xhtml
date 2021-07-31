@@ -37,7 +37,6 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     <composite:interface>
         <composite:attribute required="true" name="pageTitle" type="java.lang.String" />
         <composite:attribute required="false" name="simpleMode" type="java.lang.Boolean" default="false" />
-        <composite:attribute required="true" name="webAppBean" type="java.lang.Object" />
     </composite:interface>
     <composite:implementation>
         <h:panelGroup layout="block" styleClass="program_heading_container">
@@ -75,65 +74,65 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                         <h:panelGroup layout="block" styleClass="program_heading_mobile_action_tool_box" />
                     </h:panelGroup>
                     <h:panelGroup layout="block" styleClass="program_heading_button_box">
-                        <h:panelGroup layout="block" styleClass="program_heading_button_box_flex" rendered="#{(cc.attrs.webAppBean.isLoggedOn eq true and cc.attrs.webAppBean.isBrokenUserSession eq false)}">
-                            <h:commandButton type="button" styleClass="grouped_button_left" value="#{label.buttonAddNewRecord}" rendered="#{(cc.attrs.webAppBean.allowRender eq true and cc.attrs.webAppBean.opMode eq 'LISTING' and cc.attrs.webAppBean.dataListIsInError eq false and cc.attrs.webAppBean.allowAdd eq true)}">
-                                <f:ajax event="click" execute="@form" render="@form" listener="#{cc.attrs.webAppBean.prepareCreate}" />
+                        <h:panelGroup layout="block" styleClass="program_heading_button_box_flex" rendered="#{(controller.bean.isLoggedOn eq true and controller.bean.isBrokenUserSession eq false)}">
+                            <h:commandButton type="button" styleClass="grouped_button_left" value="#{label.buttonAddNewRecord}" rendered="#{(controller.bean.allowRender eq true and controller.bean.opMode eq 'LISTING' and controller.bean.dataListIsInError eq false and controller.bean.allowAdd eq true)}">
+                                <f:ajax event="click" execute="@form" render="@form" listener="#{controller.bean.prepareCreate}" />
                             </h:commandButton>
-                            <h:commandButton type="button" styleClass="#{(cc.attrs.webAppBean.allowAdd eq true) ? 'grouped_button_inner' : 'grouped_button_left'}" value="#{label.buttonMassiveRemove}" rendered="#{(cc.attrs.webAppBean.allowRender eq true and cc.attrs.webAppBean.opMode eq 'LISTING' and cc.attrs.webAppBean.totalRowCount ne 0 and cc.attrs.simpleMode eq false)}">
-                                <f:actionListener binding="#{cc.attrs.webAppBean.presetMassiveRemovalReadyState()}" />
+                            <h:commandButton type="button" styleClass="#{(controller.bean.allowAdd eq true) ? 'grouped_button_inner' : 'grouped_button_left'}" value="#{label.buttonMassiveRemove}" rendered="#{(controller.bean.allowRender eq true and controller.bean.opMode eq 'LISTING' and controller.bean.totalRowCount ne 0 and cc.attrs.simpleMode eq false)}">
+                                <f:actionListener binding="#{controller.bean.presetMassiveRemovalReadyState()}" />
                                 <f:ajax event="click" execute="@form" render="@form" />
                             </h:commandButton>
-                            <h:commandButton type="button" styleClass="grouped_button_left" immediate="true" value="#{label.buttonCloseViewer}" rendered="#{(cc.attrs.webAppBean.allowRender eq true and cc.attrs.webAppBean.opMode eq 'VIEW')}">
-                                <f:actionListener binding="#{cc.attrs.webAppBean.exitView()}" />
+                            <h:commandButton type="button" styleClass="grouped_button_left" immediate="true" value="#{label.buttonCloseViewer}" rendered="#{(controller.bean.allowRender eq true and controller.bean.opMode eq 'VIEW')}">
+                                <f:actionListener binding="#{controller.bean.exitView()}" />
                                 <f:ajax event="click" execute="@form" render="@form" />
                             </h:commandButton>
-                            <h:commandButton type="button" styleClass="grouped_button_left" value="#{label.buttonSaveUpdate}" rendered="#{(cc.attrs.webAppBean.allowRender eq true and cc.attrs.webAppBean.opMode eq 'UPDATE')}">
-                                <f:ajax event="click" execute="@form" render="@form" listener="#{cc.attrs.webAppBean.executeUpdate}" />
+                            <h:commandButton type="button" styleClass="grouped_button_left" value="#{label.buttonSaveUpdate}" rendered="#{(controller.bean.allowRender eq true and controller.bean.opMode eq 'UPDATE')}">
+                                <f:ajax event="click" execute="@form" render="@form" listener="#{controller.bean.executeUpdate}" />
                             </h:commandButton>
-                            <h:commandButton type="button" styleClass="grouped_button_inner" value="#{label.buttonSaveClose}" rendered="#{(cc.attrs.webAppBean.allowRender eq true and cc.attrs.webAppBean.opMode eq 'UPDATE')}">
-                                <f:ajax event="click" execute="@form" render="@form" listener="#{cc.attrs.webAppBean.executeUpdateAlt}" />
+                            <h:commandButton type="button" styleClass="grouped_button_inner" value="#{label.buttonSaveClose}" rendered="#{(controller.bean.allowRender eq true and controller.bean.opMode eq 'UPDATE')}">
+                                <f:ajax event="click" execute="@form" render="@form" listener="#{controller.bean.executeUpdateAlt}" />
                             </h:commandButton>
-                            <h:commandButton type="button" styleClass="grouped_button_left" value="#{label.buttonSaveCreate}" rendered="#{(cc.attrs.webAppBean.allowRender eq true and cc.attrs.webAppBean.allowRender eq true and cc.attrs.webAppBean.opMode eq 'CREATE')}">
-                                <f:ajax event="click" execute="@form" render="@form" listener="#{cc.attrs.webAppBean.executeCreate}" />
+                            <h:commandButton type="button" styleClass="grouped_button_left" value="#{label.buttonSaveCreate}" rendered="#{(controller.bean.allowRender eq true and controller.bean.allowRender eq true and controller.bean.opMode eq 'CREATE')}">
+                                <f:ajax event="click" execute="@form" render="@form" listener="#{controller.bean.executeCreate}" />
                             </h:commandButton>
-                            <h:commandButton type="button" styleClass="grouped_button_inner" value="#{label.buttonSaveClose}" rendered="#{(cc.attrs.webAppBean.allowRender eq true and cc.attrs.webAppBean.opMode eq 'CREATE')}">
-                                <f:ajax event="click" execute="@form" render="@form" listener="#{cc.attrs.webAppBean.executeCreateAlt}" />
+                            <h:commandButton type="button" styleClass="grouped_button_inner" value="#{label.buttonSaveClose}" rendered="#{(controller.bean.allowRender eq true and controller.bean.opMode eq 'CREATE')}">
+                                <f:ajax event="click" execute="@form" render="@form" listener="#{controller.bean.executeCreateAlt}" />
                             </h:commandButton>
-                            <h:commandButton type="button" styleClass="#{(cc.attrs.simpleMode eq false) ? 'grouped_button_inner' : 'grouped_button_right'}" immediate="true" value="#{label.buttonCloseEditor}" rendered="#{(cc.attrs.webAppBean.allowRender eq true and (cc.attrs.webAppBean.opMode eq 'CREATE' or cc.attrs.webAppBean.opMode eq 'UPDATE'))}">
-                                <f:actionListener binding="#{cc.attrs.webAppBean.setOpMode(opMode.LISTING)}" />
-                                <f:actionListener binding="#{cc.attrs.webAppBean.setDisableValidation(true)}" />
-                                <f:ajax event="click" execute="@form" render="@form" />
-                            </h:commandButton>
-                            <h:commandButton type="button" styleClass="list_update_button" style="display:none;" immediate="true" value=""
-                                rendered="#{(cc.attrs.webAppBean.allowRender eq true and cc.attrs.webAppBean.opMode eq 'VIEW')}">
-                                <f:actionListener binding="#{cc.attrs.webAppBean.view(cc.attrs.webAppBean.currentViewDataId)}" />
+                            <h:commandButton type="button" styleClass="#{(cc.attrs.simpleMode eq false) ? 'grouped_button_inner' : 'grouped_button_right'}" immediate="true" value="#{label.buttonCloseEditor}" rendered="#{(controller.bean.allowRender eq true and (controller.bean.opMode eq 'CREATE' or controller.bean.opMode eq 'UPDATE'))}">
+                                <f:actionListener binding="#{controller.bean.setOpMode(opMode.LISTING)}" />
+                                <f:actionListener binding="#{controller.bean.setDisableValidation(true)}" />
                                 <f:ajax event="click" execute="@form" render="@form" />
                             </h:commandButton>
                             <h:commandButton type="button" styleClass="list_update_button" style="display:none;" immediate="true" value=""
-                                rendered="#{(cc.attrs.webAppBean.allowRender eq true and cc.attrs.webAppBean.opMode eq 'LISTING')}">
+                                rendered="#{(controller.bean.allowRender eq true and controller.bean.opMode eq 'VIEW')}">
+                                <f:actionListener binding="#{controller.bean.view(controller.bean.currentViewDataId)}" />
                                 <f:ajax event="click" execute="@form" render="@form" />
                             </h:commandButton>
-                            <h:commandButton type="button" styleClass="grouped_button_inner" immediate="true" value="#{label.listExitSearch}" rendered="#{(cc.attrs.webAppBean.allowRender eq true and cc.attrs.webAppBean.allowRender eq true and cc.attrs.webAppBean.opMode eq 'LISTING' and cc.attrs.webAppBean.searchMode eq true and cc.attrs.simpleMode eq false)}">
-                                <f:ajax listener="#{cc.attrs.webAppBean.exitSearch}" event="click" execute="@form" render="@form" />
+                            <h:commandButton type="button" styleClass="list_update_button" style="display:none;" immediate="true" value=""
+                                rendered="#{(controller.bean.allowRender eq true and controller.bean.opMode eq 'LISTING')}">
+                                <f:ajax event="click" execute="@form" render="@form" />
                             </h:commandButton>
-                            <h:commandButton type="button" styleClass="#{(cc.attrs.webAppBean.allowAdd eq true and cc.attrs.webAppBean.opMode eq 'LISTING') ? 'grouped_button_inner' : ((cc.attrs.webAppBean.totalRowCount eq 0) ? 'grouped_button_left' : 'grouped_button_inner')}" immediate="true" value="#{label.buttonCheckOrphanData}" rendered="#{(cc.attrs.webAppBean.allowRender eq true and cc.attrs.webAppBean.inCheckOrphanDataMode eq false and cc.attrs.webAppBean.userType eq 'ADMINISTRATOR' and cc.attrs.webAppBean.opMode eq 'LISTING' and cc.attrs.simpleMode eq false)}">
-                                <f:ajax event="click" execute="@form" render="@form" listener="#{cc.attrs.webAppBean.setCheckOrphanDataMode}" />
+                            <h:commandButton type="button" styleClass="grouped_button_inner" immediate="true" value="#{label.listExitSearch}" rendered="#{(controller.bean.allowRender eq true and controller.bean.allowRender eq true and controller.bean.opMode eq 'LISTING' and controller.bean.searchMode eq true and cc.attrs.simpleMode eq false)}">
+                                <f:ajax listener="#{controller.bean.exitSearch}" event="click" execute="@form" render="@form" />
                             </h:commandButton>
-                            <h:commandButton type="button" styleClass="#{(cc.attrs.webAppBean.allowAdd eq true and cc.attrs.webAppBean.opMode eq 'LISTING') ? 'grouped_button_inner' : ((cc.attrs.webAppBean.totalRowCount eq 0) ? 'grouped_button_left' : 'grouped_button_inner')}" immediate="true" value="#{label.buttonExitCheckOrphanData}" rendered="#{(cc.attrs.webAppBean.allowRender eq true and cc.attrs.webAppBean.inCheckOrphanDataMode eq true and cc.attrs.webAppBean.userType eq 'ADMINISTRATOR' and cc.attrs.webAppBean.opMode eq 'LISTING' and cc.attrs.simpleMode eq false)}">
-                                <f:ajax event="click" execute="@form" render="@form" listener="#{cc.attrs.webAppBean.unsetCheckOrphanDataMode}" />
+                            <h:commandButton type="button" styleClass="#{(controller.bean.allowAdd eq true and controller.bean.opMode eq 'LISTING') ? 'grouped_button_inner' : ((controller.bean.totalRowCount eq 0) ? 'grouped_button_left' : 'grouped_button_inner')}" immediate="true" value="#{label.buttonCheckOrphanData}" rendered="#{(controller.bean.allowRender eq true and controller.bean.inCheckOrphanDataMode eq false and controller.bean.userType eq 'ADMINISTRATOR' and controller.bean.opMode eq 'LISTING' and cc.attrs.simpleMode eq false)}">
+                                <f:ajax event="click" execute="@form" render="@form" listener="#{controller.bean.setCheckOrphanDataMode}" />
                             </h:commandButton>
-                            <h:commandButton type="button" styleClass="#{(cc.attrs.webAppBean.dataListIsInError eq true) ? ((cc.attrs.webAppBean.searchMode eq true and cc.attrs.webAppBean.allowRender eq true) ? 'grouped_button_right' : 'common_button') : ((cc.attrs.webAppBean.allowRender eq true) ? 'grouped_button_right' : 'common_button')}"
+                            <h:commandButton type="button" styleClass="#{(controller.bean.allowAdd eq true and controller.bean.opMode eq 'LISTING') ? 'grouped_button_inner' : ((controller.bean.totalRowCount eq 0) ? 'grouped_button_left' : 'grouped_button_inner')}" immediate="true" value="#{label.buttonExitCheckOrphanData}" rendered="#{(controller.bean.allowRender eq true and controller.bean.inCheckOrphanDataMode eq true and controller.bean.userType eq 'ADMINISTRATOR' and controller.bean.opMode eq 'LISTING' and cc.attrs.simpleMode eq false)}">
+                                <f:ajax event="click" execute="@form" render="@form" listener="#{controller.bean.unsetCheckOrphanDataMode}" />
+                            </h:commandButton>
+                            <h:commandButton type="button" styleClass="#{(controller.bean.dataListIsInError eq true) ? ((controller.bean.searchMode eq true and controller.bean.allowRender eq true) ? 'grouped_button_right' : 'common_button') : ((controller.bean.allowRender eq true) ? 'grouped_button_right' : 'common_button')}"
                                 immediate="true" value="#{label.buttonClose}" onclick="document.location.href='adm.jsf';"
                                 rendered="#{(cc.attrs.simpleMode eq false)}"/>
                         </h:panelGroup>
-                        <h:panelGroup layout="block" styleClass="program_heading_button_box_flex" rendered="#{((cc.attrs.webAppBean.isLoggedOn eq false or cc.attrs.webAppBean.isBrokenUserSession eq true) and cc.attrs.simpleMode eq true)}">
+                        <h:panelGroup layout="block" styleClass="program_heading_button_box_flex" rendered="#{((controller.bean.isLoggedOn eq false or controller.bean.isBrokenUserSession eq true) and cc.attrs.simpleMode eq true)}">
                             <h:commandButton type="button" styleClass="common_button" value="#{label.buttonClose}" immediate="true">
-                                <f:actionListener binding="#{cc.attrs.webAppBean.setOpMode(opMode.LISTING)}" />
-                                <f:actionListener binding="#{cc.attrs.webAppBean.setDisableValidation(true)}" />
+                                <f:actionListener binding="#{controller.bean.setOpMode(opMode.LISTING)}" />
+                                <f:actionListener binding="#{controller.bean.setDisableValidation(true)}" />
                                 <f:ajax event="click" execute="@form" render="@form" />
                             </h:commandButton>
                         </h:panelGroup>
-                        <h:panelGroup layout="block" styleClass="program_heading_button_box_flex" rendered="#{((cc.attrs.webAppBean.isLoggedOn eq false or cc.attrs.webAppBean.isBrokenUserSession eq true) and cc.attrs.simpleMode eq false)}">
+                        <h:panelGroup layout="block" styleClass="program_heading_button_box_flex" rendered="#{((controller.bean.isLoggedOn eq false or controller.bean.isBrokenUserSession eq true) and cc.attrs.simpleMode eq false)}">
                             <h:commandButton type="button" styleClass="common_button" onclick="document.location.href='adm.jsf';" value="#{label.buttonClose}" />
                         </h:panelGroup>
                     </h:panelGroup>

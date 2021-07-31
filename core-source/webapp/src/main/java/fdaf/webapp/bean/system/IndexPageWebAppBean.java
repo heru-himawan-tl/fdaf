@@ -37,13 +37,13 @@ import fdaf.base.UserType;
 import fdaf.webapp.base.AbstractBaseWebAppBean;
 import java.io.Serializable;
 import javax.ejb.EJB;
-import javax.enterprise.context.SessionScoped;
+import javax.faces.view.ViewScoped;
 import javax.faces.event.AbortProcessingException;
 import javax.faces.event.ComponentSystemEvent;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-@SessionScoped
+@ViewScoped
 @Named
 public class IndexPageWebAppBean extends AbstractBaseWebAppBean implements Serializable {
 
@@ -60,9 +60,16 @@ public class IndexPageWebAppBean extends AbstractBaseWebAppBean implements Seria
     
     @EJB(lookup = "java:global/__EJB_LOOKUP_DIR__/DatabaseServiceCheckerFacade")
     private DatabaseServiceCheckerInterface dbServiceChecker;
+    
+    @Inject
+    private Controller controller;
 
     public IndexPageWebAppBean() {
         // NO-OP
+    }
+    
+    protected Controller getController() {
+        return controller;
     }
     
     public void initIndexPage(ComponentSystemEvent event) throws AbortProcessingException {

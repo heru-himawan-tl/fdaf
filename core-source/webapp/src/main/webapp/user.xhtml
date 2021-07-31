@@ -30,7 +30,8 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 -->
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:d="http://java.sun.com/jsf/composite/component">
-    <d:setUserSessionRequirement webAppBean="#{userWebAppBean}" />
-    <d:setForAdministratorOnly webAppBean="#{userWebAppBean}" />
-    <d:commonPage webAppBean="#{userWebAppBean}" pagePrefix="user" pageTitle="#{elabel.user}" id="user" />
+    <d:controllerInit bean="#{userWebAppBean}" />
+    <d:setUserSessionRequirement />
+    <d:setForAdministratorOnly />
+    <d:commonPage pagePrefix="user" pageTitle="#{elabel.user}" id="user" />
 </html>

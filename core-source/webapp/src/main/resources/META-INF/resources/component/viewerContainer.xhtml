@@ -35,11 +35,10 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         xmlns:f="http://java.sun.com/jsf/core"
         xmlns:h="http://java.sun.com/jsf/html">
     <composite:interface>
-        <composite:attribute required="true" name="webAppBean" type="java.lang.Object" />
         <composite:attribute required="true" name="caption" type="java.lang.String" />
     </composite:interface>
     <composite:implementation>
-        <h:panelGroup layout="block" styleClass="viewer_container" rendered="#{(cc.attrs.webAppBean.opMode eq 'VIEW')}">
+        <h:panelGroup layout="block" styleClass="viewer_container" rendered="#{(controller.bean.opMode eq 'VIEW')}">
             <h:panelGroup layout="block" styleClass="viewer_container_inner">
                 <h:panelGroup layout="block" styleClass="viewer_caption_box">
                     <h:outputText value="#{label.detailViewOf} " />
@@ -53,13 +52,13 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                         <h:outputText value="#{label.dataPropertiesOf} " />
                         <h:outputText value="#{cc.attrs.caption}" />
                     </h:panelGroup>
-                    <d:viewerTable webAppBean="#{cc.attrs.webAppBean}">
-                        <d:viewerRowSet label="#{label.createdBy}" value="#{cc.attrs.webAppBean.resultObject.authorName}" />
-                        <d:viewerRowSet label="#{label.modifiedBy}" value="#{cc.attrs.webAppBean.resultObject.modifierName}" />
-                        <d:viewerRowSet label="#{elabel.createdDate}" value="#{cc.attrs.webAppBean.resultObject.createdDate}" />
-                        <d:viewerRowSet label="#{elabel.modificationDate}" value="#{cc.attrs.webAppBean.resultObject.modificationDate}" />
-                        <d:viewerRowSet label="#{label.editable}" value="#{(cc.attrs.webAppBean.resultObject.editable eq true) ? label.yes : label.no}" />
-                        <d:viewerRowSet label="#{label.removable}" value="#{(cc.attrs.webAppBean.resultObject.removable eq true) ? label.yes : label.no}" />
+                    <d:viewerTable>
+                        <d:viewerRowSet label="#{label.createdBy}" value="#{controller.bean.resultObject.authorName}" />
+                        <d:viewerRowSet label="#{label.modifiedBy}" value="#{controller.bean.resultObject.modifierName}" />
+                        <d:viewerRowSet label="#{elabel.createdDate}" value="#{controller.bean.resultObject.createdDate}" />
+                        <d:viewerRowSet label="#{elabel.modificationDate}" value="#{controller.bean.resultObject.modificationDate}" />
+                        <d:viewerRowSet label="#{label.editable}" value="#{(controller.bean.resultObject.editable eq true) ? label.yes : label.no}" />
+                        <d:viewerRowSet label="#{label.removable}" value="#{(controller.bean.resultObject.removable eq true) ? label.yes : label.no}" />
                     </d:viewerTable>
                 </h:panelGroup>
             </h:panelGroup>

@@ -35,38 +35,39 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         xmlns:h="http://java.sun.com/jsf/html"
         xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions"
         xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+    <d:controllerInit bean="#{mailerConfigurationWebAppBean}" />
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <title><h:outputText value="#{mailerConfigurationWebAppBean.applicationName} - #{fn:toUpperCase(label.mailerConfiguration)}" /></title>
+        <title><h:outputText value="#{controller.bean.applicationName} - #{fn:toUpperCase(label.mailerConfiguration)}" /></title>
         <h:outputStylesheet library="css" name="style.css"/>
         <d:customHeadTag />
     </h:head>
     <h:body>
         <h:form id="form">
-            <d:mainInit webAppBean="#{mailerConfigurationWebAppBean}" />
+            <d:mainInit />
             <d:loadBundles />
-            <d:databaseServiceCheck webAppBean="#{mailerConfigurationWebAppBean}" />
-            <d:administratorAccountCheck webAppBean="#{mailerConfigurationWebAppBean}" />
-            <d:mailerConfigurationInit webAppBean="#{mailerConfigurationWebAppBean}" />
-            <d:userSessionWatch webAppBean="#{mailerConfigurationWebAppBean}" rendered="#{(mailerConfigurationWebAppBean.administratorAccountExists eq true)}" />
-            <d:customTopPanel webAppBean="#{mailerConfigurationWebAppBean}" />
+            <d:databaseServiceCheck />
+            <d:administratorAccountCheck />
+            <d:mailerConfigurationInit />
+            <d:userSessionWatch rendered="#{(controller.bean.administratorAccountExists eq true)}" />
+            <d:customTopPanel />
             <h:panelGroup layout="block" styleClass="left_panel_back_overlay"></h:panelGroup>
             <h:panelGroup layout="block" styleClass="right_panel_back_overlay"></h:panelGroup>
             <h:panelGroup layout="block" styleClass="main_panel_back_overlay"></h:panelGroup>
             <h:panelGroup layout="block" styleClass="body_flexbox">
                 <d:leftPanel>
-                    <d:customLeftPanel webAppBean="#{mailerConfigurationWebAppBean}" />
+                    <d:customLeftPanel />
                 </d:leftPanel>
                 <d:mainPanel>
-                        <d:pageContainer id="page" webAppBean="#{mailerConfigurationWebAppBean}">
+                        <d:pageContainer id="page">
                             <d:customProgramHeading pageTitle="#{fn:toUpperCase(label.mailerConfiguration)}">
-                                <h:commandButton type="button" styleClass="grouped_button_left" value="#{label.buttonSaveCreate}" rendered="#{(mailerConfigurationWebAppBean.inSaving eq false and mailerConfigurationWebAppBean.userType ne 'STAFF' and mailerConfigurationWebAppBean.userType ne 'CLIENT')}">
-                                    <f:ajax event="click" execute="@form" render="@form" listener="#{mailerConfigurationWebAppBean.save}" />
+                                <h:commandButton type="button" styleClass="grouped_button_left" value="#{label.buttonSaveCreate}" rendered="#{(controller.bean.inSaving eq false and controller.bean.userType ne 'STAFF' and controller.bean.userType ne 'CLIENT')}">
+                                    <f:ajax event="click" execute="@form" render="@form" listener="#{controller.bean.save}" />
                                 </h:commandButton>
-                                <h:commandButton type="button" styleClass="#{(mailerConfigurationWebAppBean.userType eq 'CLIENT' or mailerConfigurationWebAppBean.userType eq 'STAFF') ? 'common_button' : 'grouped_button_right'}" onclick="document.location.href='adm.jsf'" value="#{label.buttonClose}" rendered="#{(mailerConfigurationWebAppBean.inSaving eq false)}" />
-                                <h:commandButton type="button" styleClass="common_button" value="#{label.buttonClose}" onclick="document.location.href='adm.jsf';" rendered="#{(mailerConfigurationWebAppBean.inSaving eq true)}" />
+                                <h:commandButton type="button" styleClass="#{(controller.bean.userType eq 'CLIENT' or controller.bean.userType eq 'STAFF') ? 'common_button' : 'grouped_button_right'}" onclick="document.location.href='adm.jsf'" value="#{label.buttonClose}" rendered="#{(controller.bean.inSaving eq false)}" />
+                                <h:commandButton type="button" styleClass="common_button" value="#{label.buttonClose}" onclick="document.location.href='adm.jsf';" rendered="#{(controller.bean.inSaving eq true)}" />
                             </d:customProgramHeading>
-                            <h:panelGroup layout="block" styleClass="field_container" rendered="#{(mailerConfigurationWebAppBean.inSaving eq true)}">
+                            <h:panelGroup layout="block" styleClass="field_container" rendered="#{(controller.bean.inSaving eq true)}">
                                 <h:panelGroup layout="block" styleClass="field_container_inner">
                                     <d:fieldRow>
                                         <d:fieldColumn>
@@ -75,30 +76,30 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                                     </d:fieldRow>
                                 </h:panelGroup>
                             </h:panelGroup>
-                            <d:messages rendered="#{(mailerConfigurationWebAppBean.inSaving eq false)}" />
+                            <d:messages rendered="#{(controller.bean.inSaving eq false)}" />
                             <h:panelGroup layout="block" styleClass="field_container" rendered="#{(
-                                    mailerConfigurationWebAppBean.inSaving eq false and
-                                    mailerConfigurationWebAppBean.userType ne 'STAFF' and
-                                    mailerConfigurationWebAppBean.userType ne 'CLIENT'
+                                    controller.bean.inSaving eq false and
+                                    controller.bean.userType ne 'STAFF' and
+                                    controller.bean.userType ne 'CLIENT'
                                 )}">
                                 <h:panelGroup layout="block" styleClass="field_container_inner">
                                     <d:fieldRow>
                                         <d:fieldColumn>
                                             <d:fieldLabel for="domain" value="#{label.domain}" />
                                             <d:fieldInputBox>
-                                                <h:inputText id="domain" value="#{mailerConfigurationWebAppBean.domain}" />
+                                                <h:inputText id="domain" value="#{controller.bean.domain}" />
                                             </d:fieldInputBox>
                                         </d:fieldColumn>
                                         <d:fieldColumn>
                                             <d:fieldLabel for="host" value="#{label.host}" />
                                             <d:fieldInputBox>
-                                                <h:inputText id="host" value="#{mailerConfigurationWebAppBean.host}" />
+                                                <h:inputText id="host" value="#{controller.bean.host}" />
                                             </d:fieldInputBox>
                                         </d:fieldColumn>
                                         <d:fieldColumn>
                                             <d:fieldLabel for="port" value="#{label.port}" />
                                             <d:fieldInputBox>
-                                                <h:inputText id="port" value="#{mailerConfigurationWebAppBean.port}" a:type="number" a:min="0" a:max="65535" />
+                                                <h:inputText id="port" value="#{controller.bean.port}" a:type="number" a:min="0" a:max="65535" />
                                             </d:fieldInputBox>
                                         </d:fieldColumn>
                                     </d:fieldRow>
@@ -106,20 +107,20 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                                         <d:fieldColumn>
                                             <d:fieldLabel for="user" value="#{label.user}" />
                                             <d:fieldInputBox>
-                                                <h:inputText id="user" value="#{mailerConfigurationWebAppBean.user}" />
+                                                <h:inputText id="user" value="#{controller.bean.user}" />
                                             </d:fieldInputBox>
                                         </d:fieldColumn>
                                         <d:fieldColumn>
                                             <d:fieldLabel for="pass" value="#{label.password}" />
                                             <d:fieldInputBox>
-                                                <h:inputSecret id="pass" value="#{mailerConfigurationWebAppBean.pass}" />
+                                                <h:inputSecret id="pass" value="#{controller.bean.pass}" />
                                             </d:fieldInputBox>
                                         </d:fieldColumn>
                                     </d:fieldRow>
                                     <d:fieldRow>
                                         <d:fieldColumn>
                                             <d:fieldInputCheckbox>
-                                                <h:selectBooleanCheckbox value="#{mailerConfigurationWebAppBean.auth}" id="auth" />
+                                                <h:selectBooleanCheckbox value="#{controller.bean.auth}" id="auth" />
                                             </d:fieldInputCheckbox>
                                             <d:fieldInputCheckboxLabel>
                                                 <h:outputText value="#{label.applyAuthentication}" />
@@ -127,7 +128,7 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                                         </d:fieldColumn>
                                         <d:fieldColumn>
                                             <d:fieldInputCheckbox>
-                                                <h:selectBooleanCheckbox value="#{mailerConfigurationWebAppBean.starttls}" id="starttls" />
+                                                <h:selectBooleanCheckbox value="#{controller.bean.starttls}" id="starttls" />
                                             </d:fieldInputCheckbox>
                                             <d:fieldInputCheckboxLabel>
                                                 <h:outputText value="#{label.applySTARTTLS}" />
@@ -135,27 +136,27 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                                         </d:fieldColumn>
                                         <d:fieldColumn>
                                             <d:fieldInputCheckbox>
-                                                <h:selectBooleanCheckbox value="#{mailerConfigurationWebAppBean.useSSL}" id="useSSL" />
+                                                <h:selectBooleanCheckbox value="#{controller.bean.useSSL}" id="useSSL" />
                                             </d:fieldInputCheckbox>
                                             <d:fieldInputCheckboxLabel>
                                                 <h:outputText value="#{label.useSSL}" />
                                             </d:fieldInputCheckboxLabel>
                                         </d:fieldColumn>
                                     </d:fieldRow>
-                                    <d:fieldRow rendered="#{mailerConfigurationWebAppBean.isLoggedOn eq false}">
+                                    <d:fieldRow rendered="#{controller.bean.isLoggedOn eq false}">
                                         <d:fieldColumn>
                                             <d:informationBox>
                                                 <h:outputText value="#{defaultMessage.mailerConfigurationUnlockPasswordPredefinition} " />
                                                 <br />
-                                                <h:outputText value="#{mailerConfigurationWebAppBean.getMasterPasswordFileAddr()}" />
+                                                <h:outputText value="#{controller.bean.getMasterPasswordFileAddr()}" />
                                             </d:informationBox>
                                         </d:fieldColumn>
                                     </d:fieldRow>
-                                    <d:fieldRow rendered="#{mailerConfigurationWebAppBean.isLoggedOn eq false}">
+                                    <d:fieldRow rendered="#{controller.bean.isLoggedOn eq false}">
                                         <d:fieldColumn>
                                             <d:fieldLabel for="unlockPassword" value="#{label.masterPassword}" />
                                             <d:fieldInputBox>
-                                                <h:inputSecret id="unlockPassword" value="#{mailerConfigurationWebAppBean.unlockPassword}">
+                                                <h:inputSecret id="unlockPassword" value="#{controller.bean.unlockPassword}">
                                                     <f:validateBean disabled="#{true}" />
                                                 </h:inputSecret>
                                             </d:fieldInputBox>
@@ -163,16 +164,16 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                                     </d:fieldRow>
                                 </h:panelGroup>
                             </h:panelGroup>
-                            <d:altProgramRestrictionWarningBox rendered="#{(mailerConfigurationWebAppBean.userType eq 'CLIENT' or mailerConfigurationWebAppBean.userType eq 'STAFF') and mailerConfigurationWebAppBean.databaseIsError eq false}" />
-                            <d:mainPanelFooter webAppBean="#{mailerConfigurationWebAppBean}" />
+                            <d:altProgramRestrictionWarningBox rendered="#{(controller.bean.userType eq 'CLIENT' or controller.bean.userType eq 'STAFF') and controller.bean.databaseIsError eq false}" />
+                            <d:mainPanelFooter />
                         </d:pageContainer>
                 </d:mainPanel>
                 <d:rightPanel>
-                    <d:customRightPanel webAppBean="#{mailerConfigurationWebAppBean}" />
+                    <d:customRightPanel />
                 </d:rightPanel>
             </h:panelGroup>
-            <d:customBottomForm webAppBean="#{mailerConfigurationWebAppBean}" />
+            <d:customBottomForm />
         </h:form>
-        <d:customBottomBody webAppBean="#{mailerConfigurationWebAppBean}" />
+        <d:customBottomBody />
     </h:body>
 </html>

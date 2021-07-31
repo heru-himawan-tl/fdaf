@@ -37,11 +37,10 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         <composite:attribute required="false" name="addStyleClass" type="java.lang.String" />
         <composite:attribute required="true" name="itemId" type="java.lang.Object" />
         <composite:attribute required="false" name="readonly" type="java.lang.Boolean" default="false" />
-        <composite:attribute required="true" name="webAppBean" type="java.lang.Object" />
     </composite:interface>
     <composite:implementation>
         <h:panelGroup layout="block" styleClass="list_column_check_box #{cc.attrs.addStyleClass}">
-            <h:selectManyCheckbox rendered="#{(cc.attrs.readonly eq false)}" value="#{cc.attrs.webAppBean.primaryKeys}" styleClass="checkbox" collectionType="java.util.ArrayList">
+            <h:selectManyCheckbox rendered="#{(cc.attrs.readonly eq false)}" value="#{controller.bean.primaryKeys}" styleClass="checkbox" collectionType="java.util.ArrayList">
                 <f:selectItem itemValue="#{cc.attrs.itemId}" itemLabel="" />
             </h:selectManyCheckbox>
             <h:selectManyCheckbox disabled="#{true}" rendered="#{(cc.attrs.readonly eq true)}" readonly="#{true}" styleClass="checkbox">

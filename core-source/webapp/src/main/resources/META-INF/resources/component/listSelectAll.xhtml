@@ -36,12 +36,11 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     <composite:interface>
         <composite:attribute required="false" name="addStyleClass" type="java.lang.String" />
         <composite:attribute required="false" name="id" type="java.lang.String" />
-        <composite:attribute required="true" name="webAppBean" type="java.lang.Object" />
     </composite:interface>
     <composite:implementation>
         <h:panelGroup layout="block" styleClass="list_column_check_box_head #{cc.attrs.addStyleClass}">
-            <h:selectBooleanCheckbox value="#{cc.attrs.webAppBean.selectAllFlag}" styleClass="checkbox" id="#{cc.attrs.id}" disabled="#{(cc.attrs.webAppBean.isServiceError eq true)}">
-                <f:ajax execute="@form" render="@form" event="change" listener="#{cc.attrs.webAppBean.selectAll}" />
+            <h:selectBooleanCheckbox value="#{controller.bean.selectAllFlag}" styleClass="checkbox" id="#{cc.attrs.id}" disabled="#{(controller.bean.isServiceError eq true)}">
+                <f:ajax execute="@form" render="@form" event="change" listener="#{controller.bean.selectAll}" />
             </h:selectBooleanCheckbox>
         </h:panelGroup>
     </composite:implementation>

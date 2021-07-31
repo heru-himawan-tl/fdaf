@@ -30,32 +30,12 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 -->
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-        xmlns:d="http://java.sun.com/jsf/composite/component"
-        xmlns:ui="http://java.sun.com/jsf/facelets"
-        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:composite="http://java.sun.com/jsf/composite"
         xmlns:f="http://java.sun.com/jsf/core">
-    <ui:composition>
-        <d:listContainer>
-            <d:listRowHead>
-                <d:listHeadMobileView value="#{label.contentsAndAction}" />
-                <d:listHead value="#{elabel.id}" />
-                <d:listHead value="#{elabel.user}" />
-                <d:listHeadStrictWidth value="#{elabel.userGroup}" />
-            </d:listRowHead>
-            <ui:repeat value="#{controller.bean.resultList}" var="userGroupMember">
-                <d:listRow removePromptId="userGroupMember" listObject="#{userGroupMember}">
-                    <d:listColumnMobileViewWithTool listObject="#{userGroupMember}">
-                        <d:dataListMobileViewContentBox>
-                            <h:outputText value="#{userGroupMember.data.user.userName}" /><br />
-                            <h:outputText value="#{elabel.id}" />:
-                            <h:outputText value="#{userGroupMember.data.id}" />
-                        </d:dataListMobileViewContentBox>
-                    </d:listColumnMobileViewWithTool>
-                    <d:listColumn value="#{userGroupMember.data.id}" />
-                    <d:listColumnLongText value="#{userGroupMember.data.user.userName}" />
-                    <d:listColumnText value="#{userGroupMember.data.userGroup.name}" />
-                </d:listRow>
-            </ui:repeat>
-        </d:listContainer>
-    </ui:composition>
+    <composite:interface>
+        <composite:attribute required="true" name="bean" type="java.lang.Object" />
+    </composite:interface>
+    <composite:implementation>
+        <f:event listener="#{cc.attrs.bean.initController}" type="preRenderComponent" />
+    </composite:implementation>
 </html>

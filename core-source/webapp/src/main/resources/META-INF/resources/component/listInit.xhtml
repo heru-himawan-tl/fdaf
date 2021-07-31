@@ -34,14 +34,13 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         xmlns:composite="http://java.sun.com/jsf/composite"
         xmlns:h="http://java.sun.com/jsf/html">
     <composite:interface>
-        <composite:attribute required="true" name="webAppBean" type="java.lang.Object" />
     </composite:interface>
     <composite:implementation>
-        <h:panelGroup layout="block" styleClass="display:none;" rendered="#{(cc.attrs.webAppBean.opMode eq 'LISTING')}">
-            <d:listPopulateCountOfRows webAppBean="#{cc.attrs.webAppBean}" />
-            <d:listPopulatePageNumbers webAppBean="#{cc.attrs.webAppBean}" />
-            <d:recoverFromPrematureSearchMode webAppBean="#{cc.attrs.webAppBean}" />
-            <d:listPopulateResultList webAppBean="#{cc.attrs.webAppBean}" />
+        <h:panelGroup layout="block" styleClass="display:none;" rendered="#{(controller.bean.opMode eq 'LISTING')}">
+            <d:listPopulateCountOfRows />
+            <d:listPopulatePageNumbers />
+            <d:recoverFromPrematureSearchMode />
+            <d:listPopulateResultList />
         </h:panelGroup>
     </composite:implementation>
 </html>

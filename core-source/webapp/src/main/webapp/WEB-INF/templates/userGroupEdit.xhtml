@@ -35,13 +35,13 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         xmlns:f="http://java.sun.com/jsf/core"
         xmlns:d="http://java.sun.com/jsf/composite/component">
     <ui:composition>
-        <d:editorContainer webAppBean="#{userGroupWebAppBean}">
+        <d:editorContainer>
             <d:fieldRow>
                 <d:fieldColumn>
                     <d:fieldLabel for="name" value="#{elabel.name}" />
                     <d:fieldInputBox>
-                        <h:inputText id="name" value="#{userGroupWebAppBean.entity.name}">
-                            <f:validateBean disabled="#{userGroupWebAppBean.disableValidation}" />
+                        <h:inputText id="name" value="#{controller.bean.entity.name}">
+                            <f:validateBean disabled="#{controller.bean.disableValidation}" />
                         </h:inputText>
                     </d:fieldInputBox>
                 </d:fieldColumn>
@@ -50,8 +50,8 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                 <d:fieldColumn>
                     <d:fieldLabel for="description" value="#{elabel.description}" />
                     <d:fieldInputBox>
-                        <h:inputTextarea id="description" value="#{userGroupWebAppBean.entity.description}">
-                            <f:validateBean disabled="#{userGroupWebAppBean.disableValidation}" />
+                        <h:inputTextarea id="description" value="#{controller.bean.entity.description}">
+                            <f:validateBean disabled="#{controller.bean.disableValidation}" />
                         </h:inputTextarea>
                     </d:fieldInputBox>
                 </d:fieldColumn>

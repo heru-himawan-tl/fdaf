@@ -37,6 +37,7 @@ import fdaf.webapp.base.AbstractBaseWebAppBean;
 import java.io.Serializable;
 import javax.ejb.EJB;
 import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 
 @ViewScoped
@@ -56,9 +57,16 @@ public class ErrorPageWebAppBean extends AbstractBaseWebAppBean implements Seria
     
     @EJB(lookup = "java:global/__EJB_LOOKUP_DIR__/DatabaseServiceCheckerFacade")
     private DatabaseServiceCheckerInterface dbServiceChecker;
+    
+    @Inject
+    private Controller controller;
 
     public ErrorPageWebAppBean() {
         // NO-OP
+    }
+    
+    protected Controller getController() {
+        return controller;
     }
     
     @Override

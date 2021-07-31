@@ -132,8 +132,15 @@ public class CommonConfigurationWebAppBean extends AbstractBaseWebAppBean implem
     
     private boolean inSaving;
     
+    @Inject
+    private Controller controller;
+    
     public CommonConfigurationWebAppBean() {
         // NO-OP
+    }
+    
+    protected Controller getController() {
+        return controller;
     }
     
     public void initCommonConfiguration(ComponentSystemEvent event) throws AbortProcessingException {

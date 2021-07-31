@@ -101,9 +101,16 @@ public class UserRegistrationWebAppBean extends AbstractWebAppBean implements Se
     private String referer;
     
     private boolean success;
+    
+    @Inject
+    private Controller controller;
 
     public UserRegistrationWebAppBean() {
         // NO-OP
+    }
+    
+    protected Controller getController() {
+        return controller;
     }
     
     protected AdministratorAccountCheckerInterface getAdministratorAccountChecker() {

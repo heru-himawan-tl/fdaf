@@ -37,47 +37,46 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions"
 		xmlns:f="http://xmlns.jcp.org/jsf/core">
     <composite:interface>
-        <composite:attribute required="true" name="webAppBean" type="java.lang.Object" />
         <composite:attribute required="true" name="pagePrefix" type="java.lang.String" />
         <composite:attribute required="true" name="pageTitle" type="java.lang.String" />
     </composite:interface>
     <composite:implementation>
         <h:head>
             <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-            <d:customTitleTag webAppBean="#{cc.attrs.webAppBean}" pageTitle="#{cc.attrs.pageTitle}" />
+            <d:customTitleTag pageTitle="#{cc.attrs.pageTitle}" />
             <h:outputStylesheet library="css" name="style.css" />
             <h:outputScript library="js" name="function.js" />
             <d:customHeadTag />
         </h:head>
         <h:body>
-            <h:form id="form" enctype="#{cc.attrs.webAppBean.enctype}">
-                <d:mainInit webAppBean="#{cc.attrs.webAppBean}" />
+            <h:form id="form" enctype="#{controller.bean.enctype}">
+                <d:mainInit />
                 <d:loadBundles />
-                <d:databaseServiceCheck webAppBean="#{cc.attrs.webAppBean}" />
-                <d:userSessionWatch webAppBean="#{cc.attrs.webAppBean}" rendered="#{cc.attrs.webAppBean.databaseIsError eq false}" />
-                <d:customTopPanel webAppBean="#{cc.attrs.webAppBean}" />
+                <d:databaseServiceCheck />
+                <d:userSessionWatch rendered="#{controller.bean.databaseIsError eq false}" />
+                <d:customTopPanel />
                 <h:panelGroup layout="block" styleClass="left_panel_back_overlay"></h:panelGroup>
                 <h:panelGroup layout="block" styleClass="right_panel_back_overlay"></h:panelGroup>
                 <h:panelGroup layout="block" styleClass="main_panel_back_overlay"></h:panelGroup>
                 <h:panelGroup layout="block" styleClass="body_flexbox">
                     <d:leftPanel>
-                        <d:customLeftPanel webAppBean="#{cc.attrs.webAppBean}" />
+                        <d:customLeftPanel />
                     </d:leftPanel>
                     <d:mainPanel>
-                        <d:pageContainer id="page" webAppBean="#{cc.attrs.webAppBean}">
+                        <d:pageContainer id="page">
                             <composite:insertChildren />
                         </d:pageContainer>
-                        <d:mainPanelFooter webAppBean="#{cc.attrs.webAppBean}" />
+                        <d:mainPanelFooter />
                     </d:mainPanel>
                     <d:rightPanel>
-                        <d:customRightPanel webAppBean="#{cc.attrs.webAppBean}" />
+                        <d:customRightPanel />
                     </d:rightPanel>
                 </h:panelGroup>
-                <d:customBottomPanel webAppBean="#{cc.attrs.webAppBean}" />
-                <d:customBottomForm webAppBean="#{cc.attrs.webAppBean}" />
-                <d:deinit webAppBean="#{cc.attrs.webAppBean}" />
+                <d:customBottomPanel />
+                <d:customBottomForm />
+                <d:deinit />
             </h:form>
-            <d:customBottomBody webAppBean="#{cc.attrs.webAppBean}" />          
+            <d:customBottomBody />          
         </h:body>
     </composite:implementation>
 </html>

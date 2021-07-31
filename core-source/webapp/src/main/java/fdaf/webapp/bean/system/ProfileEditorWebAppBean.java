@@ -65,9 +65,16 @@ public class ProfileEditorWebAppBean extends AbstractWebAppBean implements Seria
     private CommonConfigurationInterface commonConfiguration;
 
     private boolean initialized;
+    
+    @Inject
+    private Controller controller;
 
     public ProfileEditorWebAppBean() {
         // NO-OP
+    }
+    
+    protected Controller getController() {
+        return controller;
     }
     
     public void initProfileEditor(ComponentSystemEvent event) throws AbortProcessingException {

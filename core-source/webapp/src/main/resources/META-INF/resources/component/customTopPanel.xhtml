@@ -36,7 +36,6 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         xmlns:h="http://java.sun.com/jsf/html"
         xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
     <composite:interface>
-        <composite:attribute required="true" name="webAppBean" type="java.lang.Object" />
     </composite:interface>
     <composite:implementation>
                 <!--
@@ -51,7 +50,7 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
             <h:panelGroup layout="block" styleClass="top_panel_table">
                 <h:panelGroup layout="block" styleClass="top_panel_row">
                     <h:panelGroup layout="block" styleClass="top_panel_title_cell">
-                        <h:outputText value="#{cc.attrs.webAppBean.applicationName} " />
+                        <h:outputText value="#{controller.bean.applicationName} " />
                         <h:outputText value="#{label.administrationDashboard}" />
                     </h:panelGroup>
                     <h:panelGroup layout="block" styleClass="top_panel_mobile_menu_cell">
@@ -81,11 +80,11 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                     </h:panelGroup>
                     <h:panelGroup layout="block" styleClass="top_panel_login_info_cell">
                         <h:panelGroup layout="block" styleClass="top_panel_login_info_cell_inner">
-                            <!-- h:panelGroup layout="block" styleClass="login_info_flexbox" rendered="#{cc.attrs.webAppBean.isLoggedOn eq false}">
+                            <!-- h:panelGroup layout="block" styleClass="login_info_flexbox" rendered="#{controller.bean.isLoggedOn eq false}">
                                 <h:commandButton type="button" styleClass="common_button blue_button"
                                     immediate="true" value="#{label.buttonLogin}" onclick="document.location.href='login.jsf';" />
                             </h:panelGroup>
-                            <h:panelGroup layout="block" styleClass="login_info_flexbox" rendered="#{cc.attrs.webAppBean.isLoggedOn}">
+                            <h:panelGroup layout="block" styleClass="login_info_flexbox" rendered="#{controller.bean.isLoggedOn}">
                                 <h:panelGroup layout="block" styleClass="login_info_box">
                                     <h:panelGroup layout="block" styleClass="login_info_box_inner">
                                         <h:panelGroup layout="block" styleClass="login_info_box_deeper">
@@ -95,7 +94,7 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                                                 <h:outputText value="#{label.loggedBy}" />
                                             </h:panelGroup>
                                             <h:panelGroup layout="block" styleClass="login_info_value_box">
-                                                <h:link value="#{cc.attrs.webAppBean.userSessionManager.userName}" outcome="edit-account" />
+                                                <h:link value="#{controller.bean.userSessionManager.userName}" outcome="edit-account" />
                                             </h:panelGroup>
                                         </h:panelGroup>
                                     </h:panelGroup>

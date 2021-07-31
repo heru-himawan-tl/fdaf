@@ -34,11 +34,10 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         xmlns:h="http://java.sun.com/jsf/html">
     <composite:interface>
         <composite:attribute required="false" name="addStyleClass" type="java.lang.String" />
-        <composite:attribute required="true" name="webAppBean" type="java.lang.Object" />
     </composite:interface>
     <composite:implementation>
         <h:panelGroup layout="block" styleClass="field_container #{cc.attrs.addStyleClass}"
-            rendered="#{cc.attrs.webAppBean.isLoggedOn eq true and cc.attrs.webAppBean.databaseIsError eq false}">
+            rendered="#{controller.bean.isLoggedOn eq true and controller.bean.databaseIsError eq false}">
             <composite:insertChildren />
         </h:panelGroup>
     </composite:implementation>

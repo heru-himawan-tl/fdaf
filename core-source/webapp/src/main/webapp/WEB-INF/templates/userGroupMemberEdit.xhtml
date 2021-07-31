@@ -35,12 +35,12 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         xmlns:f="http://java.sun.com/jsf/core"
         xmlns:d="http://java.sun.com/jsf/composite/component">
     <ui:composition>
-        <d:editorContainer webAppBean="#{userGroupMemberWebAppBean}">
+        <d:editorContainer>
             <d:fieldRow>
                 <d:fieldColumn>
                     <d:fieldLabel for="user" value="#{elabel.user}" />
                     <d:fieldInputBox>
-                        <h:selectOneMenu id="userId" value="#{userGroupMemberWebAppBean.entity.userId}">
+                        <h:selectOneMenu id="userId" value="#{controller.bean.entity.userId}">
                             <f:selectItems value="#{userSelectOption.items}" var="selectItem" itemValue="#{selectItem.value}" itemLabel="#{selectItem.label}" />
                         </h:selectOneMenu>
                     </d:fieldInputBox>
@@ -50,7 +50,7 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                 <d:fieldColumn>
                     <d:fieldLabel for="userGroup" value="#{elabel.userGroup}" />
                     <d:fieldInputBox>
-                        <h:selectOneMenu id="userGroupId" value="#{userGroupMemberWebAppBean.entity.userGroupId}">
+                        <h:selectOneMenu id="userGroupId" value="#{controller.bean.entity.userGroupId}">
                             <f:selectItems value="#{userGroupSelectOption.items}" var="selectItem" itemValue="#{selectItem.value}" itemLabel="#{selectItem.label}" />
                         </h:selectOneMenu>
                     </d:fieldInputBox>

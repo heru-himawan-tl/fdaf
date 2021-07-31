@@ -34,7 +34,6 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         xmlns:composite="http://java.sun.com/jsf/composite"
         xmlns:h="http://java.sun.com/jsf/html">
     <composite:interface>
-        <composite:attribute required="true" name="webAppBean" type="java.lang.Object" />
         <composite:attribute required="true" name="pagePrefix" type="java.lang.String" />
         <composite:attribute required="true" name="pageTitle" type="java.lang.String" />
     </composite:interface>
@@ -53,7 +52,7 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         </h:panelGroup>
         <h:panelGroup layout="block" styleClass="panel_menu_wrapper">
             <h:panelGroup layout="block" styleClass="panel_menu_container">
-                <d:defaultVerticalProgramNavigation webAppBean="#{cc.attrs.webAppBean}"/>
+                <d:defaultVerticalProgramNavigation />
                 <h:panelGroup layout="block" styleClass="panel_menu_bottom_gap" />
             </h:panelGroup>
         </h:panelGroup>

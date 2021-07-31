@@ -31,32 +31,31 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:composite="http://java.sun.com/jsf/composite" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core">
     <composite:interface>
-        <composite:attribute required="true" name="webAppBean" type="java.lang.Object" />
     </composite:interface>
     <composite:implementation>
         <h:panelGroup layout="block" styleClass="list_control_container list_control_container_alt">
             <h:panelGroup layout="block" styleClass="list_control_box">
                 <h:panelGroup layout="block" styleClass="list_control_inner">
                     <h:panelGroup layout="block" styleClass="list_control_deeper_label_left">
-                        #{label.listFetched} #{cc.attrs.webAppBean.totalRowCount}
-                        #{label.listRows} #{label.listIn} #{cc.attrs.webAppBean.pageCount}
+                        #{label.listFetched} #{controller.bean.totalRowCount}
+                        #{label.listRows} #{label.listIn} #{controller.bean.pageCount}
                         #{label.listPages}
                     </h:panelGroup>
                     <h:panelGroup layout="block" styleClass="list_control_deeper_gap">&nbsp;</h:panelGroup>
                     <h:panelGroup layout="block" styleClass="list_control_deeper_label">#{label.listPage}:</h:panelGroup>
                     <h:panelGroup layout="block" styleClass="list_control_deeper">
-                        <h:selectOneMenu value="#{cc.attrs.webAppBean.currentPageAlt}" disabled="#{cc.attrs.webAppBean.pageCount lt 2}">
-                            <f:selectItems value="#{cc.attrs.webAppBean.pageNumbers}" var="selectItem" itemValue="#{selectItem.value}" itemLabel="#{selectItem.label}" />
-                            <f:ajax event="change" execute="@form" render="@form" listener="#{cc.attrs.webAppBean.changePage}" />
+                        <h:selectOneMenu value="#{controller.bean.currentPageAlt}" disabled="#{controller.bean.pageCount lt 2}">
+                            <f:selectItems value="#{controller.bean.pageNumbers}" var="selectItem" itemValue="#{selectItem.value}" itemLabel="#{selectItem.label}" />
+                            <f:ajax event="change" execute="@form" render="@form" listener="#{controller.bean.changePage}" />
                         </h:selectOneMenu>
                     </h:panelGroup>
                     <h:panelGroup layout="block" styleClass="list_control_deeper_right">
                         <h:panelGroup layout="block" styleClass="list_control_page_switch_button_box">
-                            <h:commandButton styleClass="grouped_button_left" value="#{label.listPagePrev}" disabled="#{cc.attrs.webAppBean.currentPage eq 1 or cc.attrs.webAppBean.pageCount lt 2}">
-                                <f:ajax event="click" execute="@form" render="@form" listener="#{cc.attrs.webAppBean.toPrevPage}" />
+                            <h:commandButton styleClass="grouped_button_left" value="#{label.listPagePrev}" disabled="#{controller.bean.currentPage eq 1 or controller.bean.pageCount lt 2}">
+                                <f:ajax event="click" execute="@form" render="@form" listener="#{controller.bean.toPrevPage}" />
                             </h:commandButton>
-                            <h:commandButton styleClass="grouped_button_right" value="#{label.listPageNext}" disabled="#{cc.attrs.webAppBean.currentPage eq cc.attrs.webAppBean.pageCount or cc.attrs.webAppBean.pageCount lt 2}">
-                                <f:ajax event="click" execute="@form" render="@form" listener="#{cc.attrs.webAppBean.toNextPage}" />
+                            <h:commandButton styleClass="grouped_button_right" value="#{label.listPageNext}" disabled="#{controller.bean.currentPage eq controller.bean.pageCount or controller.bean.pageCount lt 2}">
+                                <f:ajax event="click" execute="@form" render="@form" listener="#{controller.bean.toNextPage}" />
                             </h:commandButton>
                         </h:panelGroup>
                     </h:panelGroup>

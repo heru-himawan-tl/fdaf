@@ -34,23 +34,24 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         xmlns:f="http://java.sun.com/jsf/core"
         xmlns:h="http://java.sun.com/jsf/html"
         xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions">
+    <d:controllerInit bean="#{userSessionManagerWebAppBean}" />
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <title><h:outputText value="#{userSessionManagerWebAppBean.applicationName} - #{fn:toUpperCase(label.userSessionLoginTitle)}" /></title>
+        <title><h:outputText value="#{controller.bean.applicationName} - #{fn:toUpperCase(label.userSessionLoginTitle)}" /></title>
         <h:outputStylesheet library="css" name="style.css"/>
         <d:customHeadTag />
     </h:head>
     <h:body>
         <h:form id="form">
-            <d:mainInit webAppBean="#{userSessionManagerWebAppBean}" />
+            <d:mainInit />
             <d:loadBundles />
-            <d:databaseServiceCheck webAppBean="#{userSessionManagerWebAppBean}" />
-            <d:userSessionWatch webAppBean="#{userSessionManagerWebAppBean}" />
-            <d:logoutInit webAppBean="#{userSessionManagerWebAppBean}" />
+            <d:databaseServiceCheck />
+            <d:userSessionWatch />
+            <d:logoutInit />
             <h:panelGroup layout="block" styleClass="dialog_container">
                 <h:panelGroup layout="block" styleClass="dialog_box">
                     <h:panelGroup layout="block" styleClass="dialog_title_box">
-                        <h:outputText value="#{userSessionManagerWebAppBean.applicationName} - #{fn:toUpperCase(label.userSessionLoginTitle)}" />
+                        <h:outputText value="#{controller.bean.applicationName} - #{fn:toUpperCase(label.userSessionLoginTitle)}" />
                     </h:panelGroup>
                         <d:dialogMessages />
                     <h:panelGroup layout="block" styleClass="dialog_button_box">
@@ -59,8 +60,8 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                     </h:panelGroup>
                 </h:panelGroup>
             </h:panelGroup>
-            <d:customBottomForm webAppBean="#{userSessionManagerWebAppBean}" />
+            <d:customBottomForm />
         </h:form>
-        <d:customBottomBody webAppBean="#{userSessionManagerWebAppBean}" />
+        <d:customBottomBody />
     </h:body>
 </html>

@@ -81,9 +81,18 @@ public class FileManagerWebAppBean extends AbstractBaseWebAppBean implements Ser
     @Size(min = 1, max = 128, message = "{newDirectoryNameLengthOutOfRange}")
     @NotBlank(message = "{newDirectoryNameBlank}")
     private String newDirectoryName;
+    
+    private boolean inPrepareCreateDirectory;
+    
+    @Inject
+    private Controller controller;
 
     public FileManagerWebAppBean() {
         // NO-OP
+    }
+    
+    protected Controller getController() {
+        return controller;
     }
     
     @Override
@@ -141,6 +150,14 @@ public class FileManagerWebAppBean extends AbstractBaseWebAppBean implements Ser
     
     public String getCurrentDirectory() {
         return directoryInfo.getCurrentDirectory();
+    }
+    
+    public void prepareCreateDirectory() {
+        inPrepareCreateDirectory = true;
+    }
+    
+    public boolean getInPrepareCreateDirectory() {
+        return inPrepareCreateDirectory;
     }
     
     public void setNewDirectoryName(String newDirectoryName) {

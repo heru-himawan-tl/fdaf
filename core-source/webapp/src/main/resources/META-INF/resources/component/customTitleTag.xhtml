@@ -35,10 +35,9 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         xmlns:composite="http://java.sun.com/jsf/composite"
         xmlns:h="http://java.sun.com/jsf/html">
     <composite:interface>
-        <composite:attribute required="true" name="webAppBean" type="java.lang.Object" />
         <composite:attribute required="true" name="pageTitle" type="java.lang.String" />
     </composite:interface>
     <composite:implementation>
-        <title><h:outputText value="#{cc.attrs.webAppBean.applicationName} - #{fn:toUpperCase(cc.attrs.pageTitle)}" /></title>
+        <title><h:outputText value="#{controller.bean.applicationName} - #{fn:toUpperCase(cc.attrs.pageTitle)}" /></title>
     </composite:implementation>
 </html>

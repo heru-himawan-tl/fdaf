@@ -35,29 +35,29 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         xmlns:f="http://java.sun.com/jsf/core"
         xmlns:d="http://java.sun.com/jsf/composite/component">
     <ui:composition>
-        <d:editorContainer webAppBean="#{employeeWebAppBean}">
+        <d:editorContainer>
             <d:fieldRow>
                 <d:fieldColumn>
                     <d:fieldLabel for="firstName" value="#{elabel.firstName}" />
                     <d:fieldInputBox>
-                        <h:inputText id="firstName" value="#{employeeWebAppBean.entity.firstName}">
-                            <f:validateBean disabled="#{employeeWebAppBean.disableValidation}" />
+                        <h:inputText id="firstName" value="#{controller.bean.entity.firstName}">
+                            <f:validateBean disabled="#{controller.bean.disableValidation}" />
                         </h:inputText>
                     </d:fieldInputBox>
                 </d:fieldColumn>
                 <d:fieldColumn>
                     <d:fieldLabel for="middleName" value="#{elabel.middleName}" />
                     <d:fieldInputBox>
-                        <h:inputText id="middleName" value="#{employeeWebAppBean.entity.middleName}">
-                            <f:validateBean disabled="#{employeeWebAppBean.disableValidation}" />
+                        <h:inputText id="middleName" value="#{controller.bean.entity.middleName}">
+                            <f:validateBean disabled="#{controller.bean.disableValidation}" />
                         </h:inputText>
                     </d:fieldInputBox>
                 </d:fieldColumn>
                 <d:fieldColumn>
                     <d:fieldLabel for="lastName" value="#{elabel.lastName}" />
                     <d:fieldInputBox>
-                        <h:inputText id="lastName" value="#{employeeWebAppBean.entity.lastName}">
-                            <f:validateBean disabled="#{employeeWebAppBean.disableValidation}" />
+                        <h:inputText id="lastName" value="#{controller.bean.entity.lastName}">
+                            <f:validateBean disabled="#{controller.bean.disableValidation}" />
                         </h:inputText>
                     </d:fieldInputBox>
                 </d:fieldColumn>
@@ -66,15 +66,15 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                 <d:fieldColumn>
                     <d:fieldLabel for="dobDay" value="#{elabel.dobDay}" />
                     <d:fieldInputBox>
-                        <h:inputText id="dobDay" value="#{employeeWebAppBean.entity.dobDay}">
-                            <f:validateBean disabled="#{employeeWebAppBean.disableValidation}" />
+                        <h:inputText id="dobDay" value="#{controller.bean.entity.dobDay}">
+                            <f:validateBean disabled="#{controller.bean.disableValidation}" />
                         </h:inputText>
                     </d:fieldInputBox>
                 </d:fieldColumn>
                 <d:fieldColumn>
                     <d:fieldLabel for="dobMonth" value="#{elabel.dobMonth}" />
                     <d:fieldInputBox>
-                        <h:selectOneMenu id="dobMonth" value="#{employeeWebAppBean.entity.dobMonth}">
+                        <h:selectOneMenu id="dobMonth" value="#{controller.bean.entity.dobMonth}">
                             <f:selectItem itemValue="1" itemLabel="#{label.january}" /> 
                             <f:selectItem itemValue="2" itemLabel="#{label.february}" />
                             <f:selectItem itemValue="3" itemLabel="#{label.march}" />
@@ -87,15 +87,15 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                             <f:selectItem itemValue="10" itemLabel="#{label.october}" />
                             <f:selectItem itemValue="11" itemLabel="#{label.november}" />
                             <f:selectItem itemValue="12" itemLabel="#{label.december}" />
-                            <f:validateBean disabled="#{employeeWebAppBean.disableValidation}" />
+                            <f:validateBean disabled="#{controller.bean.disableValidation}" />
                         </h:selectOneMenu>
                     </d:fieldInputBox>
                 </d:fieldColumn>
                 <d:fieldColumn>
                     <d:fieldLabel for="dobYear" value="#{elabel.dobYear}" />
                     <d:fieldInputBox>
-                        <h:inputText id="dobYear" value="#{employeeWebAppBean.entity.dobYear}">
-                            <f:validateBean disabled="#{employeeWebAppBean.disableValidation}" />
+                        <h:inputText id="dobYear" value="#{controller.bean.entity.dobYear}">
+                            <f:validateBean disabled="#{controller.bean.disableValidation}" />
                         </h:inputText>
                     </d:fieldInputBox>
                 </d:fieldColumn>
@@ -104,18 +104,18 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                 <d:fieldColumn>
                     <d:fieldLabel for="gender" value="#{elabel.gender}" />
                     <d:fieldInputBox>
-                        <h:selectOneMenu id="gender" value="#{employeeWebAppBean.entity.gender}">
+                        <h:selectOneMenu id="gender" value="#{controller.bean.entity.gender}">
                             <f:selectItem itemValue="MALE" itemLabel="#{label.male}" /> 
                             <f:selectItem itemValue="FEMALE" itemLabel="#{label.female}" />
-                            <f:validateBean disabled="#{employeeWebAppBean.disableValidation}" />
+                            <f:validateBean disabled="#{controller.bean.disableValidation}" />
                         </h:selectOneMenu>
                     </d:fieldInputBox>
                 </d:fieldColumn>
                 <d:fieldColumn>
                     <d:fieldLabel for="ssn" value="#{elabel.ssn}" />
                     <d:fieldInputBox>
-                        <h:inputText id="ssn" value="#{employeeWebAppBean.entity.ssn}">
-                            <f:validateBean disabled="#{employeeWebAppBean.disableValidation}" />
+                        <h:inputText id="ssn" value="#{controller.bean.entity.ssn}">
+                            <f:validateBean disabled="#{controller.bean.disableValidation}" />
                         </h:inputText>
                     </d:fieldInputBox>
                 </d:fieldColumn>
@@ -124,16 +124,16 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                 <d:fieldColumn>
                     <d:fieldLabel for="address1" value="#{elabel.address1}" />
                     <d:fieldInputBox>
-                        <h:inputTextarea id="address1" value="#{employeeWebAppBean.entity.address1}">
-                            <f:validateBean disabled="#{employeeWebAppBean.disableValidation}" />
+                        <h:inputTextarea id="address1" value="#{controller.bean.entity.address1}">
+                            <f:validateBean disabled="#{controller.bean.disableValidation}" />
                         </h:inputTextarea>
                     </d:fieldInputBox>
                 </d:fieldColumn>
                 <d:fieldColumn>
                     <d:fieldLabel for="address2" value="#{elabel.address2}" />
                     <d:fieldInputBox>
-                        <h:inputTextarea id="address2" value="#{employeeWebAppBean.entity.address2}">
-                            <f:validateBean disabled="#{employeeWebAppBean.disableValidation}" />
+                        <h:inputTextarea id="address2" value="#{controller.bean.entity.address2}">
+                            <f:validateBean disabled="#{controller.bean.disableValidation}" />
                         </h:inputTextarea>
                     </d:fieldInputBox>
                 </d:fieldColumn>
@@ -142,16 +142,16 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                 <d:fieldColumn>
                     <d:fieldLabel for="phone1" value="#{elabel.phone1}" />
                     <d:fieldInputBox>
-                        <h:inputText id="phone1" value="#{employeeWebAppBean.entity.phone1}">
-                            <f:validateBean disabled="#{employeeWebAppBean.disableValidation}" />
+                        <h:inputText id="phone1" value="#{controller.bean.entity.phone1}">
+                            <f:validateBean disabled="#{controller.bean.disableValidation}" />
                         </h:inputText>
                     </d:fieldInputBox>
                 </d:fieldColumn>
                 <d:fieldColumn>
                     <d:fieldLabel for="phone2" value="#{elabel.phone2}" />
                     <d:fieldInputBox>
-                        <h:inputText id="phone2" value="#{employeeWebAppBean.entity.phone2}">
-                            <f:validateBean disabled="#{employeeWebAppBean.disableValidation}" />
+                        <h:inputText id="phone2" value="#{controller.bean.entity.phone2}">
+                            <f:validateBean disabled="#{controller.bean.disableValidation}" />
                         </h:inputText>
                     </d:fieldInputBox>
                 </d:fieldColumn>
@@ -160,7 +160,7 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                 <d:fieldColumn>
                     <d:fieldLabel for="departmentId" value="#{elabel.department}" />
                     <d:fieldInputBox>
-                        <h:selectOneMenu id="departmentId" value="#{employeeWebAppBean.entity.departmentId}">
+                        <h:selectOneMenu id="departmentId" value="#{controller.bean.entity.departmentId}">
                             <f:selectItems value="#{departmentSelectOption.items}" var="selectItem" itemValue="#{selectItem.value}" itemLabel="#{selectItem.label}" />
                         </h:selectOneMenu>
                     </d:fieldInputBox>
@@ -168,7 +168,7 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                 <d:fieldColumn>
                     <d:fieldLabel for="roleId" value="#{elabel.role}" />
                     <d:fieldInputBox>
-                        <h:selectOneMenu id="roleId" value="#{employeeWebAppBean.entity.roleId}">
+                        <h:selectOneMenu id="roleId" value="#{controller.bean.entity.roleId}">
                             <f:selectItems value="#{roleSelectOption.items}" var="selectItem" itemValue="#{selectItem.value}" itemLabel="#{selectItem.label}" />
                         </h:selectOneMenu>
                     </d:fieldInputBox>
@@ -178,8 +178,8 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                 <d:fieldColumn>
                     <d:fieldLabel for="employmentId" value="#{elabel.employmentId}" />
                     <d:fieldInputBox>
-                        <h:inputText id="employmentId" value="#{employeeWebAppBean.entity.employmentId}">
-                            <f:validateBean disabled="#{employeeWebAppBean.disableValidation}" />
+                        <h:inputText id="employmentId" value="#{controller.bean.entity.employmentId}">
+                            <f:validateBean disabled="#{controller.bean.disableValidation}" />
                         </h:inputText>
                     </d:fieldInputBox>
                 </d:fieldColumn>

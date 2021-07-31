@@ -35,7 +35,6 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         xmlns:f="http://java.sun.com/jsf/core"
         xmlns:h="http://java.sun.com/jsf/html">
     <composite:interface>
-        <composite:attribute required="true" name="webAppBean" type="java.lang.Object" />
         <composite:attribute required="true" name="listObject" type="java.lang.Object" />
         <composite:attribute required="false" name="editable" type="java.lang.Boolean" default="true" />
         <composite:attribute required="false" name="removable" type="java.lang.Boolean" default="true" />
@@ -43,7 +42,6 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     <composite:implementation>
         <h:panelGroup layout="block" styleClass="list_action_column">
             <d:listActionToolCore
-                webAppBean="#{cc.attrs.webAppBean}"
                 listObject="#{cc.attrs.listObject}"
                 editable="#{cc.attrs.editable}"
                 removable="#{cc.attrs.removable}"

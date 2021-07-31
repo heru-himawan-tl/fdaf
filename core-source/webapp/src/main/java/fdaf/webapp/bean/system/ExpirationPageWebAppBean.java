@@ -33,15 +33,16 @@ import fdaf.webapp.base.AbstractDummyWebAppBean;
 import java.io.Serializable;
 import java.util.Map;
 import javax.ejb.EJB;
-import javax.enterprise.context.SessionScoped;
+import javax.faces.view.ViewScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.event.AbortProcessingException;
 import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.event.ComponentSystemEvent;
+import javax.inject.Inject;
 import javax.inject.Named;
 
-@SessionScoped
+@ViewScoped
 @Named
 public class ExpirationPageWebAppBean extends AbstractDummyWebAppBean implements Serializable {
 
@@ -51,9 +52,16 @@ public class ExpirationPageWebAppBean extends AbstractDummyWebAppBean implements
     private CommonConfigurationInterface commonConfiguration;
     
     private String referer;
+    
+    @Inject
+    private Controller controller;
 
     public ExpirationPageWebAppBean() {
         referer = "";
+    }
+    
+    protected Controller getController() {
+        return controller;
     }
 
     public void initExpirationPage(ComponentSystemEvent event) throws AbortProcessingException {

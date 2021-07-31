@@ -33,7 +33,6 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         xmlns:composite="http://java.sun.com/jsf/composite"
         xmlns:h="http://java.sun.com/jsf/html">
     <composite:interface>
-        <composite:attribute required="true" name="webAppBean" type="java.lang.Object" />
     </composite:interface>
     <composite:implementation>
         <h:panelGroup layout="block" styleClass="index_page_top_bar_container">
@@ -43,14 +42,14 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                         <h:graphicImage value="web-resources/icons/logo.png" />
                     </h:panelGroup>
                     <h:panelGroup layout="block" styleClass="index_page_top_bar_title_box">
-                        <h:outputText value="#{cc.attrs.webAppBean.applicationDescription}" />
+                        <h:outputText value="#{controller.bean.applicationDescription}" />
                     </h:panelGroup>
                     <h:panelGroup layout="block" styleClass="schedule_table_heading_tool_box">
-                        <h:panelGroup layout="block" styleClass="login_info_flexbox" rendered="#{(cc.attrs.webAppBean.isLoggedOn eq false or cc.attrs.webAppBean.isBrokenUserSession eq true)}">
+                        <h:panelGroup layout="block" styleClass="login_info_flexbox" rendered="#{(controller.bean.isLoggedOn eq false or controller.bean.isBrokenUserSession eq true)}">
                             <h:commandButton type="button" styleClass="grouped_button_left blue_button" immediate="true" value="#{clabel.administrationDashboard}" onclick="document.location.href='adm.jsf';" />
                             <h:commandButton type="button" styleClass="grouped_button_right" immediate="true" value="#{label.buttonLogin}" onclick="document.location.href='login.jsf';" />
                         </h:panelGroup>
-                        <h:panelGroup layout="block" styleClass="login_info_flexbox" rendered="#{(cc.attrs.webAppBean.isLoggedOn eq true and cc.attrs.webAppBean.isBrokenUserSession eq false)}">
+                        <h:panelGroup layout="block" styleClass="login_info_flexbox" rendered="#{(controller.bean.isLoggedOn eq true and controller.bean.isBrokenUserSession eq false)}">
                             <h:commandButton type="button" styleClass="grouped_button_left blue_button" immediate="true" value="#{clabel.administrationDashboard}" onclick="document.location.href='adm.jsf';" />
                             <h:commandButton type="button" styleClass="grouped_button_right red_button" immediate="true" value="#{label.buttonLogout}" onclick="document.location.href='logout.jsf';" />
                         </h:panelGroup>

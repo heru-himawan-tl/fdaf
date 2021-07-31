@@ -36,35 +36,36 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         xmlns:ui="http://java.sun.com/jsf/facelets"
         xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions"
 		xmlns:f="http://xmlns.jcp.org/jsf/core">
-    <d:setUserSessionRequirement webAppBean="#{accountEditorWebAppBean}" />
-    <d:commonPageTemplate webAppBean="#{accountEditorWebAppBean}" pageTitle="#{label.editAccount}">
-        <d:administratorAccountCheck webAppBean="#{accountEditorWebAppBean}" rendered="#{accountEditorWebAppBean.databaseIsError eq false}" />
-        <d:addAdministratorStartPage webAppBean="#{accountEditorWebAppBean}" rendered="#{accountEditorWebAppBean.databaseIsError eq false}" />
-        <d:accountEditorInit webAppBean="#{accountEditorWebAppBean}" />             
+    <d:controllerInit bean="#{accountEditorWebAppBean}" />
+    <d:setUserSessionRequirement />
+    <d:commonPageTemplate pageTitle="#{label.editAccount}">
+        <d:administratorAccountCheck rendered="#{controller.bean.databaseIsError eq false}" />
+        <d:addAdministratorStartPage rendered="#{controller.bean.databaseIsError eq false}" />
+        <d:accountEditorInit />             
         <d:customProgramHeading pageTitle="#{fn:toUpperCase(label.editAccount)}">
             <h:commandButton type="button" styleClass="grouped_button_left" value="#{label.buttonSaveUpdate}">
-                <f:ajax event="click" execute="@form" render="@form" listener="#{accountEditorWebAppBean.executeUpdate}" />
+                <f:ajax event="click" execute="@form" render="@form" listener="#{controller.bean.executeUpdate}" />
             </h:commandButton>
             <h:commandButton type="button" styleClass="grouped_button_right" onclick="document.location.href='adm.jsf'" value="#{label.buttonClose}" />
         </d:customProgramHeading>
         <d:messages />
-        <d:loginRequirementInlineDialog webAppBean="#{accountEditorWebAppBean}" />
-        <d:admFieldContainer webAppBean="#{accountEditorWebAppBean}">
+        <d:loginRequirementInlineDialog />
+        <d:admFieldContainer>
             <h:panelGroup layout="block" styleClass="field_container_inner">
                 <d:fieldRow>
                     <d:fieldColumn>
                         <d:fieldLabel for="name" value="#{elabel.userName}" />
                         <d:fieldInputBox>
-                            <h:inputText id="name" value="#{accountEditorWebAppBean.entity.userName}">
-                                <f:validateBean disabled="#{accountEditorWebAppBean.disableValidation}" />
+                            <h:inputText id="name" value="#{controller.bean.entity.userName}">
+                                <f:validateBean disabled="#{controller.bean.disableValidation}" />
                             </h:inputText>
                         </d:fieldInputBox>
                     </d:fieldColumn>
                     <d:fieldColumn>
                         <d:fieldLabel for="email" value="#{elabel.email}" />
                         <d:fieldInputBox>
-                            <h:inputText id="email" value="#{accountEditorWebAppBean.entity.email}">
-                                <f:validateBean disabled="#{accountEditorWebAppBean.disableValidation}" />
+                            <h:inputText id="email" value="#{controller.bean.entity.email}">
+                                <f:validateBean disabled="#{controller.bean.disableValidation}" />
                             </h:inputText>
                         </d:fieldInputBox>
                     </d:fieldColumn>
@@ -73,8 +74,8 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                     <d:fieldColumn>
                         <d:fieldLabel for="currentPassword" value="#{elabel.currentPassword}" />
                         <d:fieldInputBox>
-                            <h:inputSecret id="currentPassword" value="#{accountEditorWebAppBean.entity.currentPassword}">
-                                <f:validateBean disabled="#{accountEditorWebAppBean.disableValidation}" />
+                            <h:inputSecret id="currentPassword" value="#{controller.bean.entity.currentPassword}">
+                                <f:validateBean disabled="#{controller.bean.disableValidation}" />
                             </h:inputSecret>
                         </d:fieldInputBox>
                     </d:fieldColumn>
@@ -83,8 +84,8 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                     <d:fieldColumn>
                         <d:fieldLabel for="newPassword" value="#{elabel.newPassword}" />
                         <d:fieldInputBox>
-                            <h:inputSecret id="newPassword" value="#{accountEditorWebAppBean.entity.newPassword}">
-                                <f:validateBean disabled="#{accountEditorWebAppBean.disableValidation}" />
+                            <h:inputSecret id="newPassword" value="#{controller.bean.entity.newPassword}">
+                                <f:validateBean disabled="#{controller.bean.disableValidation}" />
                             </h:inputSecret>
                         </d:fieldInputBox>
                     </d:fieldColumn>
@@ -93,8 +94,8 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                     <d:fieldColumn>
                         <d:fieldLabel for="passwordConfirm" value="#{elabel.passwordConfirm}" />
                         <d:fieldInputBox>
-                            <h:inputSecret id="passwordConfirm" value="#{accountEditorWebAppBean.entity.passwordConfirm}">
-                                <f:validateBean disabled="#{accountEditorWebAppBean.disableValidation}" />
+                            <h:inputSecret id="passwordConfirm" value="#{controller.bean.entity.passwordConfirm}">
+                                <f:validateBean disabled="#{controller.bean.disableValidation}" />
                             </h:inputSecret>
                         </d:fieldInputBox>
                     </d:fieldColumn>

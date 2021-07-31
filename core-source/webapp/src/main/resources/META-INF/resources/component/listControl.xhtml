@@ -36,7 +36,6 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         xmlns:f="http://java.sun.com/jsf/core"
         xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
     <composite:interface>
-        <composite:attribute required="true" name="webAppBean" type="java.lang.Object" />
     </composite:interface>
     <composite:implementation>
         <h:panelGroup layout="block" styleClass="list_control_container list_control_top">
@@ -44,14 +43,14 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                 <h:panelGroup layout="block" styleClass="list_control_inner">
                     <h:panelGroup layout="block" styleClass="list_control_deeper_label_left">#{label.listOrderBy}:</h:panelGroup>
                     <h:panelGroup layout="block" styleClass="list_control_deeper">
-                        <h:selectOneMenu value="#{cc.attrs.webAppBean.orderParameter}" disabled="#{(cc.attrs.webAppBean.isServiceError eq true)}">
+                        <h:selectOneMenu value="#{controller.bean.orderParameter}" disabled="#{(controller.bean.isServiceError eq true)}">
                             <f:validateBean disabled="true" />
-                            <f:selectItems value="#{cc.attrs.webAppBean.orderParameters}" var="selectItem" itemValue="#{selectItem.value}" itemLabel="#{selectItem.label}" />
+                            <f:selectItems value="#{controller.bean.orderParameters}" var="selectItem" itemValue="#{selectItem.value}" itemLabel="#{selectItem.label}" />
                             <f:ajax event="change" execute="@form" render="@form" />
                         </h:selectOneMenu>
                     </h:panelGroup>
                     <h:panelGroup layout="block" styleClass="list_control_deeper">
-                        <h:selectOneMenu value="#{cc.attrs.webAppBean.orderMode}" disabled="#{(cc.attrs.webAppBean.isServiceError eq true)}">
+                        <h:selectOneMenu value="#{controller.bean.orderMode}" disabled="#{(controller.bean.isServiceError eq true)}">
                             <f:selectItem itemValue="ASC" itemLabel="#{label.listOrderAscending}" />
                             <f:selectItem itemValue="DESC" itemLabel="#{label.listOrderDescending}" />
                             <f:ajax event="change" execute="@form" render="@form" />
@@ -59,7 +58,7 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                     </h:panelGroup>
                     <h:panelGroup layout="block" styleClass="list_control_deeper_label">#{label.listDisplayed}:</h:panelGroup>
                     <h:panelGroup layout="block" styleClass="list_control_deeper">
-                        <h:selectOneMenu value="#{cc.attrs.webAppBean.limit}" disabled="#{(cc.attrs.webAppBean.isServiceError eq true)}">
+                        <h:selectOneMenu value="#{controller.bean.limit}" disabled="#{(controller.bean.isServiceError eq true)}">
                             <f:selectItem itemValue="25" itemLabel="25" />
                             <f:selectItem itemValue="50" itemLabel="50" />
                             <f:selectItem itemValue="100" itemLabel="100" />
@@ -68,24 +67,24 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                     </h:panelGroup>
                     <h:panelGroup layout="block" styleClass="list_control_deeper_label">#{label.listSearch}:</h:panelGroup>
                     <h:panelGroup layout="block" styleClass="list_control_deeper_gap list_control_search_box">
-                        <h:inputText a:autocomplete="off" onkeypress="if (event.keyCode != 13) { return false; }" value="#{cc.attrs.webAppBean.keyword}" disabled="#{(cc.attrs.webAppBean.isServiceError eq true)}">
-                            <f:ajax event="keypress" execute="@form" render="@form" listener="#{cc.attrs.webAppBean.configureSearch}" />
+                        <h:inputText a:autocomplete="off" onkeypress="if (event.keyCode != 13) { return false; }" value="#{controller.bean.keyword}" disabled="#{(controller.bean.isServiceError eq true)}">
+                            <f:ajax event="keypress" execute="@form" render="@form" listener="#{controller.bean.configureSearch}" />
                         </h:inputText>
                     </h:panelGroup>
                     <h:panelGroup layout="block" styleClass="list_control_deeper_label">#{label.listPage}:</h:panelGroup>
                     <h:panelGroup layout="block" styleClass="list_control_deeper">
-                        <h:selectOneMenu value="#{cc.attrs.webAppBean.currentPage}" disabled="#{cc.attrs.webAppBean.pageCount lt 2 or cc.attrs.webAppBean.isServiceError eq true}">
-                            <f:selectItems value="#{cc.attrs.webAppBean.pageNumbers}" var="selectItem" itemValue="#{selectItem.value}" itemLabel="#{selectItem.label}" />
-                            <f:ajax event="change" execute="@form" render="@form" listener="#{cc.attrs.webAppBean.changePageByMainPagination}" />
+                        <h:selectOneMenu value="#{controller.bean.currentPage}" disabled="#{controller.bean.pageCount lt 2 or controller.bean.isServiceError eq true}">
+                            <f:selectItems value="#{controller.bean.pageNumbers}" var="selectItem" itemValue="#{selectItem.value}" itemLabel="#{selectItem.label}" />
+                            <f:ajax event="change" execute="@form" render="@form" listener="#{controller.bean.changePageByMainPagination}" />
                         </h:selectOneMenu>
                     </h:panelGroup>
                     <h:panelGroup layout="block" styleClass="list_control_deeper_right">
                         <h:panelGroup layout="block" styleClass="list_control_page_switch_button_box">
-                            <h:commandButton styleClass="grouped_button_left" value="#{label.listPagePrev}" disabled="#{cc.attrs.webAppBean.currentPage eq 1 or cc.attrs.webAppBean.pageCount lt 2 or cc.attrs.webAppBean.isServiceError eq true}">
-                                <f:ajax event="click" execute="@form" render="@form" listener="#{cc.attrs.webAppBean.toPrevPage}" />
+                            <h:commandButton styleClass="grouped_button_left" value="#{label.listPagePrev}" disabled="#{controller.bean.currentPage eq 1 or controller.bean.pageCount lt 2 or controller.bean.isServiceError eq true}">
+                                <f:ajax event="click" execute="@form" render="@form" listener="#{controller.bean.toPrevPage}" />
                             </h:commandButton>
-                            <h:commandButton styleClass="grouped_button_right" value="#{label.listPageNext}" disabled="#{cc.attrs.webAppBean.currentPage eq cc.attrs.webAppBean.pageCount or cc.attrs.webAppBean.pageCount lt 2 or cc.attrs.webAppBean.isServiceError eq true}">
-                                <f:ajax event="click" execute="@form" render="@form" listener="#{cc.attrs.webAppBean.toNextPage}" />
+                            <h:commandButton styleClass="grouped_button_right" value="#{label.listPageNext}" disabled="#{controller.bean.currentPage eq controller.bean.pageCount or controller.bean.pageCount lt 2 or controller.bean.isServiceError eq true}">
+                                <f:ajax event="click" execute="@form" render="@form" listener="#{controller.bean.toNextPage}" />
                             </h:commandButton>
                         </h:panelGroup>
                     </h:panelGroup>

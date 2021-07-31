@@ -34,34 +34,35 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         xmlns:f="http://java.sun.com/jsf/core"
         xmlns:h="http://java.sun.com/jsf/html"
         xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions">
+    <d:controllerInit bean="#{userRegistrationWebAppBean}" />
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <title><h:outputText value="#{userRegistrationWebAppBean.applicationName} - #{fn:toUpperCase(label.userAccountRegistration)}" /></title>
+        <title><h:outputText value="#{controller.bean.applicationName} - #{fn:toUpperCase(label.userAccountRegistration)}" /></title>
         <h:outputStylesheet library="css" name="style.css"/>
         <d:customHeadTag />
     </h:head>
     <h:body>
         <h:form id="form">
-            <d:mainInit webAppBean="#{userRegistrationWebAppBean}" />
+            <d:mainInit />
             <d:loadBundles />
-            <d:databaseServiceCheck webAppBean="#{staffInvitationWebAppBean}" />
-            <d:userSessionWatch webAppBean="#{userRegistrationWebAppBean}" />
+            <d:databaseServiceCheck />
+            <d:userSessionWatch />
             <h:panelGroup layout="block" styleClass="dialog_container login_container">
                 <h:panelGroup layout="block" styleClass="dialog_box ">
                     <h:panelGroup layout="block" styleClass="dialog_title_box login_title_box">
                         <h:outputLink value="index.jsf" styleClass="login_close_button" />
-                        <h:outputText value="#{userRegistrationWebAppBean.applicationName} - #{fn:toUpperCase(label.userAccountRegistration)}" />
+                        <h:outputText value="#{controller.bean.applicationName} - #{fn:toUpperCase(label.userAccountRegistration)}" />
                     </h:panelGroup>
-                    <d:loginStyledMessages disableBottomMargin="#{(userRegistrationWebAppBean.success eq false)}" />
-                    <h:panelGroup layout="block" styleClass="dialog_content_box login_content_box login_content_justify_box" rendered="#{(userRegistrationWebAppBean.isLoggedOn eq true)}">
+                    <d:loginStyledMessages disableBottomMargin="#{(controller.bean.success eq false)}" />
+                    <h:panelGroup layout="block" styleClass="dialog_content_box login_content_box login_content_justify_box" rendered="#{(controller.bean.isLoggedOn eq true)}">
                         <h:outputText value="#{defaultMessage.alreadyLoggedOnWarning}" />
                     </h:panelGroup>
-                    <h:panelGroup layout="block" styleClass="login_button_box" rendered="#{(userRegistrationWebAppBean.success eq true or userRegistrationWebAppBean.isLoggedOn eq true)}">
+                    <h:panelGroup layout="block" styleClass="login_button_box" rendered="#{(controller.bean.success eq true or controller.bean.isLoggedOn eq true)}">
                         <h:commandButton type="button" styleClass="login_button" value="#{label.buttonClose}" onclick="document.location.href='index.jsf';" />
                     </h:panelGroup>
                     <h:panelGroup layout="block" styleClass="dialog_content_box login_content_box" rendered="#{(
-                            userRegistrationWebAppBean.isLoggedOn eq false and
-                            userRegistrationWebAppBean.success eq false
+                            controller.bean.isLoggedOn eq false and
+                            controller.bean.success eq false
                         )}">
                         <h:panelGroup layout="block" styleClass="login_content_justify_box">
                             <h:outputText value="#{defaultMessage.userRegistrationPredefinition}" /><br /><br />
@@ -69,17 +70,17 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                         <d:freeFieldRow>
                             <d:freeFieldColumn>
                                 <h:outputLabel for="userType" styleClass="dialog_label" value="#{elabel.userType}" />
-                                <h:selectOneMenu id="userType" value="#{userRegistrationWebAppBean.userType}">
+                                <h:selectOneMenu id="userType" value="#{controller.bean.userType}">
                                     <f:selectItem itemValue="STAFF" itemLabel="STAFF" /> 
                                     <f:selectItem itemValue="CLIENT" itemLabel="CLIENT" />
-                                    <f:validateBean disabled="#{userRegistrationWebAppBean.disableValidation}" />
+                                    <f:validateBean disabled="#{controller.bean.disableValidation}" />
                                 </h:selectOneMenu>
                             </d:freeFieldColumn>
                             <d:freeGapFieldColumn>&nbsp;</d:freeGapFieldColumn>
                             <d:freeFieldColumn>
                                 <h:outputLabel for="signature" styleClass="dialog_label" value="#{label.invitationSignature}" />
-                                <h:inputText autocomplete="off" id="signature" value="#{userRegistrationWebAppBean.signature}">
-                                    <f:validateBean disabled="#{userRegistrationWebAppBean.disableValidation}" />
+                                <h:inputText autocomplete="off" id="signature" value="#{controller.bean.signature}">
+                                    <f:validateBean disabled="#{controller.bean.disableValidation}" />
                                 </h:inputText>
                             </d:freeFieldColumn>
                         </d:freeFieldRow>
@@ -87,15 +88,15 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                         <d:freeFieldRow>
                             <d:freeFieldColumn>
                                 <h:outputLabel for="userName" styleClass="dialog_label" value="#{elabel.userName}" />
-                                <h:inputText autocomplete="off" id="userName" value="#{userRegistrationWebAppBean.userName}">
-                                    <f:validateBean disabled="#{userRegistrationWebAppBean.disableValidation}" />
+                                <h:inputText autocomplete="off" id="userName" value="#{controller.bean.userName}">
+                                    <f:validateBean disabled="#{controller.bean.disableValidation}" />
                                 </h:inputText>
                             </d:freeFieldColumn>
                             <d:freeGapFieldColumn>&nbsp;</d:freeGapFieldColumn>
                             <d:freeFieldColumn>
                                 <h:outputLabel for="email" styleClass="dialog_label" value="#{elabel.email}" />
-                                <h:inputText autocomplete="off" id="email" value="#{userRegistrationWebAppBean.email}">
-                                    <f:validateBean disabled="#{userRegistrationWebAppBean.disableValidation}" />
+                                <h:inputText autocomplete="off" id="email" value="#{controller.bean.email}">
+                                    <f:validateBean disabled="#{controller.bean.disableValidation}" />
                                 </h:inputText>
                             </d:freeFieldColumn>
                         </d:freeFieldRow>
@@ -103,31 +104,31 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                         <d:freeFieldRow>
                             <d:freeFieldColumn>
                                 <h:outputLabel for="password" styleClass="dialog_label" value="#{elabel.password}" />
-                                <h:inputSecret autocomplete="off" id="password" value="#{userRegistrationWebAppBean.password}">
-                                    <f:validateBean disabled="#{userRegistrationWebAppBean.disableValidation}" />
+                                <h:inputSecret autocomplete="off" id="password" value="#{controller.bean.password}">
+                                    <f:validateBean disabled="#{controller.bean.disableValidation}" />
                                 </h:inputSecret>
                             </d:freeFieldColumn>
                             <d:freeGapFieldColumn>&nbsp;</d:freeGapFieldColumn>
                             <d:freeFieldColumn>
                                 <h:outputLabel for="passwordConfirm" styleClass="dialog_label" value="#{elabel.passwordConfirm}" />
-                                <h:inputSecret autocomplete="off" id="passwordConfirm" value="#{userRegistrationWebAppBean.passwordConfirm}">
-                                    <f:validateBean disabled="#{userRegistrationWebAppBean.disableValidation}" />
+                                <h:inputSecret autocomplete="off" id="passwordConfirm" value="#{controller.bean.passwordConfirm}">
+                                    <f:validateBean disabled="#{controller.bean.disableValidation}" />
                                 </h:inputSecret>
                             </d:freeFieldColumn>
                         </d:freeFieldRow>
                      </h:panelGroup>
                      <h:panelGroup layout="block" styleClass="login_button_box" rendered="#{(
-                            userRegistrationWebAppBean.isLoggedOn eq false and userRegistrationWebAppBean.success eq false
+                            controller.bean.isLoggedOn eq false and controller.bean.success eq false
                         )}">
                         <h:commandButton type="button" styleClass="login_button" value="#{label.buttonSubmit}"
-                                rendered="#{(userRegistrationWebAppBean.success eq false)}">
-                            <f:ajax event="click" execute="@form" render="@form" listener="#{userRegistrationWebAppBean.register}" />
+                                rendered="#{(controller.bean.success eq false)}">
+                            <f:ajax event="click" execute="@form" render="@form" listener="#{controller.bean.register}" />
                         </h:commandButton>
                     </h:panelGroup>
                 </h:panelGroup>
             </h:panelGroup>
-            <d:customBottomForm webAppBean="#{userRegistrationWebAppBean}" />
+            <d:customBottomForm />
         </h:form>
-        <d:customBottomBody webAppBean="#{userRegistrationWebAppBean}" />
+        <d:customBottomBody />
     </h:body>
 </html>

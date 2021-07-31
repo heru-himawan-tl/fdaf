@@ -38,13 +38,12 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		xmlns:f="http://xmlns.jcp.org/jsf/core"
 		xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
     <composite:interface>
-        <composite:attribute required="true" name="webAppBean" type="java.lang.Object" />
         <composite:attribute required="true" name="pagePrefix" type="java.lang.String" />
         <composite:attribute required="true" name="pageTitle" type="java.lang.String" />
     </composite:interface>
     <composite:implementation>
         <h:head>
-            <d:customTitleTag webAppBean="#{cc.attrs.webAppBean}" pageTitle="#{cc.attrs.pageTitle}" />
+            <d:customTitleTag pageTitle="#{cc.attrs.pageTitle}" />
             <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
             <h:outputStylesheet library="css" name="style.css" />
             <h:outputScript library="js" name="function.js" />
@@ -53,80 +52,80 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
             <d:customHeadTag />
         </h:head>
         <h:body>
-            <h:form id="form" a:enctype="#{cc.attrs.webAppBean.enctype}">
-                <d:mainInit webAppBean="#{cc.attrs.webAppBean}" />
+            <h:form id="form" a:enctype="#{controller.bean.enctype}">
+                <d:mainInit />
                 <d:loadBundles />
-                <d:databaseServiceCheck webAppBean="#{cc.attrs.webAppBean}" />
-                <d:userSessionWatch webAppBean="#{cc.attrs.webAppBean}" rendered="#{cc.attrs.webAppBean.databaseIsError eq false}" />
-                <d:administratorAccountCheck webAppBean="#{cc.attrs.webAppBean}" rendered="#{cc.attrs.webAppBean.databaseIsError eq false}" />
-                <d:addAdministratorStartPage webAppBean="#{cc.attrs.webAppBean}" rendered="#{cc.attrs.webAppBean.databaseIsError eq false}" />
-                <d:massiveRemovalPrompt webAppBean="#{cc.attrs.webAppBean}" id="massiveRemovalPrompt"
-                    rendered="#{(cc.attrs.webAppBean.opMode eq 'LISTING')}" />
+                <d:databaseServiceCheck />
+                <d:userSessionWatch rendered="#{controller.bean.databaseIsError eq false}" />
+                <d:administratorAccountCheck rendered="#{controller.bean.databaseIsError eq false}" />
+                <d:addAdministratorStartPage rendered="#{controller.bean.databaseIsError eq false}" />
+                <d:massiveRemovalPrompt id="massiveRemovalPrompt"
+                    rendered="#{(controller.bean.opMode eq 'LISTING')}" />
                 <d:anotherAdminsRecordTakeoverWarningDialog />
                 <d:ownRecordTakeoverWarningDialog />
                 <d:restrictedDeletionPermissionWarningDialog />
                 <d:restrictedEditingPermissionWarningDialog />
-                <d:removePrompt webAppBean="#{cc.attrs.webAppBean}" id="removePrompt" />
-                <d:customTopPanel webAppBean="#{cc.attrs.webAppBean}" />
+                <d:removePrompt id="removePrompt" />
+                <d:customTopPanel />
                 <h:panelGroup layout="block" styleClass="left_panel_back_overlay"></h:panelGroup>
                 <h:panelGroup layout="block" styleClass="right_panel_back_overlay"></h:panelGroup>
                 <h:panelGroup layout="block" styleClass="main_panel_back_overlay"></h:panelGroup>
                 <h:panelGroup layout="block" styleClass="body_flexbox">
                     <d:leftPanel>
-                        <d:customLeftPanel webAppBean="#{cc.attrs.webAppBean}" />
+                        <d:customLeftPanel />
                     </d:leftPanel>
                     <d:mainPanel>
-                        <d:pageContainer id="page" webAppBean="#{cc.attrs.webAppBean}">
-                            <d:takeoverPrompt webAppBean="#{cc.attrs.webAppBean}" />
-                            <d:massiveRemovalPrompt webAppBean="#{cc.attrs.webAppBean}" />
-                            <d:removePrompt webAppBean="#{cc.attrs.webAppBean}" />
-                            <d:listInit webAppBean="#{cc.attrs.webAppBean}" />
-                            <d:inEditStateCheck webAppBean="#{cc.attrs.webAppBean}" />
-                            <d:programHeading pageTitle="#{fn:toUpperCase(cc.attrs.pageTitle)}" webAppBean="#{cc.attrs.webAppBean}" simpleMode="" />
-                            <h:panelGroup layout="block" rendered="#{cc.attrs.webAppBean.allowRender eq true}">
+                        <d:pageContainer id="page">
+                            <d:takeoverPrompt />
+                            <d:massiveRemovalPrompt />
+                            <d:removePrompt />
+                            <d:listInit />
+                            <d:inEditStateCheck />
+                            <d:programHeading pageTitle="#{fn:toUpperCase(cc.attrs.pageTitle)}" simpleMode="" />
+                            <h:panelGroup layout="block" rendered="#{controller.bean.allowRender eq true}">
                                 <d:messages />
                                 <ui:include src="/WEB-INF/templates/#{cc.attrs.pagePrefix}View.xhtml" />
-                                <ui:include src="#{(cc.attrs.webAppBean.allowAdd eq true or (cc.attrs.webAppBean.opMode eq 'UPDATE' and cc.attrs.webAppBean.allowAdd eq false)) ? '/WEB-INF/templates/'.concat(cc.attrs.pagePrefix).concat('Edit.xhtml') : ''}" />
-                                <h:panelGroup layout="block" rendered="#{(cc.attrs.webAppBean.opMode eq 'LISTING')}">
+                                <ui:include src="#{(controller.bean.allowAdd eq true or (controller.bean.opMode eq 'UPDATE' and controller.bean.allowAdd eq false)) ? '/WEB-INF/templates/'.concat(cc.attrs.pagePrefix).concat('Edit.xhtml') : ''}" />
+                                <h:panelGroup layout="block" rendered="#{(controller.bean.opMode eq 'LISTING')}">
                                     <f:passThroughAttribute name="autocomplete" value="off" />
-                                    <d:listControl webAppBean="#{cc.attrs.webAppBean}" />
+                                    <d:listControl />
                                     <ui:include src="/WEB-INF/templates/#{cc.attrs.pagePrefix}List.xhtml" />
                                     <d:listFetchErrorMessages />
-                                    <d:listControlAlt webAppBean="#{cc.attrs.webAppBean}" />
-                                    <d:massiveSelectReset webAppBean="#{cc.attrs.webAppBean}" />
+                                    <d:listControlAlt />
+                                    <d:massiveSelectReset />
                                 </h:panelGroup>
                             </h:panelGroup>
-                            <d:programRestrictionWarningBox webAppBean="#{cc.attrs.webAppBean}" />
-                            <d:databaseErrorWarningBox webAppBean="#{cc.attrs.webAppBean}" />
-                            <d:mainPanelFooter webAppBean="#{cc.attrs.webAppBean}" />
+                            <d:programRestrictionWarningBox />
+                            <d:databaseErrorWarningBox />
+                            <d:mainPanelFooter />
                         </d:pageContainer>
-                        <d:deinit webAppBean="#{cc.attrs.webAppBean}" />
+                        <d:deinit />
                     </d:mainPanel>
                     <d:rightPanel>
-                        <d:customRightPanel webAppBean="#{cc.attrs.webAppBean}" />
+                        <d:customRightPanel />
                     </d:rightPanel>
                 </h:panelGroup>
-                <d:customBottomPanel webAppBean="#{cc.attrs.webAppBean}" />
-                <d:multipartCompatCmp webAppBean="#{cc.attrs.webAppBean}" rendered="#{cc.attrs.webAppBean.enctype eq 'multipart/form-data'}" />
-                <d:customBottomForm webAppBean="#{cc.attrs.webAppBean}" />
-                <h:outputScript rendered="#{(cc.attrs.webAppBean.opMode eq 'LISTING')}">
+                <d:customBottomPanel />
+                <d:multipartCompatCmp rendered="#{controller.bean.enctype eq 'multipart/form-data'}" />
+                <d:customBottomForm />
+                <h:outputScript rendered="#{(controller.bean.opMode eq 'LISTING')}">
                     initListUpdaterWS(
-                        "#{cc.attrs.webAppBean.websocketURL}/list-updater",
-                        "#{cc.attrs.webAppBean.listUpdater.serviceUUID}",
-                        "#{cc.attrs.webAppBean.viewLayerName}",
+                        "#{controller.bean.websocketURL}/list-updater",
+                        "#{controller.bean.listUpdater.serviceUUID}",
+                        "#{controller.bean.viewLayerName}",
                         "list_update_button"
                     );
                 </h:outputScript>
-                <h:outputScript rendered="#{(cc.attrs.webAppBean.opMode eq 'UPDATE')}">
+                <h:outputScript rendered="#{(controller.bean.opMode eq 'UPDATE')}">
                     initEditIndexingWS(
-                        "#{cc.attrs.webAppBean.websocketURL}/edit-indexing",
-                        "#{cc.attrs.webAppBean.editIndexing.serviceUUID}",
-                        "#{cc.attrs.webAppBean.viewLayerName}",
-                        "#{cc.attrs.webAppBean.primaryKey}"
+                        "#{controller.bean.websocketURL}/edit-indexing",
+                        "#{controller.bean.editIndexing.serviceUUID}",
+                        "#{controller.bean.viewLayerName}",
+                        "#{controller.bean.primaryKey}"
                     );
                 </h:outputScript>
             </h:form>
-            <d:customBottomBody webAppBean="#{cc.attrs.webAppBean}" />
+            <d:customBottomBody />
         </h:body>
     </composite:implementation>
 </html>

@@ -97,9 +97,16 @@ public class AddAdministratorWebAppBean extends AbstractWebAppBean implements Se
     private String unlockPassword;
     
     private boolean mailerFailure;
+    
+    @Inject
+    private Controller controller;
 
     public AddAdministratorWebAppBean() {
         // NO-OP
+    }
+    
+    protected Controller getController() {
+        return controller;
     }
     
     @Override
