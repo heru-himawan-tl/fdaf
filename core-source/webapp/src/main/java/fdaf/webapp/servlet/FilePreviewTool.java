@@ -95,7 +95,7 @@ public class FilePreviewTool extends HttpServlet {
                 isAudio = mimeType.matches(".*audio\\/.*");
             }
         } else {
-            address = getServletContext().getRealPath("/web-resources/icons/folder.png");
+            address = getServletContext().getRealPath("/web-resources/icons/folder.svg");
             isDirectory = true;
         }
         
