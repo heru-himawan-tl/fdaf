@@ -30,24 +30,16 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 -->
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-        xmlns:d="http://java.sun.com/jsf/composite/component"
         xmlns:composite="http://java.sun.com/jsf/composite"
         xmlns:h="http://java.sun.com/jsf/html">
     <composite:interface>
+        <composite:attribute required="false" name="addStyleClass" type="java.lang.String" />
         <composite:attribute required="true" name="webAppBean" type="java.lang.Object" />
     </composite:interface>
     <composite:implementation>
-        <h:panelGroup layout="block" styleClass="adm_notice_container">
-            <h:panelGroup layout="block" styleClass="program_restriction_warning_box"
-                rendered="#{
-                    (cc.attrs.webAppBean.isLoggedOn eq false or cc.attrs.webAppBean.allowRender eq false)
-                    and cc.attrs.webAppBean.databaseIsError eq false
-                    and cc.attrs.webAppBean.allowRender eq false
-                    and cc.attrs.webAppBean.userType ne 'ADMINISTRATOR'
-                    and cc.attrs.webAppBean.forAdministratorOnly eq true
-                }">
-                <h:outputText value="#{defaultMessage.forAdministratorOnlyRestrictionWarning}" />
-            </h:panelGroup>
+        <h:panelGroup layout="block" styleClass="field_container #{cc.attrs.addStyleClass}"
+            rendered="#{cc.attrs.webAppBean.isLoggedOn eq true and cc.attrs.webAppBean.databaseIsError eq false}">
+            <composite:insertChildren />
         </h:panelGroup>
     </composite:implementation>
 </html>

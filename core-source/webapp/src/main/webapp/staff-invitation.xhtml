@@ -50,7 +50,6 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
             <d:userSessionWatch webAppBean="#{staffInvitationWebAppBean}" rendered="#{staffInvitationWebAppBean.databaseIsError eq false}" />
             <d:administratorAccountCheck webAppBean="#{staffInvitationWebAppBean}" rendered="#{staffInvitationWebAppBean.databaseIsError eq false}" />
             <d:addAdministratorStartPage webAppBean="#{staffInvitationWebAppBean}" rendered="#{staffInvitationWebAppBean.databaseIsError eq false}" />
-            <d:loginRequirementDialog webAppBean="#{staffInvitationWebAppBean}" rendered="#{staffInvitationWebAppBean.databaseIsError eq false}" />
             <d:staffInvitationInit webAppBean="#{staffInvitationWebAppBean}" />
             <d:customTopPanel webAppBean="#{staffInvitationWebAppBean}" />
             <h:panelGroup layout="block" styleClass="left_panel_back_overlay"></h:panelGroup>
@@ -68,8 +67,13 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                                 and staffInvitationWebAppBean.userType ne 'STAFF' and staffInvitationWebAppBean.userType ne 'CLIENT')}">
                                     <f:ajax event="click" execute="@form" render="@form" listener="#{staffInvitationWebAppBean.executeCreate}" />
                                 </h:commandButton>
-                                <h:commandButton type="button" styleClass="#{(staffInvitationWebAppBean.userType eq 'CLIENT' or staffInvitationWebAppBean.userType eq 'STAFF' or staffInvitationWebAppBean.databaseIsError eq true) ? 'common_button' : 'grouped_button_right'}" onclick="document.location.href='adm.jsf'" value="#{label.buttonClose}" rendered="#{(staffInvitationWebAppBean.opMode ne 'UPDATE' and staffInvitationWebAppBean.isLoggedOn eq true)
-                                or staffInvitationWebAppBean.databaseIsError eq true}" />
+                                <h:commandButton type="button" styleClass="#{(
+                                    staffInvitationWebAppBean.userType eq 'CLIENT' or
+                                    staffInvitationWebAppBean.userType eq 'STAFF' or
+                                    staffInvitationWebAppBean.databaseIsError eq true or
+                                    staffInvitationWebAppBean.isLoggedOn eq false) ?
+                                    'common_button' : 'grouped_button_right'}"
+                                    onclick="document.location.href='adm.jsf'" value="#{label.buttonClose}" />
                             </d:customProgramHeading>
                             <h:panelGroup layout="block" rendered="#{staffInvitationWebAppBean.isLoggedOn eq true}">
                                 <h:panelGroup layout="block" styleClass="field_container" rendered="#{(staffInvitationWebAppBean.opMode eq 'UPDATE')}">
@@ -147,7 +151,7 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                                     </h:panelGroup>
                                 </h:panelGroup>
                             </h:panelGroup>
-                            <d:altProgramRestrictionWarningBox rendered="#{(staffInvitationWebAppBean.userType eq 'CLIENT' or staffInvitationWebAppBean.userType eq 'STAFF') and (staffInvitationWebAppBean.databaseIsError eq false)}" />
+                            <d:altProgramRestrictionWarningBox rendered="#{(staffInvitationWebAppBean.userType eq 'CLIENT' or staffInvitationWebAppBean.userType eq 'STAFF' or staffInvitationWebAppBean.isLoggedOn eq false) and (staffInvitationWebAppBean.databaseIsError eq false)}" />
                             <d:databaseErrorWarningBox webAppBean="#{staffInvitationWebAppBean}" />
                             <d:mainPanelFooter webAppBean="#{staffInvitationWebAppBean}" />
                         </d:pageContainer>

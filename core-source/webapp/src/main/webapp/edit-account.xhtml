@@ -36,8 +36,8 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         xmlns:ui="http://java.sun.com/jsf/facelets"
         xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions"
 		xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <d:setUserSessionRequirement webAppBean="#{accountEditorWebAppBean}" />
     <d:commonPageTemplate webAppBean="#{accountEditorWebAppBean}" pageTitle="#{label.editAccount}">
-        <d:loginRequirementDialog webAppBean="#{accountEditorWebAppBean}" rendered="#{accountEditorWebAppBean.databaseIsError eq false}" />
         <d:administratorAccountCheck webAppBean="#{accountEditorWebAppBean}" rendered="#{accountEditorWebAppBean.databaseIsError eq false}" />
         <d:addAdministratorStartPage webAppBean="#{accountEditorWebAppBean}" rendered="#{accountEditorWebAppBean.databaseIsError eq false}" />
         <d:accountEditorInit webAppBean="#{accountEditorWebAppBean}" />             
@@ -48,7 +48,8 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
             <h:commandButton type="button" styleClass="grouped_button_right" onclick="document.location.href='adm.jsf'" value="#{label.buttonClose}" />
         </d:customProgramHeading>
         <d:messages />
-        <h:panelGroup layout="block" styleClass="field_container" rendered="#{accountEditorWebAppBean.databaseIsError eq false}">
+        <d:loginRequirementInlineDialog webAppBean="#{accountEditorWebAppBean}" />
+        <d:admFieldContainer webAppBean="#{accountEditorWebAppBean}">
             <h:panelGroup layout="block" styleClass="field_container_inner">
                 <d:fieldRow>
                     <d:fieldColumn>
@@ -99,6 +100,6 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                     </d:fieldColumn>
                 </d:fieldRow>
             </h:panelGroup>
-        </h:panelGroup>
+        </d:admFieldContainer>
     </d:commonPageTemplate>
 </html>

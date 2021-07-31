@@ -242,4 +242,8 @@ public class FileManagerUtil {
     public List<String> getSearchResultList() {
         return null;
     }
+    
+    public void createNewDirectory(String name) {
+        
+    }
 }

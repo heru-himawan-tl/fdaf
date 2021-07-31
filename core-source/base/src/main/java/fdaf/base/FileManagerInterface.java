@@ -56,4 +56,6 @@ public interface FileManagerInterface {
     public void toParentDirectory();
     
     public void toHomeDirectory();
+    
+    public void createNewDirectory(String name);
 }

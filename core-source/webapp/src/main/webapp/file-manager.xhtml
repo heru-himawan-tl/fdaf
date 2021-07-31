@@ -44,13 +44,16 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         <d:customHeadTag />
     </h:head>
     <h:body>
+        <d:setUserSessionRequirement webAppBean="#{fileManagerWebAppBean}" />
         <h:form id="form">
             <d:mainInit webAppBean="#{fileManagerWebAppBean}" />
             <d:loadBundles />
             <d:databaseServiceCheck webAppBean="#{fileManagerWebAppBean}" />
-            <d:administratorAccountCheck webAppBean="#{fileManagerWebAppBean}" />
-            <d:populateNodes webAppBean="#{fileManagerWebAppBean}" />
+            <d:administratorAccountCheck webAppBean="#{fileManagerWebAppBean}" rendered="#{fileManagerWebAppBean.databaseIsError eq false}" />
+            <d:addAdministratorStartPage webAppBean="#{fileManagerWebAppBean}" rendered="#{fileManagerWebAppBean.databaseIsError eq false}" />
             <d:userSessionWatch webAppBean="#{fileManagerWebAppBean}" rendered="#{(fileManagerWebAppBean.administratorAccountExists eq true)}" />
+            
+            <d:populateNodes webAppBean="#{fileManagerWebAppBean}" />
             <d:customTopPanel webAppBean="#{fileManagerWebAppBean}" />
             <h:panelGroup layout="block" styleClass="left_panel_back_overlay"></h:panelGroup>
             <h:panelGroup layout="block" styleClass="right_panel_back_overlay"></h:panelGroup>
@@ -67,19 +70,23 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                             rewitePageClass="file_manager_main_page_container" />
                         <h:panelGroup layout="block" styleClass="file_manager_main_page_container">
                             <d:customProgramHeading pageTitle="#{fn:toUpperCase(label.fileManager)}">
-                                <h:commandButton type="button" styleClass="grouped_button_left" value="#{label.buttonHome}" immediate="true">
+                                <h:commandButton type="button" styleClass="grouped_button_left" value="#{label.buttonHome}"
+                                    immediate="true" rendered="#{fileManagerWebAppBean.isLoggedOn eq true}">
                                     <f:actionListener binding="#{fileManagerWebAppBean.toHomeDirectory()}" />
                                     <f:ajax event="click" execute="@form" render="@form" />
                                 </h:commandButton>
-                                <h:commandButton type="button" styleClass="grouped_button_left" value="#{label.buttonParentDir}" immediate="true">
+                                <h:commandButton type="button" styleClass="grouped_button_left" value="#{label.buttonParentDir}"
+                                    immediate="true" rendered="#{fileManagerWebAppBean.isLoggedOn eq true}">
                                     <f:actionListener binding="#{fileManagerWebAppBean.toParentDirectory()}" />
                                     <f:ajax event="click" execute="@form" render="@form" />
                                 </h:commandButton>
-                                <h:commandButton type="button" styleClass="grouped_button_right"
+                                <h:commandButton type="button" styleClass="#{
+                                    (fileManagerWebAppBean.isLoggedOn eq true) ? 'grouped_button_right' : 'common_button'}"
                                     onclick="document.location.href='adm.jsf'" value="#{label.buttonClose}" />
                             </d:customProgramHeading>
                             <d:messages />
-                            <h:panelGroup layout="block" styleClass="field_container">
+                            <d:loginRequirementInlineDialog webAppBean="#{fileManagerWebAppBean}" />
+                            <d:admFieldContainer webAppBean="#{fileManagerWebAppBean}">
                                 <h:panelGroup layout="block" styleClass="field_container_inner">
                                     <h:panelGroup layout="block" styleClass="file_manager_image_box">
                                         <ui:repeat value="#{fileManagerWebAppBean.nodes}" var="node">
@@ -124,7 +131,7 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                                         </ui:repeat>
                                     </h:panelGroup>
                                 </h:panelGroup>
-                            </h:panelGroup>
+                            </d:admFieldContainer>
                         </h:panelGroup>
                         <d:databaseErrorWarningBox webAppBean="#{fileManagerWebAppBean}" />
                         <d:mainPanelFooter webAppBean="#{fileManagerWebAppBean}" />
