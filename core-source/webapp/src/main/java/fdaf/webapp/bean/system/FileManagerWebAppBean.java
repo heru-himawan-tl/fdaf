@@ -46,6 +46,9 @@ import javax.faces.event.ComponentSystemEvent;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 // UNDER DEVELOPMENT!
 @ViewScoped
@@ -72,7 +75,12 @@ public class FileManagerWebAppBean extends AbstractBaseWebAppBean implements Ser
     private LinkedHashMap<String, Map<String, Boolean>> nodes = new LinkedHashMap<String, Map<String, Boolean>>();
     
     @Inject
-    private FileManagerDirectoryInfoBean directoryInfo; 
+    private FileManagerDirectoryInfoBean directoryInfo;
+    
+    @Pattern(regexp = "^[a-zA-Z0-9\\.\\-\\_\\(\\)\\[\\]\\{\\}\\$\\@\\~]+$", message = "{newDirectoryNameBadFormat}")
+    @Size(min = 1, max = 128, message = "{newDirectoryNameLengthOutOfRange}")
+    @NotBlank(message = "{newDirectoryNameBlank}")
+    private String newDirectoryName;
 
     public FileManagerWebAppBean() {
         // NO-OP
@@ -133,5 +141,18 @@ public class FileManagerWebAppBean extends AbstractBaseWebAppBean implements Ser
     
     public String getCurrentDirectory() {
         return directoryInfo.getCurrentDirectory();
+    }
+    
+    public void setNewDirectoryName(String newDirectoryName) {
+        this.newDirectoryName = newDirectoryName;
+    }
+    
+    public String getNewDirectoryName() {
+        return newDirectoryName;
+    }
+    
+    public void createNewDirectory() {
+        if (!fileManagerUtil.createNewDirectory(newDirectoryName)) {
+        }
     }
 }

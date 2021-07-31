@@ -57,5 +57,5 @@ public interface FileManagerInterface {
     
     public void toHomeDirectory();
     
-    public void createNewDirectory(String name);
+    public boolean createNewDirectory(String name);
 }

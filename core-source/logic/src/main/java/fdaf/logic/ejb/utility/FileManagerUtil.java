@@ -243,7 +243,12 @@ public class FileManagerUtil {
         return null;
     }
     
-    public void createNewDirectory(String name) {
-        
+    public boolean createNewDirectory(String name) {
+        try {
+            Files.createDirectory(Paths.get(currentDirectory + File.separator + name));
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
     }
 }
