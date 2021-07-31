@@ -153,6 +153,7 @@ public class FileManagerWebAppBean extends AbstractBaseWebAppBean implements Ser
     
     public void createNewDirectory() {
         if (!fileManagerUtil.createNewDirectory(newDirectoryName)) {
+            addMessage(SV_ERROR, "newDirectoryCreationError");
         }
     }
 }
