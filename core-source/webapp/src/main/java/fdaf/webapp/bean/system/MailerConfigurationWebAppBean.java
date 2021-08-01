@@ -28,12 +28,7 @@
  */
 package fdaf.webapp.bean.system;
 
-import fdaf.base.AdministratorAccountCheckerInterface;
-import fdaf.base.CommonConfigurationInterface;
-import fdaf.base.DatabaseServiceCheckerInterface;
-import fdaf.base.FacadeInterface;
 import fdaf.base.MailerInterface;
-import fdaf.base.UserSessionManagerInterface;
 import fdaf.webapp.base.AbstractBaseWebAppBean;
 import fdaf.webapp.base.WebAppOpMode;
 import java.io.File;
@@ -77,20 +72,8 @@ public class MailerConfigurationWebAppBean extends AbstractBaseWebAppBean implem
     
     private static final Random RANDOM = new SecureRandom();
     
-    @EJB(lookup = "java:global/__EJB_LOOKUP_DIR__/AdministratorAccountCheckerFacade")
-    private AdministratorAccountCheckerInterface admAccountChecker; 
-      
-    @EJB(lookup = "java:global/__EJB_LOOKUP_DIR__/DatabaseServiceCheckerFacade")
-    private DatabaseServiceCheckerInterface dbServiceChecker;
-    
-    @EJB(lookup = "java:global/__EJB_LOOKUP_DIR__/UserSessionManagerFacade")
-    private UserSessionManagerInterface userSessionManager;
-    
     @EJB(lookup = "java:global/__EJB_LOOKUP_DIR__/MailerService")
     private MailerInterface mailer;
-    
-    @EJB(lookup = "java:global/__EJB_LOOKUP_DIR__/CommonConfigurationService")
-    private CommonConfigurationInterface commonConfiguration;
     
     private String masterPasswordFileAddr;
     private String masterPassword;
@@ -124,10 +107,6 @@ public class MailerConfigurationWebAppBean extends AbstractBaseWebAppBean implem
     
     protected Controller getController() {
         return controller;
-    }
-    
-    protected CommonConfigurationInterface getCommonConfiguration() {
-        return commonConfiguration;
     }
     
     public void initMailerConfiguration(ComponentSystemEvent event) throws AbortProcessingException {
@@ -283,19 +262,6 @@ public class MailerConfigurationWebAppBean extends AbstractBaseWebAppBean implem
 
     public String getMasterPasswordFileAddr() {
         return masterPasswordFileAddr;
-    }
-
-    protected AdministratorAccountCheckerInterface getAdministratorAccountChecker() {
-        return admAccountChecker;
-    }
-    
-    @Override
-    protected DatabaseServiceCheckerInterface getDatabaseServiceChecker() {
-        return dbServiceChecker;
-    }
-    
-    public UserSessionManagerInterface getUserSessionManager() {
-        return userSessionManager;
     }
     
     public void setHost(String host) {

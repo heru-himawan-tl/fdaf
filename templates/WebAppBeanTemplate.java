@@ -28,11 +28,7 @@
  */
 package fdaf.webapp.bean.common;
 
-import fdaf.base.AdministratorAccountCheckerInterface;
-import fdaf.base.CommonConfigurationInterface;
-import fdaf.base.DatabaseServiceCheckerInterface;
 import fdaf.base.FacadeInterface;
-import fdaf.base.UserSessionManagerInterface;
 import fdaf.webapp.base.AbstractWebAppBean;
 import fdaf.webapp.bean.system.Controller;
 import fdaf.webapp.bean.system.EditIndexingBean;
@@ -51,18 +47,6 @@ public class __NAME__WebAppBean extends AbstractWebAppBean implements Serializab
 
     @EJB(lookup = "java:global/__EJB_LOOKUP_DIR__/__NAME__Facade")
     private FacadeInterface facade;
-
-    @EJB(lookup = "java:global/__EJB_LOOKUP_DIR__/AdministratorAccountCheckerFacade")
-    private AdministratorAccountCheckerInterface admAccountChecker;
-
-    @EJB(lookup = "java:global/__EJB_LOOKUP_DIR__/UserSessionManagerFacade")
-    private UserSessionManagerInterface userSessionManager;
-    
-    @EJB(lookup = "java:global/__EJB_LOOKUP_DIR__/DatabaseServiceCheckerFacade")
-    private DatabaseServiceCheckerInterface dbServiceChecker;
-    
-    @EJB(lookup = "java:global/__EJB_LOOKUP_DIR__/CommonConfigurationService")
-    private CommonConfigurationInterface commonConfiguration;
     
     @Inject
     private EditIndexingBean editIndexing;
@@ -93,26 +77,8 @@ public class __NAME__WebAppBean extends AbstractWebAppBean implements Serializab
         return listUpdater;
     }
 
-    protected AdministratorAccountCheckerInterface getAdministratorAccountChecker() {
-        return admAccountChecker;
-    }
-    
-    protected CommonConfigurationInterface getCommonConfiguration() {
-        return commonConfiguration;
-    }
-
     protected FacadeInterface getFacade() {
         return facade;
-    }
-    
-    @Override
-    protected DatabaseServiceCheckerInterface getDatabaseServiceChecker() {
-        return dbServiceChecker;
-    }
-
-    @Override
-    public UserSessionManagerInterface getUserSessionManager() {
-        return userSessionManager;
     }
     
     // UI_UPDATER_ARRAY_GET_METHOD_HERE

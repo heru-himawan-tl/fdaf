@@ -28,10 +28,7 @@
  */
 package fdaf.webapp.bean.system;
 
-import fdaf.base.AdministratorAccountCheckerInterface;
-import fdaf.base.CommonConfigurationInterface;
 import fdaf.base.FacadeInterface;
-import fdaf.base.UserSessionManagerInterface;
 import fdaf.webapp.base.AbstractWebAppBean;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -48,16 +45,8 @@ import javax.inject.Inject;
 @ViewScoped
 @Named
 public class UserSessionManagerWebAppBean extends AbstractWebAppBean implements Serializable {
+
     private static final long serialVersionUID = 1L;
-    
-    @EJB(lookup = "java:global/__EJB_LOOKUP_DIR__/AdministratorAccountCheckerFacade")
-    private AdministratorAccountCheckerInterface rootAccountChecker;
-    
-    @EJB(lookup = "java:global/__EJB_LOOKUP_DIR__/UserSessionManagerFacade")
-    private UserSessionManagerInterface userSessionManager;
-    
-    @EJB(lookup = "java:global/__EJB_LOOKUP_DIR__/CommonConfigurationService")
-    private CommonConfigurationInterface commonConfiguration;
     
     private boolean inProcessLogin;
     private boolean loginRefused;
@@ -77,10 +66,6 @@ public class UserSessionManagerWebAppBean extends AbstractWebAppBean implements 
         return controller;
     }
 
-    protected AdministratorAccountCheckerInterface getAdministratorAccountChecker() {
-        return rootAccountChecker;
-    }
-
     @Override
     protected void postConstructTask() {
         String ref = getRequest().getHeader("Referer");
@@ -89,15 +74,6 @@ public class UserSessionManagerWebAppBean extends AbstractWebAppBean implements 
         } else {
             referer = "index.jsf";
         }
-    }
-    
-    protected CommonConfigurationInterface getCommonConfiguration() {
-        return commonConfiguration;
-    }
-
-    @Override
-    public UserSessionManagerInterface getUserSessionManager() {
-        return userSessionManager;
     }
 
     protected FacadeInterface getFacade() {
@@ -146,10 +122,10 @@ public class UserSessionManagerWebAppBean extends AbstractWebAppBean implements 
         loggedOn = false;
         loginRefused = false;
         try {
-            if (userSessionManager.login(userName, password, userAgent, commonConfiguration.getAllowPerUserMultipleLogins())) {
-                userSessionID = userSessionManager.getUserSessionID();
+            if (getUserSessionManager().login(userName, password, userAgent, getCommonConfiguration().getAllowPerUserMultipleLogins())) {
+                userSessionID = getUserSessionManager().getUserSessionID();
                 if (!presetUserSessionIDCookie(userSessionID, (keepLogin) ? 24*365*3600 : -1)) {
-                    userSessionManager.rollbackLogin(userSessionID, userAgent);
+                    getUserSessionManager().rollbackLogin(userSessionID, userAgent);
                     addMessage(SV_WARN, "loginRefused");
                     return;
                 }
@@ -186,7 +162,7 @@ public class UserSessionManagerWebAppBean extends AbstractWebAppBean implements 
             return;
         }
         try {
-            if (userSessionManager.logout(userSessionID, getRequest().getHeader("User-Agent"))
+            if (getUserSessionManager().logout(userSessionID, getRequest().getHeader("User-Agent"))
                     && presetUserSessionIDCookie("", 0)) {
                 addMessage(SV_INFO, "logoutSucces");
                 brokenUserSession = false;

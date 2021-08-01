@@ -28,11 +28,8 @@
  */
 package fdaf.webapp.bean.system;
 
-import fdaf.base.AdministratorAccountCheckerInterface;
-import fdaf.base.CommonConfigurationInterface;
-import fdaf.base.DatabaseServiceCheckerInterface;
 import fdaf.base.FacadeInterface;
-import fdaf.base.UserSessionManagerInterface;
+import fdaf.base.CommonConfigurationInterface;
 import fdaf.webapp.base.AbstractBaseWebAppBean;
 import fdaf.webapp.base.WebAppOpMode;
 import java.io.File;
@@ -78,18 +75,6 @@ public class CommonConfigurationWebAppBean extends AbstractBaseWebAppBean implem
     private static final String ALPHABET = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
     
     private static final Random RANDOM = new SecureRandom();
-    
-    @EJB(lookup = "java:global/__EJB_LOOKUP_DIR__/AdministratorAccountCheckerFacade")
-    private AdministratorAccountCheckerInterface admAccountChecker; 
-      
-    @EJB(lookup = "java:global/__EJB_LOOKUP_DIR__/DatabaseServiceCheckerFacade")
-    private DatabaseServiceCheckerInterface dbServiceChecker;
-    
-    @EJB(lookup = "java:global/__EJB_LOOKUP_DIR__/UserSessionManagerFacade")
-    private UserSessionManagerInterface userSessionManager;
-    
-    @EJB(lookup = "java:global/__EJB_LOOKUP_DIR__/CommonConfigurationService")
-    private CommonConfigurationInterface config;
     
     private String masterPasswordFileAddr;
     private String masterPassword;
@@ -197,29 +182,25 @@ public class CommonConfigurationWebAppBean extends AbstractBaseWebAppBean implem
             return;
         }
         
-        config.loadConfig();
+        getCommonConfiguration().loadConfig();
         
-        if (config.isEnabled()) {
-            setOfflineSite(config.getOfflineSite());
-            setSiteName(config.getSiteName());
-            setDomain(config.getDomain());
-            setDomainAsDefaultSite(config.getDomainAsDefaultSite());
-            setAllowPerUserMultipleLogins(config.getAllowPerUserMultipleLogins());
-            setWebSocketClientSecureKey(config.getWebSocketClientSecureKey());
-            setWebmasterEmail(config.getWebmasterEmail());
-            setSiteDescription(config.getSiteDescription());
-            setRegionalLanguage(config.getRegionalLanguage());
-            setCompanyName(config.getCompanyName());
-            setCompanyDescription(config.getCompanyDescription());
-            setCompanyAddress1(config.getCompanyAddress1());
-            setCompanyAddress2(config.getCompanyAddress2());
-            setCompanyPhone1(config.getCompanyPhone1());
-            setCompanyPhone2(config.getCompanyPhone2());
+        if (getCommonConfiguration().isEnabled()) {
+            setOfflineSite(getCommonConfiguration().getOfflineSite());
+            setSiteName(getCommonConfiguration().getSiteName());
+            setDomain(getCommonConfiguration().getDomain());
+            setDomainAsDefaultSite(getCommonConfiguration().getDomainAsDefaultSite());
+            setAllowPerUserMultipleLogins(getCommonConfiguration().getAllowPerUserMultipleLogins());
+            setWebSocketClientSecureKey(getCommonConfiguration().getWebSocketClientSecureKey());
+            setWebmasterEmail(getCommonConfiguration().getWebmasterEmail());
+            setSiteDescription(getCommonConfiguration().getSiteDescription());
+            setRegionalLanguage(getCommonConfiguration().getRegionalLanguage());
+            setCompanyName(getCommonConfiguration().getCompanyName());
+            setCompanyDescription(getCommonConfiguration().getCompanyDescription());
+            setCompanyAddress1(getCommonConfiguration().getCompanyAddress1());
+            setCompanyAddress2(getCommonConfiguration().getCompanyAddress2());
+            setCompanyPhone1(getCommonConfiguration().getCompanyPhone1());
+            setCompanyPhone2(getCommonConfiguration().getCompanyPhone2());
         }
-    }
-    
-    protected CommonConfigurationInterface getCommonConfiguration() {
-        return config;
     }
     
     private void generatePassword() throws Exception {
@@ -246,19 +227,6 @@ public class CommonConfigurationWebAppBean extends AbstractBaseWebAppBean implem
     public String getMasterPasswordFileAddr() {
         return masterPasswordFileAddr;
     }
-
-    protected AdministratorAccountCheckerInterface getAdministratorAccountChecker() {
-        return admAccountChecker;
-    }
-    
-    @Override
-    protected DatabaseServiceCheckerInterface getDatabaseServiceChecker() {
-        return dbServiceChecker;
-    }
-    
-    public UserSessionManagerInterface getUserSessionManager() {
-        return userSessionManager;
-    }
     
     public void save(AjaxBehaviorEvent event) throws AbortProcessingException {
         boolean abort = false;
@@ -276,22 +244,22 @@ public class CommonConfigurationWebAppBean extends AbstractBaseWebAppBean implem
         if (abort) {
             return;
         }
-        config.setOfflineSite(offlineSite);
-        config.setSiteName(siteName);
-        config.setDomain(domain);
-        config.setDomainAsDefaultSite(domainAsDefaultSite);
-        config.setAllowPerUserMultipleLogins(allowPerUserMultipleLogins);
-        config.setWebSocketClientSecureKey(webSocketClientSecureKey);
-        config.setWebmasterEmail(webmasterEmail);
-        config.setSiteDescription(siteDescription);
-        config.setRegionalLanguage(regionalLanguage);
-        config.setCompanyName(companyName);
-        config.setCompanyDescription(companyDescription);
-        config.setCompanyAddress1(companyAddress1);
-        config.setCompanyAddress2(companyAddress2);
-        config.setCompanyPhone1(companyPhone1);
-        config.setCompanyPhone2(companyPhone2);
-        if (!config.saveConfig()) {
+        getCommonConfiguration().setOfflineSite(offlineSite);
+        getCommonConfiguration().setSiteName(siteName);
+        getCommonConfiguration().setDomain(domain);
+        getCommonConfiguration().setDomainAsDefaultSite(domainAsDefaultSite);
+        getCommonConfiguration().setAllowPerUserMultipleLogins(allowPerUserMultipleLogins);
+        getCommonConfiguration().setWebSocketClientSecureKey(webSocketClientSecureKey);
+        getCommonConfiguration().setWebmasterEmail(webmasterEmail);
+        getCommonConfiguration().setSiteDescription(siteDescription);
+        getCommonConfiguration().setRegionalLanguage(regionalLanguage);
+        getCommonConfiguration().setCompanyName(companyName);
+        getCommonConfiguration().setCompanyDescription(companyDescription);
+        getCommonConfiguration().setCompanyAddress1(companyAddress1);
+        getCommonConfiguration().setCompanyAddress2(companyAddress2);
+        getCommonConfiguration().setCompanyPhone1(companyPhone1);
+        getCommonConfiguration().setCompanyPhone2(companyPhone2);
+        if (!getCommonConfiguration().saveConfig()) {
             addMessage(SV_ERROR, "commonConfigurationServiceError");
             return;
         }
@@ -303,7 +271,7 @@ public class CommonConfigurationWebAppBean extends AbstractBaseWebAppBean implem
     }
     
     public CommonConfigurationInterface getConfig() {
-        return config;
+        return getCommonConfiguration();
     }
     
     public void setOfflineSite(boolean offlineSite) {

@@ -28,11 +28,7 @@
  */
 package fdaf.webapp.bean.system;
 
-import fdaf.base.AdministratorAccountCheckerInterface;
-import fdaf.base.CommonConfigurationInterface;
-import fdaf.base.DatabaseServiceCheckerInterface;
 import fdaf.base.FacadeInterface;
-import fdaf.base.UserSessionManagerInterface;
 import fdaf.webapp.base.AbstractWebAppBean;
 import fdaf.webapp.base.WebAppOpMode;
 import java.io.Serializable;
@@ -52,18 +48,6 @@ public class ProfileEditorWebAppBean extends AbstractWebAppBean implements Seria
     @EJB(lookup = "java:global/__EJB_LOOKUP_DIR__/ProfileEditorFacade")
     private FacadeInterface facade;
 
-    @EJB(lookup = "java:global/__EJB_LOOKUP_DIR__/AdministratorAccountCheckerFacade")
-    private AdministratorAccountCheckerInterface admAccountChecker;
-
-    @EJB(lookup = "java:global/__EJB_LOOKUP_DIR__/UserSessionManagerFacade")
-    private UserSessionManagerInterface userSessionManager;
-
-    @EJB(lookup = "java:global/__EJB_LOOKUP_DIR__/DatabaseServiceCheckerFacade")
-    private DatabaseServiceCheckerInterface dbServiceChecker;
-
-    @EJB(lookup = "java:global/__EJB_LOOKUP_DIR__/CommonConfigurationService")
-    private CommonConfigurationInterface commonConfiguration;
-
     private boolean initialized;
     
     @Inject
@@ -79,7 +63,7 @@ public class ProfileEditorWebAppBean extends AbstractWebAppBean implements Seria
     
     public void initProfileEditor(ComponentSystemEvent event) throws AbortProcessingException {
         if (loggedOn && !initialized) {
-            primaryKey = userSessionManager.getEmployeeId();
+            primaryKey = getUserSessionManager().getEmployeeId();
             if ((primaryKey == null) && ((opMode != WebAppOpMode.UPDATE) && (opMode != WebAppOpMode.CREATE))) {
                 prepareCreate(null);
             }
@@ -90,25 +74,7 @@ public class ProfileEditorWebAppBean extends AbstractWebAppBean implements Seria
         }
     }
 
-    protected AdministratorAccountCheckerInterface getAdministratorAccountChecker() {
-        return admAccountChecker;
-    }
-    
-    protected CommonConfigurationInterface getCommonConfiguration() {
-        return commonConfiguration;
-    }
-
     protected FacadeInterface getFacade() {
         return facade;
-    }
-    
-    @Override
-    protected DatabaseServiceCheckerInterface getDatabaseServiceChecker() {
-        return dbServiceChecker;
-    }
-
-    @Override
-    public UserSessionManagerInterface getUserSessionManager() {
-        return userSessionManager;
     }
 }

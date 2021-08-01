@@ -28,11 +28,7 @@
  */
 package fdaf.webapp.bean.system;
 
-import fdaf.base.AdministratorAccountCheckerInterface;
-import fdaf.base.CommonConfigurationInterface;
 import fdaf.base.PasswordResetInterface;
-import fdaf.base.FacadeInterface;
-import fdaf.base.UserSessionManagerInterface;
 import fdaf.webapp.base.AbstractWebAppBean;
 import fdaf.webapp.base.WebAppOpMode;
 import fdaf.base.MailerInterface;
@@ -55,20 +51,11 @@ public class PasswordResetWebAppBean extends AbstractWebAppBean implements Seria
     
     private static final long serialVersionUID = 1L;
     
-    @EJB(lookup = "java:global/__EJB_LOOKUP_DIR__/AdministratorAccountCheckerFacade")
-    private AdministratorAccountCheckerInterface rootAccountChecker;
-    
     @EJB(lookup = "java:global/__EJB_LOOKUP_DIR__/PasswordResetFacade")
     private PasswordResetInterface facade;
     
-    @EJB(lookup = "java:global/__EJB_LOOKUP_DIR__/UserSessionManagerFacade")
-    private UserSessionManagerInterface userSessionManager;
-    
     @EJB(lookup = "java:global/__EJB_LOOKUP_DIR__/MailerService")
     private MailerInterface mailer;
-    
-    @EJB(lookup = "java:global/__EJB_LOOKUP_DIR__/CommonConfigurationService")
-    private CommonConfigurationInterface commonConfiguration;
     
     private String resetPassword;
     private boolean success;
@@ -86,18 +73,6 @@ public class PasswordResetWebAppBean extends AbstractWebAppBean implements Seria
     
     protected Controller getController() {
         return controller;
-    }
-
-    protected AdministratorAccountCheckerInterface getAdministratorAccountChecker() {
-        return rootAccountChecker;
-    }
-    
-    protected CommonConfigurationInterface getCommonConfiguration() {
-        return commonConfiguration;
-    }
-    
-    public UserSessionManagerInterface getUserSessionManager() {
-        return userSessionManager;
     }
     
     public void setEmail(String email) {
@@ -182,7 +157,7 @@ public class PasswordResetWebAppBean extends AbstractWebAppBean implements Seria
         // NO-OP
     }
 
-    public PasswordResetInterface getFacade() {
+    protected PasswordResetInterface getFacade() {
         return facade;
     }
 }

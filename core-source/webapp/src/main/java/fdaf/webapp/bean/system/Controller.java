@@ -28,7 +28,12 @@
  */
 package fdaf.webapp.bean.system;
 
+import fdaf.base.AdministratorAccountCheckerInterface;
+import fdaf.base.CommonConfigurationInterface;
+import fdaf.base.DatabaseServiceCheckerInterface;
+import fdaf.base.UserSessionManagerInterface;
 import java.io.Serializable;
+import javax.ejb.EJB;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -39,6 +44,18 @@ public class Controller implements Serializable {
 
     private static final long serialVersionUID = 1L;
     private Object bean;
+    
+    @EJB(lookup = "java:global/__EJB_LOOKUP_DIR__/AdministratorAccountCheckerFacade")
+    private AdministratorAccountCheckerInterface administratorAccountChecker;
+    
+    @EJB(lookup = "java:global/__EJB_LOOKUP_DIR__/CommonConfigurationService")
+    private CommonConfigurationInterface commonConfiguration;
+    
+    @EJB(lookup = "java:global/__EJB_LOOKUP_DIR__/DatabaseServiceCheckerFacade")
+    private DatabaseServiceCheckerInterface databaseServiceChecker;
+    
+    @EJB(lookup = "java:global/__EJB_LOOKUP_DIR__/UserSessionManagerFacade")
+    private UserSessionManagerInterface userSessionManager;
 
     public Controller() {
         // NO-OP
@@ -50,5 +67,21 @@ public class Controller implements Serializable {
     
     public Object getBean() {
         return bean;
+    }
+    
+    public AdministratorAccountCheckerInterface getAdministratorAccountChecker() {
+        return administratorAccountChecker;
+    }
+    
+    public CommonConfigurationInterface getCommonConfiguration() {
+        return commonConfiguration;
+    }
+    
+    public DatabaseServiceCheckerInterface getDatabaseServiceChecker() {
+        return databaseServiceChecker;
+    }
+    
+    public UserSessionManagerInterface getUserSessionManager() {
+        return userSessionManager;
     }
 }

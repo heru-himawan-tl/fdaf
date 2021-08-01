@@ -28,11 +28,7 @@
  */
 package fdaf.webapp.bean.system;
 
-import fdaf.base.AdministratorAccountCheckerInterface;
-import fdaf.base.CommonConfigurationInterface;
-import fdaf.base.DatabaseServiceCheckerInterface;
 import fdaf.base.FacadeInterface;
-import fdaf.base.UserSessionManagerInterface;
 import fdaf.webapp.base.AbstractWebAppBean;
 import fdaf.webapp.base.WebAppOpMode;
 import java.io.Serializable;
@@ -52,18 +48,6 @@ public class AccountEditorWebAppBean extends AbstractWebAppBean implements Seria
     @EJB(lookup = "java:global/__EJB_LOOKUP_DIR__/AccountEditorFacade")
     private FacadeInterface facade;
     
-    @EJB(lookup = "java:global/__EJB_LOOKUP_DIR__/AdministratorAccountCheckerFacade")
-    private AdministratorAccountCheckerInterface admAccountChecker;
-    
-    @EJB(lookup = "java:global/__EJB_LOOKUP_DIR__/UserSessionManagerFacade")
-    private UserSessionManagerInterface userSessionManager;
-    
-    @EJB(lookup = "java:global/__EJB_LOOKUP_DIR__/DatabaseServiceCheckerFacade")
-    private DatabaseServiceCheckerInterface dbServiceChecker;
-    
-    @EJB(lookup = "java:global/__EJB_LOOKUP_DIR__/CommonConfigurationService")
-    private CommonConfigurationInterface commonConfiguration;
-    
     @Inject
     private Controller controller;
 
@@ -77,30 +61,12 @@ public class AccountEditorWebAppBean extends AbstractWebAppBean implements Seria
     
     public void initAccountEditor(ComponentSystemEvent event) throws AbortProcessingException {
         if (loggedOn && opMode != WebAppOpMode.UPDATE) {
-            primaryKey = userSessionManager.getUserId();
+            primaryKey = getUserSessionManager().getUserId();
             prepareUpdate(primaryKey);
         }
     }
 
-    protected AdministratorAccountCheckerInterface getAdministratorAccountChecker() {
-        return admAccountChecker;
-    }
-    
-    protected CommonConfigurationInterface getCommonConfiguration() {
-        return commonConfiguration;
-    }
-
     protected FacadeInterface getFacade() {
         return facade;
-    }
-    
-    @Override
-    protected DatabaseServiceCheckerInterface getDatabaseServiceChecker() {
-        return dbServiceChecker;
-    }
-
-    @Override
-    public UserSessionManagerInterface getUserSessionManager() {
-        return userSessionManager;
     }
 }

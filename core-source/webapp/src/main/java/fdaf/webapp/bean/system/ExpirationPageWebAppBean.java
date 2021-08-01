@@ -48,9 +48,6 @@ public class ExpirationPageWebAppBean extends AbstractDummyWebAppBean implements
 
     private static final long serialVersionUID = 1L;
     
-    @EJB(lookup = "java:global/__EJB_LOOKUP_DIR__/CommonConfigurationService")
-    private CommonConfigurationInterface commonConfiguration;
-    
     private String referer;
     
     @Inject
@@ -76,10 +73,6 @@ public class ExpirationPageWebAppBean extends AbstractDummyWebAppBean implements
                 referer = currentReferer[0];
             }
         }
-    }
-    
-    protected CommonConfigurationInterface getCommonConfiguration() {
-        return commonConfiguration;
     }
 
     public String getReferer() {

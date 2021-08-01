@@ -28,10 +28,6 @@
  */
 package fdaf.webapp.bean.system;
 
-import fdaf.base.AdministratorAccountCheckerInterface;
-import fdaf.base.CommonConfigurationInterface;
-import fdaf.base.DatabaseServiceCheckerInterface;
-import fdaf.base.UserSessionManagerInterface;
 import fdaf.webapp.base.AbstractBaseWebAppBean;
 import java.io.Serializable;
 import javax.ejb.EJB;
@@ -45,18 +41,6 @@ public class AdmWebAppBean extends AbstractBaseWebAppBean implements Serializabl
 
     private static final long serialVersionUID = 1L;
     
-    @EJB(lookup = "java:global/__EJB_LOOKUP_DIR__/AdministratorAccountCheckerFacade")
-    private AdministratorAccountCheckerInterface admAccountChecker;
-    
-    @EJB(lookup = "java:global/__EJB_LOOKUP_DIR__/UserSessionManagerFacade")
-    private UserSessionManagerInterface userSessionManager;
-    
-    @EJB(lookup = "java:global/__EJB_LOOKUP_DIR__/DatabaseServiceCheckerFacade")
-    private DatabaseServiceCheckerInterface dbServiceChecker;
-    
-    @EJB(lookup = "java:global/__EJB_LOOKUP_DIR__/CommonConfigurationService")
-    private CommonConfigurationInterface commonConfiguration;
-    
     @Inject
     private Controller controller;
 
@@ -66,23 +50,5 @@ public class AdmWebAppBean extends AbstractBaseWebAppBean implements Serializabl
     
     protected Controller getController() {
         return controller;
-    }
-
-    protected AdministratorAccountCheckerInterface getAdministratorAccountChecker() {
-        return admAccountChecker;
-    }
-    
-    protected CommonConfigurationInterface getCommonConfiguration() {
-        return commonConfiguration;
-    }
-    
-    @Override
-    protected DatabaseServiceCheckerInterface getDatabaseServiceChecker() {
-        return dbServiceChecker;
-    }
-
-    @Override
-    public UserSessionManagerInterface getUserSessionManager() {
-        return userSessionManager;
     }
 }

@@ -96,12 +96,26 @@ public abstract class AbstractBaseWebAppBean extends AbstractWebAppCommon {
         return controllerID;
     }
     
-    protected abstract CommonConfigurationInterface getCommonConfiguration();
-    
     protected abstract Controller getController();
     
     public void initController(ComponentSystemEvent event) throws AbortProcessingException {
         getController().setBean((Object) this);
+    }
+    
+    protected AdministratorAccountCheckerInterface getAdministratorAccountChecker() {
+        return getController().getAdministratorAccountChecker();
+    }
+    
+    protected CommonConfigurationInterface getCommonConfiguration() {
+        return getController().getCommonConfiguration();
+    }
+    
+    protected DatabaseServiceCheckerInterface getDatabaseServiceChecker() {
+        return getController().getDatabaseServiceChecker();
+    }
+    
+    public UserSessionManagerInterface getUserSessionManager() {
+        return getController().getUserSessionManager();
     }
     
     protected void addCustomCallbackMessage(FacesMessage.Severity severity, String key, String addInfo) {
@@ -154,13 +168,6 @@ public abstract class AbstractBaseWebAppBean extends AbstractWebAppCommon {
 
     protected void addMessage(FacesMessage.Severity severity, String key) {
         addMessage(severity, key, "");
-    }
-
-    protected abstract AdministratorAccountCheckerInterface getAdministratorAccountChecker();
-    public abstract UserSessionManagerInterface getUserSessionManager();
-    
-    protected DatabaseServiceCheckerInterface getDatabaseServiceChecker() {
-        return null;
     }
     
     public void checkDatabaseService(ComponentSystemEvent event) throws AbortProcessingException {
