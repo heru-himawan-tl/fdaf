@@ -29,6 +29,7 @@
 package fdaf.webapp.bean.utility;
 
 import java.io.Serializable;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 import javax.enterprise.context.SessionScoped;
@@ -46,5 +47,13 @@ public class Utility implements Serializable {
 
     public int getPercentByListLength(List list) {
         return (int) (100 / list.size());
+    }
+    
+    public String toURL(String src) {
+        try {
+            return URLEncoder.encode(src, "UTF-8");
+        } catch (Exception e) {
+        }
+        return src;
     }
 }

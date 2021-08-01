@@ -37,7 +37,6 @@ import fdaf.base.UserSessionManagerInterface;
 import fdaf.base.UserType;
 import fdaf.webapp.base.AbstractBaseWebAppBean;
 import java.io.Serializable;
-import java.net.URLEncoder;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import javax.ejb.EJB;
@@ -131,15 +130,7 @@ public class FileManagerWebAppBean extends AbstractBaseWebAppBean implements Ser
         fileManagerUtil.populateNodes();
         nodes = fileManagerUtil.getNodeMap();
     }
-    
-    public String toURL(String src) {
-        try {
-            return URLEncoder.encode(src, "UTF-8");
-        } catch (Exception e) {
-        }
-        return src;
-    }
-    
+
     public LinkedHashMap<String, Map<String, Boolean>> getNodes() {
         return nodes;
     }
