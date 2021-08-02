@@ -65,6 +65,7 @@ public class FileManagerWebAppBean extends AbstractBaseWebAppBean implements Ser
     private String newDirectoryName;
     
     private boolean inPrepareCreateDirectory;
+    private boolean inPrepareUpload;
     
     @Inject
     private Controller controller;
@@ -117,6 +118,14 @@ public class FileManagerWebAppBean extends AbstractBaseWebAppBean implements Ser
         return inPrepareCreateDirectory;
     }
     
+    public void prepareUpload() {
+        inPrepareUpload = true;
+    }
+    
+    public boolean inPrepareUpload() {
+        return inPrepareUpload;
+    }
+    
     public void setNewDirectoryName(String newDirectoryName) {
         this.newDirectoryName = newDirectoryName;
     }
@@ -128,6 +137,12 @@ public class FileManagerWebAppBean extends AbstractBaseWebAppBean implements Ser
     public void createNewDirectory() {
         if (!fileManagerUtil.createNewDirectory(newDirectoryName)) {
             addMessage(SV_ERROR, "newDirectoryCreationError");
+            return;
         }
+        inPrepareCreateDirectory = false;
+    }
+    
+    public void cancelNewDirectoryCreation() {
+        inPrepareCreateDirectory = false;
     }
 }

@@ -48,7 +48,7 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
             <d:loadBundles />
             <d:databaseServiceCheck />
             <d:administratorAccountCheck />
-            <d:userSessionWatch rendered="#{(controller.bean.administratorAccountExists eq true)}" />
+            <d:userSessionWatch rendered="#{controller.bean.administratorAccountExists eq true}" />
             <d:commonConfigurationInit />
             <d:customTopPanel />
             <h:panelGroup layout="block" styleClass="left_panel_back_overlay"></h:panelGroup>
@@ -62,23 +62,23 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                     <d:pageContainer id="page">
                         <d:customProgramHeading pageTitle="#{fn:toUpperCase(label.commonConfiguration)}">
                             <h:commandButton type="button" styleClass="grouped_button_left" value="#{label.buttonSaveCreate}"
-                                rendered="#{(
+                                rendered="#{
                                     controller.bean.inSaving eq false and
                                     controller.bean.userType ne 'STAFF' and
                                     controller.bean.userType ne 'CLIENT'
-                                )}">
+                                }">
                                 <f:ajax event="click" execute="@form" render="@form" listener="#{controller.bean.save}" />
                             </h:commandButton>
                             <h:commandButton type="button" styleClass="#{(
                                 controller.bean.userType eq 'CLIENT' or
                                 controller.bean.userType eq 'STAFF')
                                 ? 'common_button' : 'grouped_button_right'}" onclick="document.location.href='adm.jsf'" 
-                                value="#{label.buttonClose}" rendered="#{(controller.bean.inSaving eq false)}" />
+                                value="#{label.buttonClose}" rendered="#{controller.bean.inSaving eq false}" />
                             <h:commandButton type="button" styleClass="common_button" value="#{label.buttonClose}" 
                                 onclick="document.location.href='adm.jsf';"
-                                rendered="#{(controller.bean.inSaving eq true)}" />
+                                rendered="#{controller.bean.inSaving eq true}" />
                         </d:customProgramHeading>
-                        <h:panelGroup layout="block" styleClass="field_container" rendered="#{(controller.bean.inSaving eq true)}">
+                        <h:panelGroup layout="block" styleClass="field_container" rendered="#{controller.bean.inSaving eq true}">
                             <h:panelGroup layout="block" styleClass="field_container_inner">
                                 <d:fieldRow>
                                     <d:fieldColumn>
@@ -88,11 +88,11 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                             </h:panelGroup>
                         </h:panelGroup>
                         <d:messages rendered="#{(controller.bean.inSaving eq false)}" />
-                        <h:panelGroup layout="block" styleClass="field_container" rendered="#{(
+                        <h:panelGroup layout="block" styleClass="field_container" rendered="#{
                                 controller.bean.inSaving eq false and
                                 controller.bean.userType ne 'STAFF' and
                                 controller.bean.userType ne 'CLIENT'
-                            )}">
+                            }">
                             <h:panelGroup layout="block" styleClass="field_container_inner">
                                 <d:fieldNoteBox rendered="#{controller.bean.isLoggedOn eq false}">
                                     <h:outputText value="#{defaultMessage.restrictedCommonConfigurationWarn}" />
@@ -163,7 +163,7 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                                         <d:fieldInputBox>
                                             <h:selectOneMenu id="gender" value="#{controller.bean.regionalLanguage}">
                                                 <f:selectItems value="#{languageOption.items}" var="selectItem"
-                                                        itemValue="#{selectItem.value}" itemLabel="#{selectItem.label}" />
+                                                    itemValue="#{selectItem.value}" itemLabel="#{selectItem.label}" />
                                             </h:selectOneMenu>
                                         </d:fieldInputBox>
                                     </d:fieldColumn>
@@ -262,10 +262,9 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                                 </d:fieldRow>
                             </h:panelGroup>
                         </h:panelGroup>
-                        <d:altProgramRestrictionWarningBox rendered="#{(
-                            controller.bean.userType eq 'CLIENT' or
-                            controller.bean.userType eq 'STAFF') and
-                            controller.bean.databaseIsError eq false
+                        <d:altProgramRestrictionWarningBox rendered="#{
+                                (controller.bean.userType eq 'CLIENT' or controller.bean.userType eq 'STAFF') and
+                                controller.bean.databaseIsError eq false
                             }" />
                         <d:mainPanelFooter />
                     </d:pageContainer>

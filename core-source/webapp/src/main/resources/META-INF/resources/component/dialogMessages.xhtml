@@ -33,17 +33,17 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         xmlns:composite="http://java.sun.com/jsf/composite"
         xmlns:h="http://java.sun.com/jsf/html"
         xmlns:ui="http://java.sun.com/jsf/facelets">
-    <composite:interface></composite:interface>
+    <composite:interface>
+        <composite:attribute required="false" name="addStyleClass" type="java.lang.String" />
+    </composite:interface>
     <composite:implementation>
         <h:panelGroup layout="block" rendered="#{(messagesTagUtil.rendered eq true)}">
-            <h:panelGroup layout="block" styleClass="dialog_content_box">
-                <h:panelGroup layout="block" styleClass="dialog_#{messagesTagUtil.severity}_message">
-                    <ui:repeat value="#{messagesTagUtil.messages}" var="message">
-                        <h:panelGroup layout="block" styleClass="dialog_messages_item">
-                            <h:outputText value="#{message}" />
-                        </h:panelGroup>
-                    </ui:repeat>
-                </h:panelGroup>
+            <h:panelGroup layout="block" styleClass="dialog_#{messagesTagUtil.severity}_message #{cc.attrs.addStyleClass}">
+                <ui:repeat value="#{messagesTagUtil.messages}" var="message">
+                    <h:panelGroup layout="block" styleClass="dialog_messages_item">
+                        <h:outputText value="#{message}" />
+                    </h:panelGroup>
+                </ui:repeat>
             </h:panelGroup>
         </h:panelGroup>
     </composite:implementation>

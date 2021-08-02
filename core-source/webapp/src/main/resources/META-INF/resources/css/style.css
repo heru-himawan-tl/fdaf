@@ -1443,6 +1443,11 @@ a:hover
     color: #ffffff;
 }
 
+.field_note_box_free
+{
+    margin-left: 8px;
+}
+
 .field_group_title_outer
 {
     display: table;
@@ -1852,6 +1857,17 @@ a:hover
 
 .dialog_messages_item
 {
+}
+
+.dialog_field_label_box
+{
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+
+.dialog_messages_offset_top
+{
+    padding-top: 8px;
 }
 
 /* END OF DIALOG BOX ====================================================== */
