@@ -1948,6 +1948,26 @@ a:hover
     background: #ffffff;
 }
 
+.file_manager_directory_empty_box_outer
+{
+    padding: 8px;
+    padding-right: 0px;
+}
+
+.file_manager_directory_empty_box
+{
+    padding: 8px;
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #eeeeee;
+    height: 128px;
+}
+
 /* END OF FILE MANAGER PARTS ============================================== */
 
 /* OVERALL MISC. CONTROL ================================================== */

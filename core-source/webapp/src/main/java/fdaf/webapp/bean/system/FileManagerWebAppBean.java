@@ -97,6 +97,10 @@ public class FileManagerWebAppBean extends AbstractBaseWebAppBean implements Ser
         fileManagerUtil.populateNodes();
         nodes = fileManagerUtil.getNodeMap();
     }
+    
+    public boolean getIsEmptyDirectory() {
+        return nodes.isEmpty();
+    }
 
     public LinkedHashMap<String, Map<String, Boolean>> getNodes() {
         return nodes;

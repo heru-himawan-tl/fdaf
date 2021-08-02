@@ -126,6 +126,12 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                                     <h:panelGroup layout="block" styleClass="field_note_box field_note_box_free">
                                         <h:outputText value="#{controller.bean.currentDirectory}" />
                                     </h:panelGroup>
+                                    <h:panelGroup layout="block" styleClass="file_manager_directory_empty_box_outer"
+                                        rendered="#{controller.bean.isEmptyDirectory eq true}">
+                                        <h:panelGroup layout="block" styleClass="file_manager_directory_empty_box">
+                                            <h:outputText value="#{defaultMessage.fileManagerDirectoryEmptyNote}" />
+                                        </h:panelGroup>
+                                    </h:panelGroup>
                                     <h:panelGroup layout="block" styleClass="file_manager_image_box">
                                         <ui:repeat value="#{controller.bean.nodes}" var="node">
                                             <ui:repeat value="#{node.value}" var="data">
