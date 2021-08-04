@@ -193,9 +193,14 @@ public class CommonConfigurationService extends ApplicationIdentifier implements
             prop.setProperty("domain", domain);
             prop.setProperty("domainAsDefaultSite", (domainAsDefaultSite) ? "true" : "false");
             prop.setProperty("allowPerUserMultipleLogins", (allowPerUserMultipleLogins) ? "true" : "false");
-            prop.setProperty("webSocketClientSecureKey", webSocketClientSecureKey);
-            prop.setProperty("webmasterEmail", webmasterEmail);
-            prop.setProperty("webmasterEmail", webmasterEmail);
+            try {
+                prop.setProperty("webSocketClientSecureKey", webSocketClientSecureKey);
+            } catch (Exception ex) {
+            }
+            try {
+                prop.setProperty("webmasterEmail", webmasterEmail);
+            } catch (Exception ex) {
+            }
             prop.setProperty("siteDescription", siteDescription);
             prop.setProperty("regionalLanguage", regionalLanguage);
             prop.setProperty("companyName", companyName);

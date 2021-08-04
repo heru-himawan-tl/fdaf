@@ -39,6 +39,7 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     <composite:interface>
         <composite:attribute required="true" name="pagePrefix" type="java.lang.String" />
         <composite:attribute required="true" name="pageTitle" type="java.lang.String" />
+        <composite:attribute required="false" name="admAccountCheck" default="false" type="java.lang.Boolean" />
     </composite:interface>
     <composite:implementation>
         <h:head>
@@ -53,7 +54,9 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                 <d:mainInit />
                 <d:loadBundles />
                 <d:databaseServiceCheck />
-                <d:userSessionWatch rendered="#{controller.bean.databaseIsError eq false}" />
+                <d:administratorAccountCheck rendered="#{controller.bean.databaseIsError eq false and cc.attrs.admAccountCheck eq true}" />
+                <d:addAdministratorStartPage rendered="#{controller.bean.databaseIsError eq false and cc.attrs.admAccountCheck eq true}" />
+                <d:userSessionWatch rendered="#{controller.bean.databaseIsError eq false and controller.bean.administratorAccountExists eq true}" />
                 <d:customTopPanel />
                 <h:panelGroup layout="block" styleClass="left_panel_back_overlay"></h:panelGroup>
                 <h:panelGroup layout="block" styleClass="right_panel_back_overlay"></h:panelGroup>

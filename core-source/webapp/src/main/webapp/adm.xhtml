@@ -38,9 +38,7 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions"
 		xmlns:f="http://xmlns.jcp.org/jsf/core">
     <d:controllerInit bean="#{admWebAppBean}" />
-    <d:commonPageTemplate pageTitle="#{label.admMainPage}">
-        <d:administratorAccountCheck rendered="#{controller.bean.databaseIsError eq false}" />
-        <d:addAdministratorStartPage rendered="#{controller.bean.databaseIsError eq false}" />
+    <d:commonPageTemplate pageTitle="#{label.admMainPage}" admAccountCheck="true">
         <d:customProgramHeading pageTitle="#{fn:toUpperCase(label.admMainPage)}">
             <h:commandButton type="button" styleClass="common_button" onclick="document.location.href='index.jsf'" value="#{label.buttonClose}" />
         </d:customProgramHeading>

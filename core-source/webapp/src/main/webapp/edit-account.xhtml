@@ -38,9 +38,7 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		xmlns:f="http://xmlns.jcp.org/jsf/core">
     <d:controllerInit bean="#{accountEditorWebAppBean}" />
     <d:setUserSessionRequirement />
-    <d:commonPageTemplate pageTitle="#{label.editAccount}">
-        <d:administratorAccountCheck rendered="#{controller.bean.databaseIsError eq false}" />
-        <d:addAdministratorStartPage rendered="#{controller.bean.databaseIsError eq false}" />
+    <d:commonPageTemplate pageTitle="#{label.editAccount}" admAccountCheck="true">
         <d:accountEditorInit />             
         <d:customProgramHeading pageTitle="#{fn:toUpperCase(label.editAccount)}">
             <h:commandButton type="button" styleClass="grouped_button_left" value="#{label.buttonSaveUpdate}">
