@@ -1885,6 +1885,12 @@ a:hover
     height: 100% !important;
 }
 
+.file_previewer_internal_box
+{
+    display: block;
+    padding-top: 8px;
+}
+
 .file_manager_image_box
 {
     display: block;

@@ -122,7 +122,8 @@ public class FilePreviewTool extends HttpServlet {
             } else {
                 out.println("<body style=\"margin: 0px; text-align:center !important;\">");
             }
-            out.println("<b>" + address + "</b>\n<hr />");
+            out.println("<div class=\"field_note_box\">" + address + "</div>");
+            out.println("<div class=\"file_previewer_internal_box\">");
             if (isImage) {
                 out.println("<img src=\"file-preview-tool?view=1&amp;prev=0&amp;address=" 
                     + urlAddress + "\" width=\"100%\" alt=\"" + urlAddress + "\" id=\"FilePreviewToolImage\" />");
@@ -149,6 +150,7 @@ public class FilePreviewTool extends HttpServlet {
                 out.println("<embed class=\"file_previewer_object\" height=\"100%\" src=\"file-preview-tool?view=1&amp;prev=0&amp;address=" + urlAddress + "\" type=\"application/pdf\" />");
                 //out.println("</object>");
             }
+            out.println("</div>");
             out.println("<script>resizeIframe();</script>");
             out.println("</body>");
             out.println("</html>");
