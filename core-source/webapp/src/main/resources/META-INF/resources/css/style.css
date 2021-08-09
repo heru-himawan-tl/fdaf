@@ -1909,8 +1909,8 @@ a:hover
 
 .file_manager_image_item_icon_box
 {
-    width: 82px;
-    height: 82px;
+    width: 96px;
+    height: 96px;
     display: -webkit-box;
     display: -moz-box;
     display: -ms-flexbox;
@@ -1922,12 +1922,30 @@ a:hover
     background: #eeeeee;
     /*border: 1px solid #0000ff;*/
     border-radius: 2px;
+    padding: 12px;
+}
+
+.file_manager_cb
+{
+    margin-top: -3px !important;
+}
+
+.file_manager_image_item_cb_rel_box
+{
+    display: block;
+    position: relative;
+}
+
+.file_manager_image_item_cb_abs_box
+{
+    position: absolute;
+    display: block;
 }
 
 .file_manager_image_item_name_box
 {
     display: block;
-    max-width: 82px !important;
+    max-width: 96px !important;
     overflow: hidden;
     padding-top: 8px;
     text-align: center;

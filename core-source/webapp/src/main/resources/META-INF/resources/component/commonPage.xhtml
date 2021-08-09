@@ -59,8 +59,7 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                 <d:userSessionWatch rendered="#{controller.bean.databaseIsError eq false}" />
                 <d:administratorAccountCheck rendered="#{controller.bean.databaseIsError eq false}" />
                 <d:addAdministratorStartPage rendered="#{controller.bean.databaseIsError eq false}" />
-                <d:massiveRemovalPrompt id="massiveRemovalPrompt"
-                    rendered="#{(controller.bean.opMode eq 'LISTING')}" />
+                <d:massiveRemovalPrompt rendered="#{(controller.bean.opMode eq 'LISTING')}" />
                 <d:anotherAdminsRecordTakeoverWarningDialog />
                 <d:ownRecordTakeoverWarningDialog />
                 <d:restrictedDeletionPermissionWarningDialog />

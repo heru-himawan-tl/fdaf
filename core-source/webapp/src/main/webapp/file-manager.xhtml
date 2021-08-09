@@ -53,6 +53,7 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
             <d:administratorAccountCheck rendered="#{controller.bean.databaseIsError eq false}" />
             <d:addAdministratorStartPage rendered="#{controller.bean.databaseIsError eq false}" />
             <d:userSessionWatch rendered="#{(controller.bean.administratorAccountExists eq true)}" />
+            <d:massiveRemovalPromptCommon />
             <d:populateNodes />
             <d:customTopPanel />
             <h:panelGroup layout="block" styleClass="dialog_container" rendered="#{controller.bean.inPrepareCreateDirectory eq true}">
@@ -115,6 +116,10 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                                     <f:actionListener binding="#{controller.bean.prepareCreateDirectory()}" />
                                     <f:ajax event="click" execute="@form" render="@form" />
                                 </h:commandButton>
+                                <h:commandButton type="button" styleClass="grouped_button_inner" value="#{label.buttonMassiveRemove}">
+                                    <f:actionListener binding="#{controller.bean.presetMassiveRemovalReadyState()}" />
+                                    <f:ajax event="click" execute="@form" render="@form" />
+                                </h:commandButton>
                                 <h:commandButton type="button" styleClass="#{
                                     (controller.bean.isLoggedOn eq true) ? 'grouped_button_right' : 'common_button'}"
                                     onclick="document.location.href='adm.jsf'" value="#{label.buttonClose}" />
@@ -142,6 +147,14 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                                                         <f:actionListener binding="#{controller.bean.setCurrentDirectory(data.key)}" />
                                                         <f:ajax event="click" execute="@form" render="@form" />
                                                     </h:commandButton>
+                                                    <h:panelGroup layout="block" styleClass="file_manager_image_item_cb_rel_box">
+                                                        <h:panelGroup layout="block" styleClass="file_manager_image_item_cb_abs_box">
+                                                            <h:selectManyCheckbox value="#{controller.bean.nodeNames}" styleClass="checkbox file_manager_cb"
+                                                                    collectionType="java.util.ArrayList">
+                                                                <f:selectItem itemValue="#{data.key}" itemLabel="" />
+                                                            </h:selectManyCheckbox>
+                                                        </h:panelGroup>
+                                                    </h:panelGroup>
                                                     <h:panelGroup layout="block" styleClass="file_manager_image_item_icon_box">
                                                         <h:graphicImage value="file-preview-tool?address=#{utility.toURL(data.key)}&amp;view=0&amp;prev=0"
                                                             alt="#{node.key}" styleClass="file_manager_image_item"
@@ -155,6 +168,14 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                                                 </h:panelGroup>
                                                 <h:panelGroup layout="block" styleClass="file_manager_image_item_box"
                                                     rendered="#{data.value eq false}">
+                                                    <h:panelGroup layout="block" styleClass="file_manager_image_item_cb_rel_box">
+                                                        <h:panelGroup layout="block" styleClass="file_manager_image_item_cb_abs_box">
+                                                            <h:selectManyCheckbox value="#{controller.bean.nodeNames}" styleClass="checkbox file_manager_cb"
+                                                                    collectionType="java.util.ArrayList">
+                                                                <f:selectItem itemValue="#{data.key}" itemLabel="" />
+                                                            </h:selectManyCheckbox>
+                                                        </h:panelGroup>
+                                                    </h:panelGroup>
                                                     <h:panelGroup layout="block" styleClass="file_manager_image_item_icon_box">
                                                         <h:graphicImage value="file-preview-tool?address=#{utility.toURL(data.key)}&amp;view=0&amp;prev=0"
                                                             alt="#{node.key}" styleClass="file_manager_image_item"

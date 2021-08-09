@@ -107,7 +107,7 @@ public class CommonConfigurationWebAppBean extends AbstractBaseWebAppBean implem
     private String siteDescription;
     
     private String regionalLanguage;
-    
+    private String fileManagerHomeDirectory;
     private String companyName;
     private String companyDescription;
     private String companyAddress1;
@@ -192,6 +192,7 @@ public class CommonConfigurationWebAppBean extends AbstractBaseWebAppBean implem
             setAllowPerUserMultipleLogins(getCommonConfiguration().getAllowPerUserMultipleLogins());
             setWebSocketClientSecureKey(getCommonConfiguration().getWebSocketClientSecureKey());
             setWebmasterEmail(getCommonConfiguration().getWebmasterEmail());
+            setFileManagerHomeDirectory(getCommonConfiguration().getFileManagerHomeDirectory());
             setSiteDescription(getCommonConfiguration().getSiteDescription());
             setRegionalLanguage(getCommonConfiguration().getRegionalLanguage());
             setCompanyName(getCommonConfiguration().getCompanyName());
@@ -252,6 +253,7 @@ public class CommonConfigurationWebAppBean extends AbstractBaseWebAppBean implem
         getCommonConfiguration().setWebSocketClientSecureKey(webSocketClientSecureKey);
         getCommonConfiguration().setWebmasterEmail(webmasterEmail);
         getCommonConfiguration().setSiteDescription(siteDescription);
+        getCommonConfiguration().setFileManagerHomeDirectory(fileManagerHomeDirectory);
         getCommonConfiguration().setRegionalLanguage(regionalLanguage);
         getCommonConfiguration().setCompanyName(companyName);
         getCommonConfiguration().setCompanyDescription(companyDescription);
@@ -328,6 +330,14 @@ public class CommonConfigurationWebAppBean extends AbstractBaseWebAppBean implem
 
     public String getWebmasterEmail() {
         return webmasterEmail;
+    }
+    
+    public void setFileManagerHomeDirectory(String fileManagerHomeDirectory) {
+        this.fileManagerHomeDirectory = fileManagerHomeDirectory;
+    }
+
+    public String getFileManagerHomeDirectory() {
+        return fileManagerHomeDirectory;
     }
 
     public void setSiteDescription(String siteDescription) {

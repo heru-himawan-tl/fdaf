@@ -32,10 +32,17 @@ import fdaf.base.FileManagerInterface;
 import fdaf.base.UserType;
 import fdaf.webapp.base.AbstractBaseWebAppBean;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import javax.ejb.EJB;
+import javax.faces.component.UIComponent;
+import javax.faces.component.UISelectItem;
+import javax.faces.context.FacesContext;
 import javax.faces.event.AbortProcessingException;
+import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.event.ComponentSystemEvent;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
@@ -148,5 +155,152 @@ public class FileManagerWebAppBean extends AbstractBaseWebAppBean implements Ser
     
     public void cancelNewDirectoryCreation() {
         inPrepareCreateDirectory = false;
+    }
+    
+    HashMap<String, String[]> nodeNameMap = new HashMap<String, String[]>();
+    String[] dummyNodeNames = new String[]{};
+    boolean applyDeselectAll;
+    boolean applySelectAll;
+    boolean selectAllFlag;
+    boolean massiveRemovalReadyState;
+    boolean prepareMassiveRemovalOp;
+   
+    public void resetMassiveSelection(ComponentSystemEvent event) throws AbortProcessingException {
+        applyDeselectAll = false;
+        applySelectAll = false;
+        selectAllFlag = false;
+    }
+
+    private String getSelectItemValue() {
+        UIComponent component = UIComponent.getCurrentComponent(FacesContext.getCurrentInstance());
+        List<UIComponent> children = component.getChildren();
+        if (children != null && !children.isEmpty()) {
+            return String.valueOf(((UISelectItem) children.get(0)).getItemValue());
+        }
+        return null;
+    }
+
+    public void selectAll(AjaxBehaviorEvent event) throws AbortProcessingException {
+        applyDeselectAll = (!selectAllFlag);
+        applySelectAll = selectAllFlag;
+    }
+
+    private void putNodeNameByMassSelection(String nodeName) {
+        if (applySelectAll) {
+            nodeNameMap.put(nodeName, new String[]{nodeName});
+        }
+        if (applyDeselectAll) {
+            resetNodeNameMapPair(nodeName);
+        }
+    }
+
+    private void resetNodeNameMapPair(String nodeName) {
+        nodeNameMap.put(nodeName, new String[]{});
+    }
+
+    public void setNodeNames(String[] nodeNames) {
+        String nodeName = getSelectItemValue();
+        if (nodeName != null) {
+            if (applySelectAll) {
+                nodeNames = new String[]{nodeName};
+            }
+            if (applyDeselectAll) {
+                nodeNames = new String[]{};
+            }
+            nodeNameMap.put(nodeName, nodeNames);
+        }
+    }
+
+    public String[] getNodeNames() {
+        String nodeName = getSelectItemValue();
+        if (nodeName != null) {
+            if (!nodeNameMap.containsKey(nodeName)) {
+                resetNodeNameMapPair(nodeName);
+                putNodeNameByMassSelection(nodeName);
+            } else {
+                putNodeNameByMassSelection(nodeName);
+                return nodeNameMap.get(nodeName);
+            }
+        }
+        return dummyNodeNames;
+    }
+
+    public void setSelectAllFlag(boolean selectAllFlag) {
+        this.selectAllFlag = selectAllFlag;
+    }
+
+    public boolean getSelectAllFlag() {
+        return selectAllFlag;
+    }
+
+    public void presetMassiveRemovalReadyState() {
+        prepareMassiveRemovalOp = true;
+        for (String nodeName : nodeNameMap.keySet()) {
+            String[] nodeNames = nodeNameMap.get(nodeName);
+            if (nodeNames != null && nodeNames.length != 0) {
+                massiveRemovalReadyState = true;
+                return;
+            }
+        }
+    }
+
+    public boolean getMassiveRemovalReadyState() {
+        return massiveRemovalReadyState;
+    }
+
+    public void clearMassiveRemovalReadyState() {
+        massiveRemovalReadyState = false;
+        prepareMassiveRemovalOp = false;
+    }
+
+    public boolean getPrepareMassiveRemovalOp() {
+        return prepareMassiveRemovalOp;
+    }
+    
+    public void executeMassiveRemoval(AjaxBehaviorEvent event) throws AbortProcessingException {
+        boolean partiallyRemoved = false;
+        boolean partiallyLocated = false;
+        boolean getRemoved = false;
+        if (!nodeNameMap.isEmpty()) {
+            List<String> nodeNameList = new ArrayList<String>();
+            for (String nodeName : nodeNameMap.keySet()) {
+                String[] nodeNames = nodeNameMap.get(nodeName);
+                if (nodeNames != null && nodeNames.length != 0) {
+                    try {
+                        // TODO: node removal here
+                        nodeNameList.add(nodeName);
+                        getRemoved = true;
+                    } catch (Exception e) {
+                        indicateServiceError(e);
+                        partiallyRemoved = true;
+                        break;
+                    }
+                }
+            }
+            if (!nodeNameList.isEmpty()) {
+                for (String nodeName : nodeNameList) {
+                    System.out.println(nodeName);
+                    nodeNameMap.remove(nodeName);
+                }
+            }
+            if (!partiallyLocated && !partiallyRemoved && getRemoved) {
+                addMessage(SV_INFO, "massiveRemovalInfo");
+            }
+            if (partiallyLocated && getRemoved) {
+                addMessage(SV_WARN, "massiveRemovalPartialLocatedWarn");
+            }
+            if (partiallyRemoved && getRemoved) {
+                addMessage(SV_WARN, "massiveRemovalPartialRemovedWarn");
+            }
+            if (!getRemoved) {
+                addMessage(SV_ERROR, "massiveRemovalError");
+            }
+        }
+        clearMassiveRemovalReadyState();
+    }
+    
+    public void cancelRemoval() {
+        clearMassiveRemovalReadyState();
+        nodeNameMap.clear();
     }
 }

@@ -39,9 +39,11 @@ public interface FileManagerInterface {
     
     public void move(List<String> fileAddressList, String destinationDirectory);
     
-    public void remove(List<String> fileAddressList);
+    public boolean remove(String fileAddress);
     
     public void populateNodes();
+    
+    public boolean isError();
     
     public LinkedHashMap<String, Map<String, Boolean>> getNodeMap();
     

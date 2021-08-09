@@ -69,6 +69,7 @@ public class CommonConfigurationService extends ApplicationIdentifier implements
     private String siteName;
     private String domain;
     private boolean domainAsDefaultSite;
+    private String fileManagerHomeDirectory;
     private String webmasterEmail;
     private String siteDescription;
     private String regionalLanguage;
@@ -79,10 +80,12 @@ public class CommonConfigurationService extends ApplicationIdentifier implements
     private String companyPhone1;
     private String companyPhone2;
     
+    private boolean isUnixLikeOS;
+    
     @PostConstruct
     public void initCommonConfiguration() {
     
-    	boolean isUNIX = (!System.getProperty("os.name").matches(".*Windows.*"));
+    	isUnixLikeOS = (!System.getProperty("os.name").matches(".*Windows.*"));
         String fsp = File.separator;
         String userHome = null;
         
@@ -95,7 +98,7 @@ public class CommonConfigurationService extends ApplicationIdentifier implements
         
         try {
             Path configDirPath = null;
-            if (isUNIX) {
+            if (isUnixLikeOS) {
                 configDirPath = Paths.get(userHome + fsp + "." + getApplicationCodeName());
             } else {
                 configDirPath = Paths.get("C:\\" + getApplicationCodeName());
@@ -107,7 +110,7 @@ public class CommonConfigurationService extends ApplicationIdentifier implements
             LOGGER.log(Level.SEVERE, null, e);
         }
         
-        if (!isUNIX) {
+        if (!isUnixLikeOS) {
             try {
                 configPath = "C:\\" + getApplicationCodeName() + "\\" + getApplicationCodeName() + "-common.conf";
                 if (Files.exists(Paths.get(configPath))) {
@@ -143,11 +146,15 @@ public class CommonConfigurationService extends ApplicationIdentifier implements
             }
 	    }
         
-        if (isUNIX) {
+        if (isUnixLikeOS) {
             configPath = userHome + fsp + "." + getApplicationCodeName() + fsp + getApplicationCodeName() + "-common.conf";
         } else {
             configPath = "C:\\" + getApplicationCodeName() + "\\" + getApplicationCodeName() + "-common.conf";
         }
+    }
+    
+    public boolean underUnixLikeOS() {
+        return isUnixLikeOS;
     }
     
     public void loadConfig() {
@@ -163,6 +170,7 @@ public class CommonConfigurationService extends ApplicationIdentifier implements
             webSocketClientSecureKey = prop.getProperty("webSocketClientSecureKey");
             domainAsDefaultSite = Boolean.parseBoolean(prop.getProperty("domainAsDefaultSite"));
             webmasterEmail = prop.getProperty("webmasterEmail");
+            fileManagerHomeDirectory = prop.getProperty("fileManagerHomeDirectory");
             siteDescription = prop.getProperty("siteDescription");
             regionalLanguage = prop.getProperty("regionalLanguage");
             companyName = prop.getProperty("companyName");
@@ -201,6 +209,7 @@ public class CommonConfigurationService extends ApplicationIdentifier implements
                 prop.setProperty("webmasterEmail", webmasterEmail);
             } catch (Exception ex) {
             }
+            prop.setProperty("fileManagerHomeDirectory", fileManagerHomeDirectory);
             prop.setProperty("siteDescription", siteDescription);
             prop.setProperty("regionalLanguage", regionalLanguage);
             prop.setProperty("companyName", companyName);
@@ -273,6 +282,14 @@ public class CommonConfigurationService extends ApplicationIdentifier implements
 
     public String getWebmasterEmail() {
         return webmasterEmail;
+    }
+    
+    public void setFileManagerHomeDirectory(String fileManagerHomeDirectory) {
+        this.fileManagerHomeDirectory = fileManagerHomeDirectory;
+    }
+
+    public String getFileManagerHomeDirectory() {
+        return fileManagerHomeDirectory;
     }
 
     public void setSiteDescription(String siteDescription) {

@@ -195,6 +195,16 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                                         </d:fieldInputBox>
                                     </d:fieldColumn>
                                 </d:fieldRow>
+                                <d:fieldGroupTitle title="#{label.fileManagerConfiguration}" />
+                                <d:fieldRow>
+                                    <d:fieldColumn>
+                                        <d:fieldLabel for="fileManagerHomeDirectory" value="#{label.fileManagerHomeDirectory}" />
+                                        <d:fieldInputBox>
+                                            <h:inputText id="fileManagerHomeDirectory" 
+                                                value="#{controller.bean.fileManagerHomeDirectory}" />
+                                        </d:fieldInputBox>
+                                    </d:fieldColumn>
+                                </d:fieldRow>
                                 <d:fieldGroupTitle title="#{label.generalUserProfile}" />
                                 <d:fieldRow>
                                     <d:fieldColumn>

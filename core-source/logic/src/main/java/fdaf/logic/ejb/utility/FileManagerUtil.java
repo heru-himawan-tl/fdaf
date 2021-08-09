@@ -28,6 +28,8 @@
  */
 package fdaf.logic.ejb.utility;
 
+import fdaf.base.ApplicationIdentifier;
+import fdaf.base.CommonConfigurationInterface;
 import fdaf.base.FileListSortMode;
 import fdaf.base.FileManagerInterface;
 import java.io.BufferedReader;
@@ -35,6 +37,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.InputStream;
+import java.io.IOException;
 import java.io.Serializable;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.nio.file.attribute.FileTime;
@@ -42,12 +45,15 @@ import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Stream;
 import java.util.TreeMap;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.ejb.Remote;
 import javax.ejb.Stateful;
@@ -55,18 +61,57 @@ import javax.ejb.Stateful;
 // UNDER DEVELOPMENT !
 @Remote({FileManagerInterface.class})
 @Stateful(passivationCapable = false)
-public class FileManagerUtil {
+public class FileManagerUtil extends ApplicationIdentifier implements Serializable {
         
     private static final long serialVersionUID = 1L;
+    
+    @EJB(lookup = "java:global/__EJB_LOOKUP_DIR__/CommonConfigurationService")
+    private CommonConfigurationInterface commonConfiguration;
+    
     private LinkedList<String> nodeList = new LinkedList<String>();
+    
     private LinkedHashMap<String, Map<String, Boolean>> nodeMap = new LinkedHashMap<String, Map<String, Boolean>>();
+    
     private boolean error;
+    
     private FileListSortMode sortMode = FileListSortMode.BY_NAME;
     private String currentDirectory = System.getProperty("user.home");
     private String baseDirectory = System.getProperty("user.home");
 
     public FileManagerUtil() {
         // NO-OP
+    }
+    
+    @PostConstruct
+    public void initFileManagerUtil() {
+        String userHome = System.getProperty("user.home");
+        String baseDir = "";
+        if (commonConfiguration.isEnabled()) {
+            String fileManagerHomeDirectory = commonConfiguration.getFileManagerHomeDirectory();
+            if (fileManagerHomeDirectory == null
+                || (fileManagerHomeDirectory != null
+                && fileManagerHomeDirectory.isEmpty())) {
+                baseDir = userHome + File.separator + ((commonConfiguration.underUnixLikeOS()) ? "." : "")
+                    + getApplicationCodeName() + File.separator + "user_files";
+            } else {
+                baseDir = fileManagerHomeDirectory;
+            }
+        } else {
+            baseDir = userHome + File.separator + ((commonConfiguration.underUnixLikeOS()) ? "." : "")
+                + getApplicationCodeName() + File.separator + "user_files";
+        }
+        Path baseDirPath = Paths.get(baseDir);
+        if (!Files.exists(baseDirPath)) {
+            try {
+                Files.createDirectories(baseDirPath);
+            } catch (Exception e) {
+                error = true;
+            }
+        }
+    }
+    
+    public boolean isError() {
+        return error;
     }
 
     private void recursiveReadDir(String dirname, LinkedList<String> nodeList) {
@@ -81,6 +126,7 @@ public class FileManagerUtil {
             }
             directoryStream.close();
         } catch (Exception e) {
+            error = true;
         }
     }
     
@@ -233,7 +279,22 @@ public class FileManagerUtil {
         }
     }
    
-    public void remove(List<String> fileAddressList) {
+    public boolean remove(String fileAddress) {
+        Path filePath = Paths.get(fileAddress);
+        if (Files.exists(filePath)) {
+            try {
+                if (Files.isDirectory(filePath)) {
+                    Stream<Path> files = Files.walk(filePath);
+                    files.sorted(Comparator.reverseOrder()).map(Path::toFile).forEach(File::deleteOnExit);
+                    files.close();
+                } else {
+                    Files.delete(filePath);
+                }
+                return true;
+            } catch (IOException ex) {
+            }
+        }
+        return false;
     }
     
     public void search(String keywords) {

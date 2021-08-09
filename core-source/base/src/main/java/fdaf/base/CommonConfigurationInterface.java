@@ -65,6 +65,10 @@ public interface CommonConfigurationInterface {
     public void setRegionalLanguage(String regionalLanguage);
 
     public String getRegionalLanguage();
+    
+    public void setFileManagerHomeDirectory(String fileManagerHomeDirectory);
+
+    public String getFileManagerHomeDirectory();
 
     public void setCompanyName(String companyName);
 
@@ -95,4 +99,6 @@ public interface CommonConfigurationInterface {
     public boolean isEnabled();
     
     public void loadConfig();
+    
+    public boolean underUnixLikeOS();
 }
