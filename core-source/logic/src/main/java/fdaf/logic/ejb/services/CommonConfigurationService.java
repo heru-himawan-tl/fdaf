@@ -153,6 +153,37 @@ public class CommonConfigurationService extends ApplicationIdentifier implements
         }
     }
     
+    private void createFileManagerHomeDirectory() {
+        String fsp = File.separator;
+        String userHome = null;
+        String baseDir = "";
+        
+        try {
+            userHome = System.getProperty("user.home");
+        } catch (Exception e) {
+            LOGGER.log(Level.SEVERE, null, e);
+            return;
+        }
+        
+        if (fileManagerHomeDirectory == null
+            || (fileManagerHomeDirectory != null
+            && fileManagerHomeDirectory.trim().isEmpty())) {
+            baseDir = userHome + fsp + ((isUnixLikeOS) ? "." : "") + getApplicationCodeName() + fsp + "user_files";
+        } else {
+            baseDir = fileManagerHomeDirectory;
+        }
+        Path baseDirPath = Paths.get(baseDir.trim());
+        if (!Files.exists(baseDirPath)) {
+            try {
+                Files.createDirectories(baseDirPath);
+                fileManagerHomeDirectory = baseDir;
+            } catch (Exception e) {
+            }
+        } else {
+            fileManagerHomeDirectory = baseDir;
+        }
+    }
+    
     public boolean underUnixLikeOS() {
         return isUnixLikeOS;
     }
@@ -180,7 +211,10 @@ public class CommonConfigurationService extends ApplicationIdentifier implements
             companyPhone1 = prop.getProperty("companyPhone1");
             companyPhone2 = prop.getProperty("companyPhone2");
                 
-            input.close();       
+            input.close();
+            
+            createFileManagerHomeDirectory();
+                  
         } catch (Exception e) {
             LOGGER.log(Level.SEVERE, null, e);
             saveConfig();
@@ -217,7 +251,7 @@ public class CommonConfigurationService extends ApplicationIdentifier implements
             prop.setProperty("companyAddress1", companyAddress1);
             prop.setProperty("companyAddress2", companyAddress2);
             prop.setProperty("companyPhone1", companyPhone1);
-            prop.setProperty("companyPhone2", companyPhone2);   
+            prop.setProperty("companyPhone2", companyPhone2);
             prop.store(out, null);
             out.close();
             loadConfig();
