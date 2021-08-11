@@ -29,6 +29,5 @@
 package fdaf.base;
 
 public interface AdministratorAccountCheckerInterface {
-
     public boolean isAdministratorAccountExists();
 }

@@ -29,6 +29,5 @@
 package fdaf.base;
 
 public interface DatabaseServiceCheckerInterface {
-
     public void triggerCheck();
 }

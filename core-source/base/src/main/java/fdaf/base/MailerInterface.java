@@ -30,10 +30,10 @@ package fdaf.base;
 
 public interface MailerInterface {
     public boolean isEnabled();
+    public boolean isValidAddress();
     public boolean send(String sender, String reception, String subject, String messages);
     public String getDomain();
     public String getHost();
     public String getUser();
     public void loadConfig();
-    public boolean isValidAddress();
 }

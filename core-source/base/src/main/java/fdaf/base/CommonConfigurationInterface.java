@@ -29,76 +29,40 @@
 package fdaf.base;
 
 public interface CommonConfigurationInterface {
-
-    public void setOfflineSite(boolean offlineSite);
-
-    public boolean getOfflineSite();
-
-    public void setSiteName(String siteName);
-
-    public String getSiteName();
-
-    public void setDomain(String domain);
-
-    public String getDomain();
-
-    public void setDomainAsDefaultSite(boolean domainAsDefaultSite);
-
-    public boolean getDomainAsDefaultSite();
-    
-    public void setWebSocketClientSecureKey(String webSocketClientSecureKey);
-
-    public String getWebSocketClientSecureKey();
-    
-    public void setAllowPerUserMultipleLogins(boolean allowPerUserMultipleLogins);
-    
     public boolean getAllowPerUserMultipleLogins();
-
-    public void setWebmasterEmail(String webmasterEmail);
-
-    public String getWebmasterEmail();
-
-    public void setSiteDescription(String siteDescription);
-
-    public String getSiteDescription();
-
-    public void setRegionalLanguage(String regionalLanguage);
-
-    public String getRegionalLanguage();
-    
-    public void setFileManagerHomeDirectory(String fileManagerHomeDirectory);
-
-    public String getFileManagerHomeDirectory();
-
-    public void setCompanyName(String companyName);
-
-    public String getCompanyName();
-
-    public void setCompanyDescription(String companyDescription);
-
-    public String getCompanyDescription();
-
-    public void setCompanyAddress1(String companyAddress1);
-
-    public String getCompanyAddress1();
-
-    public void setCompanyAddress2(String companyAddress2);
-
-    public String getCompanyAddress2();
-
-    public void setCompanyPhone1(String companyPhone1);
-
-    public String getCompanyPhone1();
-
-    public void setCompanyPhone2(String companyPhone2);
-
-    public String getCompanyPhone2();
-    
-    public boolean saveConfig();
-    
+    public boolean getDomainAsDefaultSite();
+    public boolean getOfflineSite();
     public boolean isEnabled();
-    
-    public void loadConfig();
-    
+    public boolean saveConfig();
     public boolean underUnixLikeOS();
+    public String getCompanyAddress1();
+    public String getCompanyAddress2();
+    public String getCompanyDescription();
+    public String getCompanyName();
+    public String getCompanyPhone1();
+    public String getCompanyPhone2();
+    public String getDomain();
+    public String getFileManagerHomeDirectory();
+    public String getRegionalLanguage();
+    public String getSiteDescription();
+    public String getSiteName();
+    public String getWebmasterEmail();
+    public String getWebSocketClientSecureKey();
+    public void loadConfig();
+    public void setAllowPerUserMultipleLogins(boolean allowPerUserMultipleLogins);
+    public void setCompanyAddress1(String companyAddress1);
+    public void setCompanyAddress2(String companyAddress2);
+    public void setCompanyDescription(String companyDescription);
+    public void setCompanyName(String companyName);
+    public void setCompanyPhone1(String companyPhone1);
+    public void setCompanyPhone2(String companyPhone2);
+    public void setDomainAsDefaultSite(boolean domainAsDefaultSite);
+    public void setDomain(String domain);
+    public void setFileManagerHomeDirectory(String fileManagerHomeDirectory);
+    public void setOfflineSite(boolean offlineSite);
+    public void setRegionalLanguage(String regionalLanguage);
+    public void setSiteDescription(String siteDescription);
+    public void setSiteName(String siteName);
+    public void setWebmasterEmail(String webmasterEmail);
+    public void setWebSocketClientSecureKey(String webSocketClientSecureKey);
 }

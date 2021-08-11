@@ -29,12 +29,8 @@
 package fdaf.base;
 
 public interface UserRegistrationInterface extends FacadeInterface {
-
-    public boolean register(UserType userType, String userName, String password, String email);
-    
-    public boolean validateInvitation(String email, String signature);
-    
-    public boolean findUserByName(String userName);
-    
     public boolean findUserByEmail(String email);
+    public boolean findUserByName(String userName);
+    public boolean register(UserType userType, String userName, String password, String email);
+    public boolean validateInvitation(String email, String signature);
 }

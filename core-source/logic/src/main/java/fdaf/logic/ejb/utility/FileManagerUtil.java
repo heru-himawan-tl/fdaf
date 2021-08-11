@@ -115,6 +115,20 @@ public class FileManagerUtil extends ApplicationIdentifier implements Serializab
         }
     }
     
+    public void changeBaseDirectory(String baseDirectory) {
+        Path baseDirPath = Paths.get(baseDirectory);
+        if (!Files.exists(baseDirPath)) {
+            try {
+                Files.createDirectories(baseDirPath);
+                baseDirectory = baseDirectory;
+            } catch (Exception e) {
+                error = true;
+            }
+        } else {
+            baseDirectory = baseDirectory;
+        }
+    }
+    
     public boolean isError() {
         return error;
     }

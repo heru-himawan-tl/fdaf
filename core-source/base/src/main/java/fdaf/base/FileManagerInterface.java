@@ -34,30 +34,18 @@ import java.util.Map;
 import java.util.List;
 
 public interface FileManagerInterface {
-
-    public void upload(List<InputStream> fileStreamList);
-    
-    public void move(List<String> fileAddressList, String destinationDirectory);
-    
-    public boolean remove(String fileAddress);
-    
-    public void populateNodes();
-    
-    public boolean isError();
-    
-    public LinkedHashMap<String, Map<String, Boolean>> getNodeMap();
-    
-    public void search(String keywords);
-    
-    public List<String> getSearchResultList();
-    
-    public void setCurrentDirectory(String baseDirectory);
-    
-    public String getCurrentDirectory();
-    
-    public void toParentDirectory();
-    
-    public void toHomeDirectory();
-    
     public boolean createNewDirectory(String name);
+    public boolean isError();
+    public boolean remove(String fileAddress);
+    public LinkedHashMap<String, Map<String, Boolean>> getNodeMap();
+    public List<String> getSearchResultList();
+    public String getCurrentDirectory();
+    public void changeBaseDirectory(String baseDirectory);
+    public void move(List<String> fileAddressList, String destinationDirectory);
+    public void populateNodes();
+    public void search(String keywords);
+    public void setCurrentDirectory(String baseDirectory);
+    public void toHomeDirectory();
+    public void toParentDirectory();
+    public void upload(List<InputStream> fileStreamList);
 }

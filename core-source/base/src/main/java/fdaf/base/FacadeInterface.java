@@ -31,76 +31,40 @@ package fdaf.base;
 import java.util.List;
 
 public interface FacadeInterface {
-
     public boolean isDataExists(Object primaryKey);
-    
     public boolean preCreateCheck();
-    
     public boolean preUpdateCheck();
-    
     public int count();
-
     public int count(Long authorId, Long userGroupId, String[] keywords);
-
     public int count(Long authorId, String[] keywords);
-
     public int count(String[] keywords);
-
     public List<Object> list();
-
-    public List<Object> list(String orderParameter, OrderingMode orderMode, Integer offset, Integer limit);
-
-    public List<Object> list(String orderParameter, OrderingMode orderMode, Integer offset, Integer limit, Long authorId, Long userGroupId, String[] keywords);
-
-    public List<Object> list(String orderParameter, OrderingMode orderMode, Integer offset, Integer limit, Long authorId, String[] keywords);
-
-    public List<Object> list(String orderParameter, OrderingMode orderMode, Integer offset, Integer limit, String[] keywords);
-
     public List<Object> list(String orderParameter, OrderingMode orderMode);
-
+    public List<Object> list(String orderParameter, OrderingMode orderMode, Integer offset, Integer limit);
+    public List<Object> list(String orderParameter, OrderingMode orderMode, Integer offset, Integer limit, Long authorId, Long userGroupId, String[] keywords);
+    public List<Object> list(String orderParameter, OrderingMode orderMode, Integer offset, Integer limit, Long authorId, String[] keywords);
+    public List<Object> list(String orderParameter, OrderingMode orderMode, Integer offset, Integer limit, String[] keywords);
     public List<String> getOrderParameters();
-
     public Object getEntity();
-
     public Object getNewRecordId();
-
     public String getCustomMessage();
-
     public String getMessage();
-
-    public void inlineUpdate(Object primaryKey, Object entity);
-
     public void create();
-
     public void customFacadeTask(Object parameter);
-
     public void disposeEntity();
-
+    public void inlineUpdate(Object primaryKey, Object entity);
     public void postCreateTask();
-
     public void postUpdateTask();
-    
     public void prepareCreate();
-
     public void prepareUpdate(Object primaryKey);
-
     public void reloadEntity();
-
     public void reloadNewEntity();
-
     public void remove(Object primaryKey);
-
     public void rollbackCreateTask();
-
     public void setAuthorId(Long authorId);
-
     public void setEntity(Object entity);
-
     public void setModifierId(Long modifierId);
-
     public void setUserGroupId(Long userGroupId);
-
     public void takeover();
-
     public void update();
 }

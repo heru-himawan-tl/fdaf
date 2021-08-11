@@ -29,8 +29,7 @@
 package fdaf.base;
 
 public interface AddAdministratorInterface extends FacadeInterface {
-
     public String getEmail();
-    public String getUserName();
     public String getPassword();
+    public String getUserName();
 }

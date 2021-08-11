@@ -30,7 +30,7 @@ package fdaf.base;
 
 public interface StaffInvitationInterface extends FacadeInterface {
     public String getEmail();
+    public String getInvitaionMessage();
     public String getInvitaionSignature();
     public String getInvitaionSubject();
-    public String getInvitaionMessage();
 }
