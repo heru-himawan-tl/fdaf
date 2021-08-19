@@ -59,6 +59,9 @@ public class FileManagerWebAppBean extends AbstractBaseWebAppBean implements Ser
 
     private static final long serialVersionUID = 1L;
     
+    @Inject
+    private Controller controller;
+    
     @EJB(lookup = "java:global/__EJB_LOOKUP_DIR__/FileManagerUtil")
     private FileManagerInterface fileManagerUtil;
     
@@ -72,12 +75,30 @@ public class FileManagerWebAppBean extends AbstractBaseWebAppBean implements Ser
     @NotBlank(message = "{newDirectoryNameBlank}")
     private String newDirectoryName;
     
+    private String viewedFile;
+    
+    private String oldFileAddress;
+    
+    @Pattern(regexp = "^[a-zA-Z0-9\\.\\-\\_\\(\\)\\[\\]\\{\\}\\$\\@\\~]+$", message = "{newFileNameBadFormat}")
+    @Size(min = 1, max = 128, message = "{newFileNameLengthOutOfRange}")
+    @NotBlank(message = "{newFileNameBlank}")
+    private String newFileName;
+    
     private boolean inPrepareCreateDirectory;
     private boolean inPrepareUpload;
+    private boolean inPrepareRenameFile;
+    private boolean inPrepareRenameDirectory;
+    private boolean inPrepareMoveNodes;
+    
     private boolean baseDirectoryInitialized;
     
-    @Inject
-    private Controller controller;
+    HashMap<String, String[]> nodeNameMap = new HashMap<String, String[]>();
+    String[] dummyNodeNames = new String[]{};
+    boolean applyDeselectAll;
+    boolean applySelectAll;
+    boolean selectAllFlag;
+    boolean massiveRemovalReadyState;
+    boolean prepareMassiveRemovalOp;
 
     public FileManagerWebAppBean() {
         // NO-OP
@@ -138,14 +159,6 @@ public class FileManagerWebAppBean extends AbstractBaseWebAppBean implements Ser
         return inPrepareCreateDirectory;
     }
     
-    public void prepareUpload() {
-        inPrepareUpload = true;
-    }
-    
-    public boolean inPrepareUpload() {
-        return inPrepareUpload;
-    }
-    
     public void setNewDirectoryName(String newDirectoryName) {
         this.newDirectoryName = newDirectoryName;
     }
@@ -159,6 +172,7 @@ public class FileManagerWebAppBean extends AbstractBaseWebAppBean implements Ser
             addMessage(SV_ERROR, "newDirectoryCreationError");
             return;
         }
+        addMessage(SV_INFO, "newDirectoryCreationSuccess");
         inPrepareCreateDirectory = false;
     }
     
@@ -166,13 +180,54 @@ public class FileManagerWebAppBean extends AbstractBaseWebAppBean implements Ser
         inPrepareCreateDirectory = false;
     }
     
-    HashMap<String, String[]> nodeNameMap = new HashMap<String, String[]>();
-    String[] dummyNodeNames = new String[]{};
-    boolean applyDeselectAll;
-    boolean applySelectAll;
-    boolean selectAllFlag;
-    boolean massiveRemovalReadyState;
-    boolean prepareMassiveRemovalOp;
+    public void prepareUpload() {
+        inPrepareUpload = true;
+    }
+    
+    public boolean getInPrepareUpload() {
+        return inPrepareUpload;
+    }
+    
+    public void cancelUpload() {
+        inPrepareUpload = false;
+    }
+    
+    public void setOldFileAddress(String oldFileAddress) {
+        this.oldFileAddress = oldFileAddress;
+    }
+    
+    public String getOldFileAddress() {
+        return oldFileAddress;
+    }
+    
+    public void setNewFileName(String newFileName) {
+        this.newFileName = newFileName;
+    }
+    
+    public String getNewFileName() {
+        return newFileName;
+    }
+    
+    public void prepareRenameFile() {
+        inPrepareRenameFile = true;
+    }
+    
+    public boolean getInPrepareRenameFile() {
+        return inPrepareRenameFile;
+    }
+    
+    public void renameFile() {
+        if (!fileManagerUtil.rename(oldFileAddress, newFileName)) {
+            addMessage(SV_ERROR, "renameFileFailedWarning");
+            return;
+        }
+        addMessage(SV_INFO, "renameFileSuccessInfo");
+        inPrepareRenameFile = false;
+    }
+    
+    public void cancelRenameFile() {
+        inPrepareRenameFile = false;
+    }
    
     public void resetMassiveSelection(ComponentSystemEvent event) throws AbortProcessingException {
         applyDeselectAll = false;

@@ -70,6 +70,7 @@ public class FileManagerUtil extends ApplicationIdentifier implements Serializab
     private LinkedList<String> nodeList = new LinkedList<String>();
     
     private LinkedHashMap<String, Map<String, Boolean>> nodeMap = new LinkedHashMap<String, Map<String, Boolean>>();
+    private LinkedList<String> directoryList = new LinkedList<String>();
     
     private boolean error;
     
@@ -249,6 +250,7 @@ public class FileManagerUtil extends ApplicationIdentifier implements Serializab
                 Map<String, Boolean> data = new HashMap<String, Boolean>();
                 data.put(nodeData[1], true);
                 nodeMap.put(nodeData[0], data);
+                directoryList.add(nodeData[0]);
             }
         }
         if (!localFileMap.isEmpty()) {
@@ -284,6 +286,10 @@ public class FileManagerUtil extends ApplicationIdentifier implements Serializab
     public LinkedHashMap<String, Map<String, Boolean>> getNodeMap() {
         return nodeMap;
     }
+    
+    public LinkedList<String> getDirectoryList() {
+        return directoryList;
+    }
 
     public void changeDirectory(String currentDirectory) {
         this.currentDirectory = currentDirectory;
@@ -292,9 +298,17 @@ public class FileManagerUtil extends ApplicationIdentifier implements Serializab
     public void upload(List<InputStream> fileStreamList) {
     }
     
-    public void move(List<String> fileAddressList, String destinationDirectory) {
+    public boolean move(List<String> fileAddressList, String destinationDirectory) {
         for (String fileAddress : fileAddressList) {
+            if (!fileAddress.equals(destinationDirectory)) {
+            }
         }
+        return true;
+    }
+    
+    public boolean rename(String oldAddress, String newFileName) {
+        String newFileAddress = currentDirectory + File.separator + newFileName;
+        return true;
     }
    
     public boolean remove(String fileAddress) {

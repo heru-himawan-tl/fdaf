@@ -30,18 +30,21 @@ package fdaf.base;
 
 import java.io.InputStream;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.Map;
 import java.util.List;
 
 public interface FileManagerInterface {
     public boolean createNewDirectory(String name);
     public boolean isError();
+    public boolean move(List<String> fileAddressList, String destinationDirectory);
     public boolean remove(String fileAddress);
+    public boolean rename(String oldAddress, String newFileName);
     public LinkedHashMap<String, Map<String, Boolean>> getNodeMap();
+    public LinkedList<String> getDirectoryList();
     public List<String> getSearchResultList();
     public String getCurrentDirectory();
     public void changeBaseDirectory(String baseDirectory);
-    public void move(List<String> fileAddressList, String destinationDirectory);
     public void populateNodes();
     public void search(String keywords);
     public void setCurrentDirectory(String baseDirectory);

@@ -333,6 +333,12 @@ a:hover
     z-index: 4;
     scrollbar-width: thin;
     scrollbar-color: #0000ff #2E3436;
+    overflow-y: hidden;
+}
+
+.panel_menu_container:hover
+{
+    overflow-y: scroll;
 }
 
 .panel_menu_container::-webkit-scrollbar
