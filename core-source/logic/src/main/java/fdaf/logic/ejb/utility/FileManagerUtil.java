@@ -51,7 +51,6 @@ import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Stream;
 import java.util.TreeMap;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -120,12 +119,12 @@ public class FileManagerUtil extends ApplicationIdentifier implements Serializab
         if (!Files.exists(baseDirPath)) {
             try {
                 Files.createDirectories(baseDirPath);
-                baseDirectory = baseDirectory;
+                this.baseDirectory = baseDirectory;
             } catch (Exception e) {
                 error = true;
             }
         } else {
-            baseDirectory = baseDirectory;
+            this.baseDirectory = baseDirectory;
         }
     }
     
@@ -303,14 +302,18 @@ public class FileManagerUtil extends ApplicationIdentifier implements Serializab
         if (Files.exists(filePath)) {
             try {
                 if (Files.isDirectory(filePath)) {
-                    Stream<Path> files = Files.walk(filePath);
-                    files.sorted(Comparator.reverseOrder()).map(Path::toFile).forEach(File::deleteOnExit);
-                    files.close();
+                    Files.walk(filePath).sorted(Comparator.reverseOrder()).forEach(path -> {
+                        try {
+                            Files.delete(path);
+                        } catch (IOException ex) {
+                        }
+                    });
                 } else {
                     Files.delete(filePath);
                 }
-                return true;
-            } catch (IOException ex) {
+                return !Files.exists(filePath);
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         }
         return false;

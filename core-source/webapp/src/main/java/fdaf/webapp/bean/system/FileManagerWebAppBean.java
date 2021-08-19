@@ -31,6 +31,7 @@ package fdaf.webapp.bean.system;
 import fdaf.base.FileManagerInterface;
 import fdaf.base.UserType;
 import fdaf.webapp.base.AbstractBaseWebAppBean;
+import java.io.File;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -73,6 +74,7 @@ public class FileManagerWebAppBean extends AbstractBaseWebAppBean implements Ser
     
     private boolean inPrepareCreateDirectory;
     private boolean inPrepareUpload;
+    private boolean baseDirectoryInitialized;
     
     @Inject
     private Controller controller;
@@ -96,6 +98,13 @@ public class FileManagerWebAppBean extends AbstractBaseWebAppBean implements Ser
     }
 
     public void populateNodes(ComponentSystemEvent event) throws AbortProcessingException {
+        if (!baseDirectoryInitialized) {
+            String baseDirectory = getCommonConfiguration().getFileManagerHomeDirectory()
+                + File.separator + getUserSessionManager().getUserName();
+            fileManagerUtil.changeBaseDirectory(baseDirectory);
+            directoryInfo.setCurrentDirectory(baseDirectory);
+            baseDirectoryInitialized = true;
+        }
         if (directoryInfo.getCurrentDirectory() == null) {
             directoryInfo.setCurrentDirectory(fileManagerUtil.getCurrentDirectory());
         }
@@ -267,9 +276,10 @@ public class FileManagerWebAppBean extends AbstractBaseWebAppBean implements Ser
                 String[] nodeNames = nodeNameMap.get(nodeName);
                 if (nodeNames != null && nodeNames.length != 0) {
                     try {
-                        // TODO: node removal here
-                        nodeNameList.add(nodeName);
-                        getRemoved = true;
+                        if (fileManagerUtil.remove(nodeName)) {
+                            nodeNameList.add(nodeName);
+                            getRemoved = true;
+                        }
                     } catch (Exception e) {
                         indicateServiceError(e);
                         partiallyRemoved = true;
@@ -279,7 +289,6 @@ public class FileManagerWebAppBean extends AbstractBaseWebAppBean implements Ser
             }
             if (!nodeNameList.isEmpty()) {
                 for (String nodeName : nodeNameList) {
-                    System.out.println(nodeName);
                     nodeNameMap.remove(nodeName);
                 }
             }
