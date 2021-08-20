@@ -75,7 +75,7 @@ public class FileManagerWebAppBean extends AbstractBaseWebAppBean implements Ser
     @NotBlank(message = "{newDirectoryNameBlank}")
     private String newDirectoryName;
     
-    private String viewedFile;
+    private String previewFileAddress;
     
     private String oldFileAddress;
     
@@ -192,6 +192,18 @@ public class FileManagerWebAppBean extends AbstractBaseWebAppBean implements Ser
         inPrepareUpload = false;
     }
     
+    public void prepareRenameDirectory() {
+        inPrepareRenameDirectory = true;
+    }
+    
+    public boolean getInPrepareRenameDirectory() {
+        return inPrepareRenameDirectory;
+    }
+    
+    public void cancelRenameDirectory() {
+        inPrepareRenameDirectory = false;
+    }
+    
     public void setOldFileAddress(String oldFileAddress) {
         this.oldFileAddress = oldFileAddress;
     }
@@ -227,6 +239,30 @@ public class FileManagerWebAppBean extends AbstractBaseWebAppBean implements Ser
     
     public void cancelRenameFile() {
         inPrepareRenameFile = false;
+    }
+    
+    public void prepareMoveNodes() {
+        inPrepareMoveNodes = true;
+    }
+    
+    public boolean getInPrepareMoveNodes() {
+        return inPrepareMoveNodes;
+    }
+    
+    public void cancelMoveNodes() {
+        inPrepareMoveNodes = false;
+    }
+    
+    public void setPreviewFileAddress(String previewFileAddress) {
+        this.previewFileAddress = previewFileAddress;
+    }
+    
+    public String getPreviewFileAddress() {
+        return previewFileAddress;
+    }
+    
+    public boolean getInPreviewFile() {
+        return (previewFileAddress != null && !previewFileAddress.isEmpty()); 
     }
    
     public void resetMassiveSelection(ComponentSystemEvent event) throws AbortProcessingException {

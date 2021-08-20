@@ -93,11 +93,11 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                     </h:panelGroup>
                     <h:panelGroup layout="block" styleClass="dialog_content_box">
                         <h:panelGroup layout="block" styleClass="field_note_box">
-                            <h:outputText value="#{defaultMessage.renameFileNote}" />
+                            <h:outputText value="#{defaultMessage.renameFileNote} #{label.fileToRenameNote}: #{controller.bean.previewFileAddress}" />
                         </h:panelGroup>
                         <d:dialogMessages addStyleClass="dialog_messages_offset_top" rendered="#{controller.bean.inPrepareRenameFile eq true}" />
                         <h:panelGroup layout="block" styleClass="dialog_field_label_box">
-                            <h:outputText value="#{label.newDirectoryName}" />
+                            <h:outputText value="#{label.newFileName}" />
                         </h:panelGroup>
                         <h:panelGroup layout="block" styleClass="dialog_field_input_box">
                             <h:inputText id="newFileName" value="#{controller.bean.newFileName}" />
@@ -116,6 +116,7 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                     </h:panelGroup>
                 </h:panelGroup>
             </h:panelGroup>
+            <h:inputHidden value="#{controller.bean.previewFileAddress}" id="previewFileAddress" />
             <h:panelGroup layout="block" styleClass="left_panel_back_overlay"></h:panelGroup>
             <h:panelGroup layout="block" styleClass="right_panel_back_overlay"></h:panelGroup>
             <h:panelGroup layout="block" styleClass="main_panel_back_overlay"></h:panelGroup>
@@ -131,7 +132,7 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                                 value="#{label.buttonMove}" immediate="true">
                             </h:commandButton>
                             <h:commandButton type="button" styleClass="grouped_button_inner"
-                                value="#{label.buttonRename}" immediate="true">
+                                value="#{label.buttonRename}">
                                 <f:actionListener binding="#{controller.bean.prepareRenameFile()}" />
                                 <f:ajax event="click" execute="@form" render="@form" />
                             </h:commandButton>
@@ -140,11 +141,20 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                                     document.getElementById('fileManagerPreviewer').src='about:blank';
                                     document.getElementsByClassName('file_manager_main_page_container')[0].style='display:block;';
                                     var elx = document.getElementsByClassName('file_previewer_heading_mobile_action_tool_box')[0];
-                                    var mmf = document.getElementsByClassName('mobile_menu_button_fp')[0].value = '#{label.buttonAction}';
+                                    var mmf = document.getElementsByClassName('mobile_menu_button_fp')[0].value='#{label.buttonAction}';
                                     elx.style='display:none';
+                                    document.getElementById('form:previewFileAddress').value='';
                                     elx.innerHTML = '';"
                                 value="#{label.buttonClose}" />
                         </d:fileManagerPreviewer>
+                        <h:outputScript rendered="#{controller.bean.isLoggedOn eq true and controller.bean.inPreviewFile eq true}">
+                            document.querySelector('.file_manager_preview')
+                            .style='display:block';
+                            document.querySelector('.file_manager_main_page_container')
+                            .style='display:none';
+                            document.getElementById('fileManagerPreviewer')
+                            .src='file-preview-tool?prev=1&amp;view=0&amp;address=#{utility.toURL(controller.bean.previewFileAddress)}';
+                        </h:outputScript>
                         <h:panelGroup layout="block" styleClass="file_manager_main_page_container">
                             <d:customProgramHeading pageTitle="#{fn:toUpperCase(label.fileManager)}">
                                 <h:commandButton type="button" styleClass="grouped_button_left" value="#{label.buttonHome}"
@@ -236,8 +246,9 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                                                                 .style='display:block';
                                                                 document.querySelector('.file_manager_main_page_container')
                                                                 .style='display:none';
-                                                                    document.getElementById('fileManagerPreviewer')
-                                                                    .src='file-preview-tool?prev=1&amp;view=0&amp;address=#{utility.toURL(data.key)}';" />
+                                                                document.getElementById('form:previewFileAddress').value='#{data.key}';
+                                                                document.getElementById('fileManagerPreviewer')
+                                                                .src='file-preview-tool?prev=1&amp;view=0&amp;address=#{utility.toURL(data.key)}';" />
                                                     </h:panelGroup>
                                                     <h:panelGroup layout="block" styleClass="file_manager_image_item_name_box">
                                                         <a href="javascript:void(0);"
@@ -245,8 +256,9 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                                                                 .style='display:block';
                                                                 document.querySelector('.file_manager_main_page_container')
                                                                 .style='display:none';
-                                                                    document.getElementById('fileManagerPreviewer')
-                                                                    .src='file-preview-tool?prev=1&amp;view=0&amp;address=#{utility.toURL(data.key)}';"
+                                                                document.getElementById('form:previewFileAddress').value='#{data.key}';
+                                                                document.getElementById('fileManagerPreviewer')
+                                                                .src='file-preview-tool?prev=1&amp;view=0&amp;address=#{utility.toURL(data.key)}';"
                                                             ><h:outputText value="#{node.key}" /></a>
                                                     </h:panelGroup>
                                                 </h:panelGroup>
