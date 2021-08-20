@@ -348,16 +348,16 @@ public class FileManagerWebAppBean extends AbstractBaseWebAppBean implements Ser
                 }
             }
             if (!partiallyLocated && !partiallyRemoved && getRemoved) {
-                addMessage(SV_INFO, "massiveRemovalInfo");
+                addMessage(SV_INFO, "massiveFilesRemovalInfo");
             }
             if (partiallyLocated && getRemoved) {
-                addMessage(SV_WARN, "massiveRemovalPartialLocatedWarn");
+                addMessage(SV_WARN, "massiveFilesRemovalPartialLocatedWarn");
             }
             if (partiallyRemoved && getRemoved) {
-                addMessage(SV_WARN, "massiveRemovalPartialRemovedWarn");
+                addMessage(SV_WARN, "massiveRemovalFilesPartialRemovedWarn");
             }
             if (!getRemoved) {
-                addMessage(SV_ERROR, "massiveRemovalError");
+                addMessage(SV_ERROR, "massiveFilesRemovalError");
             }
         }
         clearMassiveRemovalReadyState();

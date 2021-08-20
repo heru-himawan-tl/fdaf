@@ -38,7 +38,6 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         <composite:attribute required="true" name="title" type="java.lang.String" />
         <composite:attribute required="true" name="classId" type="java.lang.String" />
         <composite:attribute required="true" name="iframeId" type="java.lang.String" />
-        <composite:attribute required="true" name="rewitePageClass" type="java.lang.String" />
     </composite:interface>
     <composite:implementation>
         <h:panelGroup layout="block" styleClass="file_previewer_container #{cc.attrs.classId}" style="display:none;">
@@ -52,7 +51,7 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                                         <h:outputText value="#{cc.attrs.title}" />
                                     </h:panelGroup>
                                     <h:panelGroup layout="block" styleClass="file_previewer_heading_mobile_mode_action_menu_cell">
-                                        <h:commandButton type="button" styleClass="common_button blue_button mobile_menu_button"
+                                        <h:commandButton type="button" styleClass="common_button blue_button mobile_menu_button mobile_menu_button_fp"
                                             value="#{label.buttonAction}" 
                                             onclick="var elx = document.getElementsByClassName('file_previewer_heading_mobile_action_tool_box')[0];
                                                 var el1 = document.getElementsByClassName('file_previewer_heading_button_box')[0];
@@ -74,13 +73,7 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                         </h:panelGroup>
                         <h:panelGroup layout="block" styleClass="file_previewer_heading_button_box">
                             <h:panelGroup layout="block" styleClass="file_previewer_heading_button_box_flex">
-                                <h:commandButton type="button" styleClass="common_button"
-                                    onclick="
-                                        document.getElementsByClassName('#{cc.attrs.classId}')[0].style='display:none;';
-                                        document.getElementById('#{cc.attrs.iframeId}').src='about:blank';
-                                        document.getElementsByClassName('#{cc.attrs.rewitePageClass}')[0].style='display:block;';
-                                    "
-                                    value="#{label.buttonClose}" />
+                                <composite:insertChildren />
                             </h:panelGroup>
                         </h:panelGroup>
                     </h:panelGroup>

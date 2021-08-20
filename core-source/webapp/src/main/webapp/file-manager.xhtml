@@ -65,8 +65,7 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                         <h:panelGroup layout="block" styleClass="field_note_box">
                             <h:outputText value="#{defaultMessage.createNewDirectoryNote}" />
                         </h:panelGroup>
-                        <d:dialogMessages addStyleClass="dialog_messages_offset_top"
-                            rendered="#{controller.bean.inPrepareCreateDirectory eq true}" />
+                        <d:dialogMessages addStyleClass="dialog_messages_offset_top" rendered="#{controller.bean.inPrepareCreateDirectory eq true}" />
                         <h:panelGroup layout="block" styleClass="dialog_field_label_box">
                             <h:outputText value="#{label.newDirectoryName}" />
                         </h:panelGroup>
@@ -87,6 +86,36 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                     </h:panelGroup>
                 </h:panelGroup>
             </h:panelGroup>
+            <h:panelGroup layout="block" styleClass="dialog_container" rendered="#{controller.bean.inPrepareRenameFile eq true}">
+                <h:panelGroup layout="block" styleClass="dialog_box">
+                    <h:panelGroup layout="block" styleClass="dialog_title_box">
+                        <h:outputText value="#{label.renameFileDialogTitle}" />
+                    </h:panelGroup>
+                    <h:panelGroup layout="block" styleClass="dialog_content_box">
+                        <h:panelGroup layout="block" styleClass="field_note_box">
+                            <h:outputText value="#{defaultMessage.renameFileNote}" />
+                        </h:panelGroup>
+                        <d:dialogMessages addStyleClass="dialog_messages_offset_top" rendered="#{controller.bean.inPrepareRenameFile eq true}" />
+                        <h:panelGroup layout="block" styleClass="dialog_field_label_box">
+                            <h:outputText value="#{label.newDirectoryName}" />
+                        </h:panelGroup>
+                        <h:panelGroup layout="block" styleClass="dialog_field_input_box">
+                            <h:inputText id="newFileName" value="#{controller.bean.newFileName}" />
+                        </h:panelGroup>
+                    </h:panelGroup>
+                    <h:panelGroup layout="block" styleClass="dialog_button_box">
+                        <h:commandButton type="button" styleClass="grouped_button_left" value="#{label.buttonCreate}">
+                            <f:actionListener binding="#{controller.bean.renameFile()}" />
+                            <f:ajax event="click" execute="@form" render="@form" />
+                        </h:commandButton>
+                        <h:commandButton type="button" styleClass="grouped_button_right" value="#{label.buttonCancel}"
+                                immediate="true">
+                            <f:actionListener binding="#{controller.bean.cancelRenameFile()}" />
+                            <f:ajax event="click" execute="@form" render="@form" />
+                        </h:commandButton>
+                    </h:panelGroup>
+                </h:panelGroup>
+            </h:panelGroup>
             <h:panelGroup layout="block" styleClass="left_panel_back_overlay"></h:panelGroup>
             <h:panelGroup layout="block" styleClass="right_panel_back_overlay"></h:panelGroup>
             <h:panelGroup layout="block" styleClass="main_panel_back_overlay"></h:panelGroup>
@@ -97,8 +126,25 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                 <d:mainPanel>
                     <d:pageContainer id="page">
                         <d:fileManagerPreviewer iframeId="fileManagerPreviewer" classId="file_manager_preview"
-                            title="#{fn:toUpperCase(label.filePreviewer)}"
-                            rewitePageClass="file_manager_main_page_container" />
+                            title="#{fn:toUpperCase(label.filePreviewer)}">
+                            <h:commandButton type="button" styleClass="grouped_button_left"
+                                value="#{label.buttonMove}" immediate="true">
+                            </h:commandButton>
+                            <h:commandButton type="button" styleClass="grouped_button_inner"
+                                value="#{label.buttonRename}" immediate="true">
+                                <f:actionListener binding="#{controller.bean.prepareRenameFile()}" />
+                                <f:ajax event="click" execute="@form" render="@form" />
+                            </h:commandButton>
+                            <h:commandButton type="button" styleClass="grouped_button_right"
+                                onclick="document.getElementsByClassName('file_manager_preview')[0].style='display:none;';
+                                    document.getElementById('fileManagerPreviewer').src='about:blank';
+                                    document.getElementsByClassName('file_manager_main_page_container')[0].style='display:block;';
+                                    var elx = document.getElementsByClassName('file_previewer_heading_mobile_action_tool_box')[0];
+                                    var mmf = document.getElementsByClassName('mobile_menu_button_fp')[0].value = '#{label.buttonAction}';
+                                    elx.style='display:none';
+                                    elx.innerHTML = '';"
+                                value="#{label.buttonClose}" />
+                        </d:fileManagerPreviewer>
                         <h:panelGroup layout="block" styleClass="file_manager_main_page_container">
                             <d:customProgramHeading pageTitle="#{fn:toUpperCase(label.fileManager)}">
                                 <h:commandButton type="button" styleClass="grouped_button_left" value="#{label.buttonHome}"
@@ -125,7 +171,13 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                                     (controller.bean.isLoggedOn eq true) ? 'grouped_button_right' : 'common_button'}"
                                     onclick="document.location.href='adm.jsf'" value="#{label.buttonClose}" />
                             </d:customProgramHeading>
-                            <d:messages rendered="#{controller.bean.inPrepareCreateDirectory eq false}" />
+                            <d:messages rendered="#{
+                                    controller.bean.inPrepareCreateDirectory eq false and
+                                    controller.bean.inPrepareRenameFile eq false and
+                                    controller.bean.inPrepareRenameDirectory eq false and
+                                    controller.bean.inPrepareUpload eq false and
+                                    controller.bean.inPrepareMoveNodes eq false
+                                }" />
                             <d:loginRequirementInlineDialog />
                             <d:admFieldContainer>
                                 <h:panelGroup layout="block" styleClass="field_container_inner">
