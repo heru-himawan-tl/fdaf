@@ -308,6 +308,15 @@ public class FileManagerUtil extends ApplicationIdentifier implements Serializab
     
     public boolean rename(String oldAddress, String newFileName) {
         String newFileAddress = currentDirectory + File.separator + newFileName;
+        if (!Files.exists(Paths.get(newFileAddress))) {
+            try {
+                Files.move(Paths.get(oldAddress), Paths.get(newFileAddress));
+            } catch (Exception e) {
+                return false;
+            }
+        } else {
+            return false;
+        }
         return true;
     }
    
@@ -327,7 +336,6 @@ public class FileManagerUtil extends ApplicationIdentifier implements Serializab
                 }
                 return !Files.exists(filePath);
             } catch (IOException e) {
-                e.printStackTrace();
             }
         }
         return false;

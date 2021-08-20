@@ -108,8 +108,7 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                             <f:actionListener binding="#{controller.bean.renameFile()}" />
                             <f:ajax event="click" execute="@form" render="@form" />
                         </h:commandButton>
-                        <h:commandButton type="button" styleClass="grouped_button_right" value="#{label.buttonCancel}"
-                                immediate="true">
+                        <h:commandButton type="button" styleClass="grouped_button_right" value="#{label.buttonCancel}" immediate="true">
                             <f:actionListener binding="#{controller.bean.cancelRenameFile()}" />
                             <f:ajax event="click" execute="@form" render="@form" />
                         </h:commandButton>
@@ -128,11 +127,9 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                     <d:pageContainer id="page">
                         <d:fileManagerPreviewer iframeId="fileManagerPreviewer" classId="file_manager_preview"
                             title="#{fn:toUpperCase(label.filePreviewer)}">
-                            <h:commandButton type="button" styleClass="grouped_button_left"
-                                value="#{label.buttonMove}" immediate="true">
+                            <h:commandButton type="button" styleClass="grouped_button_left" value="#{label.buttonMove}" immediate="true">
                             </h:commandButton>
-                            <h:commandButton type="button" styleClass="grouped_button_inner"
-                                value="#{label.buttonRename}">
+                            <h:commandButton type="button" styleClass="grouped_button_inner" value="#{label.buttonRename}">
                                 <f:actionListener binding="#{controller.bean.prepareRenameFile()}" />
                                 <f:ajax event="click" execute="@form" render="@form" />
                             </h:commandButton>
@@ -277,6 +274,7 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                 </d:rightPanel>
             </h:panelGroup>
             <d:customBottomForm />
+            <d:deinit />
         </h:form>
         <d:customBottomBody />
     </h:body>

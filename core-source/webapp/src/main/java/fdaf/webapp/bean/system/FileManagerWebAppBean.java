@@ -70,16 +70,14 @@ public class FileManagerWebAppBean extends AbstractBaseWebAppBean implements Ser
     @Inject
     private FileManagerDirectoryInfoBean directoryInfo;
     
-    @Pattern(regexp = "^[a-zA-Z0-9\\.\\-\\_\\(\\)\\[\\]\\{\\}\\$\\@\\~]+$", message = "{newDirectoryNameBadFormat}")
+    @Pattern(regexp = "^[a-zA-Z0-9\\.\\-\\_\\(\\)\\[\\]\\{\\}\\$\\@\\~ ]+$", message = "{newDirectoryNameBadFormat}")
     @Size(min = 1, max = 128, message = "{newDirectoryNameLengthOutOfRange}")
     @NotBlank(message = "{newDirectoryNameBlank}")
     private String newDirectoryName;
     
     private String previewFileAddress;
     
-    private String oldFileAddress;
-    
-    @Pattern(regexp = "^[a-zA-Z0-9\\.\\-\\_\\(\\)\\[\\]\\{\\}\\$\\@\\~]+$", message = "{newFileNameBadFormat}")
+    @Pattern(regexp = "^[a-zA-Z0-9\\.\\-\\_\\(\\)\\[\\]\\{\\}\\$\\@\\~ ]+$", message = "{newFileNameBadFormat}")
     @Size(min = 1, max = 128, message = "{newFileNameLengthOutOfRange}")
     @NotBlank(message = "{newFileNameBlank}")
     private String newFileName;
@@ -204,14 +202,6 @@ public class FileManagerWebAppBean extends AbstractBaseWebAppBean implements Ser
         inPrepareRenameDirectory = false;
     }
     
-    public void setOldFileAddress(String oldFileAddress) {
-        this.oldFileAddress = oldFileAddress;
-    }
-    
-    public String getOldFileAddress() {
-        return oldFileAddress;
-    }
-    
     public void setNewFileName(String newFileName) {
         this.newFileName = newFileName;
     }
@@ -229,14 +219,16 @@ public class FileManagerWebAppBean extends AbstractBaseWebAppBean implements Ser
     }
     
     public void renameFile() {
-        if (!fileManagerUtil.rename(oldFileAddress, newFileName)) {
+        String newFileAddress = fileManagerUtil.getCurrentDirectory() + File.separator + newFileName;
+        if (!fileManagerUtil.rename(previewFileAddress, newFileName)) {
             addMessage(SV_ERROR, "renameFileFailedWarning");
             return;
         }
+        previewFileAddress = newFileAddress;
         addMessage(SV_INFO, "renameFileSuccessInfo");
         inPrepareRenameFile = false;
     }
-    
+
     public void cancelRenameFile() {
         inPrepareRenameFile = false;
     }
@@ -402,5 +394,10 @@ public class FileManagerWebAppBean extends AbstractBaseWebAppBean implements Ser
     public void cancelRemoval() {
         clearMassiveRemovalReadyState();
         nodeNameMap.clear();
+    }
+    
+    public void deinit(ComponentSystemEvent event) throws AbortProcessingException {
+        newDirectoryName = (inPrepareCreateDirectory) ? newDirectoryName : "";
+        newFileName = (inPrepareRenameFile) ? newFileName : "";
     }
 }
