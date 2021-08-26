@@ -2854,13 +2854,6 @@ a:hover
         width: 0px !important;
     }
     
-    .dialog_title_box,
-    .dialog_content_box,
-    .dialog_button_box
-    {
-        padding: 8px;
-    }
-    
     .dialog_messages_container
     
     pre

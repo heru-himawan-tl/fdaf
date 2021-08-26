@@ -333,7 +333,7 @@ public class FileManagerWebAppBean extends AbstractBaseWebAppBean implements Ser
     }
     
     public boolean getInPreviewFile() {
-        return (previewFileAddress != null && !previewFileAddress.isEmpty()
+        return (previewFileAddress != null && !previewFileAddress.trim().isEmpty()
                 && !inPrepareCreateDirectory && !inPrepareUpload
                 && !massiveRemovalReadyState && !inPrepareRenameDirectory
                 && !inPrepareMoveNodes); 

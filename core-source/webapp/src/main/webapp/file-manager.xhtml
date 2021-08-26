@@ -221,7 +221,7 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                                 value="#{label.buttonClose}"
                                 rendered="#{controller.bean.inPreviewFile eq false}" />
                             <h:commandButton type="button" styleClass="grouped_button_right" value="#{label.buttonClose}"
-                                immediate="true" rendered="#{controller.bean.inPreviewFile eq true}">
+                                rendered="#{controller.bean.inPreviewFile eq true}">
                                 <f:actionListener binding="#{controller.bean.closePreview()}" />
                                 <f:ajax event="click" execute="@form" render="@form" />
                             </h:commandButton>
@@ -277,7 +277,7 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                             <d:admFieldContainer>
                                 <h:panelGroup layout="block" styleClass="field_container_inner">
                                     <h:panelGroup layout="block" styleClass="field_note_box field_note_box_free">
-                                        <h:outputText value="#{controller.bean.currentDirectory}" />
+                                        <h:outputText value="#{controller.bean.currentDirectoryInfo}" />
                                     </h:panelGroup>
                                     <h:panelGroup layout="block" styleClass="file_manager_directory_empty_box_outer"
                                         rendered="#{controller.bean.isEmptyDirectory eq true}">
