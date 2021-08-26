@@ -253,6 +253,9 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                                     <f:actionListener binding="#{controller.bean.prepareCreateDirectory()}" />
                                     <f:ajax event="click" execute="@form" render="@form" />
                                 </h:commandButton>
+                                <h:commandButton type="button" styleClass="grouped_button_inner" value="#{label.buttonMoveCurrentDirectory}"
+                                    rendered="#{controller.bean.isLoggedOn eq true and controller.bean.inHomeDirectory eq false}">
+                                </h:commandButton>
                                 <h:commandButton type="button" styleClass="grouped_button_inner" value="#{label.buttonMassiveMove}"
                                     rendered="#{controller.bean.isLoggedOn eq true}">
                                     <f:actionListener binding="#{controller.bean.presetMassiveMoveReadyState()}" />
