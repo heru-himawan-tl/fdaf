@@ -150,7 +150,7 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                     </h:panelGroup>
                     <h:panelGroup layout="block" styleClass="dialog_button_box">
                         <h:commandButton type="button" styleClass="grouped_button_left" value="#{label.buttonContinue}">
-                            <f:actionListener binding="#{controller.bean.renameFile()}" />
+                            <f:actionListener binding="#{controller.bean.moveFile()}" />
                             <f:ajax event="click" execute="@form" render="@form" />
                         </h:commandButton>
                         <h:commandButton type="button" styleClass="grouped_button_right" value="#{label.buttonCancel}" immediate="true">
