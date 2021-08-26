@@ -38,13 +38,17 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UISelectItem;
 import javax.faces.context.FacesContext;
 import javax.faces.event.AbortProcessingException;
 import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.event.ComponentSystemEvent;
+import javax.faces.model.SelectItem;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -83,12 +87,23 @@ public class FileManagerWebAppBean extends AbstractBaseWebAppBean implements Ser
     private String newFileName;
     
     private boolean inPrepareCreateDirectory;
+    
     private boolean inPrepareUpload;
+    
     private boolean inPrepareRenameFile;
+    private boolean inPrepareMoveFile;
+    
     private boolean inPrepareRenameDirectory;
+    private boolean inPrepareMoveDirectory;
+    
     private boolean inPrepareMoveNodes;
     
     private boolean baseDirectoryInitialized;
+    
+    private boolean massiveMoveReadyState;
+    private boolean prepareMassiveMoveOp;
+    
+    private String massiveMoveDestinationDirectory;
     
     HashMap<String, String[]> nodeNameMap = new HashMap<String, String[]>();
     String[] dummyNodeNames = new String[]{};
@@ -106,6 +121,10 @@ public class FileManagerWebAppBean extends AbstractBaseWebAppBean implements Ser
         return controller;
     }
     
+    // ======================================================================
+    // Directory retrieval methods
+    // ======================================================================
+    
     public void toHomeDirectory() {
         fileManagerUtil.toHomeDirectory();
         directoryInfo.setCurrentDirectory(fileManagerUtil.getCurrentDirectory());
@@ -115,6 +134,22 @@ public class FileManagerWebAppBean extends AbstractBaseWebAppBean implements Ser
         fileManagerUtil.toParentDirectory();
         directoryInfo.setCurrentDirectory(fileManagerUtil.getCurrentDirectory());
     }
+    
+    public void setCurrentDirectory(String currentDirectory) {
+        directoryInfo.setCurrentDirectory(currentDirectory);
+    }
+    
+    public String getCurrentDirectory() {
+        return directoryInfo.getCurrentDirectory();
+    }
+    
+    public boolean getInHomeDirectory() {
+        return fileManagerUtil.isInHomeDirectory();
+    }
+    
+    // ======================================================================
+    // Population of directories & files
+    // ======================================================================
 
     public void populateNodes(ComponentSystemEvent event) throws AbortProcessingException {
         if (!baseDirectoryInitialized) {
@@ -141,13 +176,9 @@ public class FileManagerWebAppBean extends AbstractBaseWebAppBean implements Ser
         return nodes;
     }
     
-    public void setCurrentDirectory(String currentDirectory) {
-        directoryInfo.setCurrentDirectory(currentDirectory);
-    }
-    
-    public String getCurrentDirectory() {
-        return directoryInfo.getCurrentDirectory();
-    }
+    // ======================================================================
+    // Directory creation
+    // ======================================================================
     
     public void prepareCreateDirectory() {
         inPrepareCreateDirectory = true;
@@ -172,11 +203,17 @@ public class FileManagerWebAppBean extends AbstractBaseWebAppBean implements Ser
         }
         addMessage(SV_INFO, "newDirectoryCreationSuccess");
         inPrepareCreateDirectory = false;
+        newDirectoryName = null;
     }
     
     public void cancelNewDirectoryCreation() {
         inPrepareCreateDirectory = false;
+        newDirectoryName = null;
     }
+    
+    // ======================================================================
+    // File upload
+    // ======================================================================
     
     public void prepareUpload() {
         inPrepareUpload = true;
@@ -190,6 +227,10 @@ public class FileManagerWebAppBean extends AbstractBaseWebAppBean implements Ser
         inPrepareUpload = false;
     }
     
+    // ======================================================================
+    // Directory renaming
+    // ======================================================================
+    
     public void prepareRenameDirectory() {
         inPrepareRenameDirectory = true;
     }
@@ -202,22 +243,26 @@ public class FileManagerWebAppBean extends AbstractBaseWebAppBean implements Ser
         inPrepareRenameDirectory = false;
     }
     
+    // ======================================================================
+    // File renaming
+    // ======================================================================
+
     public void setNewFileName(String newFileName) {
         this.newFileName = newFileName;
     }
-    
+
     public String getNewFileName() {
         return newFileName;
     }
-    
+
     public void prepareRenameFile() {
         inPrepareRenameFile = true;
     }
-    
+
     public boolean getInPrepareRenameFile() {
         return inPrepareRenameFile;
     }
-    
+  
     public void renameFile() {
         String newFileAddress = fileManagerUtil.getCurrentDirectory() + File.separator + newFileName;
         if (!fileManagerUtil.rename(previewFileAddress, newFileName)) {
@@ -227,23 +272,17 @@ public class FileManagerWebAppBean extends AbstractBaseWebAppBean implements Ser
         previewFileAddress = newFileAddress;
         addMessage(SV_INFO, "renameFileSuccessInfo");
         inPrepareRenameFile = false;
+        newFileName = null;
     }
 
     public void cancelRenameFile() {
         inPrepareRenameFile = false;
+        newFileName = null;
     }
-    
-    public void prepareMoveNodes() {
-        inPrepareMoveNodes = true;
-    }
-    
-    public boolean getInPrepareMoveNodes() {
-        return inPrepareMoveNodes;
-    }
-    
-    public void cancelMoveNodes() {
-        inPrepareMoveNodes = false;
-    }
+
+    // ======================================================================
+    // File preview helper
+    // ======================================================================
     
     public void setPreviewFileAddress(String previewFileAddress) {
         this.previewFileAddress = previewFileAddress;
@@ -254,8 +293,15 @@ public class FileManagerWebAppBean extends AbstractBaseWebAppBean implements Ser
     }
     
     public boolean getInPreviewFile() {
-        return (previewFileAddress != null && !previewFileAddress.isEmpty()); 
+        return (previewFileAddress != null && !previewFileAddress.isEmpty()
+                && !inPrepareCreateDirectory && !inPrepareUpload
+                && !massiveRemovalReadyState && !inPrepareRenameDirectory
+                && !inPrepareMoveNodes); 
     }
+    
+    // ======================================================================
+    // Massive selection helper
+    // ======================================================================
    
     public void resetMassiveSelection(ComponentSystemEvent event) throws AbortProcessingException {
         applyDeselectAll = false;
@@ -324,6 +370,104 @@ public class FileManagerWebAppBean extends AbstractBaseWebAppBean implements Ser
     public boolean getSelectAllFlag() {
         return selectAllFlag;
     }
+    
+    // ======================================================================
+    // Directories & files massive move
+    // ======================================================================
+    
+    public SelectItem[] getDirectorySelection() {
+        List<SelectItem> itemsTemp = new ArrayList<SelectItem>();
+        for (String directory : fileManagerUtil.getDirectoryList()) {
+            SelectItem selectItem = new SelectItem();
+            selectItem.setValue(directory);
+            selectItem.setLabel(directory);
+            itemsTemp.add(selectItem);
+        }
+        return itemsTemp.toArray(new SelectItem[]{});
+    }
+    
+    public void setMassiveMoveDestinationDirectory(String massiveMoveDestinationDirectory) {
+        this.massiveMoveDestinationDirectory = massiveMoveDestinationDirectory;
+    }
+    
+    public String getMassiveMoveDestinationDirectory() {
+        return massiveMoveDestinationDirectory;
+    }
+    
+    public void presetMassiveMoveReadyState() {
+        prepareMassiveMoveOp = true;
+        for (String nodeName : nodeNameMap.keySet()) {
+            String[] nodeNames = nodeNameMap.get(nodeName);
+            if (nodeNames != null && nodeNames.length != 0) {
+                massiveMoveReadyState = true;
+                return;
+            }
+        }
+    }
+
+    public boolean getMassiveMoveReadyState() {
+        return massiveMoveReadyState;
+    }
+
+    public void clearMassiveMoveReadyState() {
+        massiveMoveReadyState = false;
+        prepareMassiveMoveOp = false;
+    }
+
+    public boolean getPrepareMassiveMoveOp() {
+        return prepareMassiveMoveOp;
+    }
+    
+    public void executeMassiveMove(AjaxBehaviorEvent event) throws AbortProcessingException {
+        boolean partiallyMoved = false;
+        boolean partiallyLocated = false;
+        boolean getMoved = false;
+        if (!nodeNameMap.isEmpty()) {
+            List<String> nodeNameList = new ArrayList<String>();
+            for (String nodeName : nodeNameMap.keySet()) {
+                String[] nodeNames = nodeNameMap.get(nodeName);
+                if (nodeNames != null && nodeNames.length != 0) {
+                    try {
+                        if (fileManagerUtil.move(nodeName, massiveMoveDestinationDirectory)) {
+                            nodeNameList.add(nodeName);
+                            getMoved = true;
+                        }
+                    } catch (Exception e) {
+                        indicateServiceError(e);
+                        partiallyMoved = true;
+                        break;
+                    }
+                }
+            }
+            if (!nodeNameList.isEmpty()) {
+                for (String nodeName : nodeNameList) {
+                    nodeNameMap.remove(nodeName);
+                }
+            }
+            if (!partiallyLocated && !partiallyMoved && getMoved) {
+                addMessage(SV_INFO, "massiveMoveInfo");
+            }
+            if (partiallyLocated && getMoved) {
+                addMessage(SV_WARN, "massiveMovePartialLocatedWarn");
+            }
+            if (partiallyMoved && getMoved) {
+                addMessage(SV_WARN, "massiveMovePartialMovedWarn");
+            }
+            if (!getMoved) {
+                addMessage(SV_ERROR, "massiveMoveError");
+            }
+        }
+        clearMassiveMoveReadyState();
+    }
+    
+    public void cancelMassiveMove() {
+        clearMassiveMoveReadyState();
+        nodeNameMap.clear();
+    }
+    
+    // ======================================================================
+    // Directories & files massive removal
+    // ======================================================================
 
     public void presetMassiveRemovalReadyState() {
         prepareMassiveRemovalOp = true;
@@ -390,14 +534,9 @@ public class FileManagerWebAppBean extends AbstractBaseWebAppBean implements Ser
         }
         clearMassiveRemovalReadyState();
     }
-    
+
     public void cancelRemoval() {
         clearMassiveRemovalReadyState();
         nodeNameMap.clear();
-    }
-    
-    public void deinit(ComponentSystemEvent event) throws AbortProcessingException {
-        newDirectoryName = (inPrepareCreateDirectory) ? newDirectoryName : "";
-        newFileName = (inPrepareRenameFile) ? newFileName : "";
     }
 }

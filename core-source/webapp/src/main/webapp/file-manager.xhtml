@@ -54,6 +54,48 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
             <d:addAdministratorStartPage rendered="#{controller.bean.databaseIsError eq false}" />
             <d:userSessionWatch rendered="#{(controller.bean.administratorAccountExists eq true)}" />
             <d:massiveRemovalPromptCommon />
+            <h:panelGroup layout="block" styleClass="dialog_container" rendered="#{(
+                    controller.bean.prepareMassiveMoveOp eq true and
+                    controller.bean.administratorAccountExists eq true and
+                    controller.bean.isLoggedOn eq true and
+                    controller.bean.isBrokenUserSession eq false
+                )}">
+                <h:panelGroup styleClass="dialog_box">
+                    <h:panelGroup styleClass="dialog_title_box" rendered="#{(controller.bean.massiveMoveReadyState eq false)}">
+                        <h:outputText value="#{label.massiveMoveNotReadyPromptTitle}" />
+                    </h:panelGroup>
+                    <h:panelGroup styleClass="dialog_content_box" rendered="#{(controller.bean.massiveMoveReadyState eq false)}">
+                        <h:outputText value="#{defaultMessage.massiveMoveNotReadyPrompt}" />
+                    </h:panelGroup>
+                    <h:panelGroup styleClass="dialog_title_box" rendered="#{(controller.bean.massiveMoveReadyState eq true)}">
+                        <h:outputText value="#{label.massiveMovePromptTitle}" />
+                    </h:panelGroup>
+                    <h:panelGroup styleClass="dialog_content_box" rendered="#{(controller.bean.massiveMoveReadyState eq true)}">
+                        <h:outputText value="#{defaultMessage.massiveMovePrompt}" />
+                        <h:panelGroup layout="block" styleClass="dialog_field_label_box">
+                            <h:outputText value="#{label.massiveMoveDestinationDirectory}" />
+                        </h:panelGroup>
+                        <h:panelGroup layout="block" styleClass="dialog_field_input_box">
+                            <h:selectOneMenu id="massiveMoveDestinationDirectory" value="#{controller.bean.massiveMoveDestinationDirectory}">
+                                <f:selectItems value="#{controller.bean.directorySelection}" var="selectItem" itemValue="#{selectItem.value}" 
+                                    itemLabel="#{selectItem.label}" />
+                            </h:selectOneMenu>
+                        </h:panelGroup>
+                    </h:panelGroup>
+                    <h:panelGroup styleClass="dialog_button_box">
+                        <h:panelGroup styleClass="dialog_button_box_gap">&nbsp;</h:panelGroup>
+                        <h:commandButton styleClass="grouped_button_left" value="#{label.buttonContinue}" 
+                                rendered="#{(controller.bean.massiveMoveReadyState eq true)}">
+                            <f:ajax event="click" execute="@form" render="@form" listener="#{controller.bean.executeMassiveMove}" />
+                        </h:commandButton>
+                        <h:commandButton styleClass="#{(controller.bean.massiveMoveReadyState eq true) ? 'grouped_button_right' : 'common_button'}" 
+                                value="#{(controller.bean.massiveMoveReadyState eq true) ? label.buttonCancel : label.buttonOk}" immediate="true">
+                            <f:actionListener binding="#{controller.bean.cancelMassiveMove()}" />
+                            <f:ajax event="click" execute="@form" render="@form" />
+                        </h:commandButton>
+                    </h:panelGroup>
+                </h:panelGroup>
+            </h:panelGroup>
             <d:populateNodes />
             <d:customTopPanel />
             <h:panelGroup layout="block" styleClass="dialog_container" rendered="#{controller.bean.inPrepareCreateDirectory eq true}">
@@ -115,7 +157,7 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                     </h:panelGroup>
                 </h:panelGroup>
             </h:panelGroup>
-            <h:inputHidden value="#{controller.bean.previewFileAddress}" id="previewFileAddress" />
+            <h:inputHidden value="#{controller.bean.previewFileAddress}" id="previewFileAddress" a:autocomplete="false" />
             <h:panelGroup layout="block" styleClass="left_panel_back_overlay"></h:panelGroup>
             <h:panelGroup layout="block" styleClass="right_panel_back_overlay"></h:panelGroup>
             <h:panelGroup layout="block" styleClass="main_panel_back_overlay"></h:panelGroup>
@@ -155,18 +197,25 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                         <h:panelGroup layout="block" styleClass="file_manager_main_page_container">
                             <d:customProgramHeading pageTitle="#{fn:toUpperCase(label.fileManager)}">
                                 <h:commandButton type="button" styleClass="grouped_button_left" value="#{label.buttonHome}"
-                                    immediate="true" rendered="#{controller.bean.isLoggedOn eq true}">
+                                    immediate="true" rendered="#{controller.bean.isLoggedOn eq true and controller.bean.inHomeDirectory eq false}">
                                     <f:actionListener binding="#{controller.bean.toHomeDirectory()}" />
                                     <f:ajax event="click" execute="@form" render="@form" />
                                 </h:commandButton>
                                 <h:commandButton type="button" styleClass="grouped_button_inner" value="#{label.buttonParentDir}"
-                                    immediate="true" rendered="#{controller.bean.isLoggedOn eq true}">
+                                    immediate="true" rendered="#{controller.bean.isLoggedOn eq true and controller.bean.inHomeDirectory eq false}">
                                     <f:actionListener binding="#{controller.bean.toParentDirectory()}" />
                                     <f:ajax event="click" execute="@form" render="@form" />
                                 </h:commandButton>
-                                <h:commandButton type="button" styleClass="grouped_button_inner" value="#{label.buttonNewDir}"
+                                <h:commandButton type="button" styleClass="#{
+                                        (controller.bean.inHomeDirectory eq true) ? 'grouped_button_left' : 'grouped_button_inner'
+                                    }" value="#{label.buttonNewDir}"
                                     immediate="true" rendered="#{controller.bean.isLoggedOn eq true}">
                                     <f:actionListener binding="#{controller.bean.prepareCreateDirectory()}" />
+                                    <f:ajax event="click" execute="@form" render="@form" />
+                                </h:commandButton>
+                                <h:commandButton type="button" styleClass="grouped_button_inner" value="#{label.buttonMassiveMove}"
+                                    rendered="#{controller.bean.isLoggedOn eq true}">
+                                    <f:actionListener binding="#{controller.bean.presetMassiveMoveReadyState()}" />
                                     <f:ajax event="click" execute="@form" render="@form" />
                                 </h:commandButton>
                                 <h:commandButton type="button" styleClass="grouped_button_inner" value="#{label.buttonMassiveRemove}"
@@ -182,8 +231,7 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                                     controller.bean.inPrepareCreateDirectory eq false and
                                     controller.bean.inPrepareRenameFile eq false and
                                     controller.bean.inPrepareRenameDirectory eq false and
-                                    controller.bean.inPrepareUpload eq false and
-                                    controller.bean.inPrepareMoveNodes eq false
+                                    controller.bean.inPrepareUpload eq false
                                 }" />
                             <d:loginRequirementInlineDialog />
                             <d:admFieldContainer>
@@ -210,7 +258,7 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                                                     <h:panelGroup layout="block" styleClass="file_manager_image_item_cb_rel_box">
                                                         <h:panelGroup layout="block" styleClass="file_manager_image_item_cb_abs_box">
                                                             <h:selectManyCheckbox value="#{controller.bean.nodeNames}" styleClass="checkbox file_manager_cb"
-                                                                    collectionType="java.util.ArrayList">
+                                                                    collectionType="java.util.ArrayList" a:autocomplete="false">
                                                                 <f:selectItem itemValue="#{data.key}" itemLabel="" />
                                                             </h:selectManyCheckbox>
                                                         </h:panelGroup>
@@ -231,7 +279,7 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                                                     <h:panelGroup layout="block" styleClass="file_manager_image_item_cb_rel_box">
                                                         <h:panelGroup layout="block" styleClass="file_manager_image_item_cb_abs_box">
                                                             <h:selectManyCheckbox value="#{controller.bean.nodeNames}" styleClass="checkbox file_manager_cb"
-                                                                    collectionType="java.util.ArrayList">
+                                                                    collectionType="java.util.ArrayList" a:autocomplete="false">
                                                                 <f:selectItem itemValue="#{data.key}" itemLabel="" />
                                                             </h:selectManyCheckbox>
                                                         </h:panelGroup>

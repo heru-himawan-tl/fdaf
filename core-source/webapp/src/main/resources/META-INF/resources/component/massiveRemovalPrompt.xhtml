@@ -41,10 +41,18 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                 controller.bean.isBrokenUserSession eq false
             )}">
             <h:panelGroup styleClass="dialog_box">
-                <h:panelGroup styleClass="dialog_title_box" rendered="#{(controller.bean.massiveRemovalReadyState eq false)}">#{label.massiveRemovalNotReadyPromptTitle}</h:panelGroup>
-                <h:panelGroup styleClass="dialog_content_box" rendered="#{(controller.bean.massiveRemovalReadyState eq false)}">#{defaultMessage.massiveRemovalNotReadyPrompt}</h:panelGroup>
-                <h:panelGroup styleClass="dialog_title_box" rendered="#{(controller.bean.massiveRemovalReadyState eq true)}">#{label.massiveRemovalPromptTitle}</h:panelGroup>
-                <h:panelGroup styleClass="dialog_content_box" rendered="#{(controller.bean.massiveRemovalReadyState eq true)}">#{defaultMessage.massiveRemovalPrompt}</h:panelGroup>
+                <h:panelGroup styleClass="dialog_title_box" rendered="#{(controller.bean.massiveRemovalReadyState eq false)}">
+                    <h:outputText value="#{label.massiveRemovalNotReadyPromptTitle}" />
+                </h:panelGroup>
+                <h:panelGroup styleClass="dialog_content_box" rendered="#{(controller.bean.massiveRemovalReadyState eq false)}">
+                    <h:outputText value="#{defaultMessage.massiveRemovalNotReadyPrompt}" />
+                </h:panelGroup>
+                <h:panelGroup styleClass="dialog_title_box" rendered="#{(controller.bean.massiveRemovalReadyState eq true)}">
+                    <h:outputText value="#{label.massiveRemovalPromptTitle}" />
+                </h:panelGroup>
+                <h:panelGroup styleClass="dialog_content_box" rendered="#{(controller.bean.massiveRemovalReadyState eq true)}">
+                    <h:outputText value="#{defaultMessage.massiveRemovalPrompt}" />
+                </h:panelGroup>
                 <h:panelGroup styleClass="dialog_button_box">
                     <h:panelGroup styleClass="dialog_button_box_gap">&nbsp;</h:panelGroup>
                     <h:commandButton styleClass="grouped_button_left" value="#{label.buttonContinue}" immediate="true" rendered="#{(controller.bean.opMode eq 'LISTING' and controller.bean.massiveRemovalReadyState eq true)}">

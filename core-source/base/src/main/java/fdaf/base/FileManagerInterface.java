@@ -37,7 +37,8 @@ import java.util.List;
 public interface FileManagerInterface {
     public boolean createNewDirectory(String name);
     public boolean isError();
-    public boolean move(List<String> fileAddressList, String destinationDirectory);
+    public boolean isInHomeDirectory();
+    public boolean move(String fileAddress, String destinationDirectory);
     public boolean remove(String fileAddress);
     public boolean rename(String oldAddress, String newFileName);
     public LinkedHashMap<String, Map<String, Boolean>> getNodeMap();
