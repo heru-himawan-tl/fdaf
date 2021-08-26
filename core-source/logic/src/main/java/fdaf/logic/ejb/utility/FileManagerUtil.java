@@ -278,6 +278,14 @@ public class FileManagerUtil extends ApplicationIdentifier implements Serializab
     }
     
     public void setCurrentDirectory(String currentDirectory) {
+        this.currentDirectory = baseDirectory;
+        try {
+            if (!Files.exists(Paths.get(currentDirectory))) {
+                return;
+            }
+        } catch (Exception e) {
+            return;
+        }
         this.currentDirectory = currentDirectory;
     }
     

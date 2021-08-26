@@ -104,6 +104,7 @@ public class FileManagerWebAppBean extends AbstractBaseWebAppBean implements Ser
     private boolean prepareMassiveMoveOp;
     
     private String massiveMoveDestinationDirectory;
+    private String moveFileDestinationDirectory;
     
     HashMap<String, String[]> nodeNameMap = new HashMap<String, String[]>();
     String[] dummyNodeNames = new String[]{};
@@ -278,6 +279,45 @@ public class FileManagerWebAppBean extends AbstractBaseWebAppBean implements Ser
     public void cancelRenameFile() {
         inPrepareRenameFile = false;
         newFileName = null;
+    }
+    
+    // ======================================================================
+    // File move
+    // ======================================================================
+    
+    public void setMoveFileDestinationDirectory(String moveFileDestinationDirectory) {
+        this.moveFileDestinationDirectory = moveFileDestinationDirectory;
+    }
+
+    public String getMoveFileDestinationDirectory() {
+        return moveFileDestinationDirectory;
+    }
+    
+    public void prepareMoveFile() {
+        inPrepareMoveFile = true;
+    }
+    
+    public boolean getInPrepareMoveFile() {
+        return inPrepareMoveFile;
+    }
+    
+    public void cancelMoveFile() {
+        inPrepareMoveFile = false;
+    }
+    
+    public void moveFile() {
+        try {
+            String newFileAddress = moveFileDestinationDirectory + File.separator + (new File(previewFileAddress)).getName();
+            if (!fileManagerUtil.move(previewFileAddress, moveFileDestinationDirectory)) {
+                addMessage(SV_ERROR, "moveFileFailedWarning");
+                return;
+            }
+            previewFileAddress = newFileAddress;
+            addMessage(SV_INFO, "moveFileSuccessInfo");
+        } catch (Exception e) {
+            addMessage(SV_ERROR, "moveFileFailedWarning");
+        }
+        inPrepareMoveFile = false;
     }
 
     // ======================================================================
