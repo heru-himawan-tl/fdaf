@@ -339,6 +339,10 @@ public class FileManagerWebAppBean extends AbstractBaseWebAppBean implements Ser
                 && !inPrepareMoveNodes); 
     }
     
+    public void closePreview() {
+        previewFileAddress = null;
+    }
+    
     // ======================================================================
     // Massive selection helper
     // ======================================================================

@@ -218,7 +218,13 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                                     elx.style='display:none';
                                     document.getElementById('form:previewFileAddress').value='';
                                     elx.innerHTML = '';"
-                                value="#{label.buttonClose}" />
+                                value="#{label.buttonClose}"
+                                rendered="#{controller.bean.inPreviewFile eq false}" />
+                            <h:commandButton type="button" styleClass="grouped_button_right" value="#{label.buttonClose}"
+                                immediate="true" rendered="#{controller.bean.inPreviewFile eq true}">
+                                <f:actionListener binding="#{controller.bean.closePreview()}" />
+                                <f:ajax event="click" execute="@form" render="@form" />
+                            </h:commandButton>
                         </d:fileManagerPreviewer>
                         <h:outputScript rendered="#{controller.bean.isLoggedOn eq true and controller.bean.inPreviewFile eq true}">
                             document.querySelector('.file_manager_preview')
