@@ -40,7 +40,8 @@ public interface FileManagerInterface {
     public boolean isInHomeDirectory();
     public boolean move(String fileAddress, String destinationDirectory);
     public boolean remove(String fileAddress);
-    public boolean rename(String oldAddress, String newFileName);
+    public boolean renameCurrentDirectory(String newDirectoryName);
+    public boolean renameFile(String oldAddress, String newFileName);
     public LinkedHashMap<String, Map<String, Boolean>> getNodeMap();
     public LinkedList<String> getDirectoryList();
     public List<String> getSearchResultList();

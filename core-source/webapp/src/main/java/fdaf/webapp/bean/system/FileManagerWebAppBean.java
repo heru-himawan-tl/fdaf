@@ -236,7 +236,7 @@ public class FileManagerWebAppBean extends AbstractBaseWebAppBean implements Ser
     }
     
     // ======================================================================
-    // Directory renaming
+    // Directory rename
     // ======================================================================
     
     public void prepareRenameDirectory() {
@@ -248,6 +248,18 @@ public class FileManagerWebAppBean extends AbstractBaseWebAppBean implements Ser
     }
     
     public void renameDirectory() {
+        try {
+            if (!fileManagerUtil.renameCurrentDirectory(newDirectoryName)) {
+                addMessage(SV_ERROR, "renameDirectoryFailedWarning");
+                return;
+            }
+            setCurrentDirectory(new File(getCurrentDirectory()).getParent() + File.separator + newDirectoryName);
+            populateNodes(null);
+            addMessage(SV_INFO, "renameDirectorySuccessInfo");
+        } catch (Exception e) {
+            addMessage(SV_ERROR, "renameDirectoryFailedWarning");
+        }
+        inPrepareRenameDirectory = false;
     }
     
     public void cancelRenameDirectory() {
@@ -276,12 +288,11 @@ public class FileManagerWebAppBean extends AbstractBaseWebAppBean implements Ser
     
     public void moveDirectory() {
         try {
-            String md = moveDirectoryDestination + File.separator + (new File(getCurrentDirectory())).getName();
             if (!fileManagerUtil.move(getCurrentDirectory(), moveDirectoryDestination)) {
                 addMessage(SV_ERROR, "moveDirectoryFailedWarning");
                 return;
             }
-            setCurrentDirectory(md);
+            setCurrentDirectory(moveDirectoryDestination + File.separator + (new File(getCurrentDirectory())).getName());
             populateNodes(null);
             addMessage(SV_INFO, "moveDirectorySuccessInfo");
         } catch (Exception e) {
@@ -295,7 +306,7 @@ public class FileManagerWebAppBean extends AbstractBaseWebAppBean implements Ser
     }
     
     // ======================================================================
-    // File renaming
+    // File rename
     // ======================================================================
 
     public void setNewFileName(String newFileName) {
@@ -316,7 +327,7 @@ public class FileManagerWebAppBean extends AbstractBaseWebAppBean implements Ser
   
     public void renameFile() {
         String newFileAddress = fileManagerUtil.getCurrentDirectory() + File.separator + newFileName;
-        if (!fileManagerUtil.rename(previewFileAddress, newFileName)) {
+        if (!fileManagerUtil.renameFile(previewFileAddress, newFileName)) {
             addMessage(SV_ERROR, "renameFileFailedWarning");
             return;
         }
@@ -470,12 +481,12 @@ public class FileManagerWebAppBean extends AbstractBaseWebAppBean implements Ser
     // ======================================================================
     
     public SelectItem[] getDirectorySelection() {
-        List<SelectItem> itemsTemp = new ArrayList<SelectItem>();
         String currentDirectory = directoryInfo.getCurrentDirectory();
         String parentDirectory = (new File(currentDirectory)).getParent();
         if (inPrepareMoveFile) {
             parentDirectory = (new File(previewFileAddress)).getParent();
         }
+        List<SelectItem> itemsTemp = new ArrayList<SelectItem>();
         for (String directory : fileManagerUtil.getDirectoryList()) {
             if (inPrepareMoveDirectory && (currentDirectory.equals(directory)
                 || parentDirectory.equals(directory)

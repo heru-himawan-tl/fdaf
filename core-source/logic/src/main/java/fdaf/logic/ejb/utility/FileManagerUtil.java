@@ -163,13 +163,6 @@ public class FileManagerUtil extends ApplicationIdentifier implements Serializab
         if (!currentDirectory.equals(baseDirectory)) {
             try {
                 currentDirectory = (new File(currentDirectory)).getParent();
-            /*boolean isUnixLikeOS = !System.getProperty("os.name").toLowerCase().matches(".*windows.*");
-            String[] dirs = currentDirectory.split(File.separator);
-            currentDirectory = "" + ((isUnixLikeOS) ? File.separator : "");
-            for (int i = 0; i < dirs.length-1; i++) {
-                currentDirectory += dirs[i].trim() + ((i < dirs.length-2) ? File.separator : "");
-            }
-            currentDirectory = (isUnixLikeOS) ? currentDirectory.replaceAll("[\\/]+", "/") : currentDirectory;*/
             } catch (Exception e) {
             }
         }
@@ -333,7 +326,21 @@ public class FileManagerUtil extends ApplicationIdentifier implements Serializab
         return true;
     }
     
-    public boolean rename(String oldAddress, String newFileName) {
+    public boolean renameCurrentDirectory(String newDirectoryName) {
+        String newAddress = (new File(currentDirectory)).getParent() + File.separator + newDirectoryName;
+        if (!Files.exists(Paths.get(newAddress))) {
+            try {
+                Files.move(Paths.get(currentDirectory), Paths.get(newAddress));
+            } catch (Exception e) {
+                return false;
+            }
+        } else {
+            return false;
+        }
+        return true;
+    }
+    
+    public boolean renameFile(String oldAddress, String newFileName) {
         String newFileAddress = currentDirectory + File.separator + newFileName;
         if (!Files.exists(Paths.get(newFileAddress))) {
             try {
