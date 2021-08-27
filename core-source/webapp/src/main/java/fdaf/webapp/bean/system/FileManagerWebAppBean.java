@@ -178,6 +178,18 @@ public class FileManagerWebAppBean extends AbstractBaseWebAppBean implements Ser
     }
     
     // ======================================================================
+    // Shared methods to support new directory creation & directory renaming
+    // ======================================================================
+    
+    public void setNewDirectoryName(String newDirectoryName) {
+        this.newDirectoryName = newDirectoryName;
+    }
+    
+    public String getNewDirectoryName() {
+        return newDirectoryName;
+    }
+    
+    // ======================================================================
     // Directory creation
     // ======================================================================
     
@@ -187,14 +199,6 @@ public class FileManagerWebAppBean extends AbstractBaseWebAppBean implements Ser
     
     public boolean getInPrepareCreateDirectory() {
         return inPrepareCreateDirectory;
-    }
-    
-    public void setNewDirectoryName(String newDirectoryName) {
-        this.newDirectoryName = newDirectoryName;
-    }
-    
-    public String getNewDirectoryName() {
-        return newDirectoryName;
     }
     
     public void createNewDirectory() {
@@ -224,6 +228,9 @@ public class FileManagerWebAppBean extends AbstractBaseWebAppBean implements Ser
         return inPrepareUpload;
     }
     
+    public void upload() {
+    }
+    
     public void cancelUpload() {
         inPrepareUpload = false;
     }
@@ -238,6 +245,9 @@ public class FileManagerWebAppBean extends AbstractBaseWebAppBean implements Ser
     
     public boolean getInPrepareRenameDirectory() {
         return inPrepareRenameDirectory;
+    }
+    
+    public void renameDirectory() {
     }
     
     public void cancelRenameDirectory() {
@@ -461,7 +471,20 @@ public class FileManagerWebAppBean extends AbstractBaseWebAppBean implements Ser
     
     public SelectItem[] getDirectorySelection() {
         List<SelectItem> itemsTemp = new ArrayList<SelectItem>();
+        String currentDirectory = directoryInfo.getCurrentDirectory();
+        String parentDirectory = (new File(currentDirectory)).getParent();
+        if (inPrepareMoveFile) {
+            parentDirectory = (new File(previewFileAddress)).getParent();
+        }
         for (String directory : fileManagerUtil.getDirectoryList()) {
+            if (inPrepareMoveDirectory && (currentDirectory.equals(directory)
+                || parentDirectory.equals(directory)
+                || directory.indexOf(currentDirectory) != -1)) {
+                continue;
+            }
+            if (inPrepareMoveFile && parentDirectory.equals(directory)) {
+                continue;
+            }
             SelectItem selectItem = new SelectItem();
             selectItem.setValue(directory);
             selectItem.setLabel(directory);

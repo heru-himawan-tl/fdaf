@@ -86,10 +86,9 @@ public class FileManagerUtil extends ApplicationIdentifier implements Serializab
         String baseDir = "";
         if (commonConfiguration.isEnabled()) {
             String fileManagerHomeDirectory = commonConfiguration.getFileManagerHomeDirectory();
-            if (fileManagerHomeDirectory == null
-                || (fileManagerHomeDirectory != null
+            if (fileManagerHomeDirectory == null || (fileManagerHomeDirectory != null
                 && fileManagerHomeDirectory.isEmpty())) {
-                baseDir = userHome + File.separator + ((commonConfiguration.underUnixLikeOS()) ? "." : "")
+                baseDir = userHome + File.separator + ((commonConfiguration.underUnixLikeOS()) ? "." : "") 
                     + getApplicationCodeName() + File.separator + "user_files";
             } else {
                 baseDir = fileManagerHomeDirectory;
@@ -136,10 +135,14 @@ public class FileManagerUtil extends ApplicationIdentifier implements Serializab
             DirectoryStream<Path> directoryStream = Files.newDirectoryStream(Paths.get(dirname));
             for (Path path : directoryStream) {
                 String fileName = path.getFileName().toString();
-                nodeList.add(dirname + File.separator + fileName);
+                if (nodeList != null) {
+                    nodeList.add(dirname + File.separator + fileName);
+                }
                 if (Files.isDirectory(path)) {
                     recursiveReadDir(dirname + File.separator + fileName, nodeList, directoryList);
-                    directoryList.add(dirname + File.separator + fileName);
+                    if (directoryList != null) {
+                        directoryList.add(dirname + File.separator + fileName);
+                    }
                 }
             }
             directoryStream.close();
@@ -158,13 +161,17 @@ public class FileManagerUtil extends ApplicationIdentifier implements Serializab
     
     public void toParentDirectory() {
         if (!currentDirectory.equals(baseDirectory)) {
-            boolean isUnixLikeOS = System.getProperty("os.name").toLowerCase().matches(".*windows.*");
+            try {
+                currentDirectory = (new File(currentDirectory)).getParent();
+            /*boolean isUnixLikeOS = !System.getProperty("os.name").toLowerCase().matches(".*windows.*");
             String[] dirs = currentDirectory.split(File.separator);
             currentDirectory = "" + ((isUnixLikeOS) ? File.separator : "");
             for (int i = 0; i < dirs.length-1; i++) {
                 currentDirectory += dirs[i].trim() + ((i < dirs.length-2) ? File.separator : "");
             }
-            currentDirectory = (isUnixLikeOS) ? currentDirectory.replaceAll("[\\/]+", "/") : currentDirectory;
+            currentDirectory = (isUnixLikeOS) ? currentDirectory.replaceAll("[\\/]+", "/") : currentDirectory;*/
+            } catch (Exception e) {
+            }
         }
     }
 
@@ -299,12 +306,10 @@ public class FileManagerUtil extends ApplicationIdentifier implements Serializab
     
     public LinkedList<String> getDirectoryList() {
         LinkedList<String> directoryList = new LinkedList<String>();
-        LinkedList<String> nodeList = new LinkedList<String>();
         if (!currentDirectory.equals(baseDirectory)) {
             directoryList.add(baseDirectory);
         }
-        recursiveReadDir(baseDirectory, nodeList, directoryList);
-        nodeList.clear();
+        recursiveReadDir(baseDirectory, null, directoryList);
         if (!directoryList.isEmpty()) {
             Collections.sort(directoryList);
         }
@@ -364,9 +369,11 @@ public class FileManagerUtil extends ApplicationIdentifier implements Serializab
     }
     
     public void search(String keywords) {
+        // NOT APPLICABLE YET
     }
     
     public List<String> getSearchResultList() {
+        // NOT APPLICABLE YET
         return null;
     }
     
