@@ -36,12 +36,22 @@ import javax.inject.Named;
 @Named
 public class FileManagerDirectoryInfoBean implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L; 
+    private boolean baseDirectoryInitialized;
+    private String baseDirectory;
     
     private String currentDirectory;
     
     public FileManagerDirectoryInfoBean() {
         // NO-OP
+    }
+    
+    public void setBaseDirectory(String baseDirectory) {
+        this.baseDirectory= baseDirectory;
+    }
+    
+    public String getBaseDirectory() {
+        return baseDirectory;
     }
     
     public void setCurrentDirectory(String currentDirectory) {
@@ -50,5 +60,17 @@ public class FileManagerDirectoryInfoBean implements Serializable {
     
     public String getCurrentDirectory() {
         return currentDirectory;
+    }
+    
+    public boolean isBaseDirectoryInitialized() {
+        return baseDirectoryInitialized;
+    }
+    
+    public void markBaseDirectoryDeinitialized() {
+        baseDirectoryInitialized = false;
+    }
+    
+    public void markBaseDirectoryInitialized() {
+        baseDirectoryInitialized = true;
     }
 }

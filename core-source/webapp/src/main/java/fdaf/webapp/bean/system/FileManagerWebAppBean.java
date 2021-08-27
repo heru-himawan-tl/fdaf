@@ -98,13 +98,12 @@ public class FileManagerWebAppBean extends AbstractBaseWebAppBean implements Ser
     
     private boolean inPrepareMoveNodes;
     
-    private boolean baseDirectoryInitialized;
-    
     private boolean massiveMoveReadyState;
     private boolean prepareMassiveMoveOp;
     
-    private String massiveMoveDestinationDirectory;
+    private String massiveMoveDirectoryDestination;
     private String moveFileDestinationDirectory;
+    private String moveDirectoryDestination;
     
     HashMap<String, String[]> nodeNameMap = new HashMap<String, String[]>();
     String[] dummyNodeNames = new String[]{};
@@ -153,13 +152,14 @@ public class FileManagerWebAppBean extends AbstractBaseWebAppBean implements Ser
     // ======================================================================
 
     public void populateNodes(ComponentSystemEvent event) throws AbortProcessingException {
-        if (!baseDirectoryInitialized) {
+        if (!directoryInfo.isBaseDirectoryInitialized()) {
             String baseDirectory = getCommonConfiguration().getFileManagerHomeDirectory()
                 + File.separator + getUserSessionManager().getUserName();
-            fileManagerUtil.changeBaseDirectory(baseDirectory);
             directoryInfo.setCurrentDirectory(baseDirectory);
-            baseDirectoryInitialized = true;
+            directoryInfo.setBaseDirectory(baseDirectory);
+            directoryInfo.markBaseDirectoryInitialized();
         }
+        fileManagerUtil.changeBaseDirectory(directoryInfo.getBaseDirectory());
         if (directoryInfo.getCurrentDirectory() == null) {
             directoryInfo.setCurrentDirectory(fileManagerUtil.getCurrentDirectory());
         }
@@ -242,6 +242,46 @@ public class FileManagerWebAppBean extends AbstractBaseWebAppBean implements Ser
     
     public void cancelRenameDirectory() {
         inPrepareRenameDirectory = false;
+    }
+    
+    // ======================================================================
+    // Directory move
+    // ======================================================================
+    
+    public void setMoveDirectoryDestination(String moveDirectoryDestination) {
+        this.moveDirectoryDestination = moveDirectoryDestination;
+    }
+
+    public String getMoveDirectoryDestination() {
+        return moveDirectoryDestination;
+    }
+    
+    public void prepareMoveDirectory() {
+        inPrepareMoveDirectory = true;
+    }
+    
+    public boolean getInPrepareMoveDirectory() {
+        return inPrepareMoveDirectory;
+    }
+    
+    public void moveDirectory() {
+        try {
+            String md = moveDirectoryDestination + File.separator + (new File(getCurrentDirectory())).getName();
+            if (!fileManagerUtil.move(getCurrentDirectory(), moveDirectoryDestination)) {
+                addMessage(SV_ERROR, "moveDirectoryFailedWarning");
+                return;
+            }
+            setCurrentDirectory(md);
+            populateNodes(null);
+            addMessage(SV_INFO, "moveDirectorySuccessInfo");
+        } catch (Exception e) {
+            addMessage(SV_ERROR, "moveDirectoryFailedWarning");
+        }
+        inPrepareMoveDirectory = false;
+    }
+    
+    public void cancelMoveDirectory() {
+        inPrepareMoveDirectory = false;
     }
     
     // ======================================================================
@@ -430,12 +470,12 @@ public class FileManagerWebAppBean extends AbstractBaseWebAppBean implements Ser
         return itemsTemp.toArray(new SelectItem[]{});
     }
     
-    public void setMassiveMoveDestinationDirectory(String massiveMoveDestinationDirectory) {
-        this.massiveMoveDestinationDirectory = massiveMoveDestinationDirectory;
+    public void setMassiveMoveDirectoryDestination(String massiveMoveDirectoryDestination) {
+        this.massiveMoveDirectoryDestination = massiveMoveDirectoryDestination;
     }
     
-    public String getMassiveMoveDestinationDirectory() {
-        return massiveMoveDestinationDirectory;
+    public String getMassiveMoveDirectoryDestination() {
+        return massiveMoveDirectoryDestination;
     }
     
     public void presetMassiveMoveReadyState() {
@@ -472,7 +512,7 @@ public class FileManagerWebAppBean extends AbstractBaseWebAppBean implements Ser
                 String[] nodeNames = nodeNameMap.get(nodeName);
                 if (nodeNames != null && nodeNames.length != 0) {
                     try {
-                        if (fileManagerUtil.move(nodeName, massiveMoveDestinationDirectory)) {
+                        if (fileManagerUtil.move(nodeName, massiveMoveDirectoryDestination)) {
                             nodeNameList.add(nodeName);
                             getMoved = true;
                         }
