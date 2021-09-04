@@ -52,6 +52,7 @@ import javax.faces.model.SelectItem;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.http.Part;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
@@ -89,6 +90,7 @@ public class FileManagerWebAppBean extends AbstractBaseWebAppBean implements Ser
     private boolean inPrepareCreateDirectory;
     
     private boolean inPrepareUpload;
+    private Part fileParts[] = new Part[]{};
     
     private boolean inPrepareRenameFile;
     private boolean inPrepareMoveFile;
@@ -219,6 +221,14 @@ public class FileManagerWebAppBean extends AbstractBaseWebAppBean implements Ser
     // ======================================================================
     // File upload
     // ======================================================================
+    
+    public void setFileParts(Part[] fileParts) {
+        this.fileParts = fileParts;
+    }
+    
+    public Part[] getFileParts() {
+        return fileParts;
+    }
     
     public void prepareUpload() {
         initMultipartForm();
