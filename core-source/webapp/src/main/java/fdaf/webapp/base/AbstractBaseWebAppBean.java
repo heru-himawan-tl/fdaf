@@ -410,6 +410,16 @@ public abstract class AbstractBaseWebAppBean extends AbstractWebAppCommon {
         isMultipart = true;
     }
     
+    protected String getFileNameFromPart(Part part) {
+        final String partHeader = part.getHeader("content-disposition");
+        for (String content : partHeader.split(";")) {
+            if (content.trim().startsWith("filename")) {
+                return content.substring(content.indexOf('=') + 1).trim().replace("\"", "");
+            }
+        }
+        return null;
+    }
+    
     public String getEnctype() {
         return enctype;
     }
