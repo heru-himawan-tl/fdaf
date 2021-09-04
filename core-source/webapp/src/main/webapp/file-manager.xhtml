@@ -192,6 +192,35 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                     </h:panelGroup>
                 </h:panelGroup>
             </h:panelGroup>
+            <h:panelGroup layout="block" styleClass="dialog_container" rendered="#{controller.bean.inPrepareRenameDirectory eq true}">
+                <h:panelGroup layout="block" styleClass="dialog_box">
+                    <h:panelGroup layout="block" styleClass="dialog_title_box">
+                        <h:outputText value="#{label.renameDirectoryDialogTitle}" />
+                    </h:panelGroup>
+                    <h:panelGroup layout="block" styleClass="dialog_content_box">
+                        <h:panelGroup layout="block" styleClass="field_note_box">
+                            <h:outputText value="#{defaultMessage.renameDirectoryNote} #{label.directoryToRenameNote}: #{controller.bean.currentDirectory}" />
+                        </h:panelGroup>
+                        <d:dialogMessages addStyleClass="dialog_messages_offset_top" rendered="#{controller.bean.inPrepareRenameDirectory eq true}" />
+                        <h:panelGroup layout="block" styleClass="dialog_field_label_box">
+                            <h:outputText value="#{label.newDirectoryName}" />
+                        </h:panelGroup>
+                        <h:panelGroup layout="block" styleClass="dialog_field_input_box">
+                            <h:inputText id="newDirectoryName1" value="#{controller.bean.newDirectoryName}" />
+                        </h:panelGroup>
+                    </h:panelGroup>
+                    <h:panelGroup layout="block" styleClass="dialog_button_box">
+                        <h:commandButton type="button" styleClass="grouped_button_left" value="#{label.buttonContinue}">
+                            <f:actionListener binding="#{controller.bean.renameDirectory()}" />
+                            <f:ajax event="click" execute="@form" render="@form" />
+                        </h:commandButton>
+                        <h:commandButton type="button" styleClass="grouped_button_right" value="#{label.buttonCancel}" immediate="true">
+                            <f:actionListener binding="#{controller.bean.cancelRenameDirectory()}" />
+                            <f:ajax event="click" execute="@form" render="@form" />
+                        </h:commandButton>
+                    </h:panelGroup>
+                </h:panelGroup>
+            </h:panelGroup>
             <h:panelGroup layout="block" styleClass="dialog_container" rendered="#{controller.bean.inPrepareRenameFile eq true}">
                 <h:panelGroup layout="block" styleClass="dialog_box">
                     <h:panelGroup layout="block" styleClass="dialog_title_box">
@@ -292,6 +321,8 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                                 </h:commandButton>
                                 <h:commandButton type="button" styleClass="grouped_button_inner" value="#{label.buttonRenameCurrentDirectory}"
                                     rendered="#{controller.bean.isLoggedOn eq true and controller.bean.inHomeDirectory eq false}">
+                                    <f:actionListener binding="#{controller.bean.prepareRenameDirectory()}" />
+                                    <f:ajax event="click" execute="@form" render="@form" />
                                 </h:commandButton>
                                 <h:commandButton type="button" styleClass="grouped_button_inner" value="#{label.buttonMassiveMove}"
                                     rendered="#{controller.bean.isLoggedOn eq true}">

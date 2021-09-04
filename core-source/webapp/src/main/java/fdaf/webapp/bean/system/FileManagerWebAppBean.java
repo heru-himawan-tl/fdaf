@@ -221,6 +221,7 @@ public class FileManagerWebAppBean extends AbstractBaseWebAppBean implements Ser
     // ======================================================================
     
     public void prepareUpload() {
+        initMultipartForm();
         inPrepareUpload = true;
     }
     
@@ -229,9 +230,12 @@ public class FileManagerWebAppBean extends AbstractBaseWebAppBean implements Ser
     }
     
     public void upload() {
+        deinitMultipartForm();
+        inPrepareUpload = false;
     }
     
     public void cancelUpload() {
+        deinitMultipartForm();
         inPrepareUpload = false;
     }
     

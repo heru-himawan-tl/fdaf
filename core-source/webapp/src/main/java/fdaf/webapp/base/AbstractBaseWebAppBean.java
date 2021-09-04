@@ -391,6 +391,20 @@ public abstract class AbstractBaseWebAppBean extends AbstractWebAppCommon {
         return loggedOn;
     }
     
+    public void initMultipartForm() {
+        enctype = "multipart/form-data";
+        isMultipart = true;
+    }
+    
+    public void deinitMultipartForm() {
+        enctype = "application/x-www-form-urlencoded";
+        isMultipart = false;
+    }
+    
+    public boolean getIsMultipart() {
+        return isMultipart;
+    }
+    
     public void useMultipartForm(ComponentSystemEvent event) throws AbortProcessingException {
         enctype = "multipart/form-data";
         isMultipart = true;

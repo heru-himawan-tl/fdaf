@@ -227,7 +227,6 @@ public abstract class AbstractWebAppBean extends AbstractBaseWebAppBean {
         return allowAdd;
     }
     
-    
     public boolean getDefaultReadonlyForAll() {
         return defaultReadonlyForAll;
     }
@@ -586,7 +585,8 @@ public abstract class AbstractWebAppBean extends AbstractBaseWebAppBean {
         resultObject.setData(data);
         resultObject.setRemovable(true);
         resultObject.setEditable(true);
-        if (!withoutDataProperties && !checkOrphanDataMode && (userType == UserType.STAFF || userType == UserType.ADMINISTRATOR) && currentAuthorId != null && currentUserGroupId != null && currentAuthorId != 0 && currentUserGroupId != 0) {
+        if (!withoutDataProperties && !checkOrphanDataMode && (userType == UserType.STAFF || userType == UserType.ADMINISTRATOR)
+            && currentAuthorId != null && currentUserGroupId != null && currentAuthorId != 0 && currentUserGroupId != 0) {
             PermissionCheck permissionCheck = new PermissionCheck(currentAuthorId, authorId, currentUserGroupId, userGroupId, permission);
             resultObject.setRemovable((userType == UserType.ADMINISTRATOR && authorUserType != UserType.STAFF) ? true : permissionCheck.isRemovable());
             resultObject.setEditable((userType == UserType.ADMINISTRATOR && authorUserType != UserType.STAFF) ? true : permissionCheck.isEditable());
