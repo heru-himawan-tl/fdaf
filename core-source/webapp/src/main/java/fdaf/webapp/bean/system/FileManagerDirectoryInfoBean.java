@@ -47,7 +47,7 @@ public class FileManagerDirectoryInfoBean implements Serializable {
     }
     
     public void setBaseDirectory(String baseDirectory) {
-        this.baseDirectory= baseDirectory;
+        this.baseDirectory = baseDirectory;
     }
     
     public String getBaseDirectory() {

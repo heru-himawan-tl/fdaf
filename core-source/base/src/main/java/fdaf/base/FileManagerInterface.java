@@ -45,11 +45,12 @@ public interface FileManagerInterface {
     public LinkedHashMap<String, Map<String, Boolean>> getNodeMap();
     public LinkedList<String> getDirectoryList();
     public List<String> getSearchResultList();
+    public String getBaseDirectory();
     public String getCurrentDirectory();
-    public void changeBaseDirectory(String baseDirectory);
     public void populateNodes();
     public void search(String keywords);
-    public void setCurrentDirectory(String baseDirectory);
+    public void setBaseDirectory(String baseDirectory);
+    public void setCurrentDirectory(String currentDirectory);
     public void toHomeDirectory();
     public void toParentDirectory();
     public void upload(List<InputStream> fileStreamList);

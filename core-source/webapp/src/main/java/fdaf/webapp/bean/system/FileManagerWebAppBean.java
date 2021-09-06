@@ -161,7 +161,7 @@ public class FileManagerWebAppBean extends AbstractBaseWebAppBean implements Ser
             directoryInfo.setBaseDirectory(baseDirectory);
             directoryInfo.markBaseDirectoryInitialized();
         }
-        fileManagerUtil.changeBaseDirectory(directoryInfo.getBaseDirectory());
+        fileManagerUtil.setBaseDirectory(directoryInfo.getBaseDirectory());
         if (directoryInfo.getCurrentDirectory() == null) {
             directoryInfo.setCurrentDirectory(fileManagerUtil.getCurrentDirectory());
         }
