@@ -32,6 +32,7 @@ import fdaf.base.FileManagerInterface;
 import fdaf.base.UserType;
 import fdaf.webapp.base.AbstractBaseWebAppBean;
 import java.io.File;
+import java.io.InputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -240,8 +241,24 @@ public class FileManagerWebAppBean extends AbstractBaseWebAppBean implements Ser
     }
     
     public void upload() {
-        deinitMultipartForm();
-        inPrepareUpload = false;
+        if (fileParts != null && fileParts.length > 0) {
+            try {
+                Map<String, InputStream> filesMap = new HashMap<String, InputStream>();
+                for (Part filePart : fileParts) {
+                    String address = getCurrentDirectory() + File.separator + getFileNameFromPart(filePart);
+                    InputStream fileStream = filePart.getInputStream();
+                    filesMap.put(address, fileStream);
+                }
+                fileManagerUtil.upload(filesMap);
+                addMessage(SV_INFO, "fileUploadSuccessInfo");
+            } catch (Exception e) {
+                addMessage(SV_ERROR, "fileUploadError");
+            }
+            deinitMultipartForm();
+            inPrepareUpload = false;
+        } else {
+            addMessage(SV_WARN, "fileUploadNoFileWarning");
+        }
     }
     
     public void cancelUpload() {

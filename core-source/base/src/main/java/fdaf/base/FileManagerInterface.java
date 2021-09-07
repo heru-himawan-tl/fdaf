@@ -53,5 +53,5 @@ public interface FileManagerInterface {
     public void setCurrentDirectory(String currentDirectory);
     public void toHomeDirectory();
     public void toParentDirectory();
-    public void upload(List<InputStream> fileStreamList);
+    public void upload(Map<String, InputStream> filesMap);
 }

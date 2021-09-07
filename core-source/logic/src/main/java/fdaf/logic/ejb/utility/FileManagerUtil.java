@@ -334,7 +334,7 @@ public class FileManagerUtil extends ApplicationIdentifier implements Serializab
     // Files & directories management
     // ======================================================================
     
-    public void upload(List<InputStream> fileStreamList) {
+    public void upload(Map<String, InputStream> filesMap) {
     }
     
     public boolean move(String fileAddress, String destinationDirectory) {
