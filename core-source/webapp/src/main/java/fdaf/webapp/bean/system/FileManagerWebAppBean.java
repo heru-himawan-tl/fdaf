@@ -244,13 +244,20 @@ public class FileManagerWebAppBean extends AbstractBaseWebAppBean implements Ser
         if (fileParts != null && fileParts.length > 0) {
             try {
                 Map<String, InputStream> filesMap = new HashMap<String, InputStream>();
+                int uploadedCount = 0;
+                int uploadCount = 0;
                 for (Part filePart : fileParts) {
                     String address = getCurrentDirectory() + File.separator + getFileNameFromPart(filePart);
                     InputStream fileStream = filePart.getInputStream();
                     filesMap.put(address, fileStream);
+                    uploadCount++;
                 }
-                fileManagerUtil.upload(filesMap);
-                addMessage(SV_INFO, "fileUploadSuccessInfo");
+                uploadedCount = fileManagerUtil.upload(filesMap);
+                if (uploadedCount == uploadCount) {
+                    addMessage(SV_INFO, "fileUploadSuccessInfo");
+                } else {
+                    addMessage(SV_INFO, "fileUploadPartialInfo");
+                }
             } catch (Exception e) {
                 addMessage(SV_ERROR, "fileUploadError");
             }

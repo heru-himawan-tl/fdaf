@@ -42,6 +42,7 @@ public interface FileManagerInterface {
     public boolean remove(String fileAddress);
     public boolean renameCurrentDirectory(String newDirectoryName);
     public boolean renameFile(String oldAddress, String newFileName);
+    public int upload(Map<String, InputStream> filesMap);
     public LinkedHashMap<String, Map<String, Boolean>> getNodeMap();
     public LinkedList<String> getDirectoryList();
     public List<String> getSearchResultList();
@@ -53,5 +54,4 @@ public interface FileManagerInterface {
     public void setCurrentDirectory(String currentDirectory);
     public void toHomeDirectory();
     public void toParentDirectory();
-    public void upload(Map<String, InputStream> filesMap);
 }
