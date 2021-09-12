@@ -43,8 +43,12 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                 <d:listHeadStrictWidth value="#{elabel.description}" />
             </d:listRowHead>
             <ui:repeat value="#{controller.bean.resultList}" var="userGroup">
-                <d:listRow removePromptId="userGroup" listObject="#{userGroup}">
-                    <d:listColumnMobileViewWithTool listObject="#{userGroup}">
+                <d:listRow removePromptId="userGroup" listObject="#{userGroup}"
+                        removable="#{controller.bean.userSessionManager.userGroupId ne userGroup.data.id}"
+                        editable="#{controller.bean.userSessionManager.userGroupId ne userGroup.data.id}">
+                    <d:listColumnMobileViewWithTool listObject="#{userGroup}"
+                            removable="#{controller.bean.userSessionManager.userGroupId ne userGroup.data.id}"
+                            editable="#{controller.bean.userSessionManager.userGroupId ne userGroup.data.id}">
                         <d:dataListMobileViewContentBox>
                             <h:outputText value="#{userGroup.data.name}" /><br />
                             <h:outputText value="#{elabel.id}" />:
