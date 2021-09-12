@@ -35,7 +35,9 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         xmlns:f="http://java.sun.com/jsf/core"
         xmlns:d="http://java.sun.com/jsf/composite/component">
     <ui:composition>
-        <d:viewerContainer caption="#{elabel.userGroup.toLowerCase()} #{label.with} #{elabel.name.toLowerCase()}: #{controller.bean.resultObject.data.name}">
+        <d:viewerContainer caption="#{elabel.userGroup.toLowerCase()} #{label.with} #{elabel.name.toLowerCase()}: #{controller.bean.resultObject.data.name}"
+                removable="#{controller.bean.userSessionManager.userGroupId ne controller.bean.resultObject.data.id}"
+                editable="#{controller.bean.userSessionManager.userGroupId ne controller.bean.resultObject.data.id}">
             <d:viewerTable>
                 <d:viewerRowSet label="#{elabel.name}" value="#{controller.bean.resultObject.data.name}" />
                 <d:viewerRowSet label="#{elabel.description}" value="#{controller.bean.resultObject.data.description}" />
