@@ -28,7 +28,6 @@
  */
 package fdaf.base;
 
-import java.io.InputStream;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.Map;
@@ -42,7 +41,6 @@ public interface FileManagerInterface {
     public boolean remove(String fileAddress);
     public boolean renameCurrentDirectory(String newDirectoryName);
     public boolean renameFile(String oldAddress, String newFileName);
-    public int upload(Map<String, InputStream> filesMap);
     public LinkedHashMap<String, Map<String, Boolean>> getNodeMap();
     public LinkedList<String> getDirectoryList();
     public List<String> getSearchResultList();

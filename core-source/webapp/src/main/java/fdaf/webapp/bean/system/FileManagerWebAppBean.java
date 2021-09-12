@@ -32,7 +32,9 @@ import fdaf.base.FileManagerInterface;
 import fdaf.base.UserType;
 import fdaf.webapp.base.AbstractBaseWebAppBean;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -91,7 +93,7 @@ public class FileManagerWebAppBean extends AbstractBaseWebAppBean implements Ser
     private boolean inPrepareCreateDirectory;
     
     private boolean inPrepareUpload;
-    private Part fileParts[] = new Part[]{};
+    private Part fileParts[] = new Part[10];
     
     private boolean inPrepareRenameFile;
     private boolean inPrepareMoveFile;
@@ -124,6 +126,14 @@ public class FileManagerWebAppBean extends AbstractBaseWebAppBean implements Ser
         return controller;
     }
     
+    public List<Integer> getCommonLoop() {
+        List<Integer> l = new ArrayList<Integer>();
+        for (int i = 0; i < 10; i++) {
+            l.add(i);
+        }
+        return l;
+    }
+    
     // ======================================================================
     // Directory retrieval methods
     // ======================================================================
@@ -153,14 +163,22 @@ public class FileManagerWebAppBean extends AbstractBaseWebAppBean implements Ser
     // ======================================================================
     // Population of directories & files
     // ======================================================================
-
-    public void populateNodes(ComponentSystemEvent event) throws AbortProcessingException {
+    
+    private void initializeBaseDirectory() {
         if (!directoryInfo.isBaseDirectoryInitialized()) {
-            String baseDirectory = getCommonConfiguration().getFileManagerHomeDirectory()
-                + File.separator + getUserSessionManager().getUserName();
+            String baseDirectory = getCommonConfiguration().getFileManagerHomeDirectory() + File.separator
+                + getUserSessionManager().getUserName();
             directoryInfo.setCurrentDirectory(baseDirectory);
             directoryInfo.setBaseDirectory(baseDirectory);
             directoryInfo.markBaseDirectoryInitialized();
+        }
+    }
+
+    public void populateNodes(ComponentSystemEvent event) throws AbortProcessingException {
+        initializeBaseDirectory();
+        if (directoryInfo.getBaseDirectory().matches(".*\\/null$")) {
+            directoryInfo.markBaseDirectoryDeinitialized();
+            initializeBaseDirectory();
         }
         fileManagerUtil.setBaseDirectory(directoryInfo.getBaseDirectory());
         if (directoryInfo.getCurrentDirectory() == null) {
@@ -240,26 +258,44 @@ public class FileManagerWebAppBean extends AbstractBaseWebAppBean implements Ser
         return inPrepareUpload;
     }
     
-    public void upload() {
+    public void upload() { 
         if (fileParts != null && fileParts.length > 0) {
-            try {
-                Map<String, InputStream> filesMap = new HashMap<String, InputStream>();
-                int uploadedCount = 0;
-                int uploadCount = 0;
-                for (Part filePart : fileParts) {
-                    String address = getCurrentDirectory() + File.separator + getFileNameFromPart(filePart);
-                    InputStream fileStream = filePart.getInputStream();
-                    filesMap.put(address, fileStream);
-                    uploadCount++;
+            int uploadedCount = 0;
+            int uploadCount = 0;
+            for (Part filePart : fileParts) {
+                if (filePart != null) {
+                    try {
+                        uploadCount++;
+                        String address = getCurrentDirectory() + File.separator + getFileNameFromPart(filePart);
+                        InputStream fileStream = filePart.getInputStream();
+                        if (fileStream != null) {
+                            OutputStream outputStream = new FileOutputStream(address);
+                            byte[] buffer = new byte[1024];
+                            int bytesRead = 0;
+                            while ((bytesRead = fileStream.read(buffer)) != -1) {
+                                outputStream.write(buffer, 0, bytesRead);
+                            }
+                            if (outputStream != null) {
+                                outputStream.close();
+                            }
+                            fileStream.close();
+                            uploadedCount++;
+                        }
+                    } catch (Exception e) {
+                    }
                 }
-                uploadedCount = fileManagerUtil.upload(filesMap);
+            }
+            if (uploadCount > 0) {
                 if (uploadedCount == uploadCount) {
                     addMessage(SV_INFO, "fileUploadSuccessInfo");
                 } else {
                     addMessage(SV_INFO, "fileUploadPartialInfo");
                 }
-            } catch (Exception e) {
-                addMessage(SV_ERROR, "fileUploadError");
+                if (uploadCount > 0 && uploadedCount == 0) {
+                    addMessage(SV_ERROR, "fileUploadFailed");
+                }
+            } else {
+                addMessage(SV_WARN, "fileUploadNoFileWarning");
             }
             deinitMultipartForm();
             inPrepareUpload = false;

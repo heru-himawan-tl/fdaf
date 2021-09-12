@@ -46,7 +46,7 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     </h:head>
     <h:body>
         <d:setUserSessionRequirement />
-        <h:form id="form">
+        <h:form id="form" a:enctype="#{controller.bean.enctype}">
             <d:mainInit />
             <d:loadBundles />
             <d:databaseServiceCheck />
@@ -302,7 +302,7 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                                     <f:ajax event="click" execute="@form" render="@form" />
                                 </h:commandButton>
                                 <h:commandButton type="button" styleClass="grouped_button_left" value="#{label.buttonProceedUpload}"
-                                    immediate="true" rendered="#{controller.bean.isLoggedOn eq true and controller.bean.inPrepareUpload eq true}">
+                                    rendered="#{controller.bean.isLoggedOn eq true and controller.bean.inPrepareUpload eq true}">
                                     <f:actionListener binding="#{controller.bean.upload()}" />
                                     <f:ajax event="click" execute="@form" render="@form" />
                                 </h:commandButton>
@@ -365,6 +365,23 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                             <d:loginRequirementInlineDialog />
                             <d:admFieldContainer>
                                 <h:panelGroup layout="block" styleClass="field_container_inner" rendered="#{controller.bean.inPrepareUpload eq true}">
+                                    <d:fieldNoteBox>
+                                        <h:outputText value="#{defaultMessage.fileUploadNotePre}: #{controller.bean.currentDirectory}. #{defaultMessage.fileUploadNote}" />
+                                    </d:fieldNoteBox>
+                                    <ui:repeat value="#{controller.bean.commonLoop}" var="cl">
+                                        <d:fieldRow>
+                                            <d:fieldColumn>
+                                                <d:fieldInputBox>
+                                                    <h:panelGroup display="block" style="position:relative">
+                                                        <h:inputFile value="#{controller.bean.fileParts[cl]}" style="display:none;"
+                                                            styleClass="filePart#{cl}"
+                                                            onchange="setFakeFileInputValue(this,'filePartTmp#{cl}');" />
+                                                        <d:fakeFileInput FIclassId="filePart#{cl}" classId="filePartTmp#{cl}" />
+                                                    </h:panelGroup>
+                                                </d:fieldInputBox>
+                                            </d:fieldColumn>
+                                        </d:fieldRow>
+                                    </ui:repeat>
                                 </h:panelGroup>
                                 <h:panelGroup layout="block" styleClass="field_container_inner" rendered="#{controller.bean.inPrepareUpload eq false}">
                                     <h:panelGroup layout="block" styleClass="field_note_box field_note_box_free">

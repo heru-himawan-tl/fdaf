@@ -32,14 +32,7 @@ import fdaf.base.ApplicationIdentifier;
 import fdaf.base.CommonConfigurationInterface;
 import fdaf.base.FileListSortMode;
 import fdaf.base.FileManagerInterface;
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
-import java.io.InputStream;
-import java.io.IOException;
-import java.io.OutputStream;
 import java.io.Serializable;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.nio.file.attribute.FileTime;
@@ -336,30 +329,6 @@ public class FileManagerUtil extends ApplicationIdentifier implements Serializab
     // Files & directories management
     // ======================================================================
     
-    public int upload(Map<String, InputStream> filesMap) {
-        int uploadCount = 0;
-        for (String address : filesMap.keySet()) {
-            try {
-                InputStream fileStream = filesMap.get(address);
-                if (fileStream != null) {
-                    OutputStream outputStream = new FileOutputStream(address);
-                    byte[] buffer = new byte[1024];
-                    int bytesRead = 0;
-                    while ((bytesRead = fileStream.read(buffer)) != -1) {
-                        outputStream.write(buffer, 0, bytesRead);
-                    }
-                    if (outputStream != null) {
-                        outputStream.close();
-                    }
-                    fileStream.close();
-                    uploadCount++;
-                }
-            } catch (Exception e) {
-            }
-        }
-        return uploadCount;
-    }
-    
     public boolean move(String fileAddress, String destinationDirectory) {
         try {
             String fileName = (new File(fileAddress)).getName();
@@ -406,14 +375,14 @@ public class FileManagerUtil extends ApplicationIdentifier implements Serializab
                     Files.walk(filePath).sorted(Comparator.reverseOrder()).forEach(path -> {
                         try {
                             Files.delete(path);
-                        } catch (IOException ex) {
+                        } catch (Exception ex) {
                         }
                     });
                 } else {
                     Files.delete(filePath);
                 }
                 return !Files.exists(filePath);
-            } catch (IOException e) {
+            } catch (Exception e) {
             }
         }
         return false;

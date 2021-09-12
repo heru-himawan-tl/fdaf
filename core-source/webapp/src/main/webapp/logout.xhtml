@@ -53,7 +53,9 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                     <h:panelGroup layout="block" styleClass="dialog_title_box">
                         <h:outputText value="#{controller.bean.applicationName} - #{fn:toUpperCase(label.userSessionLoginTitle)}" />
                     </h:panelGroup>
+                    <h:panelGroup layout="block" styleClass="dialog_content_box">
                         <d:dialogMessages />
+                    </h:panelGroup>
                     <h:panelGroup layout="block" styleClass="dialog_button_box">
                         <h:panelGroup layout="block" styleClass="dialog_button_box_gap">&nbsp;</h:panelGroup>
                         <h:commandButton type="button" styleClass="common_button_std" value="#{label.buttonClose}" onclick="document.location.href='index.jsf';" />
