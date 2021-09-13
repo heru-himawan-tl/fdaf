@@ -35,7 +35,8 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         xmlns:f="http://java.sun.com/jsf/core"
         xmlns:d="http://java.sun.com/jsf/composite/component">
     <ui:composition>
-        <d:viewerContainer caption="#{elabel.employee.toLowerCase()} #{label.with} #{elabel.fullName.toLowerCase()}: #{controller.bean.resultObject.data.firstName} #{controller.bean.resultObject.data.middleName} #{controller.bean.resultObject.data.lastName}">
+        <d:viewerContainer caption="#{elabel.employee.toLowerCase()} #{label.with} #{elabel.fullName.toLowerCase()}: #{controller.bean.resultObject.data.firstName} #{controller.bean.resultObject.data.middleName} #{controller.bean.resultObject.data.lastName}"
+                removable="#{controller.bean.userSessionManager.employeeId ne controller.bean.resultObject.data.id}">
             <d:viewerTable>
                 <d:viewerRowSet label="#{elabel.fullName}" value="#{controller.bean.resultObject.data.firstName} #{controller.bean.resultObject.data.middleName} #{controller.bean.resultObject.data.lastName}" />
                 <d:viewerRowSet label="#{elabel.DOB}" value="#{controller.bean.resultObject.data.dobDay} #{controller.bean.resultObject.data.dobDay} #{controller.bean.resultObject.data.dobYear}" />

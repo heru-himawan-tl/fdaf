@@ -356,6 +356,14 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                                     (controller.bean.isLoggedOn eq true) ? 'grouped_button_right' : 'common_button'}"
                                     onclick="document.location.href='adm.jsf'" value="#{label.buttonClose}" />
                             </d:customProgramHeading>
+                            <h:panelGroup layout="block" styleClass="list_control_container list_control_top">
+                                <h:panelGroup layout="block" styleClass="list_control_box">
+                                    <h:panelGroup layout="block" styleClass="list_control_inner">
+                                        <h:panelGroup layout="block" styleClass="list_control_deeper">
+                                        </h:panelGroup>
+                                    </h:panelGroup>
+                                </h:panelGroup>
+                            </h:panelGroup>
                             <d:messages rendered="#{
                                     controller.bean.inPrepareCreateDirectory eq false and
                                     controller.bean.inPrepareRenameFile eq false and
