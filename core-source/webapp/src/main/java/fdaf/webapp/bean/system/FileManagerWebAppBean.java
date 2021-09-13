@@ -76,6 +76,9 @@ public class FileManagerWebAppBean extends AbstractBaseWebAppBean implements Ser
     
     private LinkedHashMap<String, Map<String, Boolean>> nodes = new LinkedHashMap<String, Map<String, Boolean>>();
     
+    private String keyword;
+    private boolean inSearchMode;
+    
     @Inject
     private FileManagerSettingsBean settings;
     
@@ -172,6 +175,22 @@ public class FileManagerWebAppBean extends AbstractBaseWebAppBean implements Ser
     // ======================================================================
     // Population of directories & files
     // ======================================================================
+    
+    public void configureSearch(AjaxBehaviorEvent event) throws AbortProcessingException {
+        inSearchMode = true;
+    }
+    
+    public void setKeyword(String keyword) {
+        this.keyword = keyword;
+    }
+    
+    public String getKeyword() {
+        return keyword;
+    }
+    
+    public boolean getInSearchMode() {
+        return inSearchMode;
+    }
     
     private void initializeBaseDirectory() {
         if (!settings.isBaseDirectoryInitialized()) {

@@ -370,7 +370,11 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                                                 <f:ajax event="change" execute="@form" render="@form" />
                                             </h:selectOneMenu>
                                         </h:panelGroup>
-                                        <h:panelGroup layout="block" styleClass="list_control_deeper">
+                                        <h:panelGroup layout="block" styleClass="list_control_deeper_gap list_control_search_box">
+                                            <h:inputText a:autocomplete="off" onkeypress="if (event.keyCode != 13) { return false; }" 
+                                                    value="#{controller.bean.keyword}" disabled="#{(controller.bean.isServiceError eq true)}">
+                                                <f:ajax event="keypress" execute="@form" render="@form" listener="#{controller.bean.configureSearch}" />
+                                            </h:inputText>
                                         </h:panelGroup>
                                     </h:panelGroup>
                                 </h:panelGroup>
