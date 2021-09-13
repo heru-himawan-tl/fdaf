@@ -359,6 +359,17 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                             <h:panelGroup layout="block" styleClass="list_control_container list_control_top">
                                 <h:panelGroup layout="block" styleClass="list_control_box">
                                     <h:panelGroup layout="block" styleClass="list_control_inner">
+                                        <h:panelGroup layout="block" styleClass="list_control_deeper_label_left">#{label.fileListSortBy}:</h:panelGroup>
+                                        <h:panelGroup layout="block" styleClass="list_control_deeper">
+                                            <h:selectOneMenu value="#{controller.bean.sortMode}">
+                                                <f:selectItem itemValue="BY_NAME" itemLabel="#{label.fileListSortByName}" />
+                                                <f:selectItem itemValue="BY_SIZE" itemLabel="#{label.fileListSortBySize}" />
+                                                <f:selectItem itemValue="BY_CREATION_TIME" itemLabel="#{label.fileListSortByCreationTime}" />
+                                                <f:selectItem itemValue="BY_LAST_MODIFIED_TIME" itemLabel="#{label.fileListSortByLastModifiedTime}" />
+                                                <f:selectItem itemValue="BY_LAST_ACCESS_TIME" itemLabel="#{label.fileListSortByLastAccessTime}" />
+                                                <f:ajax event="change" execute="@form" render="@form" />
+                                            </h:selectOneMenu>
+                                        </h:panelGroup>
                                         <h:panelGroup layout="block" styleClass="list_control_deeper">
                                         </h:panelGroup>
                                     </h:panelGroup>

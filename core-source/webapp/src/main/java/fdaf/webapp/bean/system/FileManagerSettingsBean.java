@@ -28,22 +28,32 @@
  */
 package fdaf.webapp.bean.system;
 
+import fdaf.base.FileListSortMode;
 import java.io.Serializable;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 
 @SessionScoped
 @Named
-public class FileManagerDirectoryInfoBean implements Serializable {
+public class FileManagerSettingsBean implements Serializable {
 
     private static final long serialVersionUID = 1L; 
     private boolean baseDirectoryInitialized;
     private String baseDirectory;
+    private FileListSortMode sortMode = FileListSortMode.BY_NAME;
     
     private String currentDirectory;
     
-    public FileManagerDirectoryInfoBean() {
+    public FileManagerSettingsBean() {
         // NO-OP
+    }
+    
+    public void setSortMode(FileListSortMode sortMode) {
+        this.sortMode = sortMode;
+    }
+    
+    public FileListSortMode getSortMode() {
+        return sortMode;
     }
     
     public void setBaseDirectory(String baseDirectory) {

@@ -41,6 +41,7 @@ public interface FileManagerInterface {
     public boolean remove(String fileAddress);
     public boolean renameCurrentDirectory(String newDirectoryName);
     public boolean renameFile(String oldAddress, String newFileName);
+    public FileListSortMode getSortMode();
     public LinkedHashMap<String, Map<String, Boolean>> getNodeMap();
     public LinkedList<String> getDirectoryList();
     public List<String> getSearchResultList();
@@ -50,6 +51,7 @@ public interface FileManagerInterface {
     public void search(String keywords);
     public void setBaseDirectory(String baseDirectory);
     public void setCurrentDirectory(String currentDirectory);
+    public void setSortMode(FileListSortMode sortMode);
     public void toHomeDirectory();
     public void toParentDirectory();
 }

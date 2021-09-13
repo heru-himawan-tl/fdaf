@@ -29,6 +29,7 @@
 package fdaf.webapp.bean.system;
 
 import fdaf.base.FileManagerInterface;
+import fdaf.base.FileListSortMode;
 import fdaf.base.UserType;
 import fdaf.webapp.base.AbstractBaseWebAppBean;
 import java.io.File;
@@ -76,7 +77,7 @@ public class FileManagerWebAppBean extends AbstractBaseWebAppBean implements Ser
     private LinkedHashMap<String, Map<String, Boolean>> nodes = new LinkedHashMap<String, Map<String, Boolean>>();
     
     @Inject
-    private FileManagerDirectoryInfoBean directoryInfo;
+    private FileManagerSettingsBean settings;
     
     @Pattern(regexp = "^[a-zA-Z0-9\\.\\-\\_\\(\\)\\[\\]\\{\\}\\$\\@\\~ ]+$", message = "{newDirectoryNameBadFormat}")
     @Size(min = 1, max = 128, message = "{newDirectoryNameLengthOutOfRange}")
@@ -125,6 +126,14 @@ public class FileManagerWebAppBean extends AbstractBaseWebAppBean implements Ser
     protected Controller getController() {
         return controller;
     }
+
+    public void setSortMode(FileListSortMode sortMode) {
+        settings.setSortMode(sortMode);
+    }
+    
+    public FileListSortMode getSortMode() {
+        return settings.getSortMode();
+    }
     
     public List<Integer> getCommonLoop() {
         List<Integer> l = new ArrayList<Integer>();
@@ -140,20 +149,20 @@ public class FileManagerWebAppBean extends AbstractBaseWebAppBean implements Ser
     
     public void toHomeDirectory() {
         fileManagerUtil.toHomeDirectory();
-        directoryInfo.setCurrentDirectory(fileManagerUtil.getCurrentDirectory());
+        settings.setCurrentDirectory(fileManagerUtil.getCurrentDirectory());
     }
     
     public void toParentDirectory() {
         fileManagerUtil.toParentDirectory();
-        directoryInfo.setCurrentDirectory(fileManagerUtil.getCurrentDirectory());
+        settings.setCurrentDirectory(fileManagerUtil.getCurrentDirectory());
     }
     
     public void setCurrentDirectory(String currentDirectory) {
-        directoryInfo.setCurrentDirectory(currentDirectory);
+        settings.setCurrentDirectory(currentDirectory);
     }
     
     public String getCurrentDirectory() {
-        return directoryInfo.getCurrentDirectory();
+        return settings.getCurrentDirectory();
     }
     
     public boolean getInHomeDirectory() {
@@ -165,27 +174,28 @@ public class FileManagerWebAppBean extends AbstractBaseWebAppBean implements Ser
     // ======================================================================
     
     private void initializeBaseDirectory() {
-        if (!directoryInfo.isBaseDirectoryInitialized()) {
+        if (!settings.isBaseDirectoryInitialized()) {
             String baseDirectory = getCommonConfiguration().getFileManagerHomeDirectory() + File.separator
                 + getUserSessionManager().getUserName();
-            directoryInfo.setCurrentDirectory(baseDirectory);
-            directoryInfo.setBaseDirectory(baseDirectory);
-            directoryInfo.markBaseDirectoryInitialized();
+            settings.setCurrentDirectory(baseDirectory);
+            settings.setBaseDirectory(baseDirectory);
+            settings.markBaseDirectoryInitialized();
         }
     }
 
     public void populateNodes(ComponentSystemEvent event) throws AbortProcessingException {
         initializeBaseDirectory();
-        if (directoryInfo.getBaseDirectory().matches(".*\\/null$")) {
-            directoryInfo.markBaseDirectoryDeinitialized();
+        if (settings.getBaseDirectory().matches(".*\\/null$")) {
+            settings.markBaseDirectoryDeinitialized();
             initializeBaseDirectory();
         }
-        fileManagerUtil.setBaseDirectory(directoryInfo.getBaseDirectory());
-        if (directoryInfo.getCurrentDirectory() == null) {
-            directoryInfo.setCurrentDirectory(fileManagerUtil.getCurrentDirectory());
+        fileManagerUtil.setBaseDirectory(settings.getBaseDirectory());
+        if (settings.getCurrentDirectory() == null) {
+            settings.setCurrentDirectory(fileManagerUtil.getCurrentDirectory());
         }
-        fileManagerUtil.setCurrentDirectory(directoryInfo.getCurrentDirectory());
-        directoryInfo.setCurrentDirectory(fileManagerUtil.getCurrentDirectory());
+        fileManagerUtil.setSortMode(settings.getSortMode());
+        fileManagerUtil.setCurrentDirectory(settings.getCurrentDirectory());
+        settings.setCurrentDirectory(fileManagerUtil.getCurrentDirectory());
         fileManagerUtil.populateNodes();
         nodes = fileManagerUtil.getNodeMap();
     }
@@ -555,7 +565,7 @@ public class FileManagerWebAppBean extends AbstractBaseWebAppBean implements Ser
     // ======================================================================
     
     public SelectItem[] getDirectorySelection() {
-        String currentDirectory = directoryInfo.getCurrentDirectory();
+        String currentDirectory = settings.getCurrentDirectory();
         String parentDirectory = (new File(currentDirectory)).getParent();
         if (inPrepareMoveFile) {
             parentDirectory = (new File(previewFileAddress)).getParent();

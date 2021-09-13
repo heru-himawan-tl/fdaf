@@ -111,6 +111,14 @@ public class FileManagerUtil extends ApplicationIdentifier implements Serializab
         return error;
     }
     
+    public void setSortMode(FileListSortMode sortMode) {
+        this.sortMode = sortMode;
+    }
+    
+    public FileListSortMode getSortMode() {
+        return sortMode;
+    }
+    
     // ======================================================================
     // Files & directories population
     // ======================================================================
