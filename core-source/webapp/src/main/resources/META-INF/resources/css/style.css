@@ -1378,10 +1378,18 @@ a:hover
 
 /* ADDITIONAL STYLES =============================================== */
 
-.list_control_container .grouped_button_left,
-.list_control_container .grouped_button_inner,
-.list_control_container .grouped_button_right,
-.list_control_container .common_button,
+.list_control_deeper .grouped_button_left,
+.list_control_deeper .grouped_button_inner,
+.list_control_deeper .grouped_button_right,
+.list_control_deeper .common_button,
+.list_control_deeper_left .grouped_button_left,
+.list_control_deeper_left .grouped_button_inner,
+.list_control_deeper_left .grouped_button_right,
+.list_control_deeper_left .common_button,
+.list_control_deeper_right .grouped_button_left,
+.list_control_deeper_right .grouped_button_inner,
+.list_control_deeper_right .grouped_button_right,
+.list_control_deeper_right .common_button,
 .program_heading_button_box_flex .grouped_button_left,
 .program_heading_button_box_flex .grouped_button_inner,
 .program_heading_button_box_flex .grouped_button_right,
@@ -1400,7 +1408,12 @@ a:hover
     padding: 6px;
 }
 
-.list_control_container .grouped_button_left,
+.list_control_deeper .grouped_button_left,
+.list_control_deeper .grouped_button_inner,
+.list_control_deeper_left .grouped_button_left,
+.list_control_deeper_left .grouped_button_inner,
+.list_control_deeper_right .grouped_button_left,
+.list_control_deeper_right .grouped_button_inner,
 .program_heading_button_box_flex .grouped_button_inner,
 .program_heading_button_box_flex .grouped_button_left,
 .file_previewer_heading_button_box_flex .grouped_button_inner,
@@ -2507,6 +2520,18 @@ a:hover
         display: none;
     }
     
+    .list_control_deeper .grouped_button_left,
+    .list_control_deeper .grouped_button_inner,
+    .list_control_deeper .grouped_button_right,
+    .list_control_deeper .common_button,
+    .list_control_deeper_left .grouped_button_left,
+    .list_control_deeper_left .grouped_button_inner,
+    .list_control_deeper_left .grouped_button_right,
+    .list_control_deeper_left .common_button,
+    .list_control_deeper_right .grouped_button_left,
+    .list_control_deeper_right .grouped_button_inner,
+    .list_control_deeper_right .grouped_button_right,
+    .list_control_deeper_right .common_button,
     .list_control_page_switch_button_box .grouped_button_left,
     .list_control_page_switch_button_box .grouped_button_inner,
     .list_control_page_switch_button_box .grouped_button_right,
@@ -2582,8 +2607,8 @@ a:hover
         padding-bottom: 8px;
     }
     
-    .list_control_deeper_gap input,
-    .list_control_deeper input,
+    .list_control_deeper_gap input[type="text"],
+    .list_control_deeper input[type="text"],
     .list_control_deeper select
     {
         width: 100%;
@@ -2856,7 +2881,15 @@ a:hover
         width: 0px !important;
     }
     
-    .dialog_messages_container
+    .list_control_search_box input[type=text]
+    {
+        background: url(../web-resources/ui-bg/search.png);
+        background-color: #ffffff;
+        background-repeat: no-repeat;
+        background-position: center right;
+        background-size: 24px 24px;
+        padding-right: 28px;
+    }
     
     pre
     {
