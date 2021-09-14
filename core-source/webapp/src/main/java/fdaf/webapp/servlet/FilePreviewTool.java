@@ -28,6 +28,7 @@
  */
 package fdaf.webapp.servlet;
 
+import fdaf.webapp.bean.system.FileManagerSettingsBean;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
@@ -39,6 +40,7 @@ import java.net.URLEncoder;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import javax.inject.Inject;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -47,6 +49,9 @@ import javax.servlet.ServletException;
  
 @WebServlet(urlPatterns = {"/file-preview-tool"})
 public class FilePreviewTool extends HttpServlet {
+
+    @Inject
+    private FileManagerSettingsBean settings;
  
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     
@@ -122,7 +127,8 @@ public class FilePreviewTool extends HttpServlet {
             } else {
                 out.println("<body style=\"margin: 0px; text-align:center !important;\">");
             }
-            out.println("<div class=\"field_note_box\">" + address + "</div>");
+            String fsp = File.separator;
+            out.println("<div class=\"field_note_box\">" + address.replace(settings.getBaseDirectory(), fsp).replace(fsp + fsp, fsp) + "</div>");
             out.println("<div class=\"file_previewer_internal_box\">");
             if (isImage) {
                 out.println("<img src=\"file-preview-tool?view=1&amp;prev=0&amp;address=" 

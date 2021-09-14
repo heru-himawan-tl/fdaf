@@ -38,6 +38,7 @@ import javax.inject.Named;
 public class FileManagerSettingsBean implements Serializable {
 
     private static final long serialVersionUID = 1L; 
+
     private boolean baseDirectoryInitialized;
     private String baseDirectory;
     private FileListSortMode sortMode = FileListSortMode.BY_NAME;

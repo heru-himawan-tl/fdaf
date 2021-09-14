@@ -135,7 +135,7 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                     </h:panelGroup>
                     <h:panelGroup layout="block" styleClass="dialog_content_box">
                         <h:panelGroup layout="block" styleClass="field_note_box">
-                            <h:outputText value="#{defaultMessage.moveDirectoryNote} #{label.directoryToMoveNote}: #{controller.bean.currentDirectory}" />
+                            <h:outputText value="#{defaultMessage.moveDirectoryNote} #{label.directoryToMoveNote}: #{controller.bean.currentDirectoryDisplayName}" />
                         </h:panelGroup>
                         <d:dialogMessages addStyleClass="dialog_messages_offset_top" rendered="#{controller.bean.inPrepareMoveDirectory eq true}" />
                         <h:panelGroup layout="block" styleClass="dialog_field_label_box">
@@ -199,7 +199,7 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                     </h:panelGroup>
                     <h:panelGroup layout="block" styleClass="dialog_content_box">
                         <h:panelGroup layout="block" styleClass="field_note_box">
-                            <h:outputText value="#{defaultMessage.renameDirectoryNote} #{label.directoryToRenameNote}: #{controller.bean.currentDirectory}" />
+                            <h:outputText value="#{defaultMessage.renameDirectoryNote} #{label.directoryToRenameNote}: #{controller.bean.currentDirectoryDisplayName}" />
                         </h:panelGroup>
                         <d:dialogMessages addStyleClass="dialog_messages_offset_top" rendered="#{controller.bean.inPrepareRenameDirectory eq true}" />
                         <h:panelGroup layout="block" styleClass="dialog_field_label_box">
@@ -371,10 +371,16 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                                             </h:selectOneMenu>
                                         </h:panelGroup>
                                         <h:panelGroup layout="block" styleClass="list_control_deeper_gap list_control_search_box">
-                                            <h:inputText a:autocomplete="off" onkeypress="if (event.keyCode != 13) { return false; }" 
-                                                    value="#{controller.bean.keyword}" disabled="#{(controller.bean.isServiceError eq true)}">
+                                            <h:inputText a:autocomplete="off" onkeypress="if (event.keyCode != 13) { return false; }"
+                                                    value="#{controller.bean.keyword}">
                                                 <f:ajax event="keypress" execute="@form" render="@form" listener="#{controller.bean.configureSearch}" />
                                             </h:inputText>
+                                        </h:panelGroup>
+                                        <h:panelGroup layout="block" styleClass="list_control_deeper_right">
+                                            <h:panelGroup layout="block" styleClass="list_control_page_switch_button_box">
+                                                <h:commandButton type="button" styleClass="common_button" value="#{label.buttonSearch}">
+                                                </h:commandButton>
+                                            </h:panelGroup>
                                         </h:panelGroup>
                                     </h:panelGroup>
                                 </h:panelGroup>
@@ -389,7 +395,7 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                             <d:admFieldContainer>
                                 <h:panelGroup layout="block" styleClass="field_container_inner" rendered="#{controller.bean.inPrepareUpload eq true}">
                                     <d:fieldNoteBox>
-                                        <h:outputText value="#{defaultMessage.fileUploadNotePre}: #{controller.bean.currentDirectory}. #{defaultMessage.fileUploadNote}" />
+                                        <h:outputText value="#{defaultMessage.fileUploadNotePre}: #{controller.bean.currentDirectoryDisplayName}. #{defaultMessage.fileUploadNote}" />
                                     </d:fieldNoteBox>
                                     <ui:repeat value="#{controller.bean.commonLoop}" var="cl">
                                         <d:fieldRow>
@@ -408,7 +414,7 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                                 </h:panelGroup>
                                 <h:panelGroup layout="block" styleClass="field_container_inner" rendered="#{controller.bean.inPrepareUpload eq false}">
                                     <h:panelGroup layout="block" styleClass="field_note_box field_note_box_free">
-                                        <h:outputText value="#{controller.bean.currentDirectory}" />
+                                        <h:outputText value="#{controller.bean.currentDirectoryDisplayName}" />
                                     </h:panelGroup>
                                     <h:panelGroup layout="block" styleClass="file_manager_directory_empty_box_outer"
                                         rendered="#{controller.bean.isEmptyDirectory eq true}">

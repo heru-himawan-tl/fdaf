@@ -164,6 +164,12 @@ public class FileManagerWebAppBean extends AbstractBaseWebAppBean implements Ser
         settings.setCurrentDirectory(currentDirectory);
     }
     
+    public String getCurrentDirectoryDisplayName() {
+        return settings.getCurrentDirectory()
+            .replace(settings.getBaseDirectory(), File.separator)
+            .replace(File.separator + File.separator, File.separator);
+    }
+    
     public String getCurrentDirectory() {
         return settings.getCurrentDirectory();
     }
