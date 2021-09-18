@@ -313,31 +313,33 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                                 </h:commandButton>
                                 <h:commandButton type="button" styleClass="grouped_button_inner" value="#{label.buttonParentDir}"
                                     immediate="true" rendered="#{controller.bean.isLoggedOn eq true and controller.bean.inHomeDirectory eq false
-                                        and controller.bean.inPrepareUpload eq false}">
+                                        and controller.bean.inPrepareUpload eq false and controller.bean.inSearchMode eq false}">
                                     <f:actionListener binding="#{controller.bean.toParentDirectory()}" />
                                     <f:ajax event="click" execute="@form" render="@form" />
                                 </h:commandButton>
                                 <h:commandButton type="button" styleClass="#{
                                         (controller.bean.inHomeDirectory eq true) ? 'grouped_button_left' : 'grouped_button_inner'
                                     }" value="#{label.buttonNewDir}"
-                                    immediate="true" rendered="#{controller.bean.isLoggedOn eq true and controller.bean.inPrepareUpload eq false}">
+                                    immediate="true" rendered="#{controller.bean.isLoggedOn eq true and controller.bean.inPrepareUpload eq false
+                                        and controller.bean.inSearchMode eq false}">
                                     <f:actionListener binding="#{controller.bean.prepareCreateDirectory()}" />
                                     <f:ajax event="click" execute="@form" render="@form" />
                                 </h:commandButton>
                                 <h:commandButton type="button" styleClass="grouped_button_inner" value="#{label.buttonMoveCurrentDirectory}"
                                     rendered="#{controller.bean.isLoggedOn eq true and controller.bean.inHomeDirectory eq false
-                                        and controller.bean.inPrepareUpload eq false}">
+                                        and controller.bean.inPrepareUpload eq false and controller.bean.inSearchMode eq false}">
                                     <f:actionListener binding="#{controller.bean.prepareMoveDirectory()}" />
                                     <f:ajax event="click" execute="@form" render="@form" />
                                 </h:commandButton>
                                 <h:commandButton type="button" styleClass="grouped_button_inner" value="#{label.buttonUpload}"
-                                    rendered="#{controller.bean.isLoggedOn eq true and controller.bean.inPrepareUpload eq false}">
+                                    rendered="#{controller.bean.isLoggedOn eq true and controller.bean.inPrepareUpload eq false
+                                        and controller.bean.inSearchMode eq false}">
                                     <f:actionListener binding="#{controller.bean.prepareUpload()}" />
                                     <f:ajax event="click" execute="@form" render="@form" />
                                 </h:commandButton>
                                 <h:commandButton type="button" styleClass="grouped_button_inner" value="#{label.buttonRenameCurrentDirectory}"
                                     rendered="#{controller.bean.isLoggedOn eq true and controller.bean.inHomeDirectory eq false
-                                        and controller.bean.inPrepareUpload eq false}">
+                                        and controller.bean.inPrepareUpload eq false and controller.bean.inSearchMode eq false}">
                                     <f:actionListener binding="#{controller.bean.prepareRenameDirectory()}" />
                                     <f:ajax event="click" execute="@form" render="@form" />
                                 </h:commandButton>
@@ -356,7 +358,8 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                                     (controller.bean.isLoggedOn eq true) ? 'grouped_button_right' : 'common_button'}"
                                     onclick="document.location.href='adm.jsf'" value="#{label.buttonClose}" />
                             </d:customProgramHeading>
-                            <h:panelGroup layout="block" styleClass="list_control_container list_control_top">
+                            <h:panelGroup layout="block" styleClass="list_control_container list_control_top"
+                                    rendered="#{controller.bean.isLoggedOn eq true}">
                                 <h:panelGroup layout="block" styleClass="list_control_box">
                                     <h:panelGroup layout="block" styleClass="list_control_inner">
                                         <h:panelGroup layout="block" styleClass="list_control_deeper_label_left">
@@ -379,9 +382,9 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                                             </h:inputText>
                                         </h:panelGroup>
                                         <h:panelGroup layout="block" styleClass="list_control_deeper_right">
-                                                <h:commandButton type="button" styleClass="common_button" value="#{label.buttonSearch}">
-                                                    <f:ajax event="keypress" execute="@form" render="@form" listener="#{controller.bean.configureSearch}" />
-                                                </h:commandButton>
+                                            <h:commandButton type="button" styleClass="common_button" value="#{label.buttonSearch}">
+                                                <f:ajax event="keypress" execute="@form" render="@form" listener="#{controller.bean.configureSearch}" />
+                                            </h:commandButton>
                                         </h:panelGroup>
                                     </h:panelGroup>
                                 </h:panelGroup>

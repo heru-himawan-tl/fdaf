@@ -217,7 +217,6 @@ public abstract class AbstractBaseWebAppBean extends AbstractWebAppCommon {
         try {
             locale = new Locale(getCommonConfiguration().getRegionalLanguage());
         } catch (Exception e) {
-            LOGGER.log(Level.SEVERE, "Service error", e);
         }
         if (locale == null) {
             locale = new Locale("en_US");

@@ -183,7 +183,9 @@ public class FileManagerWebAppBean extends AbstractBaseWebAppBean implements Ser
     // ======================================================================
     
     public void configureSearch(AjaxBehaviorEvent event) throws AbortProcessingException {
-        inSearchMode = true;
+        if (keyword != null && keyword.trim().isEmpty()) {
+            inSearchMode = true;
+        }
     }
     
     public void setKeyword(String keyword) {
@@ -198,10 +200,19 @@ public class FileManagerWebAppBean extends AbstractBaseWebAppBean implements Ser
         return inSearchMode;
     }
     
+    public void exitSearch() {
+        inSearchMode = false;
+    }
+    
     private void initializeBaseDirectory() {
         if (!settings.isBaseDirectoryInitialized()) {
             String baseDirectory = getCommonConfiguration().getFileManagerHomeDirectory() + File.separator
                 + getUserSessionManager().getUserName();
+            if (baseDirectory.matches(".*null.*")) {
+                baseDirectory = System.getProperty("user.home") + File.separator + "."
+                    + getApplicationCodeName() + File.separator + "user_files" + File.separator
+                    + ((loggedOn) ? getUserSessionManager().getUserName() : "");
+            }
             settings.setCurrentDirectory(baseDirectory);
             settings.setBaseDirectory(baseDirectory);
             settings.markBaseDirectoryInitialized();
@@ -210,7 +221,7 @@ public class FileManagerWebAppBean extends AbstractBaseWebAppBean implements Ser
 
     public void populateNodes(ComponentSystemEvent event) throws AbortProcessingException {
         initializeBaseDirectory();
-        if (settings.getBaseDirectory().matches(".*\\/null$")) {
+        if (settings.getBaseDirectory().matches("(.*\\/null$|.*null.*)")) {
             settings.markBaseDirectoryDeinitialized();
             initializeBaseDirectory();
         }

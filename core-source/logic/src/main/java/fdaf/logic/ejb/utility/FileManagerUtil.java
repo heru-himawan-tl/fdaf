@@ -64,6 +64,7 @@ public class FileManagerUtil extends ApplicationIdentifier implements Serializab
     private CommonConfigurationInterface commonConfiguration;
     
     private LinkedHashMap<String, Map<String, Boolean>> nodeMap = new LinkedHashMap<String, Map<String, Boolean>>();
+    private LinkedList<String> nodeList = new LinkedList<String>();
 
     private boolean error;
     
@@ -89,6 +90,10 @@ public class FileManagerUtil extends ApplicationIdentifier implements Serializab
                 baseDir = fileManagerHomeDirectory;
             }
         } else {
+            baseDir = userHome + File.separator + ((commonConfiguration.underUnixLikeOS()) ? "." : "")
+                + getApplicationCodeName() + File.separator + "user_files";
+        }
+        if (baseDir.matches(".*null.*")) {
             baseDir = userHome + File.separator + ((commonConfiguration.underUnixLikeOS()) ? "." : "")
                 + getApplicationCodeName() + File.separator + "user_files";
         }
@@ -271,6 +276,12 @@ public class FileManagerUtil extends ApplicationIdentifier implements Serializab
     
     public void search(String keywords) {
         // NOT APPLICABLE YET
+        if (keywords.matches("[, ]+")) {
+            for (String k: keywords.split("[, ]+")) {
+                
+            }
+        } else {
+        }
     }
     
     public List<String> getSearchResultList() {
