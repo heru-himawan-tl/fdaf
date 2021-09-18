@@ -64,7 +64,7 @@ public class FileManagerUtil extends ApplicationIdentifier implements Serializab
     private CommonConfigurationInterface commonConfiguration;
     
     private LinkedHashMap<String, Map<String, Boolean>> nodeMap = new LinkedHashMap<String, Map<String, Boolean>>();
-    private LinkedList<String> nodeList = new LinkedList<String>();
+    private LinkedHashMap<String, Map<String, Boolean>> searchResultList = new LinkedHashMap<String, Map<String, Boolean>>();
 
     private boolean error;
     
@@ -275,20 +275,67 @@ public class FileManagerUtil extends ApplicationIdentifier implements Serializab
     }
     
     public void search(String keywords) {
-        // NOT APPLICABLE YET
-        if (keywords != null && !keywords.isEmpty() && keywords.matches(".*[, ]+.*")) {
-            for (String k: keywords.split("[, ]+")) {
-                System.out.println("k: " + k);
+        LinkedList<String> nl = new LinkedList<String>();
+        LinkedList<String> dl = new LinkedList<String>();
+        LinkedList<String> fl = new LinkedList<String>();
+        recursiveReadDir(baseDirectory, nl, null);
+        if (!nl.isEmpty()) {
+            Collections.sort(nl);
+            for (String node : nl) {
+                try {
+                    String fileName = (new File(node)).getName();
+                    if (keywords != null && !keywords.isEmpty() && keywords.matches(".*[, ]+.*")) {
+                        for (String k: keywords.split("[, ]+")) {
+                            if (fileName.toLowerCase().indexOf(k.trim().toLowerCase()) != -1) {
+                                if (Files.isDirectory(Paths.get(node))) {
+                                    dl.add(node);
+                                } else {
+                                    fl.add(node);
+                                }
+                            }
+                        }
+                    }
+                    if (keywords != null && !keywords.isEmpty()) {
+                        if (fileName.toLowerCase().indexOf(keywords.toLowerCase()) != -1) {
+                            if (fileName.toLowerCase().indexOf(keywords.trim().toLowerCase()) != -1) {
+                                if (Files.isDirectory(Paths.get(node))) {
+                                    if (!dl.contains(node)) {
+                                        dl.add(node);
+                                    }
+                                } else {
+                                    if (!fl.contains(node)) {
+                                        fl.add(node);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                } catch (Exception e) {
+                }
             }
         }
-        if (keywords != null && !keywords.isEmpty()) {
-            System.out.println("keywords: " + keywords);
+        if (!dl.isEmpty()) {
+            Collections.sort(dl);
+            for (String d : dl) {
+                String dn = (new File(d)).getName();
+                Map<String, Boolean> data = new HashMap<String, Boolean>();
+                data.put(d, true);
+                searchResultList.put(dn, data);
+            }
+        }
+        if (!fl.isEmpty()) {
+            Collections.sort(fl);
+            for (String f : fl) {
+                String fn = (new File(f)).getName();
+                Map<String, Boolean> data = new HashMap<String, Boolean>();
+                data.put(f, true);
+                searchResultList.put(fn, data);
+            }
         }
     }
     
-    public List<String> getSearchResultList() {
-        // NOT APPLICABLE YET
-        return null;
+    public LinkedHashMap<String, Map<String, Boolean>> getSearchResultList() {
+        return searchResultList;
     }
     
     // ======================================================================

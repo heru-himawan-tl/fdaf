@@ -31,7 +31,6 @@ package fdaf.base;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.Map;
-import java.util.List;
 
 public interface FileManagerInterface {
     public boolean createNewDirectory(String name);
@@ -43,8 +42,8 @@ public interface FileManagerInterface {
     public boolean renameFile(String oldAddress, String newFileName);
     public FileListSortMode getSortMode();
     public LinkedHashMap<String, Map<String, Boolean>> getNodeMap();
+    public LinkedHashMap<String, Map<String, Boolean>> getSearchResultList();
     public LinkedList<String> getDirectoryList();
-    public List<String> getSearchResultList();
     public String getBaseDirectory();
     public String getCurrentDirectory();
     public void populateNodes();
