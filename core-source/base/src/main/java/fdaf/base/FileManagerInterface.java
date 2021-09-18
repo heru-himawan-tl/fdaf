@@ -47,7 +47,7 @@ public interface FileManagerInterface {
     public String getBaseDirectory();
     public String getCurrentDirectory();
     public void populateNodes();
-    public void search(String keywords);
+    public void search(String keyword);
     public void setBaseDirectory(String baseDirectory);
     public void setCurrentDirectory(String currentDirectory);
     public void setSortMode(FileListSortMode sortMode);

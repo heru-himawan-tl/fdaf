@@ -57,17 +57,17 @@ import javax.ejb.Stateful;
 @Remote({FileManagerInterface.class})
 @Stateful(passivationCapable = false)
 public class FileManagerUtil extends ApplicationIdentifier implements Serializable {
-        
-    private static final long serialVersionUID = 1L;
     
+    private static final long serialVersionUID = 1L;
+
     @EJB(lookup = "java:global/__EJB_LOOKUP_DIR__/CommonConfigurationService")
     private CommonConfigurationInterface commonConfiguration;
-    
+
     private LinkedHashMap<String, Map<String, Boolean>> nodeMap = new LinkedHashMap<String, Map<String, Boolean>>();
     private LinkedHashMap<String, Map<String, Boolean>> searchResultList = new LinkedHashMap<String, Map<String, Boolean>>();
 
     private boolean error;
-    
+
     private FileListSortMode sortMode = FileListSortMode.BY_NAME;
     private String currentDirectory = System.getProperty("user.home");
     private String baseDirectory = System.getProperty("user.home");
@@ -75,7 +75,7 @@ public class FileManagerUtil extends ApplicationIdentifier implements Serializab
     public FileManagerUtil() {
         // NO-OP
     }
-    
+
     @PostConstruct
     public void initFileManagerUtil() {
         String userHome = System.getProperty("user.home");
@@ -111,19 +111,19 @@ public class FileManagerUtil extends ApplicationIdentifier implements Serializab
             currentDirectory = baseDir;
         }
     }
-    
+
     public boolean isError() {
         return error;
     }
-    
+
     public void setSortMode(FileListSortMode sortMode) {
         this.sortMode = sortMode;
     }
-    
+
     public FileListSortMode getSortMode() {
         return sortMode;
     }
-    
+
     // ======================================================================
     // Files & directories population
     // ======================================================================
@@ -257,11 +257,11 @@ public class FileManagerUtil extends ApplicationIdentifier implements Serializab
         localFilesSortByName.clear();
         localFilesSortBySize.clear();
     }
-    
+
     public LinkedHashMap<String, Map<String, Boolean>> getNodeMap() {
         return nodeMap;
     }
-    
+
     public LinkedList<String> getDirectoryList() {
         LinkedList<String> directoryList = new LinkedList<String>();
         if (!currentDirectory.equals(baseDirectory)) {
@@ -273,38 +273,39 @@ public class FileManagerUtil extends ApplicationIdentifier implements Serializab
         }
         return directoryList;
     }
-    
-    public void search(String keywords) {
-        LinkedList<String> nl = new LinkedList<String>();
-        LinkedList<String> dl = new LinkedList<String>();
-        LinkedList<String> fl = new LinkedList<String>();
-        recursiveReadDir(baseDirectory, nl, null);
-        if (!nl.isEmpty()) {
-            Collections.sort(nl);
-            for (String node : nl) {
+
+    public void search(String keyword) {
+        searchResultList = new LinkedHashMap<String, Map<String, Boolean>>();
+        LinkedList<String> nodeList = new LinkedList<String>();
+        LinkedList<String> directoryList = new LinkedList<String>();
+        LinkedList<String> fileList = new LinkedList<String>();
+        recursiveReadDir(baseDirectory, nodeList, null);
+        if (!nodeList.isEmpty()) {
+            Collections.sort(nodeList);
+            for (String node : nodeList) {
                 try {
                     String fileName = (new File(node)).getName();
-                    if (keywords != null && !keywords.isEmpty() && keywords.matches(".*[, ]+.*")) {
-                        for (String k: keywords.split("[, ]+")) {
+                    if (keyword != null && !keyword.isEmpty() && keyword.matches(".*[, ]+.*")) {
+                        for (String k: keyword.split("[, ]+")) {
                             if (fileName.toLowerCase().indexOf(k.trim().toLowerCase()) != -1) {
                                 if (Files.isDirectory(Paths.get(node))) {
-                                    dl.add(node);
+                                    directoryList.add(node);
                                 } else {
-                                    fl.add(node);
+                                    fileList.add(node);
                                 }
                             }
                         }
                     }
-                    if (keywords != null && !keywords.isEmpty()) {
-                        if (fileName.toLowerCase().indexOf(keywords.toLowerCase()) != -1) {
-                            if (fileName.toLowerCase().indexOf(keywords.trim().toLowerCase()) != -1) {
+                    if (keyword != null && !keyword.isEmpty()) {
+                        if (fileName.toLowerCase().indexOf(keyword.toLowerCase()) != -1) {
+                            if (fileName.toLowerCase().indexOf(keyword.trim().toLowerCase()) != -1) {
                                 if (Files.isDirectory(Paths.get(node))) {
-                                    if (!dl.contains(node)) {
-                                        dl.add(node);
+                                    if (!directoryList.contains(node)) {
+                                        directoryList.add(node);
                                     }
                                 } else {
-                                    if (!fl.contains(node)) {
-                                        fl.add(node);
+                                    if (!fileList.contains(node)) {
+                                        fileList.add(node);
                                     }
                                 }
                             }
@@ -314,34 +315,39 @@ public class FileManagerUtil extends ApplicationIdentifier implements Serializab
                 }
             }
         }
-        if (!dl.isEmpty()) {
-            Collections.sort(dl);
-            for (String d : dl) {
-                String dn = (new File(d)).getName();
+        if (!directoryList.isEmpty()) {
+            Collections.sort(directoryList);
+            for (String d : directoryList) {
+                String directoryName = (new File(d)).getName();
                 Map<String, Boolean> data = new HashMap<String, Boolean>();
                 data.put(d, true);
-                searchResultList.put(dn, data);
+                searchResultList.put(directoryName, data);
+                System.out.println(directoryName);
             }
         }
-        if (!fl.isEmpty()) {
-            Collections.sort(fl);
-            for (String f : fl) {
-                String fn = (new File(f)).getName();
+        if (!fileList.isEmpty()) {
+            Collections.sort(fileList);
+            for (String f : fileList) {
+                String fileName = (new File(f)).getName();
                 Map<String, Boolean> data = new HashMap<String, Boolean>();
                 data.put(f, true);
-                searchResultList.put(fn, data);
+                searchResultList.put(fileName, data);
+                System.out.println(fileName);
             }
         }
+        nodeList.clear();
+        directoryList.clear();
+        fileList.clear();
     }
-    
+
     public LinkedHashMap<String, Map<String, Boolean>> getSearchResultList() {
         return searchResultList;
     }
-    
+
     // ======================================================================
     // Directory locating
     // ======================================================================
-    
+
     public void toParentDirectory() {
         if (!currentDirectory.equals(baseDirectory)) {
             try {
@@ -350,15 +356,15 @@ public class FileManagerUtil extends ApplicationIdentifier implements Serializab
             }
         }
     }
-    
+
     public void toHomeDirectory() {
         currentDirectory = baseDirectory;
     }
-    
+
     public boolean isInHomeDirectory() {
         return currentDirectory.equals(baseDirectory);
     }
-    
+
     public void setBaseDirectory(String baseDirectory) {
         Path baseDirPath = Paths.get(baseDirectory);
         if (!Files.exists(baseDirPath)) {
@@ -372,11 +378,11 @@ public class FileManagerUtil extends ApplicationIdentifier implements Serializab
             this.baseDirectory = baseDirectory;
         }
     }
-    
+
     public String getBaseDirectory() {
         return baseDirectory;
     }
-    
+
     public void setCurrentDirectory(String currentDirectory) {
         this.currentDirectory = baseDirectory;
         try {
@@ -388,15 +394,15 @@ public class FileManagerUtil extends ApplicationIdentifier implements Serializab
         }
         this.currentDirectory = currentDirectory;
     }
-    
+
     public String getCurrentDirectory() {
         return currentDirectory;
     }
-    
+
     // ======================================================================
     // Files & directories management
     // ======================================================================
-    
+
     public boolean move(String fileAddress, String destinationDirectory) {
         try {
             String fileName = (new File(fileAddress)).getName();
@@ -406,7 +412,7 @@ public class FileManagerUtil extends ApplicationIdentifier implements Serializab
         }
         return true;
     }
-    
+
     public boolean renameCurrentDirectory(String newDirectoryName) {
         String newAddress = (new File(currentDirectory)).getParent() + File.separator + newDirectoryName;
         if (!Files.exists(Paths.get(newAddress))) {
@@ -420,7 +426,7 @@ public class FileManagerUtil extends ApplicationIdentifier implements Serializab
         }
         return true;
     }
-    
+
     public boolean renameFile(String oldAddress, String newFileName) {
         String newFileAddress = currentDirectory + File.separator + newFileName;
         if (!Files.exists(Paths.get(newFileAddress))) {
@@ -434,7 +440,7 @@ public class FileManagerUtil extends ApplicationIdentifier implements Serializab
         }
         return true;
     }
-   
+
     public boolean remove(String fileAddress) {
         Path filePath = Paths.get(fileAddress);
         if (Files.exists(filePath)) {
@@ -455,7 +461,7 @@ public class FileManagerUtil extends ApplicationIdentifier implements Serializab
         }
         return false;
     }
-    
+
     public boolean createNewDirectory(String name) {
         try {
             Files.createDirectory(Paths.get(currentDirectory + File.separator + name));
