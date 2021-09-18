@@ -276,11 +276,13 @@ public class FileManagerUtil extends ApplicationIdentifier implements Serializab
     
     public void search(String keywords) {
         // NOT APPLICABLE YET
-        if (keywords.matches("[, ]+")) {
+        if (keywords != null && !keywords.isEmpty() && keywords.matches(".*[, ]+.*")) {
             for (String k: keywords.split("[, ]+")) {
-                
+                System.out.println("k: " + k);
             }
-        } else {
+        }
+        if (keywords != null && !keywords.isEmpty()) {
+            System.out.println("keywords: " + keywords);
         }
     }
     

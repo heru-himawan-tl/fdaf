@@ -301,6 +301,13 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                                     <f:actionListener binding="#{controller.bean.toHomeDirectory()}" />
                                     <f:ajax event="click" execute="@form" render="@form" />
                                 </h:commandButton>
+                                <h:commandButton type="button"
+                                        styleClass="#{(controller.bean.inHomeDirectory eq false) ? 'grouped_button_inner' : 'grouped_button_left'}" 
+                                        value="#{label.buttonExitSearch}"
+                                    rendered="#{controller.bean.isLoggedOn eq true and controller.bean.inSearchMode eq true}">
+                                    <f:actionListener binding="#{controller.bean.exitSearch()}" />
+                                    <f:ajax event="click" execute="@form" render="@form" />
+                                </h:commandButton>
                                 <h:commandButton type="button" styleClass="grouped_button_left" value="#{label.buttonProceedUpload}"
                                     rendered="#{controller.bean.isLoggedOn eq true and controller.bean.inPrepareUpload eq true}">
                                     <f:actionListener binding="#{controller.bean.upload()}" />
@@ -383,12 +390,13 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                                         </h:panelGroup>
                                         <h:panelGroup layout="block" styleClass="list_control_deeper_right">
                                             <h:commandButton type="button" styleClass="common_button" value="#{label.buttonSearch}">
-                                                <f:ajax event="keypress" execute="@form" render="@form" listener="#{controller.bean.configureSearch}" />
+                                                <f:ajax event="click" execute="@form" render="@form" listener="#{controller.bean.configureSearch}" />
                                             </h:commandButton>
                                         </h:panelGroup>
                                     </h:panelGroup>
                                 </h:panelGroup>
                             </h:panelGroup>
+                            
                             <d:messages rendered="#{
                                     controller.bean.inPrepareCreateDirectory eq false and
                                     controller.bean.inPrepareRenameFile eq false and

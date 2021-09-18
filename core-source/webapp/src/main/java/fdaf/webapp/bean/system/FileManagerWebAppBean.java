@@ -183,8 +183,9 @@ public class FileManagerWebAppBean extends AbstractBaseWebAppBean implements Ser
     // ======================================================================
     
     public void configureSearch(AjaxBehaviorEvent event) throws AbortProcessingException {
-        if (keyword != null && keyword.trim().isEmpty()) {
+        if (keyword != null && !keyword.trim().isEmpty()) {
             inSearchMode = true;
+            fileManagerUtil.search(keyword);
         }
     }
     
