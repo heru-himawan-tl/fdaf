@@ -388,10 +388,22 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                                                 <f:ajax event="keypress" execute="@form" render="@form" listener="#{controller.bean.configureSearch}" />
                                             </h:inputText>
                                         </h:panelGroup>
-                                        <h:panelGroup layout="block" styleClass="list_control_deeper_right">
+                                        <h:panelGroup layout="block" styleClass="list_control_deeper">
                                             <h:commandButton type="button" styleClass="common_button" value="#{label.buttonSearch}">
                                                 <f:ajax event="click" execute="@form" render="@form" listener="#{controller.bean.configureSearch}" />
                                             </h:commandButton>
+                                        </h:panelGroup>
+                                        <h:panelGroup layout="block" styleClass="list_control_deeper_right">
+                                            <h:panelGroup layout="block" styleClass="list_control_page_switch_button_box">
+                                                <h:commandButton type="button" styleClass="grouped_button_left" value="#{label.buttonSelectAll}">
+                                                    <f:actionListener binding="#{controller.bean.selectAll()}" />
+                                                    <f:ajax event="click" execute="@form" render="@form" />
+                                                </h:commandButton>
+                                                <h:commandButton type="button" styleClass="grouped_button_right" value="#{label.buttonDeselectAll}">
+                                                    <f:actionListener binding="#{controller.bean.deselectAll()}" />
+                                                    <f:ajax event="click" execute="@form" render="@form" />
+                                                </h:commandButton>
+                                            </h:panelGroup>
                                         </h:panelGroup>
                                     </h:panelGroup>
                                 </h:panelGroup>

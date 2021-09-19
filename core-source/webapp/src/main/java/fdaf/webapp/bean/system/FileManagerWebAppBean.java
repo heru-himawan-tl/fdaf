@@ -560,6 +560,12 @@ public class FileManagerWebAppBean extends AbstractBaseWebAppBean implements Ser
         applySelectAll = false;
         selectAllFlag = false;
     }
+    
+    public void deselectAll() {
+        applyDeselectAll = true;
+        applySelectAll = false;
+        selectAllFlag = false;
+    }
 
     private String getSelectItemValue() {
         UIComponent component = UIComponent.getCurrentComponent(FacesContext.getCurrentInstance());
@@ -570,9 +576,10 @@ public class FileManagerWebAppBean extends AbstractBaseWebAppBean implements Ser
         return null;
     }
 
-    public void selectAll(AjaxBehaviorEvent event) throws AbortProcessingException {
-        applyDeselectAll = (!selectAllFlag);
-        applySelectAll = selectAllFlag;
+    public void selectAll() {
+        applyDeselectAll = false;
+        applySelectAll = true;
+        selectAllFlag = true;
     }
 
     private void putNodeNameByMassSelection(String nodeName) {
