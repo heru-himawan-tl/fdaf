@@ -153,6 +153,7 @@ public class FileManagerWebAppBean extends AbstractBaseWebAppBean implements Ser
     public void toHomeDirectory() {
         fileManagerUtil.toHomeDirectory();
         settings.setCurrentDirectory(fileManagerUtil.getCurrentDirectory());
+        inSearchMode = false;
     }
     
     public void toParentDirectory() {
@@ -186,6 +187,23 @@ public class FileManagerWebAppBean extends AbstractBaseWebAppBean implements Ser
         if (keyword != null && !keyword.trim().isEmpty()) {
             inSearchMode = true;
             fileManagerUtil.search(keyword);
+        }
+    }
+    
+    public LinkedHashMap<String, Map<String, Boolean>> getSearchResult() {
+        return fileManagerUtil.getSearchResult();
+    }
+    
+    public int getSearchResultCount() {
+        return fileManagerUtil.getSearchResultCount();
+    }
+    
+    private void reconfigureSearch() {
+        if (inSearchMode) {
+            try {
+                configureSearch(null);
+            } catch (Exception e) {
+            }
         }
     }
     
@@ -381,6 +399,7 @@ public class FileManagerWebAppBean extends AbstractBaseWebAppBean implements Ser
             addMessage(SV_ERROR, "renameDirectoryFailedWarning");
         }
         inPrepareRenameDirectory = false;
+        reconfigureSearch();
     }
     
     public void cancelRenameDirectory() {
@@ -420,6 +439,7 @@ public class FileManagerWebAppBean extends AbstractBaseWebAppBean implements Ser
             addMessage(SV_ERROR, "moveDirectoryFailedWarning");
         }
         inPrepareMoveDirectory = false;
+        reconfigureSearch();
     }
     
     public void cancelMoveDirectory() {
@@ -456,6 +476,7 @@ public class FileManagerWebAppBean extends AbstractBaseWebAppBean implements Ser
         addMessage(SV_INFO, "renameFileSuccessInfo");
         inPrepareRenameFile = false;
         newFileName = null;
+        reconfigureSearch();
     }
 
     public void cancelRenameFile() {
@@ -500,6 +521,7 @@ public class FileManagerWebAppBean extends AbstractBaseWebAppBean implements Ser
             addMessage(SV_ERROR, "moveFileFailedWarning");
         }
         inPrepareMoveFile = false;
+        reconfigureSearch();
     }
 
     // ======================================================================
@@ -697,6 +719,7 @@ public class FileManagerWebAppBean extends AbstractBaseWebAppBean implements Ser
             }
         }
         clearMassiveMoveReadyState();
+        reconfigureSearch();
     }
     
     public void cancelMassiveMove() {

@@ -64,7 +64,9 @@ public class FileManagerUtil extends ApplicationIdentifier implements Serializab
     private CommonConfigurationInterface commonConfiguration;
 
     private LinkedHashMap<String, Map<String, Boolean>> nodeMap = new LinkedHashMap<String, Map<String, Boolean>>();
-    private LinkedHashMap<String, Map<String, Boolean>> searchResultList = new LinkedHashMap<String, Map<String, Boolean>>();
+    private LinkedHashMap<String, Map<String, Boolean>> searchResult = new LinkedHashMap<String, Map<String, Boolean>>();
+    
+    private int searchResultCount;
 
     private boolean error;
 
@@ -275,7 +277,8 @@ public class FileManagerUtil extends ApplicationIdentifier implements Serializab
     }
 
     public void search(String keyword) {
-        searchResultList = new LinkedHashMap<String, Map<String, Boolean>>();
+        searchResult = new LinkedHashMap<String, Map<String, Boolean>>();
+        searchResultCount = 0;
         LinkedList<String> nodeList = new LinkedList<String>();
         LinkedList<String> directoryList = new LinkedList<String>();
         LinkedList<String> fileList = new LinkedList<String>();
@@ -321,8 +324,8 @@ public class FileManagerUtil extends ApplicationIdentifier implements Serializab
                 String directoryName = (new File(d)).getName();
                 Map<String, Boolean> data = new HashMap<String, Boolean>();
                 data.put(d, true);
-                searchResultList.put(directoryName, data);
-                System.out.println(directoryName);
+                searchResult.put(directoryName, data);
+                searchResultCount++;
             }
         }
         if (!fileList.isEmpty()) {
@@ -330,9 +333,9 @@ public class FileManagerUtil extends ApplicationIdentifier implements Serializab
             for (String f : fileList) {
                 String fileName = (new File(f)).getName();
                 Map<String, Boolean> data = new HashMap<String, Boolean>();
-                data.put(f, true);
-                searchResultList.put(fileName, data);
-                System.out.println(fileName);
+                data.put(f, false);
+                searchResult.put(fileName, data);
+                searchResultCount++;
             }
         }
         nodeList.clear();
@@ -340,8 +343,12 @@ public class FileManagerUtil extends ApplicationIdentifier implements Serializab
         fileList.clear();
     }
 
-    public LinkedHashMap<String, Map<String, Boolean>> getSearchResultList() {
-        return searchResultList;
+    public LinkedHashMap<String, Map<String, Boolean>> getSearchResult() {
+        return searchResult;
+    }
+    
+    public int getSearchResultCount() {
+        return searchResultCount;
     }
 
     // ======================================================================

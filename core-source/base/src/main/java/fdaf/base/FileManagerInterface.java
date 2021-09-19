@@ -41,8 +41,9 @@ public interface FileManagerInterface {
     public boolean renameCurrentDirectory(String newDirectoryName);
     public boolean renameFile(String oldAddress, String newFileName);
     public FileListSortMode getSortMode();
+    public int getSearchResultCount();
     public LinkedHashMap<String, Map<String, Boolean>> getNodeMap();
-    public LinkedHashMap<String, Map<String, Boolean>> getSearchResultList();
+    public LinkedHashMap<String, Map<String, Boolean>> getSearchResult();
     public LinkedList<String> getDirectoryList();
     public String getBaseDirectory();
     public String getCurrentDirectory();

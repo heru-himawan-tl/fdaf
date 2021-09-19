@@ -261,7 +261,7 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                 <d:mainPanel>
                     <d:pageContainer id="page">
                         <d:fileManagerPreviewer iframeId="fileManagerPreviewer" classId="file_manager_preview"
-                            title="#{fn:toUpperCase(label.filePreviewer)}">
+                                title="#{fn:toUpperCase(label.filePreviewer)}">
                             <h:commandButton type="button" styleClass="grouped_button_left" value="#{label.buttonMove}">
                                 <f:actionListener binding="#{controller.bean.prepareMoveFile()}" />
                                 <f:ajax event="click" execute="@form" render="@form" />
@@ -396,7 +396,6 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                                     </h:panelGroup>
                                 </h:panelGroup>
                             </h:panelGroup>
-                            
                             <d:messages rendered="#{
                                     controller.bean.inPrepareCreateDirectory eq false and
                                     controller.bean.inPrepareRenameFile eq false and
@@ -424,12 +423,83 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                                         </d:fieldRow>
                                     </ui:repeat>
                                 </h:panelGroup>
-                                <h:panelGroup layout="block" styleClass="field_container_inner" rendered="#{controller.bean.inPrepareUpload eq false}">
+                                <h:panelGroup layout="block" styleClass="field_container_inner" rendered="#{controller.bean.inSearchMode eq true}">
+                                    <h:panelGroup layout="block" styleClass="field_note_box field_note_box_free">
+                                        <h:outputText value="#{label.found}: #{controller.bean.searchResultCount} #{label.itemInSearchResult}" />
+                                    </h:panelGroup>
+                                    <h:panelGroup layout="block" styleClass="file_manager_image_box">
+                                        <ui:repeat value="#{controller.bean.searchResult}" var="result">
+                                            <ui:repeat value="#{result.value}" var="data">
+                                                <h:panelGroup layout="block" styleClass="file_manager_image_item_box"
+                                                        rendered="#{data.value eq true}">
+                                                    <h:commandButton type="button" style="display:none;" immediate="true" value="" a:name="#{result.key}">
+                                                        <f:actionListener binding="#{controller.bean.setCurrentDirectory(data.key)}" />
+                                                        <f:actionListener binding="#{controller.bean.exitSearch()}" />
+                                                        <f:ajax event="click" execute="@form" render="@form" />
+                                                    </h:commandButton>
+                                                    <h:panelGroup layout="block" styleClass="file_manager_image_item_cb_rel_box">
+                                                        <h:panelGroup layout="block" styleClass="file_manager_image_item_cb_abs_box">
+                                                            <h:selectManyCheckbox value="#{controller.bean.nodeNames}" styleClass="checkbox file_manager_cb"
+                                                                    collectionType="java.util.ArrayList" a:autocomplete="false">
+                                                                <f:selectItem itemValue="#{data.key}" itemLabel="" />
+                                                            </h:selectManyCheckbox>
+                                                        </h:panelGroup>
+                                                    </h:panelGroup>
+                                                    <h:panelGroup layout="block" styleClass="file_manager_image_item_icon_box">
+                                                        <h:graphicImage value="file-preview-tool?address=#{utility.toURL(data.key)}&amp;view=0&amp;prev=0"
+                                                            alt="#{result.key}" styleClass="file_manager_image_item"
+                                                            a:onclick="var e = document.getElementsByName('#{result.key}');if(e!=null){e[0].click();};" />
+                                                    </h:panelGroup>
+                                                    <h:panelGroup layout="block" styleClass="file_manager_image_item_name_box">
+                                                        <a href="javascript:void(0);"
+                                                            onclick="var e = document.getElementsByName('#{result.key}');if(e!=null){e[0].click();};"
+                                                            ><h:outputText value="#{result.key}" /></a>
+                                                    </h:panelGroup>
+                                                </h:panelGroup>
+                                                <h:panelGroup layout="block" styleClass="file_manager_image_item_box"
+                                                        rendered="#{data.value eq false}">
+                                                    <h:panelGroup layout="block" styleClass="file_manager_image_item_cb_rel_box">
+                                                        <h:panelGroup layout="block" styleClass="file_manager_image_item_cb_abs_box">
+                                                            <h:selectManyCheckbox value="#{controller.bean.nodeNames}" styleClass="checkbox file_manager_cb"
+                                                                    collectionType="java.util.ArrayList" a:autocomplete="false">
+                                                                <f:selectItem itemValue="#{data.key}" itemLabel="" />
+                                                            </h:selectManyCheckbox>
+                                                        </h:panelGroup>
+                                                    </h:panelGroup>
+                                                    <h:panelGroup layout="block" styleClass="file_manager_image_item_icon_box">
+                                                        <h:graphicImage value="file-preview-tool?address=#{utility.toURL(data.key)}&amp;view=0&amp;prev=0"
+                                                            alt="#{result.key}" styleClass="file_manager_image_item"
+                                                            a:onclick="document.querySelector('.file_manager_preview')
+                                                                .style='display:block';
+                                                                document.querySelector('.file_manager_main_page_container')
+                                                                .style='display:none';
+                                                                document.getElementById('form:previewFileAddress').value='#{data.key}';
+                                                                document.getElementById('fileManagerPreviewer')
+                                                                .src='file-preview-tool?prev=1&amp;view=0&amp;address=#{utility.toURL(data.key)}';" />
+                                                    </h:panelGroup>
+                                                    <h:panelGroup layout="block" styleClass="file_manager_image_item_name_box">
+                                                        <a href="javascript:void(0);"
+                                                            onclick="document.querySelector('.file_manager_preview')
+                                                                .style='display:block';
+                                                                document.querySelector('.file_manager_main_page_container')
+                                                                .style='display:none';
+                                                                document.getElementById('form:previewFileAddress').value='#{data.key}';
+                                                                document.getElementById('fileManagerPreviewer')
+                                                                .src='file-preview-tool?prev=1&amp;view=0&amp;address=#{utility.toURL(data.key)}';"
+                                                            ><h:outputText value="#{result.key}" /></a>
+                                                    </h:panelGroup>
+                                                </h:panelGroup>
+                                            </ui:repeat>
+                                        </ui:repeat>
+                                    </h:panelGroup>
+                                </h:panelGroup>
+                                <h:panelGroup layout="block" styleClass="field_container_inner"
+                                        rendered="#{controller.bean.inPrepareUpload eq false and controller.bean.inSearchMode eq false}">
                                     <h:panelGroup layout="block" styleClass="field_note_box field_note_box_free">
                                         <h:outputText value="#{controller.bean.currentDirectoryDisplayName}" />
                                     </h:panelGroup>
                                     <h:panelGroup layout="block" styleClass="file_manager_directory_empty_box_outer"
-                                        rendered="#{controller.bean.isEmptyDirectory eq true}">
+                                            rendered="#{controller.bean.isEmptyDirectory eq true}">
                                         <h:panelGroup layout="block" styleClass="file_manager_directory_empty_box">
                                             <h:outputText value="#{defaultMessage.fileManagerDirectoryEmptyNote}" />
                                         </h:panelGroup>
@@ -438,9 +508,8 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                                         <ui:repeat value="#{controller.bean.nodes}" var="node">
                                             <ui:repeat value="#{node.value}" var="data">
                                                 <h:panelGroup layout="block" styleClass="file_manager_image_item_box"
-                                                    rendered="#{data.value eq true}">
-                                                    <h:commandButton type="button" style="display:none;" immediate="true" value="" 
-                                                            a:name="#{node.key}">
+                                                        rendered="#{data.value eq true}">
+                                                    <h:commandButton type="button" style="display:none;" immediate="true" value="" a:name="#{node.key}">
                                                         <f:actionListener binding="#{controller.bean.setCurrentDirectory(data.key)}" />
                                                         <f:ajax event="click" execute="@form" render="@form" />
                                                     </h:commandButton>
@@ -464,7 +533,7 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                                                     </h:panelGroup>
                                                 </h:panelGroup>
                                                 <h:panelGroup layout="block" styleClass="file_manager_image_item_box"
-                                                    rendered="#{data.value eq false}">
+                                                        rendered="#{data.value eq false}">
                                                     <h:panelGroup layout="block" styleClass="file_manager_image_item_cb_rel_box">
                                                         <h:panelGroup layout="block" styleClass="file_manager_image_item_cb_abs_box">
                                                             <h:selectManyCheckbox value="#{controller.bean.nodeNames}" styleClass="checkbox file_manager_cb"

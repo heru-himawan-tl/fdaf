@@ -1363,6 +1363,7 @@ a:hover
     background-position: center right;
     background-size: 24px 24px;
     padding-right: 28px;
+    height: 28px;
 }
 
 /*.list_control_deeper,
