@@ -53,7 +53,6 @@ import javax.ejb.EJB;
 import javax.ejb.Remote;
 import javax.ejb.Stateful;
 
-// UNDER DEVELOPMENT !
 @Remote({FileManagerInterface.class})
 @Stateful(passivationCapable = false)
 public class FileManagerUtil extends ApplicationIdentifier implements Serializable {

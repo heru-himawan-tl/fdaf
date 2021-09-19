@@ -61,7 +61,6 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
-// UNDER DEVELOPMENT!
 @ViewScoped
 @Named
 public class FileManagerWebAppBean extends AbstractBaseWebAppBean implements Serializable {
@@ -177,6 +176,11 @@ public class FileManagerWebAppBean extends AbstractBaseWebAppBean implements Ser
     
     public boolean getInHomeDirectory() {
         return fileManagerUtil.isInHomeDirectory();
+    }
+    
+    public String hideHomeDirectoryPath(String address) {
+        return address.replace(settings.getBaseDirectory(), File.separator)
+            .replace(File.separator + File.separator, File.separator);
     }
     
     // ======================================================================
@@ -544,7 +548,7 @@ public class FileManagerWebAppBean extends AbstractBaseWebAppBean implements Ser
     }
     
     public void closePreview() {
-        previewFileAddress = null;
+        previewFileAddress = "";
     }
     
     // ======================================================================
