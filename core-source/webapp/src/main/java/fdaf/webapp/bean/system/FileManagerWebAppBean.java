@@ -244,7 +244,9 @@ public class FileManagerWebAppBean extends AbstractBaseWebAppBean implements Ser
 
     public void populateNodes(ComponentSystemEvent event) throws AbortProcessingException {
         initializeBaseDirectory();
-        if (settings.getBaseDirectory().matches("(.*\\/null$|.*null.*)")) {
+        if (settings.isBaseDirectoryInitialized()
+            && ((loggedOn && settings.getBaseDirectory().indexOf(getUserSessionManager().getUserName()) < 0)
+            || settings.getBaseDirectory().matches("(.*\\/null$|.*null.*)"))) {
             settings.markBaseDirectoryDeinitialized();
             initializeBaseDirectory();
         }
