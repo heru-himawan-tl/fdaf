@@ -73,10 +73,10 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                     <h:panelGroup styleClass="dialog_content_box" rendered="#{(controller.bean.massiveMoveReadyState eq true)}">
                         <h:outputText value="#{defaultMessage.massiveMovePrompt}" />
                         <h:panelGroup layout="block" styleClass="dialog_field_label_box">
-                            <h:outputText value="#{label.massiveMoveDestinationDirectory}" />
+                            <h:outputText value="#{label.massiveMoveDirectoryDestination}" />
                         </h:panelGroup>
                         <h:panelGroup layout="block" styleClass="dialog_field_input_box">
-                            <h:selectOneMenu id="massiveMoveDestinationDirectory" value="#{controller.bean.massiveMoveDestinationDirectory}">
+                            <h:selectOneMenu id="massiveMoveDirectoryDestination" value="#{controller.bean.massiveMoveDirectoryDestination}">
                                 <f:selectItems value="#{controller.bean.directorySelection}" var="selectItem" itemValue="#{selectItem.value}" 
                                     itemLabel="#{selectItem.label}" />
                             </h:selectOneMenu>
