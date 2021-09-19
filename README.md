@@ -84,7 +84,7 @@ modules source codes:
   - Employee [1]  
 - Common Configuration Board  
 - Mailer Configuration Board  
-- File Manager (under development)
+- File Manager
 
 Modules marked as [1] are builtin with the following functions:  
 - listing (with search tool, ordering tool, pagination)  
