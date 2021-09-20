@@ -27,6 +27,8 @@
  * USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+var mobileMenuIsOpened = false;
+
 function setFakeFileInputValue(object, classId) {
     if (object.files && object.files[0]) {
         document.querySelector('.'+classId).value=object.files[0].name;

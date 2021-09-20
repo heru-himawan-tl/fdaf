@@ -70,6 +70,9 @@ public class FileManagerWebAppBean extends AbstractBaseWebAppBean implements Ser
     @Inject
     private Controller controller;
     
+    @Inject
+    private FileManagerSettingsBean settings;
+    
     @EJB(lookup = "java:global/__EJB_LOOKUP_DIR__/FileManagerUtil")
     private FileManagerInterface fileManagerUtil;
     
@@ -77,9 +80,6 @@ public class FileManagerWebAppBean extends AbstractBaseWebAppBean implements Ser
     
     private String keyword;
     private boolean inSearchMode;
-    
-    @Inject
-    private FileManagerSettingsBean settings;
     
     @Pattern(regexp = "^[a-zA-Z0-9\\.\\-\\_\\(\\)\\[\\]\\{\\}\\$\\@\\~ ]+$", message = "{newDirectoryNameBadFormat}")
     @Size(min = 1, max = 128, message = "{newDirectoryNameLengthOutOfRange}")
