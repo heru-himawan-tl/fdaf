@@ -377,6 +377,7 @@ public class FileManagerWebAppBean extends AbstractBaseWebAppBean implements Ser
         } else {
             addMessage(SV_WARN, "fileUploadNoFileWarning");
         }
+        hideMobileMenu = true;
     }
     
     public void cancelUpload() {
