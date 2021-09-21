@@ -294,8 +294,8 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                         </h:outputScript>
                         <h:panelGroup layout="block" styleClass="file_manager_main_page_container">
                             <d:customProgramHeading pageTitle="#{fn:toUpperCase(label.fileManager)}">
-                                <h:commandButton type="button" styleClass="grouped_button_left" value="#{label.buttonHome}"
-                                        immediate="true" rendered="#{controller.bean.isLoggedOn eq true and controller.bean.inHomeDirectory eq false
+                                <h:commandButton type="button" styleClass="grouped_button_left" value="#{label.buttonHome}" immediate="true"
+                                        rendered="#{controller.bean.isLoggedOn eq true and controller.bean.inHomeDirectory eq false
                                         and controller.bean.inPrepareUpload eq false}">
                                     <f:actionListener binding="#{controller.bean.toHomeDirectory()}" />
                                     <f:ajax event="click" execute="@form" render="@form" />
@@ -313,7 +313,7 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                                     <f:ajax event="click" execute="@form" render="@form" />
                                 </h:commandButton>
                                 <h:commandButton type="button" styleClass="grouped_button_inner" value="#{label.buttonCancelUpload}"
-                                        immediate="true" rendered="#{controller.bean.isLoggedOn eq true and controller.bean.inPrepareUpload eq true}">
+                                        rendered="#{controller.bean.isLoggedOn eq true and controller.bean.inPrepareUpload eq true}">
                                     <f:actionListener binding="#{controller.bean.cancelUpload()}" />
                                     <f:ajax event="click" execute="@form" render="@form" />
                                 </h:commandButton>
@@ -325,25 +325,28 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                                 </h:commandButton>
                                 <h:commandButton type="button" styleClass="#{
                                         (controller.bean.inHomeDirectory eq true) ? 'grouped_button_left' : 'grouped_button_inner'
-                                        }" value="#{label.buttonNewDir}"
-                                        immediate="true" rendered="#{controller.bean.isLoggedOn eq true and controller.bean.inPrepareUpload eq false
+                                        }" value="#{label.buttonNewDir}" immediate="true"
+                                        rendered="#{controller.bean.isLoggedOn eq true and controller.bean.inPrepareUpload eq false
                                         and controller.bean.inSearchMode eq false}">
                                     <f:actionListener binding="#{controller.bean.prepareCreateDirectory()}" />
                                     <f:ajax event="click" execute="@form" render="@form" />
                                 </h:commandButton>
                                 <h:commandButton type="button" styleClass="grouped_button_inner" value="#{label.buttonMoveCurrentDirectory}"
+                                        immediate="true"
                                         rendered="#{controller.bean.isLoggedOn eq true and controller.bean.inHomeDirectory eq false
                                         and controller.bean.inPrepareUpload eq false and controller.bean.inSearchMode eq false}">
                                     <f:actionListener binding="#{controller.bean.prepareMoveDirectory()}" />
                                     <f:ajax event="click" execute="@form" render="@form" />
                                 </h:commandButton>
                                 <h:commandButton type="button" styleClass="grouped_button_inner" value="#{label.buttonUpload}"
+                                        immediate="true"
                                         rendered="#{controller.bean.isLoggedOn eq true and controller.bean.inPrepareUpload eq false
                                         and controller.bean.inSearchMode eq false}">
                                     <f:actionListener binding="#{controller.bean.prepareUpload()}" />
                                     <f:ajax event="click" execute="@form" render="@form" />
                                 </h:commandButton>
                                 <h:commandButton type="button" styleClass="grouped_button_inner" value="#{label.buttonRenameCurrentDirectory}"
+                                        immediate="true"
                                         rendered="#{controller.bean.isLoggedOn eq true and controller.bean.inHomeDirectory eq false
                                         and controller.bean.inPrepareUpload eq false and controller.bean.inSearchMode eq false}">
                                     <f:actionListener binding="#{controller.bean.prepareRenameDirectory()}" />

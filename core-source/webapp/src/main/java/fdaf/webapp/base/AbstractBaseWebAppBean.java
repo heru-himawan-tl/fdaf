@@ -85,6 +85,7 @@ public abstract class AbstractBaseWebAppBean extends AbstractWebAppCommon {
     protected boolean databaseIsError;
     protected String operatingSystemName;
     protected boolean isUnixLikeOS;
+    protected boolean hideMobileMenu;
     
     protected String controllerID = UUID.randomUUID().toString();
 
@@ -245,6 +246,10 @@ public abstract class AbstractBaseWebAppBean extends AbstractWebAppCommon {
     
     public boolean getIsUnixLikeOS() {
         return isUnixLikeOS;
+    }
+    
+    public boolean getHideMobileMenu() {
+        return hideMobileMenu;
     }
 
     public void checkAdministratorAccount(ComponentSystemEvent event) throws AbortProcessingException {

@@ -153,11 +153,13 @@ public class FileManagerWebAppBean extends AbstractBaseWebAppBean implements Ser
         fileManagerUtil.toHomeDirectory();
         settings.setCurrentDirectory(fileManagerUtil.getCurrentDirectory());
         inSearchMode = false;
+        hideMobileMenu = true;
     }
     
     public void toParentDirectory() {
         fileManagerUtil.toParentDirectory();
         settings.setCurrentDirectory(fileManagerUtil.getCurrentDirectory());
+        hideMobileMenu = true;
     }
     
     public void setCurrentDirectory(String currentDirectory) {
@@ -225,6 +227,7 @@ public class FileManagerWebAppBean extends AbstractBaseWebAppBean implements Ser
     
     public void exitSearch() {
         inSearchMode = false;
+        hideMobileMenu = true;
     }
     
     private void initializeBaseDirectory() {
@@ -306,6 +309,7 @@ public class FileManagerWebAppBean extends AbstractBaseWebAppBean implements Ser
     public void cancelNewDirectoryCreation() {
         inPrepareCreateDirectory = false;
         newDirectoryName = null;
+        hideMobileMenu = true;
     }
     
     // ======================================================================
@@ -378,6 +382,7 @@ public class FileManagerWebAppBean extends AbstractBaseWebAppBean implements Ser
     public void cancelUpload() {
         deinitMultipartForm();
         inPrepareUpload = false;
+        hideMobileMenu = true;
     }
     
     // ======================================================================
@@ -386,6 +391,7 @@ public class FileManagerWebAppBean extends AbstractBaseWebAppBean implements Ser
     
     public void prepareRenameDirectory() {
         inPrepareRenameDirectory = true;
+        hideMobileMenu = true;
     }
     
     public boolean getInPrepareRenameDirectory() {
@@ -406,10 +412,12 @@ public class FileManagerWebAppBean extends AbstractBaseWebAppBean implements Ser
         }
         inPrepareRenameDirectory = false;
         reconfigureSearch();
+        hideMobileMenu = true;
     }
     
     public void cancelRenameDirectory() {
         inPrepareRenameDirectory = false;
+        hideMobileMenu = true;
     }
     
     // ======================================================================
@@ -426,6 +434,7 @@ public class FileManagerWebAppBean extends AbstractBaseWebAppBean implements Ser
     
     public void prepareMoveDirectory() {
         inPrepareMoveDirectory = true;
+        hideMobileMenu = true;
     }
     
     public boolean getInPrepareMoveDirectory() {
@@ -446,10 +455,12 @@ public class FileManagerWebAppBean extends AbstractBaseWebAppBean implements Ser
         }
         inPrepareMoveDirectory = false;
         reconfigureSearch();
+        hideMobileMenu = true;
     }
     
     public void cancelMoveDirectory() {
         inPrepareMoveDirectory = false;
+        hideMobileMenu = true;
     }
     
     // ======================================================================
@@ -466,6 +477,7 @@ public class FileManagerWebAppBean extends AbstractBaseWebAppBean implements Ser
 
     public void prepareRenameFile() {
         inPrepareRenameFile = true;
+        hideMobileMenu = true;
     }
 
     public boolean getInPrepareRenameFile() {
@@ -483,11 +495,13 @@ public class FileManagerWebAppBean extends AbstractBaseWebAppBean implements Ser
         inPrepareRenameFile = false;
         newFileName = null;
         reconfigureSearch();
+        hideMobileMenu = true;
     }
 
     public void cancelRenameFile() {
         inPrepareRenameFile = false;
         newFileName = null;
+        hideMobileMenu = true;
     }
     
     // ======================================================================
@@ -504,6 +518,7 @@ public class FileManagerWebAppBean extends AbstractBaseWebAppBean implements Ser
     
     public void prepareMoveFile() {
         inPrepareMoveFile = true;
+        hideMobileMenu = true;
     }
     
     public boolean getInPrepareMoveFile() {
@@ -512,6 +527,7 @@ public class FileManagerWebAppBean extends AbstractBaseWebAppBean implements Ser
     
     public void cancelMoveFile() {
         inPrepareMoveFile = false;
+        hideMobileMenu = true;
     }
     
     public void moveFile() {
@@ -528,6 +544,7 @@ public class FileManagerWebAppBean extends AbstractBaseWebAppBean implements Ser
         }
         inPrepareMoveFile = false;
         reconfigureSearch();
+        hideMobileMenu = true;
     }
 
     // ======================================================================
@@ -733,11 +750,13 @@ public class FileManagerWebAppBean extends AbstractBaseWebAppBean implements Ser
         }
         clearMassiveMoveReadyState();
         reconfigureSearch();
+        hideMobileMenu = true;
     }
     
     public void cancelMassiveMove() {
         clearMassiveMoveReadyState();
         nodeNameMap.clear();
+        hideMobileMenu = true;
     }
     
     // ======================================================================
@@ -808,10 +827,17 @@ public class FileManagerWebAppBean extends AbstractBaseWebAppBean implements Ser
             }
         }
         clearMassiveRemovalReadyState();
+        hideMobileMenu = true;
     }
 
     public void cancelRemoval() {
         clearMassiveRemovalReadyState();
         nodeNameMap.clear();
+        hideMobileMenu = true;
+    }
+    
+    @Override
+    public void deinit(ComponentSystemEvent event) throws AbortProcessingException {
+        hideMobileMenu = false;
     }
 }

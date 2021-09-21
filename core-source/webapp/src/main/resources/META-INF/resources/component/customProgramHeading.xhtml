@@ -76,13 +76,16 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                                                 mobileMenuIsOpened = false;
                                             };" />
                                 </h:panelGroup>
-                                <h:outputScript>
+                                <h:outputScript rendered="#{controller.bean.hideMobileMenu eq false}">
                                     if (mobileMenuIsOpened == true) {
                                         var mnb = document.getElementsByClassName('mobile_menu_button_custom')[0];
                                         if (mnb != null) {
                                             mnb.click();
                                         }
                                     }
+                                </h:outputScript>
+                                <h:outputScript rendered="#{controller.bean.hideMobileMenu eq true}">
+                                    mobileMenuIsOpened = false;
                                 </h:outputScript>
                             </h:panelGroup>
                         </h:panelGroup>
