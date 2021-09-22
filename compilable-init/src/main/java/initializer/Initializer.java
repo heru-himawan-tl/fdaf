@@ -218,7 +218,7 @@ public class Initializer {
                         undefinedCallbackMessage.add(ccm + "=");
                     }
                 }
-                if (nodeAddr.matches(".*(logic|ear|webapp|entity).*\\/pom\\.xml") && s.matches(".*__DEPENDENCIES__.*")) {
+                if (nodeAddr.matches(".*\\-(logic|ear|webapp|entity).*\\/pom\\.xml") && s.matches(".*__DEPENDENCIES__.*")) {
                     String depSourceName = "";
                     String depContents = "";
                     if (nodeAddr.matches(".*entity.*\\/pom\\.xml")) {
