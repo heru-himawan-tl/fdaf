@@ -218,22 +218,22 @@ public class Initializer {
                         undefinedCallbackMessage.add(ccm + "=");
                     }
                 }
-                if (nodeAddr.matches(".*\\-(logic|ear|webapp|entity).*\\/pom\\.xml") && s.matches(".*__DEPENDENCIES__.*")) {
+                if (nodeAddr.matches(".*\\-(logic|ear|webapp|entity)\\/pom\\.xml") && s.matches(".*__DEPENDENCIES__.*")) {
                     String depSourceName = "";
                     String depContents = "";
-                    if (nodeAddr.matches(".*entity.*\\/pom\\.xml")) {
+                    if (nodeAddr.matches(".*\\-entity\\/pom\\.xml")) {
                         depSourceName = "entity.deps";
                     }
-                    if (nodeAddr.matches(".*webapp.*\\/pom\\.xml") && !nodeAddr.matches(".*\\-in\\-single\\-war.*")) {
+                    if (nodeAddr.matches(".*\\-webapp\\/pom\\.xml") && !nodeAddr.matches(".*\\-in\\-single\\-war.*")) {
                         depSourceName = "webapp.deps";
                     }
-                    if (nodeAddr.matches(".*webapp.*\\/pom\\.xml") && nodeAddr.matches(".*\\-in\\-single\\-war.*")) {
+                    if (nodeAddr.matches(".*\\-webapp\\/pom\\.xml") && nodeAddr.matches(".*\\-in\\-single\\-war.*")) {
                         depSourceName = "webapp-in-single-war.deps";
                     }
-                    if (nodeAddr.matches(".*logic.*\\/pom\\.xml")) {
+                    if (nodeAddr.matches(".*\\-logic\\/pom\\.xml")) {
                         depSourceName = "logic.deps";
                     }
-                    if (nodeAddr.matches(".*ear.*\\/pom\\.xml")) {
+                    if (nodeAddr.matches(".*\\-ear\\/pom\\.xml")) {
                         depSourceName = "ear.deps";
                     }
                     try {
