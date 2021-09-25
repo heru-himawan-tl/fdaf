@@ -332,7 +332,7 @@ public class MailerConfigurationWebAppBean extends AbstractBaseWebAppBean implem
         return inSaving;
     }
     
-    public void save(AjaxBehaviorEvent event) throws AbortProcessingException {
+    public void save() {
         boolean abort = false;
         if (!loggedOn) {
             if (unlockPassword.trim().isEmpty()) {

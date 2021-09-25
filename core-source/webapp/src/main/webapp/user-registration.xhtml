@@ -122,7 +122,8 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                         )}">
                         <h:commandButton type="button" styleClass="login_button" value="#{label.buttonSubmit}"
                                 rendered="#{(controller.bean.success eq false)}">
-                            <f:ajax event="click" execute="@form" render="@form" listener="#{controller.bean.register}" />
+                            <f:actionListener binding="#{controller.bean.register()}" />
+                            <f:ajax event="click" execute="@form" render="@form" />
                         </h:commandButton>
                     </h:panelGroup>
                 </h:panelGroup>

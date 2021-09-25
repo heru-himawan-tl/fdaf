@@ -86,6 +86,7 @@ public abstract class AbstractBaseWebAppBean extends AbstractWebAppCommon {
     protected String operatingSystemName;
     protected boolean isUnixLikeOS;
     protected boolean hideMobileMenu;
+    protected boolean isUseMultipartFormOnEdit;
     
     protected String controllerID = UUID.randomUUID().toString();
 
@@ -404,9 +405,21 @@ public abstract class AbstractBaseWebAppBean extends AbstractWebAppCommon {
         enctype = "application/x-www-form-urlencoded";
         isMultipart = false;
     }
+
+    public boolean getIsUseMultipartFormOnEdit() {
+        return isUseMultipartFormOnEdit;
+    }
     
     public boolean getIsMultipart() {
         return isMultipart;
+    }
+    
+    public void useMultipartFormOnEdit(ComponentSystemEvent event) throws AbortProcessingException {
+        isUseMultipartFormOnEdit = true;
+    }
+    
+    public void deinitMultipartFormOnEdit() {
+        isUseMultipartFormOnEdit = false;
     }
     
     public void useMultipartForm(ComponentSystemEvent event) throws AbortProcessingException {

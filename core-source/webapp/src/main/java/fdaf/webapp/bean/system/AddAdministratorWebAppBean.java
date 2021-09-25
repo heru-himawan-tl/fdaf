@@ -180,7 +180,7 @@ public class AddAdministratorWebAppBean extends AbstractWebAppBean implements Se
     }
 
     @Override
-    public void executeCreate(AjaxBehaviorEvent event) throws AbortProcessingException {
+    public void executeCreate() {
         mailerFailure = false;
         if (userType != UserType.ADMINISTRATOR) {
             boolean abort = false;
@@ -262,7 +262,7 @@ public class AddAdministratorWebAppBean extends AbstractWebAppBean implements Se
     }
 
     @Override
-    public void executeUpdate(AjaxBehaviorEvent event) throws AbortProcessingException {
+    public void executeUpdate() {
         // NO-OP
     }
 

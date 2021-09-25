@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <!--
 
 Copyright (c) Heru Himawan Tejo Laksono. All rights reserved.
@@ -29,28 +28,13 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE
 USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 -->
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-        xmlns:d="http://java.sun.com/jsf/composite/component"
-        xmlns:composite="http://java.sun.com/jsf/composite"
-        xmlns:h="http://java.sun.com/jsf/html">
-    <composite:interface></composite:interface>
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:composite="http://java.sun.com/jsf/composite">
+    <composite:interface>
+    </composite:interface>
     <composite:implementation>
-        <h:outputScript rendered="#{(
-            controller.bean.requestAddress ne 'localhost' and
-            controller.bean.requestAddress ne '0.0.0.0'
-        )}">
-            initNetworkStateWS(
-                "#{controller.bean.websocketURL}/network-state",
-                "#{controller.bean.webappURL}",
-                "serviceCheckImgTag",
-                "system_state_message_container",
-                "system_state_message_box",
-                "#{networkStateBean.serviceUUID}",
-                "#{customMessage.networkSettingsMovePageNotice}",
-                "#{customMessage.redirectMessage}"
-            );
-        </h:outputScript>
+        <f:event listener="#{controller.bean.useMultipartFormOnEdit}" type="preRenderComponent" />
     </composite:implementation>
 </html>

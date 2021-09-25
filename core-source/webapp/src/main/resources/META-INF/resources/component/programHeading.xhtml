@@ -76,7 +76,8 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                     <h:panelGroup layout="block" styleClass="program_heading_button_box">
                         <h:panelGroup layout="block" styleClass="program_heading_button_box_flex" rendered="#{(controller.bean.isLoggedOn eq true and controller.bean.isBrokenUserSession eq false)}">
                             <h:commandButton type="button" styleClass="grouped_button_left" value="#{label.buttonAddNewRecord}" rendered="#{(controller.bean.allowRender eq true and controller.bean.opMode eq 'LISTING' and controller.bean.dataListIsInError eq false and controller.bean.allowAdd eq true)}">
-                                <f:ajax event="click" execute="@form" render="@form" listener="#{controller.bean.prepareCreate}" />
+                                <f:actionListener binding="#{controller.bean.prepareCreate()}" />
+                                <f:ajax event="click" execute="@form" render="@form" />
                             </h:commandButton>
                             <h:commandButton type="button" styleClass="#{(controller.bean.allowAdd eq true) ? 'grouped_button_inner' : 'grouped_button_left'}" value="#{label.buttonMassiveRemove}" rendered="#{(controller.bean.allowRender eq true and controller.bean.opMode eq 'LISTING' and controller.bean.totalRowCount ne 0 and cc.attrs.simpleMode eq false)}">
                                 <f:actionListener binding="#{controller.bean.presetMassiveRemovalReadyState()}" />
@@ -87,18 +88,23 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                                 <f:ajax event="click" execute="@form" render="@form" />
                             </h:commandButton>
                             <h:commandButton type="button" styleClass="grouped_button_left" value="#{label.buttonSaveUpdate}" rendered="#{(controller.bean.allowRender eq true and controller.bean.opMode eq 'UPDATE')}">
-                                <f:ajax event="click" execute="@form" render="@form" listener="#{controller.bean.executeUpdate}" />
+                                <f:actionListener binding="#{controller.bean.executeUpdate()}" />
+                                <f:ajax event="click" execute="@form" render="@form" />
                             </h:commandButton>
                             <h:commandButton type="button" styleClass="grouped_button_inner" value="#{label.buttonSaveClose}" rendered="#{(controller.bean.allowRender eq true and controller.bean.opMode eq 'UPDATE')}">
-                                <f:ajax event="click" execute="@form" render="@form" listener="#{controller.bean.executeUpdateAlt}" />
+                                <f:actionListener binding="#{controller.bean.executeUpdateAlt()}" />
+                                <f:ajax event="click" execute="@form" render="@form" />
                             </h:commandButton>
                             <h:commandButton type="button" styleClass="grouped_button_left" value="#{label.buttonSaveCreate}" rendered="#{(controller.bean.allowRender eq true and controller.bean.allowRender eq true and controller.bean.opMode eq 'CREATE')}">
-                                <f:ajax event="click" execute="@form" render="@form" listener="#{controller.bean.executeCreate}" />
+                                <f:actionListener binding="#{controller.bean.executeCreate()}" />
+                                <f:ajax event="click" execute="@form" render="@form" />
                             </h:commandButton>
                             <h:commandButton type="button" styleClass="grouped_button_inner" value="#{label.buttonSaveClose}" rendered="#{(controller.bean.allowRender eq true and controller.bean.opMode eq 'CREATE')}">
-                                <f:ajax event="click" execute="@form" render="@form" listener="#{controller.bean.executeCreateAlt}" />
+                                <f:actionListener binding="#{controller.bean.executeCreateAlt()}" />
+                                <f:ajax event="click" execute="@form" render="@form" />
                             </h:commandButton>
                             <h:commandButton type="button" styleClass="#{(cc.attrs.simpleMode eq false) ? 'grouped_button_inner' : 'grouped_button_right'}" immediate="true" value="#{label.buttonCloseEditor}" rendered="#{(controller.bean.allowRender eq true and (controller.bean.opMode eq 'CREATE' or controller.bean.opMode eq 'UPDATE'))}">
+                                <f:actionListener binding="#{controller.bean.deinitMultipartForm()}" />
                                 <f:actionListener binding="#{controller.bean.setOpMode(opMode.LISTING)}" />
                                 <f:actionListener binding="#{controller.bean.setDisableValidation(true)}" />
                                 <f:ajax event="click" execute="@form" render="@form" />

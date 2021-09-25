@@ -65,7 +65,7 @@ public class ProfileEditorWebAppBean extends AbstractWebAppBean implements Seria
         if (loggedOn && !initialized) {
             primaryKey = getUserSessionManager().getEmployeeId();
             if ((primaryKey == null) && ((opMode != WebAppOpMode.UPDATE) && (opMode != WebAppOpMode.CREATE))) {
-                prepareCreate(null);
+                prepareCreate();
             }
             if ((primaryKey != null) && (opMode != WebAppOpMode.UPDATE)) {
                 prepareUpdate(primaryKey);

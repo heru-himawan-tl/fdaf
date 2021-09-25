@@ -76,6 +76,7 @@ input[type="submit"]
     -moz-appearance: none !important;
     -ms-appearance: none !important;
     -o-appearance: none !important;
+    margin: 0px !important;
 }
 
 select,
@@ -1378,6 +1379,45 @@ a:hover
 /* END OF LIST CONTROL ==================================================== */
 
 /* ADDITIONAL STYLES =============================================== */
+
+.system_state_message_container,
+.redirect_message_box_container
+{
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    position: fixed;
+    top: 0px;
+    bottom: 0px;
+    right: 0px;
+    left: 0px;
+    z-index: 20;
+    background: rgba(0, 0, 0, 0.4);
+    align-items: center;
+    justify-content: center;
+}
+
+.system_state_message_box,
+.redirect_message_box
+{
+    background: #000000;
+    border: 1px solid #ffffff;
+    display: block;
+    border-radius: 8px;
+    padding: 16px;
+    max-width: 480px !important;
+    min-width: 360px !important;
+    color: #ffffff;
+    font-size: 24px;
+}
+
+.list_action_column_flex .grouped_button_inner,
+.list_action_column_flex .grouped_button_right
+{
+    margin-left: 1px !important;
+}
 
 .list_control_deeper .grouped_button_left,
 .list_control_deeper .grouped_button_inner,

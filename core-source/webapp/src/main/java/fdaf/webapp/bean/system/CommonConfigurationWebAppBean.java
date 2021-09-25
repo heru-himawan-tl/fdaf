@@ -229,7 +229,7 @@ public class CommonConfigurationWebAppBean extends AbstractBaseWebAppBean implem
         return masterPasswordFileAddr;
     }
     
-    public void save(AjaxBehaviorEvent event) throws AbortProcessingException {
+    public void save() {
         boolean abort = false;
         inSaving = false;
         if (!loggedOn) {

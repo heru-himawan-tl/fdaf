@@ -263,12 +263,15 @@ public abstract class AbstractWebAppBean extends AbstractBaseWebAppBean {
         return permissions;
     }
 
-    public void prepareCreate(AjaxBehaviorEvent event) throws AbortProcessingException {
+    public void prepareCreate() {
         opMode = WebAppOpMode.CREATE;
         disableValidation = false;
         exitSearch(null);
         getFacade().prepareCreate();
         presetEntity();
+        if (isUseMultipartFormOnEdit) {
+            initMultipartForm();
+        }
     }
 
     protected void presetEntity() {
@@ -279,9 +282,9 @@ public abstract class AbstractWebAppBean extends AbstractBaseWebAppBean {
         return entity;
     }
 
-    public void executeCreateAlt(AjaxBehaviorEvent event) throws AbortProcessingException {
+    public void executeCreateAlt() {
         saveAndClose = true;
-        executeCreate(null);
+        executeCreate();
     }
 
     protected void feedBackEntity() {
@@ -299,7 +302,7 @@ public abstract class AbstractWebAppBean extends AbstractBaseWebAppBean {
         }
     }
 
-    public void executeCreate(AjaxBehaviorEvent event) throws AbortProcessingException {
+    public void executeCreate() {
         try {
             feedBackEntity();
             if (getFacade().preCreateCheck()) {
@@ -321,6 +324,9 @@ public abstract class AbstractWebAppBean extends AbstractBaseWebAppBean {
                     saveAndClose = false;
                     onCreateFinishTask();
                     disposeEntity();
+                    if (isUseMultipartFormOnEdit) {
+                        deinitMultipartForm();
+                    }
                     notifiyListUpdate();
                     return;
                 }
@@ -741,6 +747,9 @@ public abstract class AbstractWebAppBean extends AbstractBaseWebAppBean {
             opMode = WebAppOpMode.UPDATE;
             disableValidation = false;
             this.primaryKey = primaryKey;
+            if (isUseMultipartFormOnEdit) {
+                initMultipartForm();
+            }
         } catch (Exception e) {
             indicateServiceError(e);
         }
@@ -757,12 +766,12 @@ public abstract class AbstractWebAppBean extends AbstractBaseWebAppBean {
         }
     }
 
-    public void executeUpdateAlt(AjaxBehaviorEvent event) throws AbortProcessingException {
+    public void executeUpdateAlt() {
         saveAndClose = true;
-        executeUpdate(null);
+        executeUpdate();
     }
 
-    public void executeUpdate(AjaxBehaviorEvent event) throws AbortProcessingException {
+    public void executeUpdate() {
         try {
             feedBackEntity();
             if (getFacade().preUpdateCheck()) {
@@ -781,6 +790,9 @@ public abstract class AbstractWebAppBean extends AbstractBaseWebAppBean {
                     saveAndClose = false;
                     onUpdateFinishTask();
                     disposeEntity();
+                    if (isUseMultipartFormOnEdit) {
+                        deinitMultipartForm();
+                    }
                     notifiyListUpdate();
                     return;
                 }

@@ -97,7 +97,7 @@ public class StaffInvitationWebAppBean extends AbstractWebAppBean implements Ser
     }
     
     @Override
-    public void executeCreate(AjaxBehaviorEvent event) throws AbortProcessingException {
+    public void executeCreate() {
         mailerFailure = false;
         try {
             feedBackEntity();
@@ -160,7 +160,7 @@ public class StaffInvitationWebAppBean extends AbstractWebAppBean implements Ser
     }
     
     @Override
-    public void executeUpdate(AjaxBehaviorEvent event) throws AbortProcessingException {
+    public void executeUpdate() {
         // NO-OP
     }
 }

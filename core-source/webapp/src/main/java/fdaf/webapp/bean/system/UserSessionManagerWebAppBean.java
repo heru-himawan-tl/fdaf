@@ -112,11 +112,11 @@ public class UserSessionManagerWebAppBean extends AbstractWebAppBean implements 
         return referer;
     }
 
-    public void reset(AjaxBehaviorEvent event) throws AbortProcessingException {
+    public void reset() {
         loginRefused = false;
     }
 
-    public void login(AjaxBehaviorEvent event) throws AbortProcessingException {
+    public void login() {
         String userAgent = getRequest().getHeader("User-Agent");
         inProcessLogin = true;
         loggedOn = false;
@@ -147,11 +147,10 @@ public class UserSessionManagerWebAppBean extends AbstractWebAppBean implements 
     }
 
     public void logout(ComponentSystemEvent event) throws AbortProcessingException {
-        AjaxBehaviorEvent e = null;
-        logout(e);
+        logout();
     }
 
-    public void logout(AjaxBehaviorEvent event) throws AbortProcessingException {
+    public void logout() {
         String userSessionID = getUserSessionIDCookie();
         if ((userSessionID == null) && !loggedOn) {
             addMessage(SV_WARN, "logoutNoUserSessionWarning");
@@ -177,12 +176,12 @@ public class UserSessionManagerWebAppBean extends AbstractWebAppBean implements 
     }
 
     @Override
-    public void executeCreate(AjaxBehaviorEvent event) throws AbortProcessingException {
+    public void executeCreate() {
         // NO-OP
     }
 
     @Override
-    public void executeUpdate(AjaxBehaviorEvent event) throws AbortProcessingException {
+    public void executeUpdate() {
         // NO-OP
     }
 }

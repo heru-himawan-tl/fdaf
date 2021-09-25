@@ -94,12 +94,14 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                         </d:freeFieldRow>
                         <h:panelGroup layout="block" styleClass="free_field_row_gap" />
                         <h:commandButton type="button" styleClass="login_button" value="#{label.buttonLogin}" rendered="#{(controller.bean.isloginRefused eq false)}">
-                            <f:ajax event="click" execute="@form" render="@form" listener="#{controller.bean.login}" />
+                            <f:actionListener binding="#{controller.bean.login()}" />
+                            <f:ajax event="click" execute="@form" render="@form" />
                         </h:commandButton>
                     </h:panelGroup>
                     <h:panelGroup layout="block" styleClass="login_button_box" rendered="#{(controller.bean.isloginRefused eq true)}">
                         <h:commandButton type="button" styleClass="login_button" value="#{label.buttonTryAgain}">
-                            <f:ajax event="click" execute="@form" render="@form" listener="#{controller.bean.reset}" />
+                            <f:actionListener binding="#{controller.bean.reset()}" />
+                            <f:ajax event="click" execute="@form" render="@form" />
                         </h:commandButton>
                     </h:panelGroup>
                     <h:panelGroup layout="block" styleClass="login_misc_box" rendered="#{(controller.bean.isLoggedOn eq false)}">

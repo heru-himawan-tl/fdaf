@@ -83,7 +83,7 @@ public class PasswordResetWebAppBean extends AbstractWebAppBean implements Seria
         return email;
     }
     
-    public void tryAgain(AjaxBehaviorEvent event) throws AbortProcessingException {
+    public void tryAgain() {
         resetting = false;
         success = false;
     }
@@ -96,7 +96,7 @@ public class PasswordResetWebAppBean extends AbstractWebAppBean implements Seria
         return success;
     }
     
-    public void tryReset(AjaxBehaviorEvent event) throws AbortProcessingException {
+    public void tryReset() {
         mailerFailure = false;
         resetting = true;
         if (!mailer.isEnabled()) {
@@ -148,12 +148,12 @@ public class PasswordResetWebAppBean extends AbstractWebAppBean implements Seria
     }
 
     @Override
-    public void executeCreate(AjaxBehaviorEvent event) throws AbortProcessingException {
+    public void executeCreate() {
         // NO-OP
     }
     
     @Override
-    public void executeUpdate(AjaxBehaviorEvent event) throws AbortProcessingException {
+    public void executeUpdate() {
         // NO-OP
     }
 

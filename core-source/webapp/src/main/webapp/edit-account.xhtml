@@ -42,7 +42,8 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         <d:accountEditorInit />             
         <d:customProgramHeading pageTitle="#{fn:toUpperCase(label.editAccount)}">
             <h:commandButton type="button" styleClass="grouped_button_left" value="#{label.buttonSaveUpdate}">
-                <f:ajax event="click" execute="@form" render="@form" listener="#{controller.bean.executeUpdate}" />
+                <f:actionListener binding="#{controller.bean.executeUpdate()}" />
+                <f:ajax event="click" execute="@form" render="@form" />
             </h:commandButton>
             <h:commandButton type="button" styleClass="grouped_button_right" onclick="document.location.href='adm.jsf'" value="#{label.buttonClose}" />
         </d:customProgramHeading>

@@ -67,7 +67,8 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                                     controller.bean.userType ne 'STAFF' and
                                     controller.bean.userType ne 'CLIENT'
                                 }">
-                                <f:ajax event="click" execute="@form" render="@form" listener="#{controller.bean.save}" />
+                                <f:actionListener binding="#{controller.bean.save()}" />
+                                <f:ajax event="click" execute="@form" render="@form" />
                             </h:commandButton>
                             <h:commandButton type="button" styleClass="#{(
                                 controller.bean.userType eq 'CLIENT' or

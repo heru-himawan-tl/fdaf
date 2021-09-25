@@ -61,7 +61,8 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                         <d:pageContainer id="page">
                             <d:customProgramHeading pageTitle="#{fn:toUpperCase(label.addAdministrator)}">
                                 <h:commandButton type="button" styleClass="grouped_button_left" value="#{label.buttonSaveCreate}" rendered="#{(controller.bean.opMode ne 'UPDATE' and controller.bean.userType ne 'STAFF' and controller.bean.userType ne 'CLIENT' and controller.bean.databaseIsError eq false)}">
-                                    <f:ajax event="click" execute="@form" render="@form" listener="#{controller.bean.executeCreate}" />
+                                    <f:actionListener binding="#{controller.bean.executeCreate()}" />
+                                    <f:ajax event="click" execute="@form" render="@form" />
                                 </h:commandButton>
                                 <h:commandButton type="button" styleClass="#{(controller.bean.userType eq 'CLIENT' or controller.bean.userType eq 'STAFF' or controller.bean.databaseIsError eq true) ? 'common_button' : 'grouped_button_right'}" onclick="document.location.href='adm.jsf'" value="#{label.buttonClose}" rendered="#{(controller.bean.opMode ne 'UPDATE')}" />
                             </d:customProgramHeading>

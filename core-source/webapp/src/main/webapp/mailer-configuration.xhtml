@@ -62,7 +62,8 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                         <d:pageContainer id="page">
                             <d:customProgramHeading pageTitle="#{fn:toUpperCase(label.mailerConfiguration)}">
                                 <h:commandButton type="button" styleClass="grouped_button_left" value="#{label.buttonSaveCreate}" rendered="#{(controller.bean.inSaving eq false and controller.bean.userType ne 'STAFF' and controller.bean.userType ne 'CLIENT')}">
-                                    <f:ajax event="click" execute="@form" render="@form" listener="#{controller.bean.save}" />
+                                    <f:actionListener binding="#{controller.bean.save()}" />
+                                    <f:ajax event="click" execute="@form" render="@form" />
                                 </h:commandButton>
                                 <h:commandButton type="button" styleClass="#{(controller.bean.userType eq 'CLIENT' or controller.bean.userType eq 'STAFF') ? 'common_button' : 'grouped_button_right'}" onclick="document.location.href='adm.jsf'" value="#{label.buttonClose}" rendered="#{(controller.bean.inSaving eq false)}" />
                                 <h:commandButton type="button" styleClass="common_button" value="#{label.buttonClose}" onclick="document.location.href='adm.jsf';" rendered="#{(controller.bean.inSaving eq true)}" />

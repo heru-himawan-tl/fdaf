@@ -162,7 +162,7 @@ public class UserRegistrationWebAppBean extends AbstractWebAppBean implements Se
         return success;
     }
 
-    public void register(AjaxBehaviorEvent event) throws AbortProcessingException {
+    public void register() {
         try {
             if (userType == UserType.STAFF && !facade.validateInvitation(email, signature)) {
                 addMessage(SV_WARN, "invalidInvitationSignature");
@@ -217,12 +217,12 @@ public class UserRegistrationWebAppBean extends AbstractWebAppBean implements Se
     }
 
     @Override
-    public void executeCreate(AjaxBehaviorEvent event) throws AbortProcessingException {
+    public void executeCreate() {
         // NO-OP
     }
 
     @Override
-    public void executeUpdate(AjaxBehaviorEvent event) throws AbortProcessingException {
+    public void executeUpdate() {
         // NO-OP
     }
 }
