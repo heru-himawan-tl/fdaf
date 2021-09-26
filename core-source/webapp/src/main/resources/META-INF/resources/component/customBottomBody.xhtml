@@ -37,19 +37,13 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         xmlns:h="http://java.sun.com/jsf/html">
     <composite:interface></composite:interface>
     <composite:implementation>
-        <h:outputScript rendered="#{(
-            controller.bean.requestAddress ne 'localhost' and
-            controller.bean.requestAddress ne '0.0.0.0'
-        )}">
-            initNetworkStateWS(
-                "#{controller.bean.websocketURL}/network-state",
+        <h:outputScript>
+            initNetworkConnectionCheckWS(
+                "#{controller.bean.websocketURL}/network-connection-check",
                 "#{controller.bean.webappURL}",
                 "serviceCheckImgTag",
                 "system_state_message_container",
-                "system_state_message_box",
-                "#{networkStateBean.serviceUUID}",
-                "#{customMessage.networkSettingsMovePageNotice}",
-                "#{customMessage.redirectMessage}"
+                "system_state_message_box"
             );
         </h:outputScript>
     </composite:implementation>

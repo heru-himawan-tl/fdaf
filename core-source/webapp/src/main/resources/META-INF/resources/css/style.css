@@ -1402,15 +1402,16 @@ a:hover
 .system_state_message_box,
 .redirect_message_box
 {
-    background: #000000;
-    border: 1px solid #ffffff;
+    background: rgba(0, 0, 0, 0.8);
+    border: 4px solid #ffffff;
     display: block;
     border-radius: 8px;
     padding: 16px;
     max-width: 480px !important;
     min-width: 360px !important;
     color: #ffffff;
-    font-size: 24px;
+    font-size: 22px;
+    text-align: center;
 }
 
 .list_action_column_flex .grouped_button_inner,
@@ -3001,6 +3002,21 @@ a:hover
         white-space: -o-pre-wrap;
         word-wrap: break-word;
         word-break: break-word;
+    }
+    
+    .system_state_message_box,
+    .redirect_message_box
+    {
+        background: rgba(0, 0, 0, 0.8);
+        border: 2px solid #ffffff;
+        display: block;
+        border-radius: 8px;
+        padding: 16px;
+        max-width: 420px !important;
+        min-width: 320px !important;
+        color: #ffffff;
+        font-size: 18px;
+        text-align: center;
     }
  
     *

@@ -29,19 +29,9 @@
 package fdaf.webapp.websocket;
 
 import fdaf.webapp.base.AbstractWebSocket;
-import fdaf.webapp.bean.system.NetworkStateBean;
-import javax.inject.Inject;
 import javax.websocket.server.ServerEndpoint;
 
-@ServerEndpoint(value = "/network-state")
-public class NetworkStateWS extends AbstractWebSocket {
-
-    @Inject
-    private NetworkStateBean networkState;
-    
-    @Override
-    protected void onOpenTask() {
-        networkState.addWebSocket(this);
-        networkState.runService();
-    }
+@ServerEndpoint(value = "/network-connection-check")
+public class NetworkConnectionCheckWS extends AbstractWebSocket {
+    // NO-OP
 }

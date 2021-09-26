@@ -192,44 +192,22 @@ function execPrepareRedirect(webappURL, imgEID, dialogContainerSID, messageBoxSI
     }, 1000);
 }
 
-function initNetworkStateWS(URI, webappURL, imgEID, dialogContainerSID, messageBoxSID, serviceUUID, networkStateChangeMessage, redirectMessage) {
-    var networkStateWS = new WebSocket(URI);
-    networkStateWS.onmessage = function (event) {
-        var dc = document.querySelector('.' + dialogContainerSID);
-        var mb = document.querySelector('.' + messageBoxSID);
-        if (dc != null && mb != null) {
-            var data = event.data;
-            if (data.search(",")) {
-                var a = data.split(",");
-                if (a[0] == serviceUUID && prepareRedirectHandle == null) {
-                    networkStateInHandled = true;
-                    execPrepareRedirect(webappURL, imgEID, dialogContainerSID, messageBoxSID, a[1], networkStateChangeMessage, redirectMessage);
-                }
-            } else {
-                if (data == serviceUUID && prepareRedirectHandle != null) {
-                    dc.style.display = "none";
-                    prepareRedirectDone = 1;
-                    networkStateInHandled = false;
-                    clearInterval(prepareRedirectHandle);
-                }
-            }
-        }
+function initNetworkConnectionCheckWS(URI, webappURL, imgEID, dialogContainerSID, messageBoxSID) {
+    var networkConnectionCheckWS = new WebSocket(URI);
+    networkConnectionCheckWS.onmessage = function (event) {
     }
-    networkStateWS.onopen = function (event) {
+    networkConnectionCheckWS.onopen = function (event) {
+    }
+    networkConnectionCheckWS.onclose = function (event) {
+        if (connectionCheckHandle == null && networkStateInHandled == false) {
+            connectionCheck(webappURL, imgEID, dialogContainerSID, messageBoxSID);
+        }
     }
 }
 
 function initRealtimeClockWS(URI, selectors) {
     var realtimeClockWS = new WebSocket(URI);
     realtimeClockWS.onmessage = function (event) {
-        /*var etc = document.querySelector(".schedule_legent_flex_box");
-        if (etc != null) {
-            if (etc.classList.contains("etc_hiden_box")) {
-                etc.classList.remove("etc_hiden_box");
-            } else {
-                etc.classList.add("etc_hiden_box");
-            }
-        }*/
         for (var i = 0; i < selectors.length; i++) {
             var e = document.querySelector("." + selectors[i]);
             if (e != null) {
