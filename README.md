@@ -7,7 +7,7 @@ implementing the standard Java EE. It favors both convention and
 configuration, makes implementation and configuration to be more simple,
 and lets the programmer write less of codes.
 
-## Engineering Views Behind FDAF Invention
+## Engineering Views Behind FDAF Design
 
 A Java web-application to handle dynamic contents basically a _database
 access application_ relies on CRUD operations (Create - Read - Update - Delete).
