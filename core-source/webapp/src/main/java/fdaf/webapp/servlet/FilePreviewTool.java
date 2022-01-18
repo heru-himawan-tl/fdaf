@@ -30,8 +30,6 @@ package fdaf.webapp.servlet;
 
 import fdaf.webapp.bean.system.FileManagerSettingsBean;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
@@ -135,12 +133,12 @@ public class FilePreviewTool extends HttpServlet {
                     + urlAddress + "\" width=\"100%\" alt=\"" + urlAddress + "\" id=\"FilePreviewToolImage\" />");
             }
             if (isVideo) {
-                out.println("<video width=\"100%\" controls autoplay playsinline id=\"FilePreviewToolVideo\">");
+                out.println("<video class=\"file_manager_video\" controls autoplay playsinline id=\"FilePreviewToolVideo\">");
                 out.println("<source src=\"file-preview-tool?view=1&amp;prev=0&amp;address=" + urlAddress + "\" type=\"" + mimeType + "\">");
                 out.println("</video>");
             }
             if (isAudio) {
-                out.println("<audio width=\"100%\" controls autoplay playsinline id=\"FilePreviewToolAudio\">");
+                out.println("<audio class=\"file_manager_audio\" controls autoplay playsinline id=\"FilePreviewToolAudio\">");
                 out.println("<source src=\"file-preview-tool?view=1&amp;prev=0&amp;address=" + urlAddress + "\" type=\"" + mimeType + "\">");
                 out.println("</audio>");
             }

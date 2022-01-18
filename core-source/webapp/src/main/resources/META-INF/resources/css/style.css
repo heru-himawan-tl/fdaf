@@ -1635,9 +1635,46 @@ a:hover
     margin-bottom: 8px;
 }
 
-.field_container_inner
+.field_input_flex_box
 {
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+}
 
+.field_button_box
+{
+    padding-top: 8px;
+}
+
+.field_multi_columns_table
+{
+    display: table;
+}
+
+.field_multi_columns_row
+{
+    display: table-row;
+}
+
+.field_multi_columns_cell_full_width,
+.field_multi_columns_cell_gap,
+.field_multi_columns_cell
+{
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.field_multi_columns_cell_gap
+{
+    padding: 2px;
+}
+
+.field_multi_columns_cell_full_width
+{
+    width: 10240px;
 }
 
 /* END OF EDITOR FIELD ==================================================== */
@@ -2127,6 +2164,11 @@ a:hover
     height: 128px;
 }
 
+.file_manager_audio
+{
+    width: 100% !important;
+}
+
 /* END OF FILE MANAGER PARTS ============================================== */
 
 /* OVERALL MISC. CONTROL ================================================== */
@@ -2226,11 +2268,6 @@ a:hover
 .dark_grey
 {
     background: #2E3E4E;
-}
-
-.full_width
-{
-    width: 100% !important;
 }
 
 /* LOGIN BOX */
@@ -2415,6 +2452,31 @@ a:hover
     margin-bottom: 8px;
 }
 
+.fake_file_input_box .grouped_button_inner
+{
+    margin-right: 1px !important;
+}
+
+.fake_file_input_box input[type="text"]
+{
+    height: 30px;
+}
+
+.fake_file_input_box input[type="button"]
+{
+    padding: 4px;
+}
+
+.dialog_button_box .grouped_button_inner,
+.dialog_button_box .grouped_button_left,
+.dialog_button_box .grouped_button_right,
+.dialog_button_box .common_button_std
+{
+    border: none !important;
+    margin: 0px;
+    margin-left: 1px !important;
+}
+
 @media (min-width: 864px)
 {
     .file_previewer_object
@@ -2430,6 +2492,14 @@ a:hover
     {
         width: 100%;
         height: 100% !important;
+    }
+}
+
+@media (min-width: 1080px)
+{
+    .full_width
+    {
+        width: 100% !important;
     }
 }
 
@@ -3017,6 +3087,35 @@ a:hover
         color: #ffffff;
         font-size: 18px;
         text-align: center;
+    }
+    
+    .field_multi_columns_table,
+    .field_multi_columns_row,
+    .field_multi_columns_cell_full_width,
+    .field_multi_columns_cell_gap,
+    .field_multi_columns_cell
+    {
+        display: block;
+    }
+    
+    .field_multi_columns_cell_gap
+    {
+        padding: 4px;
+    }
+    
+    .field_multi_columns_cell .common_button
+    {
+        width: 100% !important;
+    }
+    
+    .field_multi_columns_cell_full_width
+    {
+        width: 100% !important;
+    }
+    
+    .full_width
+    {
+        width: 98vw !important;
     }
  
     *

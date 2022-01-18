@@ -107,6 +107,7 @@ public abstract class AbstractWebSocket implements WebSocketInterface {
             try {
                 session.getAsyncRemote().sendText(text);
             } catch (Exception e) {
+                e.printStackTrace();
             }
         }
     }
