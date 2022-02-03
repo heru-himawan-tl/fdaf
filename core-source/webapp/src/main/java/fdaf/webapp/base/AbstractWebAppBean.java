@@ -762,7 +762,7 @@ public abstract class AbstractWebAppBean extends AbstractBaseWebAppBean {
                 if (editIndexing.isInEditing(viewLayerName, primaryKey)) {
                     addMessage(SV_WARN, "inEditStateWarning");
                 }
-           }
+            }
         }
     }
 
@@ -1017,6 +1017,7 @@ public abstract class AbstractWebAppBean extends AbstractBaseWebAppBean {
         boolean partiallyRemoved = false;
         boolean partiallyLocated = false;
         boolean getRemoved = false;
+        boolean partiallyInSourced = false;
         if (!primaryKeyMap.isEmpty()) {
             List<Object> primaryKeyIdList = new ArrayList<Object>();
             for (Object primaryKeyId : primaryKeyMap.keySet()) {
@@ -1027,9 +1028,13 @@ public abstract class AbstractWebAppBean extends AbstractBaseWebAppBean {
                             partiallyLocated = true;
                             continue;
                         }
-                        getFacade().remove(primaryKeyId);
-                        primaryKeyIdList.add(primaryKeyId);
-                        getRemoved = true;
+                        if (getFacade().allowRemovedIfNotSourced(primaryKeyId)) {
+                            getFacade().remove(primaryKeyId);
+                            primaryKeyIdList.add(primaryKeyId);
+                            getRemoved = true;
+                        } else {
+                            partiallyInSourced = true;
+                        }
                     } catch (Exception e) {
                         indicateServiceError(e);
                         partiallyRemoved = true;
@@ -1047,6 +1052,9 @@ public abstract class AbstractWebAppBean extends AbstractBaseWebAppBean {
             }
             if (partiallyLocated && getRemoved) {
                 addMessage(SV_WARN, "massiveRemovalPartialLocatedWarn");
+            }
+            if (partiallyInSourced && getRemoved) {
+                addMessage(SV_WARN, "massiveRemovalPartialInSourcedWarn");
             }
             if (partiallyRemoved && getRemoved) {
                 addMessage(SV_WARN, "massiveRemovalPartialRemovedWarn");

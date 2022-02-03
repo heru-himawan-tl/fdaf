@@ -31,6 +31,7 @@ package fdaf.base;
 import java.util.List;
 
 public interface FacadeInterface {
+    public boolean allowRemovedIfNotSourced(Object primaryKey);
     public boolean isDataExists(Object primaryKey);
     public boolean preCreateCheck();
     public boolean preUpdateCheck();

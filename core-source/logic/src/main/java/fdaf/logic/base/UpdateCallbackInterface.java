@@ -29,21 +29,22 @@
 package fdaf.logic.base;
 
 public interface UpdateCallbackInterface<R extends AbstractRepository<E>, E> {
-    public void setRepository(R repository);
-    public void setEntity(E entity);
-    public E getEntity();
-    public void onPrepareUpdateTask();
-    public void onSaveCreateTask();
-    public void onSaveUpdateTask();
+    public boolean allowRemovedIfNotSourced(Object primaryKey);
     public boolean preCreateCheck();
-    public void postCreateTask();
-    public void rollbackCreateTask();
     public boolean preUpdateCheck();
-    public void postUpdateTask();
+    public E getEntity();
+    public String getCustomMessage();
+    public String getMessage();
+    public void onPrepareUpdateTask();
     public void onPreRemoveTask(Object primaryKey);
     public void onReloadEntityTask();
+    public void onSaveCreateTask();
+    public void onSaveUpdateTask();
+    public void postCreateTask();
+    public void postUpdateTask();
+    public void rollbackCreateTask();
     public void setCustomMessage(String customMessage);
-    public String getCustomMessage();
+    public void setEntity(E entity);
     public void setMessage(String message);
-    public String getMessage();
+    public void setRepository(R repository);
 }

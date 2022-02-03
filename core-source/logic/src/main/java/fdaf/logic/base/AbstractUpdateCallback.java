@@ -80,6 +80,10 @@ public abstract class AbstractUpdateCallback {
         // NO-OP
     }
     
+    public boolean allowRemovedIfNotSourced(Object primaryKey) {
+        return true;
+    }
+    
     public void setCustomMessage(String customMessage) {
         if (this.customMessage != null) {
             this.customMessage += "-" + customMessage;

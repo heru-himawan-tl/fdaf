@@ -90,6 +90,9 @@ public abstract class AbstractFacade<R extends AbstractRepository<E>, E extends 
             public E getEntity() {
                 return entity;
             }
+            public boolean allowRemovedIfNotSourced(Object primaryKey) {
+                return true;
+            }
             public void onPrepareUpdateTask() {
                 // NO-OP
             }
@@ -308,6 +311,10 @@ public abstract class AbstractFacade<R extends AbstractRepository<E>, E extends 
         updateCallback.setEntity(entity);
         updateCallback.onReloadEntityTask();
         entity = updateCallback.getEntity();
+    }
+    
+    public boolean allowRemovedIfNotSourced(Object primaryKey) {
+        return updateCallback.allowRemovedIfNotSourced(primaryKey);
     }
 
     public void remove(Object primaryKey) {
