@@ -1,0 +1,149 @@
+<!--
+
+Copyright (c) Heru Himawan Tejo Laksono. All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+
+1. Redistributions of source code must retain the above copyright notice,
+   this list of conditions and the following disclaimer.
+
+2. Redistributions in binary form must reproduce the above copyright notice,
+   this list of conditions and the following disclaimer in the documentation
+   and/or other materials provided with the distribution.
+
+3. Neither the name of the copyright holders nor the names of its
+   contributors may be used to endorse or promote products derived from this
+   software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ARE DISCLAIMED. IN NO EVENT SHALL THE REGENTS OR CONTRIBUTORS BE LIABLE FOR
+ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE
+USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:composite="http://java.sun.com/jsf/composite"
+        xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:f="http://java.sun.com/jsf/core">
+    <composite:interface>
+        <composite:attribute required="true" name="pageTitle" type="java.lang.String" />
+        <composite:attribute required="false" name="simpleMode" type="java.lang.Boolean" default="false" />
+    </composite:interface>
+    <composite:implementation>
+        <h:panelGroup layout="block" styleClass="program_heading_container">
+            <h:panelGroup layout="block" styleClass="program_heading_box">
+                <h:panelGroup layout="block" styleClass="program_heading_inner">
+                    <h:panelGroup layout="block" styleClass="program_heading_title">
+                        <h:panelGroup layout="block" styleClass="program_heading_mobile_mode_table">
+                            <h:panelGroup layout="block" styleClass="program_heading_mobile_mode_row">
+                                <h:panelGroup layout="block" styleClass="program_heading_mobile_mode_title_cell">
+                                    <h:outputText value="#{cc.attrs.pageTitle}" />
+                                </h:panelGroup>
+                                <h:panelGroup layout="block" styleClass="program_heading_mobile_mode_action_menu_cell">
+                                    <h:commandButton type="button" styleClass="common_button blue_button mobile_menu_button"
+                                        value="#{label.buttonAction}" 
+                                        onclick="var elx = document.getElementsByClassName('program_heading_mobile_action_tool_box')[0];
+                                            var el1 = document.getElementsByClassName('program_heading_button_box')[0];
+                                            var el2 = document.getElementsByClassName('list_control_top')[0];
+                                            if (el2 != null) {
+                                                elx.innerHTML = el1.innerHTML + el2.innerHTML;
+                                            } else {
+                                                elx.innerHTML = el1.innerHTML;
+                                            }
+                                            if (elx.style.display == 'none' || elx.style.display == '') {
+                                                elx.style='display:block';
+                                                this.value = 'X';
+                                            } else {
+                                                this.value = '#{label.buttonAction}';
+                                                elx.style='display:none';
+                                            };" />
+                                </h:panelGroup>
+                            </h:panelGroup>
+                        </h:panelGroup>
+                    </h:panelGroup>
+                    <h:panelGroup layout="block" styleClass="program_heading_mobile_action_tool_box_outer">
+                        <h:panelGroup layout="block" styleClass="program_heading_mobile_action_tool_box" />
+                    </h:panelGroup>
+                    <h:panelGroup layout="block" styleClass="program_heading_button_box">
+                        <h:panelGroup layout="block" styleClass="program_heading_button_box_flex" rendered="#{(controller.bean.isLoggedOn eq true and controller.bean.isBrokenUserSession eq false)}">
+                            <h:commandButton type="button" styleClass="grouped_button_left" value="#{label.buttonAddNewRecord}" rendered="#{(controller.bean.allowRender eq true and controller.bean.opMode eq 'LISTING' and controller.bean.dataListIsInError eq false and controller.bean.allowAdd eq true)}">
+                                <f:actionListener binding="#{controller.bean.prepareCreate()}" />
+                                <f:ajax event="click" execute="@form" render="@form" />
+                            </h:commandButton>
+                            <h:commandButton type="button" styleClass="#{(controller.bean.allowAdd eq true) ? 'grouped_button_inner' : 'grouped_button_left'}" value="#{label.buttonMassiveRemove}" rendered="#{(controller.bean.allowRender eq true and controller.bean.opMode eq 'LISTING' and controller.bean.totalRowCount ne 0 and cc.attrs.simpleMode eq false)}">
+                                <f:actionListener binding="#{controller.bean.presetMassiveRemovalReadyState()}" />
+                                <f:ajax event="click" execute="@form" render="@form" />
+                            </h:commandButton>
+                            <h:commandButton type="button" styleClass="grouped_button_left" immediate="true" value="#{label.buttonCloseViewer}" rendered="#{(controller.bean.allowRender eq true and controller.bean.opMode eq 'VIEW')}">
+                                <f:actionListener binding="#{controller.bean.exitView()}" />
+                                <f:ajax event="click" execute="@form" render="@form" />
+                            </h:commandButton>
+                            <h:commandButton type="button" styleClass="grouped_button_left" value="#{label.buttonSaveUpdate}" rendered="#{(controller.bean.allowRender eq true and controller.bean.opMode eq 'UPDATE')}">
+                                <f:actionListener binding="#{controller.bean.executeUpdate()}" />
+                                <f:ajax event="click" execute="@form" render="@form" />
+                            </h:commandButton>
+                            <h:commandButton type="button" styleClass="grouped_button_inner" value="#{label.buttonSaveClose}" rendered="#{(controller.bean.allowRender eq true and controller.bean.opMode eq 'UPDATE')}">
+                                <f:actionListener binding="#{controller.bean.executeUpdateAlt()}" />
+                                <f:ajax event="click" execute="@form" render="@form" />
+                            </h:commandButton>
+                            <h:commandButton type="button" styleClass="grouped_button_left" value="#{label.buttonSaveCreate}" rendered="#{(controller.bean.allowRender eq true and controller.bean.allowRender eq true and controller.bean.opMode eq 'CREATE')}">
+                                <f:actionListener binding="#{controller.bean.executeCreate()}" />
+                                <f:ajax event="click" execute="@form" render="@form" />
+                            </h:commandButton>
+                            <h:commandButton type="button" styleClass="grouped_button_inner" value="#{label.buttonSaveClose}" rendered="#{(controller.bean.allowRender eq true and controller.bean.opMode eq 'CREATE')}">
+                                <f:actionListener binding="#{controller.bean.executeCreateAlt()}" />
+                                <f:ajax event="click" execute="@form" render="@form" />
+                            </h:commandButton>
+                            <h:commandButton type="button" styleClass="#{(cc.attrs.simpleMode eq false) ? 'grouped_button_inner' : 'grouped_button_right'}" immediate="true" value="#{label.buttonCloseEditor}" rendered="#{(controller.bean.allowRender eq true and (controller.bean.opMode eq 'CREATE' or controller.bean.opMode eq 'UPDATE'))}">
+                                <f:actionListener binding="#{controller.bean.deinitMultipartForm()}" />
+                                <f:actionListener binding="#{controller.bean.setOpMode(opMode.LISTING)}" />
+                                <f:actionListener binding="#{controller.bean.setDisableValidation(true)}" />
+                                <f:ajax event="click" execute="@form" render="@form" />
+                            </h:commandButton>
+                            <h:commandButton type="button" styleClass="list_update_button" style="display:none;" immediate="true" value=""
+                                rendered="#{(controller.bean.allowRender eq true and controller.bean.opMode eq 'VIEW')}">
+                                <f:actionListener binding="#{controller.bean.view(controller.bean.currentViewDataId)}" />
+                                <f:ajax event="click" execute="@form" render="@form" />
+                            </h:commandButton>
+                            <h:commandButton type="button" styleClass="list_update_button" style="display:none;" immediate="true" value=""
+                                rendered="#{(controller.bean.allowRender eq true and controller.bean.opMode eq 'LISTING')}">
+                                <f:ajax event="click" execute="@form" render="@form" />
+                            </h:commandButton>
+                            <h:commandButton type="button" styleClass="grouped_button_inner" immediate="true" value="#{label.listExitSearch}" rendered="#{(controller.bean.allowRender eq true and controller.bean.allowRender eq true and controller.bean.opMode eq 'LISTING' and controller.bean.searchMode eq true and cc.attrs.simpleMode eq false)}">
+                                <f:ajax listener="#{controller.bean.exitSearch}" event="click" execute="@form" render="@form" />
+                            </h:commandButton>
+                            <h:commandButton type="button" styleClass="#{(controller.bean.allowAdd eq true and controller.bean.opMode eq 'LISTING') ? 'grouped_button_inner' : ((controller.bean.totalRowCount eq 0) ? 'grouped_button_left' : 'grouped_button_inner')}" immediate="true" value="#{label.buttonCheckOrphanData}" rendered="#{(controller.bean.allowRender eq true and controller.bean.inCheckOrphanDataMode eq false and controller.bean.userType eq 'ADMINISTRATOR' and controller.bean.opMode eq 'LISTING' and cc.attrs.simpleMode eq false)}">
+                                <f:ajax event="click" execute="@form" render="@form" listener="#{controller.bean.setCheckOrphanDataMode}" />
+                            </h:commandButton>
+                            <h:commandButton type="button" styleClass="#{(controller.bean.allowAdd eq true and controller.bean.opMode eq 'LISTING') ? 'grouped_button_inner' : ((controller.bean.totalRowCount eq 0) ? 'grouped_button_left' : 'grouped_button_inner')}" immediate="true" value="#{label.buttonExitCheckOrphanData}" rendered="#{(controller.bean.allowRender eq true and controller.bean.inCheckOrphanDataMode eq true and controller.bean.userType eq 'ADMINISTRATOR' and controller.bean.opMode eq 'LISTING' and cc.attrs.simpleMode eq false)}">
+                                <f:ajax event="click" execute="@form" render="@form" listener="#{controller.bean.unsetCheckOrphanDataMode}" />
+                            </h:commandButton>
+                            <h:commandButton type="button" styleClass="#{(controller.bean.dataListIsInError eq true) ? ((controller.bean.searchMode eq true and controller.bean.allowRender eq true) ? 'grouped_button_right' : 'common_button') : ((controller.bean.allowRender eq true) ? 'grouped_button_right' : 'common_button')}"
+                                immediate="true" value="#{label.buttonClose}" onclick="document.location.href='adm.jsf';"
+                                rendered="#{(cc.attrs.simpleMode eq false)}"/>
+                        </h:panelGroup>
+                        <h:panelGroup layout="block" styleClass="program_heading_button_box_flex" rendered="#{((controller.bean.isLoggedOn eq false or controller.bean.isBrokenUserSession eq true) and cc.attrs.simpleMode eq true)}">
+                            <h:commandButton type="button" styleClass="common_button" value="#{label.buttonClose}" immediate="true">
+                                <f:actionListener binding="#{controller.bean.setOpMode(opMode.LISTING)}" />
+                                <f:actionListener binding="#{controller.bean.setDisableValidation(true)}" />
+                                <f:ajax event="click" execute="@form" render="@form" />
+                            </h:commandButton>
+                        </h:panelGroup>
+                        <h:panelGroup layout="block" styleClass="program_heading_button_box_flex" rendered="#{((controller.bean.isLoggedOn eq false or controller.bean.isBrokenUserSession eq true) and cc.attrs.simpleMode eq false)}">
+                            <h:commandButton type="button" styleClass="common_button" onclick="document.location.href='adm.jsf';" value="#{label.buttonClose}" />
+                        </h:panelGroup>
+                    </h:panelGroup>
+                </h:panelGroup>
+            </h:panelGroup>
+        </h:panelGroup>
+    </composite:implementation>
+</html>

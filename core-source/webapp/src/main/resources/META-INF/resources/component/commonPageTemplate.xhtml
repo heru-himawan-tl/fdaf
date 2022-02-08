@@ -1,0 +1,85 @@
+<!--
+
+Copyright (c) Heru Himawan Tejo Laksono. All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+
+1. Redistributions of source code must retain the above copyright notice,
+   this list of conditions and the following disclaimer.
+
+2. Redistributions in binary form must reproduce the above copyright notice,
+   this list of conditions and the following disclaimer in the documentation
+   and/or other materials provided with the distribution.
+
+3. Neither the name of the copyright holders nor the names of its
+   contributors may be used to endorse or promote products derived from this
+   software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ARE DISCLAIMED. IN NO EVENT SHALL THE REGENTS OR CONTRIBUTORS BE LIABLE FOR
+ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE
+USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:composite="http://java.sun.com/jsf/composite"
+        xmlns:d="http://java.sun.com/jsf/composite/component"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions"
+		xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <composite:interface>
+        <composite:attribute required="true" name="pagePrefix" type="java.lang.String" />
+        <composite:attribute required="true" name="pageTitle" type="java.lang.String" />
+        <composite:attribute required="false" name="admAccountCheck" default="false" type="java.lang.Boolean" />
+    </composite:interface>
+    <composite:implementation>
+        <h:head>
+            <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+            <d:customTitleTag pageTitle="#{cc.attrs.pageTitle}" />
+            <h:outputStylesheet library="css" name="style.css" />
+            <h:outputScript library="js" name="function.js" />
+            <d:customHeadTag />
+        </h:head>
+        <h:body>
+            <h:form id="form" enctype="#{controller.bean.enctype}">
+                <d:mainInit />
+                <d:loadBundles />
+                <d:databaseServiceCheck />
+                <d:administratorAccountCheck rendered="#{controller.bean.databaseIsError eq false and cc.attrs.admAccountCheck eq true}" />
+                <d:addAdministratorStartPage rendered="#{controller.bean.databaseIsError eq false and cc.attrs.admAccountCheck eq true}" />
+                <d:userSessionWatch rendered="#{controller.bean.databaseIsError eq false and controller.bean.administratorAccountExists eq true}" />
+                <d:customTopPanel />
+                <h:panelGroup layout="block" styleClass="left_panel_back_overlay"></h:panelGroup>
+                <h:panelGroup layout="block" styleClass="right_panel_back_overlay"></h:panelGroup>
+                <h:panelGroup layout="block" styleClass="main_panel_back_overlay"></h:panelGroup>
+                <h:panelGroup layout="block" styleClass="body_flexbox">
+                    <d:leftPanel>
+                        <d:customLeftPanel />
+                    </d:leftPanel>
+                    <d:mainPanel>
+                        <d:pageContainer id="page">
+                            <composite:insertChildren />
+                        </d:pageContainer>
+                        <d:mainPanelFooter />
+                    </d:mainPanel>
+                    <d:rightPanel>
+                        <d:customRightPanel />
+                    </d:rightPanel>
+                </h:panelGroup>
+                <d:customBottomPanel />
+                <d:customBottomForm />
+                <d:deinit />
+            </h:form>
+            <d:customBottomBody />          
+        </h:body>
+    </composite:implementation>
+</html>

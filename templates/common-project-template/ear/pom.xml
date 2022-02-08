@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+Copyright (c) Heru Himawan Tejo Laksono. All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+
+1. Redistributions of source code must retain the above copyright notice,
+   this list of conditions and the following disclaimer.
+
+2. Redistributions in binary form must reproduce the above copyright notice,
+   this list of conditions and the following disclaimer in the documentation
+   and/or other materials provided with the distribution.
+
+3. Neither the name of the copyright holders nor the names of its
+   contributors may be used to endorse or promote products derived from this
+   software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ARE DISCLAIMED. IN NO EVENT SHALL THE REGENTS OR CONTRIBUTORS BE LIABLE FOR
+ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE
+USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    
+    <modelVersion>4.0.0</modelVersion>
+    
+    <parent>
+        <groupId>${fdaf.applicationGroupId}</groupId>
+        <artifactId>${fdaf.applicationCodeName}-with-__JPA_PROVIDER__</artifactId>
+        <version>${fdaf.applicationVersion}</version>
+    </parent>
+   
+    <groupId>${fdaf.applicationGroupId}</groupId>
+    <artifactId>${fdaf.applicationCodeName}-ear</artifactId>
+    <version>${fdaf.applicationVersion}</version>
+    <packaging>ear</packaging>
+    <name>${fdaf.applicationName} Enterprise Application</name>
+    
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+    </properties>
+    
+    <build>
+        <directory>${java.io.tmpdir}${file.separator}${project.groupId}${file.separator}${project.parent.artifactId}${file.separator}${project.artifactId}</directory>
+        <finalName>${fdaf.applicationCodeName}</finalName>
+        <plugins>
+            <plugin>
+                <artifactId>maven-ear-plugin</artifactId>
+                <version>3.2.0</version>
+                <configuration>
+                    <applicationName>${fdaf.applicationCodeName}</applicationName>
+                    <displayName>${fdaf.applicationCodeName}</displayName>
+                    <defaultLibBundleDir>lib</defaultLibBundleDir>
+                    <description>${fdaf.applicationDescription}</description>
+                    <generateModuleId>false</generateModuleId>
+                    <generateApplicationXml>true</generateApplicationXml>
+                    <modules>
+                        <ejbModule>
+                            <groupId>${fdaf.applicationGroupId}</groupId>
+                            <artifactId>${fdaf.applicationCodeName}-logic</artifactId>
+                            <bundleFileName>${fdaf.applicationCodeName}-logic.jar</bundleFileName>
+                        </ejbModule>
+                        <jarModule>
+                            <groupId>${fdaf.applicationGroupId}</groupId>
+                            <artifactId>${fdaf.applicationCodeName}-base</artifactId>
+                            <bundleFileName>${fdaf.applicationCodeName}-base.jar</bundleFileName>
+                            <includeInApplicationXml>false</includeInApplicationXml>
+                            <bundleDir>lib</bundleDir>
+                        </jarModule>
+                    </modules>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <version>1.8</version>
+                <configuration>
+                    <target>
+                        <copy tofile="${finalBuildDir}${file.separator}${fdaf.applicationCodeName}.ear"
+                                file="${java.io.tmpdir}${file.separator}${project.groupId}${file.separator}${project.parent.artifactId}${file.separator}${project.artifactId}${file.separator}${fdaf.applicationCodeName}.ear" />
+                    </target>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+    
+    <dependencies>
+        <dependency>
+            <groupId>${fdaf.applicationGroupId}</groupId>
+            <artifactId>${fdaf.applicationCodeName}-base</artifactId>
+            <version>${fdaf.applicationVersion}</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>${fdaf.applicationGroupId}</groupId>
+            <artifactId>${fdaf.applicationCodeName}-logic</artifactId>
+            <version>${fdaf.applicationVersion}</version>
+            <type>ejb</type>
+        </dependency>
+        __DEPENDENCIES__
+    </dependencies>
+    
+</project>

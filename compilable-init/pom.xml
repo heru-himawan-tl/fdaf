@@ -1,0 +1,373 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+Copyright (c) Heru Himawan Tejo Laksono. All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+
+1. Redistributions of source code must retain the above copyright notice,
+   this list of conditions and the following disclaimer.
+
+2. Redistributions in binary form must reproduce the above copyright notice,
+   this list of conditions and the following disclaimer in the documentation
+   and/or other materials provided with the distribution.
+
+3. Neither the name of the copyright holders nor the names of its
+   contributors may be used to endorse or promote products derived from this
+   software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ARE DISCLAIMED. IN NO EVENT SHALL THE REGENTS OR CONTRIBUTORS BE LIABLE FOR
+ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE
+USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    
+    <modelVersion>4.0.0</modelVersion>
+    
+    <parent>
+        <groupId>io.sourceforge.fdaf</groupId>
+        <artifactId>fdaf</artifactId>
+        <version>1.0</version>
+    </parent>
+   
+    <groupId>io.sourceforge.fdaf</groupId>
+    <artifactId>compilable-init</artifactId>
+    <version>1.0</version>
+    <packaging>jar</packaging>
+    <name>Development Tool :: Compilable Source &amp; Package Distribution Initializer</name>
+    
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+    </properties>
+    
+    <build>
+        <directory>${java.io.tmpdir}${file.separator}${project.groupId}${file.separator}${project.parent.artifactId}${file.separator}${project.artifactId}</directory>
+        <defaultGoal>clean</defaultGoal> 
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-install-plugin</artifactId>
+                <version>2.5.2</version>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <version>1.8</version>
+                <configuration>
+                    <target>
+                        <!-- Hibernate Port -->
+                        <copy overwrite="true" tofile="${java.io.tmpdir}${file.separator}${fdaf.applicationGroupId}${file.separator}raw-compilation${file.separator}${fdaf.applicationCodeName}-with-hibernate${file.separator}${fdaf.applicationCodeName}-base${file.separator}src${file.separator}main${file.separator}java${file.separator}fdaf${file.separator}base${file.separator}ApplicationIdentifier.java"
+                            file="${fdaf.baseDirectory}${file.separator}templates${file.separator}ApplicationIdentifierTemplate.java" />
+                        <copy overwrite="true" tofile="${java.io.tmpdir}${file.separator}${fdaf.applicationGroupId}${file.separator}raw-compilation${file.separator}${fdaf.applicationCodeName}-with-hibernate${file.separator}pom.xml"
+                            file="${fdaf.baseDirectory}${file.separator}templates${file.separator}common-project-template${file.separator}pom.xml" />
+                        <copy overwrite="true" todir="${java.io.tmpdir}${file.separator}${fdaf.applicationGroupId}${file.separator}raw-compilation${file.separator}${fdaf.applicationCodeName}-with-hibernate${file.separator}${fdaf.applicationCodeName}-base">
+                            <fileset dir="${fdaf.baseDirectory}${file.separator}core-source${file.separator}base" />
+                        </copy>
+                        <copy overwrite="true" todir="${java.io.tmpdir}${file.separator}${fdaf.applicationGroupId}${file.separator}raw-compilation${file.separator}${fdaf.applicationCodeName}-with-hibernate${file.separator}${fdaf.applicationCodeName}-base">
+                            <fileset dir="${fdaf.baseDirectory}${file.separator}custom-core-source${file.separator}base" />
+                        </copy>
+                        <copy overwrite="true" todir="${java.io.tmpdir}${file.separator}${fdaf.applicationGroupId}${file.separator}raw-compilation${file.separator}${fdaf.applicationCodeName}-with-hibernate${file.separator}${fdaf.applicationCodeName}-erc">
+                            <fileset dir="${java.io.tmpdir}${file.separator}${project.groupId}${file.separator}modeling-output${file.separator}generated${file.separator}erc" />
+                        </copy>
+                        <copy overwrite="true" todir="${java.io.tmpdir}${file.separator}${fdaf.applicationGroupId}${file.separator}raw-compilation${file.separator}${fdaf.applicationCodeName}-with-hibernate${file.separator}${fdaf.applicationCodeName}-logic">
+                            <fileset dir="${fdaf.baseDirectory}${file.separator}core-source${file.separator}logic" />
+                            <fileset dir="${java.io.tmpdir}${file.separator}${project.groupId}${file.separator}modeling-output${file.separator}generated${file.separator}logic" />
+                            <fileset dir="${java.io.tmpdir}${file.separator}${project.groupId}${file.separator}modeling-output${file.separator}generated${file.separator}with-hibernate${file.separator}logic" />
+                        </copy>
+                        <copy overwrite="true" todir="${java.io.tmpdir}${file.separator}${fdaf.applicationGroupId}${file.separator}raw-compilation${file.separator}${fdaf.applicationCodeName}-with-hibernate${file.separator}${fdaf.applicationCodeName}-logic">
+                            <fileset dir="${fdaf.baseDirectory}${file.separator}custom-core-source${file.separator}logic" />
+                        </copy>
+                        <copy overwrite="true" todir="${java.io.tmpdir}${file.separator}${fdaf.applicationGroupId}${file.separator}raw-compilation${file.separator}${fdaf.applicationCodeName}-with-hibernate${file.separator}${fdaf.applicationCodeName}-entity${file.separator}src${file.separator}main${file.separator}java${file.separator}fdaf${file.separator}logic${file.separator}entity">
+                            <fileset dir="${java.io.tmpdir}${file.separator}${project.groupId}${file.separator}modeling-output${file.separator}generated${file.separator}with-hibernate${file.separator}logic${file.separator}src${file.separator}main${file.separator}java${file.separator}fdaf${file.separator}logic${file.separator}entity" />
+                        </copy>
+                        <copy overwrite="true" todir="${java.io.tmpdir}${file.separator}${fdaf.applicationGroupId}${file.separator}raw-compilation${file.separator}${fdaf.applicationCodeName}-with-hibernate${file.separator}${fdaf.applicationCodeName}-webapp">
+                            <fileset dir="${fdaf.baseDirectory}${file.separator}core-source${file.separator}webapp" />
+                            <fileset dir="${java.io.tmpdir}${file.separator}${project.groupId}${file.separator}modeling-output${file.separator}generated${file.separator}webapp" />
+                        </copy>
+                        <copy overwrite="true" todir="${java.io.tmpdir}${file.separator}${fdaf.applicationGroupId}${file.separator}raw-compilation${file.separator}${fdaf.applicationCodeName}-with-hibernate${file.separator}${fdaf.applicationCodeName}-webapp">
+                            <fileset dir="${fdaf.baseDirectory}${file.separator}custom-core-source${file.separator}webapp" />
+                        </copy>
+                        <copy overwrite="true" todir="${java.io.tmpdir}${file.separator}${fdaf.applicationGroupId}${file.separator}raw-compilation${file.separator}${fdaf.applicationCodeName}-with-hibernate${file.separator}${fdaf.applicationCodeName}-base">
+                            <fileset dir="${fdaf.baseDirectory}${file.separator}templates${file.separator}common-project-template${file.separator}base" />
+                        </copy>
+                        <copy overwrite="true" todir="${java.io.tmpdir}${file.separator}${fdaf.applicationGroupId}${file.separator}raw-compilation${file.separator}${fdaf.applicationCodeName}-with-hibernate${file.separator}${fdaf.applicationCodeName}-ear">
+                            <fileset dir="${fdaf.baseDirectory}${file.separator}templates${file.separator}common-project-template${file.separator}ear" />
+                        </copy>
+                        <copy overwrite="true" todir="${java.io.tmpdir}${file.separator}${fdaf.applicationGroupId}${file.separator}raw-compilation${file.separator}${fdaf.applicationCodeName}-with-hibernate${file.separator}${fdaf.applicationCodeName}-erc">
+                            <fileset dir="${fdaf.baseDirectory}${file.separator}templates${file.separator}common-project-template${file.separator}erc" />
+                        </copy>
+                        <copy overwrite="true" todir="${java.io.tmpdir}${file.separator}${fdaf.applicationGroupId}${file.separator}raw-compilation${file.separator}${fdaf.applicationCodeName}-with-hibernate${file.separator}${fdaf.applicationCodeName}-logic">
+                            <fileset dir="${fdaf.baseDirectory}${file.separator}templates${file.separator}common-project-template${file.separator}logic" />
+                        </copy>
+                        <copy overwrite="true" todir="${java.io.tmpdir}${file.separator}${fdaf.applicationGroupId}${file.separator}raw-compilation${file.separator}${fdaf.applicationCodeName}-with-hibernate${file.separator}${fdaf.applicationCodeName}-entity">
+                            <fileset dir="${fdaf.baseDirectory}${file.separator}templates${file.separator}common-project-template${file.separator}entity" />
+                        </copy>
+                        <copy overwrite="true" todir="${java.io.tmpdir}${file.separator}${fdaf.applicationGroupId}${file.separator}raw-compilation${file.separator}${fdaf.applicationCodeName}-with-hibernate${file.separator}${fdaf.applicationCodeName}-webapp">
+                            <fileset dir="${fdaf.baseDirectory}${file.separator}templates${file.separator}common-project-template${file.separator}webapp" />
+                        </copy>
+                        <copy overwrite="true" todir="${java.io.tmpdir}${file.separator}${fdaf.applicationGroupId}${file.separator}raw-compilation${file.separator}${fdaf.applicationCodeName}-with-hibernate${file.separator}${fdaf.applicationCodeName}-base${file.separator}src">
+                            <fileset dir="${fdaf.baseDirectory}${file.separator}custom-base${file.separator}src" />
+                        </copy>
+
+                        <!-- EclipseLink Port -->
+                        <copy overwrite="true" tofile="${java.io.tmpdir}${file.separator}${fdaf.applicationGroupId}${file.separator}raw-compilation${file.separator}${fdaf.applicationCodeName}-with-eclipselink${file.separator}${fdaf.applicationCodeName}-base${file.separator}src${file.separator}main${file.separator}java${file.separator}fdaf${file.separator}base${file.separator}ApplicationIdentifier.java"
+                            file="${fdaf.baseDirectory}${file.separator}templates${file.separator}ApplicationIdentifierTemplate.java" />
+                        <copy overwrite="true" tofile="${java.io.tmpdir}${file.separator}${fdaf.applicationGroupId}${file.separator}raw-compilation${file.separator}${fdaf.applicationCodeName}-with-eclipselink${file.separator}pom.xml"
+                            file="${fdaf.baseDirectory}${file.separator}templates${file.separator}common-project-template${file.separator}pom.xml" />
+                        <copy overwrite="true" todir="${java.io.tmpdir}${file.separator}${fdaf.applicationGroupId}${file.separator}raw-compilation${file.separator}${fdaf.applicationCodeName}-with-eclipselink${file.separator}${fdaf.applicationCodeName}-base">
+                            <fileset dir="${fdaf.baseDirectory}${file.separator}core-source${file.separator}base" />
+                        </copy>
+                        <copy overwrite="true" todir="${java.io.tmpdir}${file.separator}${fdaf.applicationGroupId}${file.separator}raw-compilation${file.separator}${fdaf.applicationCodeName}-with-eclipselink${file.separator}${fdaf.applicationCodeName}-base">
+                            <fileset dir="${fdaf.baseDirectory}${file.separator}custom-core-source${file.separator}base" />
+                        </copy>
+                        <copy overwrite="true" todir="${java.io.tmpdir}${file.separator}${fdaf.applicationGroupId}${file.separator}raw-compilation${file.separator}${fdaf.applicationCodeName}-with-eclipselink${file.separator}${fdaf.applicationCodeName}-erc">
+                            <fileset dir="${java.io.tmpdir}${file.separator}${project.groupId}${file.separator}modeling-output${file.separator}generated${file.separator}erc" />
+                        </copy>
+                        <copy overwrite="true" todir="${java.io.tmpdir}${file.separator}${fdaf.applicationGroupId}${file.separator}raw-compilation${file.separator}${fdaf.applicationCodeName}-with-eclipselink${file.separator}${fdaf.applicationCodeName}-logic">
+                            <fileset dir="${fdaf.baseDirectory}${file.separator}core-source${file.separator}logic" />
+                            <fileset dir="${java.io.tmpdir}${file.separator}${project.groupId}${file.separator}modeling-output${file.separator}generated${file.separator}logic" />
+                            <fileset dir="${java.io.tmpdir}${file.separator}${project.groupId}${file.separator}modeling-output${file.separator}generated${file.separator}with-eclipselink${file.separator}logic" />
+                        </copy>
+                        <copy overwrite="true" todir="${java.io.tmpdir}${file.separator}${fdaf.applicationGroupId}${file.separator}raw-compilation${file.separator}${fdaf.applicationCodeName}-with-eclipselink${file.separator}${fdaf.applicationCodeName}-logic">
+                            <fileset dir="${fdaf.baseDirectory}${file.separator}custom-core-source${file.separator}logic" />
+                        </copy>
+                        <copy overwrite="true" todir="${java.io.tmpdir}${file.separator}${fdaf.applicationGroupId}${file.separator}raw-compilation${file.separator}${fdaf.applicationCodeName}-with-eclipselink${file.separator}${fdaf.applicationCodeName}-entity${file.separator}src${file.separator}main${file.separator}java${file.separator}fdaf${file.separator}logic${file.separator}entity">
+                            <fileset dir="${java.io.tmpdir}${file.separator}${project.groupId}${file.separator}modeling-output${file.separator}generated${file.separator}with-eclipselink${file.separator}logic${file.separator}src${file.separator}main${file.separator}java${file.separator}fdaf${file.separator}logic${file.separator}entity" />
+                        </copy>
+                        <copy overwrite="true" todir="${java.io.tmpdir}${file.separator}${fdaf.applicationGroupId}${file.separator}raw-compilation${file.separator}${fdaf.applicationCodeName}-with-eclipselink${file.separator}${fdaf.applicationCodeName}-webapp">
+                            <fileset dir="${fdaf.baseDirectory}${file.separator}core-source${file.separator}webapp" />
+                            <fileset dir="${java.io.tmpdir}${file.separator}${project.groupId}${file.separator}modeling-output${file.separator}generated${file.separator}webapp" />
+                        </copy>
+                        <copy overwrite="true" todir="${java.io.tmpdir}${file.separator}${fdaf.applicationGroupId}${file.separator}raw-compilation${file.separator}${fdaf.applicationCodeName}-with-eclipselink${file.separator}${fdaf.applicationCodeName}-webapp">
+                            <fileset dir="${fdaf.baseDirectory}${file.separator}custom-core-source${file.separator}webapp" />
+                        </copy>
+                        <copy overwrite="true" todir="${java.io.tmpdir}${file.separator}${fdaf.applicationGroupId}${file.separator}raw-compilation${file.separator}${fdaf.applicationCodeName}-with-eclipselink${file.separator}${fdaf.applicationCodeName}-base">
+                            <fileset dir="${fdaf.baseDirectory}${file.separator}templates${file.separator}common-project-template${file.separator}base" />
+                        </copy>
+                        <copy overwrite="true" todir="${java.io.tmpdir}${file.separator}${fdaf.applicationGroupId}${file.separator}raw-compilation${file.separator}${fdaf.applicationCodeName}-with-eclipselink${file.separator}${fdaf.applicationCodeName}-ear">
+                            <fileset dir="${fdaf.baseDirectory}${file.separator}templates${file.separator}common-project-template${file.separator}ear" />
+                        </copy>
+                        <copy overwrite="true" todir="${java.io.tmpdir}${file.separator}${fdaf.applicationGroupId}${file.separator}raw-compilation${file.separator}${fdaf.applicationCodeName}-with-eclipselink${file.separator}${fdaf.applicationCodeName}-erc">
+                            <fileset dir="${fdaf.baseDirectory}${file.separator}templates${file.separator}common-project-template${file.separator}erc" />
+                        </copy>
+                        <copy overwrite="true" todir="${java.io.tmpdir}${file.separator}${fdaf.applicationGroupId}${file.separator}raw-compilation${file.separator}${fdaf.applicationCodeName}-with-eclipselink${file.separator}${fdaf.applicationCodeName}-logic">
+                            <fileset dir="${fdaf.baseDirectory}${file.separator}templates${file.separator}common-project-template${file.separator}logic" />
+                        </copy>
+                        <copy overwrite="true" todir="${java.io.tmpdir}${file.separator}${fdaf.applicationGroupId}${file.separator}raw-compilation${file.separator}${fdaf.applicationCodeName}-with-eclipselink${file.separator}${fdaf.applicationCodeName}-entity">
+                            <fileset dir="${fdaf.baseDirectory}${file.separator}templates${file.separator}common-project-template${file.separator}entity" />
+                        </copy>
+                        <copy overwrite="true" todir="${java.io.tmpdir}${file.separator}${fdaf.applicationGroupId}${file.separator}raw-compilation${file.separator}${fdaf.applicationCodeName}-with-eclipselink${file.separator}${fdaf.applicationCodeName}-webapp">
+                            <fileset dir="${fdaf.baseDirectory}${file.separator}templates${file.separator}common-project-template${file.separator}webapp" />
+                        </copy>
+                        <copy overwrite="true" todir="${java.io.tmpdir}${file.separator}${fdaf.applicationGroupId}${file.separator}raw-compilation${file.separator}${fdaf.applicationCodeName}-with-eclipselink${file.separator}${fdaf.applicationCodeName}-base${file.separator}src">
+                            <fileset dir="${fdaf.baseDirectory}${file.separator}custom-base${file.separator}src" />
+                        </copy>
+                        
+                        <!-- Single War With Hibernate Port -->
+                        <copy overwrite="true" tofile="${java.io.tmpdir}${file.separator}${fdaf.applicationGroupId}${file.separator}raw-compilation${file.separator}${fdaf.applicationCodeName}-with-hibernate-in-single-war${file.separator}${fdaf.applicationCodeName}-base${file.separator}src${file.separator}main${file.separator}java${file.separator}fdaf${file.separator}base${file.separator}ApplicationIdentifier.java"
+                            file="${fdaf.baseDirectory}${file.separator}templates${file.separator}ApplicationIdentifierTemplate.java" />
+                        <copy overwrite="true" tofile="${java.io.tmpdir}${file.separator}${fdaf.applicationGroupId}${file.separator}raw-compilation${file.separator}${fdaf.applicationCodeName}-with-hibernate-in-single-war${file.separator}pom.xml"
+                            file="${fdaf.baseDirectory}${file.separator}templates${file.separator}single-war-project-template${file.separator}pom.xml" />
+                        <copy overwrite="true" todir="${java.io.tmpdir}${file.separator}${fdaf.applicationGroupId}${file.separator}raw-compilation${file.separator}${fdaf.applicationCodeName}-with-hibernate-in-single-war${file.separator}${fdaf.applicationCodeName}-base">
+                            <fileset dir="${fdaf.baseDirectory}${file.separator}core-source${file.separator}base" />
+                        </copy>
+                        <copy overwrite="true" todir="${java.io.tmpdir}${file.separator}${fdaf.applicationGroupId}${file.separator}raw-compilation${file.separator}${fdaf.applicationCodeName}-with-hibernate-in-single-war${file.separator}${fdaf.applicationCodeName}-base">
+                            <fileset dir="${fdaf.baseDirectory}${file.separator}custom-core-source${file.separator}base" />
+                        </copy>
+                        <copy overwrite="true" todir="${java.io.tmpdir}${file.separator}${fdaf.applicationGroupId}${file.separator}raw-compilation${file.separator}${fdaf.applicationCodeName}-with-hibernate-in-single-war${file.separator}${fdaf.applicationCodeName}-erc">
+                            <fileset dir="${java.io.tmpdir}${file.separator}${project.groupId}${file.separator}modeling-output${file.separator}generated${file.separator}erc" />
+                        </copy>
+                        <copy overwrite="true" todir="${java.io.tmpdir}${file.separator}${fdaf.applicationGroupId}${file.separator}raw-compilation${file.separator}${fdaf.applicationCodeName}-with-hibernate-in-single-war${file.separator}${fdaf.applicationCodeName}-logic">
+                            <fileset dir="${fdaf.baseDirectory}${file.separator}core-source${file.separator}logic" />
+                            <fileset dir="${java.io.tmpdir}${file.separator}${project.groupId}${file.separator}modeling-output${file.separator}generated${file.separator}logic" />
+                            <fileset dir="${java.io.tmpdir}${file.separator}${project.groupId}${file.separator}modeling-output${file.separator}generated${file.separator}with-hibernate${file.separator}logic" />
+                        </copy>
+                        <copy overwrite="true" todir="${java.io.tmpdir}${file.separator}${fdaf.applicationGroupId}${file.separator}raw-compilation${file.separator}${fdaf.applicationCodeName}-with-hibernate-in-single-war${file.separator}${fdaf.applicationCodeName}-logic">
+                            <fileset dir="${fdaf.baseDirectory}${file.separator}custom-core-source${file.separator}logic" />
+                        </copy>
+                        <!-- copy overwrite="true" todir="${java.io.tmpdir}${file.separator}${fdaf.applicationGroupId}${file.separator}raw-compilation${file.separator}${fdaf.applicationCodeName}-with-hibernate-in-single-war${file.separator}${fdaf.applicationCodeName}-entity${file.separator}src${file.separator}main${file.separator}java${file.separator}fdaf${file.separator}logic${file.separator}entity">
+                            <fileset dir="${java.io.tmpdir}${file.separator}${project.groupId}${file.separator}modeling-output${file.separator}generated${file.separator}with-hibernate${file.separator}logic${file.separator}src${file.separator}main${file.separator}java${file.separator}fdaf${file.separator}logic${file.separator}entity" />
+                        </copy -->
+                        <copy overwrite="true" todir="${java.io.tmpdir}${file.separator}${fdaf.applicationGroupId}${file.separator}raw-compilation${file.separator}${fdaf.applicationCodeName}-with-hibernate-in-single-war${file.separator}${fdaf.applicationCodeName}-webapp">
+                            <fileset dir="${fdaf.baseDirectory}${file.separator}core-source${file.separator}webapp" />
+                            <fileset dir="${java.io.tmpdir}${file.separator}${project.groupId}${file.separator}modeling-output${file.separator}generated${file.separator}webapp" />
+                        </copy>
+                        <copy overwrite="true" todir="${java.io.tmpdir}${file.separator}${fdaf.applicationGroupId}${file.separator}raw-compilation${file.separator}${fdaf.applicationCodeName}-with-hibernate-in-single-war${file.separator}${fdaf.applicationCodeName}-webapp">
+                            <fileset dir="${fdaf.baseDirectory}${file.separator}custom-core-source${file.separator}webapp" />
+                        </copy>
+                        <copy overwrite="true" todir="${java.io.tmpdir}${file.separator}${fdaf.applicationGroupId}${file.separator}raw-compilation${file.separator}${fdaf.applicationCodeName}-with-hibernate-in-single-war${file.separator}${fdaf.applicationCodeName}-base">
+                            <fileset dir="${fdaf.baseDirectory}${file.separator}templates${file.separator}single-war-project-template${file.separator}base" />
+                        </copy>
+
+                        <copy overwrite="true" todir="${java.io.tmpdir}${file.separator}${fdaf.applicationGroupId}${file.separator}raw-compilation${file.separator}${fdaf.applicationCodeName}-with-hibernate-in-single-war${file.separator}${fdaf.applicationCodeName}-erc">
+                            <fileset dir="${fdaf.baseDirectory}${file.separator}templates${file.separator}single-war-project-template${file.separator}erc" />
+                        </copy>
+                        <copy overwrite="true" todir="${java.io.tmpdir}${file.separator}${fdaf.applicationGroupId}${file.separator}raw-compilation${file.separator}${fdaf.applicationCodeName}-with-hibernate-in-single-war${file.separator}${fdaf.applicationCodeName}-logic">
+                            <fileset dir="${fdaf.baseDirectory}${file.separator}templates${file.separator}single-war-project-template${file.separator}logic" />
+                        </copy>
+                        <copy overwrite="true" todir="${java.io.tmpdir}${file.separator}${fdaf.applicationGroupId}${file.separator}raw-compilation${file.separator}${fdaf.applicationCodeName}-with-hibernate-in-single-war${file.separator}${fdaf.applicationCodeName}-webapp">
+                            <fileset dir="${fdaf.baseDirectory}${file.separator}templates${file.separator}single-war-project-template${file.separator}webapp" />
+                        </copy>
+                        <copy overwrite="true" todir="${java.io.tmpdir}${file.separator}${fdaf.applicationGroupId}${file.separator}raw-compilation${file.separator}${fdaf.applicationCodeName}-with-hibernate-in-single-war${file.separator}${fdaf.applicationCodeName}-base${file.separator}src">
+                            <fileset dir="${fdaf.baseDirectory}${file.separator}custom-base${file.separator}src" />
+                        </copy>
+
+                        <!-- Single War in EclipseLink Port -->
+                        <copy overwrite="true" tofile="${java.io.tmpdir}${file.separator}${fdaf.applicationGroupId}${file.separator}raw-compilation${file.separator}${fdaf.applicationCodeName}-with-eclipselink-in-single-war${file.separator}${fdaf.applicationCodeName}-base${file.separator}src${file.separator}main${file.separator}java${file.separator}fdaf${file.separator}base${file.separator}ApplicationIdentifier.java"
+                            file="${fdaf.baseDirectory}${file.separator}templates${file.separator}ApplicationIdentifierTemplate.java" />
+                        <copy overwrite="true" tofile="${java.io.tmpdir}${file.separator}${fdaf.applicationGroupId}${file.separator}raw-compilation${file.separator}${fdaf.applicationCodeName}-with-eclipselink-in-single-war${file.separator}pom.xml"
+                            file="${fdaf.baseDirectory}${file.separator}templates${file.separator}single-war-project-template${file.separator}pom.xml" />
+                        <copy overwrite="true" todir="${java.io.tmpdir}${file.separator}${fdaf.applicationGroupId}${file.separator}raw-compilation${file.separator}${fdaf.applicationCodeName}-with-eclipselink-in-single-war${file.separator}${fdaf.applicationCodeName}-base">
+                            <fileset dir="${fdaf.baseDirectory}${file.separator}core-source${file.separator}base" />
+                        </copy>
+                        <copy overwrite="true" todir="${java.io.tmpdir}${file.separator}${fdaf.applicationGroupId}${file.separator}raw-compilation${file.separator}${fdaf.applicationCodeName}-with-eclipselink-in-single-war${file.separator}${fdaf.applicationCodeName}-base">
+                            <fileset dir="${fdaf.baseDirectory}${file.separator}custom-core-source${file.separator}base" />
+                        </copy>
+                        <copy overwrite="true" todir="${java.io.tmpdir}${file.separator}${fdaf.applicationGroupId}${file.separator}raw-compilation${file.separator}${fdaf.applicationCodeName}-with-eclipselink-in-single-war${file.separator}${fdaf.applicationCodeName}-erc">
+                            <fileset dir="${java.io.tmpdir}${file.separator}${project.groupId}${file.separator}modeling-output${file.separator}generated${file.separator}erc" />
+                        </copy>
+                        <copy overwrite="true" todir="${java.io.tmpdir}${file.separator}${fdaf.applicationGroupId}${file.separator}raw-compilation${file.separator}${fdaf.applicationCodeName}-with-eclipselink-in-single-war${file.separator}${fdaf.applicationCodeName}-logic">
+                            <fileset dir="${fdaf.baseDirectory}${file.separator}core-source${file.separator}logic" />
+                            <fileset dir="${java.io.tmpdir}${file.separator}${project.groupId}${file.separator}modeling-output${file.separator}generated${file.separator}logic" />
+                            <fileset dir="${java.io.tmpdir}${file.separator}${project.groupId}${file.separator}modeling-output${file.separator}generated${file.separator}with-eclipselink${file.separator}logic" />
+                        </copy>
+                        <copy overwrite="true" todir="${java.io.tmpdir}${file.separator}${fdaf.applicationGroupId}${file.separator}raw-compilation${file.separator}${fdaf.applicationCodeName}-with-eclipselink-in-single-war${file.separator}${fdaf.applicationCodeName}-logic">
+                            <fileset dir="${fdaf.baseDirectory}${file.separator}custom-core-source${file.separator}logic" />
+                        </copy>
+                        <!-- copy overwrite="true" todir="${java.io.tmpdir}${file.separator}${fdaf.applicationGroupId}${file.separator}raw-compilation${file.separator}${fdaf.applicationCodeName}-with-eclipselink-in-single-war${file.separator}${fdaf.applicationCodeName}-entity${file.separator}src${file.separator}main${file.separator}java${file.separator}fdaf${file.separator}logic${file.separator}entity">
+                            <fileset dir="${java.io.tmpdir}${file.separator}${project.groupId}${file.separator}modeling-output${file.separator}generated${file.separator}with-eclipselink${file.separator}logic${file.separator}src${file.separator}main${file.separator}java${file.separator}fdaf${file.separator}logic${file.separator}entity" />
+                        </copy -->
+                        <copy overwrite="true" todir="${java.io.tmpdir}${file.separator}${fdaf.applicationGroupId}${file.separator}raw-compilation${file.separator}${fdaf.applicationCodeName}-with-eclipselink-in-single-war${file.separator}${fdaf.applicationCodeName}-webapp">
+                            <fileset dir="${fdaf.baseDirectory}${file.separator}core-source${file.separator}webapp" />
+                            <fileset dir="${java.io.tmpdir}${file.separator}${project.groupId}${file.separator}modeling-output${file.separator}generated${file.separator}webapp" />
+                        </copy>
+                        <copy overwrite="true" todir="${java.io.tmpdir}${file.separator}${fdaf.applicationGroupId}${file.separator}raw-compilation${file.separator}${fdaf.applicationCodeName}-with-eclipselink-in-single-war${file.separator}${fdaf.applicationCodeName}-webapp">
+                            <fileset dir="${fdaf.baseDirectory}${file.separator}custom-core-source${file.separator}webapp" />
+                        </copy>
+                        <copy overwrite="true" todir="${java.io.tmpdir}${file.separator}${fdaf.applicationGroupId}${file.separator}raw-compilation${file.separator}${fdaf.applicationCodeName}-with-eclipselink-in-single-war${file.separator}${fdaf.applicationCodeName}-base">
+                            <fileset dir="${fdaf.baseDirectory}${file.separator}templates${file.separator}single-war-project-template${file.separator}base" />
+                        </copy>
+                        
+                        <copy overwrite="true" todir="${java.io.tmpdir}${file.separator}${fdaf.applicationGroupId}${file.separator}raw-compilation${file.separator}${fdaf.applicationCodeName}-with-eclipselink-in-single-war${file.separator}${fdaf.applicationCodeName}-erc">
+                            <fileset dir="${fdaf.baseDirectory}${file.separator}templates${file.separator}single-war-project-template${file.separator}erc" />
+                        </copy>
+                        <copy overwrite="true" todir="${java.io.tmpdir}${file.separator}${fdaf.applicationGroupId}${file.separator}raw-compilation${file.separator}${fdaf.applicationCodeName}-with-eclipselink-in-single-war${file.separator}${fdaf.applicationCodeName}-logic">
+                            <fileset dir="${fdaf.baseDirectory}${file.separator}templates${file.separator}single-war-project-template${file.separator}logic" />
+                        </copy>
+                        <copy overwrite="true" todir="${java.io.tmpdir}${file.separator}${fdaf.applicationGroupId}${file.separator}raw-compilation${file.separator}${fdaf.applicationCodeName}-with-eclipselink-in-single-war${file.separator}${fdaf.applicationCodeName}-webapp">
+                            <fileset dir="${fdaf.baseDirectory}${file.separator}templates${file.separator}single-war-project-template${file.separator}webapp" />
+                        </copy>
+                        <copy overwrite="true" todir="${java.io.tmpdir}${file.separator}${fdaf.applicationGroupId}${file.separator}raw-compilation${file.separator}${fdaf.applicationCodeName}-with-eclipselink-in-single-war${file.separator}${fdaf.applicationCodeName}-base${file.separator}src">
+                            <fileset dir="${fdaf.baseDirectory}${file.separator}custom-base${file.separator}src" />
+                        </copy>
+                        
+                        <!-- Thorntail Port -->
+                        <copy overwrite="true" tofile="${java.io.tmpdir}${file.separator}${fdaf.applicationGroupId}${file.separator}raw-compilation${file.separator}${fdaf.applicationCodeName}-thorntail${file.separator}${fdaf.applicationCodeName}-base${file.separator}src${file.separator}main${file.separator}java${file.separator}fdaf${file.separator}base${file.separator}ApplicationIdentifier.java"
+                            file="${fdaf.baseDirectory}${file.separator}templates${file.separator}ApplicationIdentifierTemplate.java" />
+                        <copy overwrite="true" tofile="${java.io.tmpdir}${file.separator}${fdaf.applicationGroupId}${file.separator}raw-compilation${file.separator}${fdaf.applicationCodeName}-thorntail${file.separator}pom.xml"
+                            file="${fdaf.baseDirectory}${file.separator}templates${file.separator}thorntail-project-template${file.separator}pom.xml" />
+                        <copy overwrite="true" todir="${java.io.tmpdir}${file.separator}${fdaf.applicationGroupId}${file.separator}raw-compilation${file.separator}${fdaf.applicationCodeName}-thorntail${file.separator}${fdaf.applicationCodeName}-logic-thorntail">
+                            <fileset dir="${fdaf.baseDirectory}${file.separator}core-source${file.separator}logic" />
+                            <fileset dir="${java.io.tmpdir}${file.separator}${project.groupId}${file.separator}modeling-output${file.separator}generated${file.separator}logic" />
+                            <fileset dir="${java.io.tmpdir}${file.separator}${project.groupId}${file.separator}modeling-output${file.separator}generated${file.separator}with-hibernate${file.separator}logic" />
+                        </copy>
+                        <copy overwrite="true" todir="${java.io.tmpdir}${file.separator}${fdaf.applicationGroupId}${file.separator}raw-compilation${file.separator}${fdaf.applicationCodeName}-thorntail${file.separator}${fdaf.applicationCodeName}-logic-thorntail">
+                            <fileset dir="${fdaf.baseDirectory}${file.separator}custom-core-source${file.separator}logic" />
+                        </copy>
+                        <copy overwrite="true" todir="${java.io.tmpdir}${file.separator}${fdaf.applicationGroupId}${file.separator}raw-compilation${file.separator}${fdaf.applicationCodeName}-thorntail${file.separator}${fdaf.applicationCodeName}-logic-thorntail">
+                            <fileset dir="${fdaf.baseDirectory}${file.separator}templates${file.separator}thorntail-project-template${file.separator}logic" />
+                        </copy>
+                        <copy overwrite="true" todir="${java.io.tmpdir}${file.separator}${fdaf.applicationGroupId}${file.separator}raw-compilation${file.separator}${fdaf.applicationCodeName}-thorntail${file.separator}${fdaf.applicationCodeName}-base">
+                            <fileset dir="${fdaf.baseDirectory}${file.separator}templates${file.separator}thorntail-project-template${file.separator}base" />
+                            <fileset dir="${fdaf.baseDirectory}${file.separator}core-source${file.separator}base" />
+                        </copy>
+                        <copy overwrite="true" todir="${java.io.tmpdir}${file.separator}${fdaf.applicationGroupId}${file.separator}raw-compilation${file.separator}${fdaf.applicationCodeName}-thorntail${file.separator}${fdaf.applicationCodeName}-base">
+                            <fileset dir="${fdaf.baseDirectory}${file.separator}custom-core-source${file.separator}base" />
+                        </copy>
+                        <copy overwrite="true" todir="${java.io.tmpdir}${file.separator}${fdaf.applicationGroupId}${file.separator}raw-compilation${file.separator}${fdaf.applicationCodeName}-thorntail${file.separator}${fdaf.applicationCodeName}-erc">
+                            <fileset dir="${fdaf.baseDirectory}${file.separator}templates${file.separator}thorntail-project-template${file.separator}erc" />
+                            <fileset dir="${java.io.tmpdir}${file.separator}${project.groupId}${file.separator}modeling-output${file.separator}generated${file.separator}erc" />
+                        </copy>
+                        <copy overwrite="true" todir="${java.io.tmpdir}${file.separator}${fdaf.applicationGroupId}${file.separator}raw-compilation${file.separator}${fdaf.applicationCodeName}-thorntail${file.separator}${fdaf.applicationCodeName}-webapp">
+                            <fileset dir="${fdaf.baseDirectory}${file.separator}templates${file.separator}thorntail-project-template${file.separator}webapp" />
+                        </copy>
+                        <copy overwrite="true" todir="${java.io.tmpdir}${file.separator}${fdaf.applicationGroupId}${file.separator}raw-compilation${file.separator}${fdaf.applicationCodeName}-thorntail${file.separator}${fdaf.applicationCodeName}-webapp">
+                            <fileset dir="${fdaf.baseDirectory}${file.separator}core-source${file.separator}webapp" />
+                            <fileset dir="${java.io.tmpdir}${file.separator}${project.groupId}${file.separator}modeling-output${file.separator}generated${file.separator}webapp" />
+                        </copy>
+                        <copy overwrite="true" todir="${java.io.tmpdir}${file.separator}${fdaf.applicationGroupId}${file.separator}raw-compilation${file.separator}${fdaf.applicationCodeName}-thorntail${file.separator}${fdaf.applicationCodeName}-webapp">
+                            <fileset dir="${fdaf.baseDirectory}${file.separator}custom-core-source${file.separator}webapp" />
+                        </copy>
+                        <copy overwrite="true" todir="${java.io.tmpdir}${file.separator}${fdaf.applicationGroupId}${file.separator}raw-compilation${file.separator}${fdaf.applicationCodeName}-thorntail${file.separator}${fdaf.applicationCodeName}-base${file.separator}src">
+                            <fileset dir="${fdaf.baseDirectory}${file.separator}custom-base${file.separator}src" />
+                        </copy>
+                        <mkdir dir="${fdaf.applicationSourceDirectory}" />
+                    </target>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>compile</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>package</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>1.6.0</version>
+                <executions>
+                    <execution>
+                        <id>on-compile-initializing</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>java</goal>
+                        </goals>
+                        <configuration>
+                            <executable>java</executable>
+                            <mainClass>initializer.Initializer</mainClass>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>on-packaging-initializing</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>java</goal>
+                        </goals>
+                        <configuration>
+                            <executable>java</executable>
+                            <mainClass>initializer.Initializer</mainClass>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+    
+</project>
