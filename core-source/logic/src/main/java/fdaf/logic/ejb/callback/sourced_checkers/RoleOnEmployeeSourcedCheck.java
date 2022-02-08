@@ -30,8 +30,9 @@ package fdaf.logic.ejb.callback.sourced_checkers;
 
 import fdaf.logic.base.SourcedDataCheckerInterface;
 import fdaf.logic.base.Specification;
+import fdaf.logic.ejb.repository.EmployeeRepository;
+import fdaf.logic.entity.Employee;
 import java.io.Serializable;
-import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.ejb.Remote;
 import javax.ejb.Stateful;
@@ -40,12 +41,21 @@ import javax.ejb.Stateful;
 @Stateful(passivationCapable = false)
 public class RoleOnEmployeeSourcedCheck implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;    
+
+    @EJB
+    private EmployeeRepository employeeRepository;
 
     public RoleOnEmployeeSourcedCheck() {
+        // NO-OP
     }
     
     public boolean isSourced(Object primaryKey) {
+        Specification<Employee> spec = employeeRepository.presetSpecification();
+        spec.setPredicate(spec.getBuilder().equal(spec.getRoot().get("roleId"), primaryKey));
+        if (employeeRepository.find(spec) != null) {
+            return true;
+        }
         return false;
     }
 }

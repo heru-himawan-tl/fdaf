@@ -33,7 +33,6 @@ import fdaf.logic.base.Specification;
 import fdaf.logic.ejb.repository.EmployeeRepository;
 import fdaf.logic.entity.Employee;
 import java.io.Serializable;
-import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.ejb.Remote;
 import javax.ejb.Stateful;
