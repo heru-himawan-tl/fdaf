@@ -902,13 +902,21 @@ public abstract class AbstractWebAppBean extends AbstractBaseWebAppBean {
 
     public void executeRemove(AjaxBehaviorEvent event) throws AbortProcessingException {
         boolean isError = false;
+        boolean dataNotFound = false;
+        boolean dataIsSourced = false;
         try {
             if (primaryKey != null && !String.valueOf(primaryKey).equals("0")) {
                 if (getFacade().isDataExists(primaryKey)) {
-                    getFacade().remove(primaryKey);
-                    onRemoveFinishTask();
+                    if (getFacade().allowRemovedIfNotSourced(primaryKey)) {
+                        getFacade().remove(primaryKey);
+                        onRemoveFinishTask();
+                    } else {
+                        addMessage(SV_WARN, "dataIsSourced");
+                        dataIsSourced = true;
+                    }
                 } else {
                     addMessage(SV_WARN, "dataNotFound");
+                    dataNotFound = true;
                 }
             }
         } catch (Exception e) {
@@ -916,7 +924,7 @@ public abstract class AbstractWebAppBean extends AbstractBaseWebAppBean {
             isError = true;
         }
         prepareRemoveOp = false;
-        if (!isError) {
+        if (!isError && !dataIsSourced && !dataNotFound) {
             notifiyListUpdate();
         }
     }
@@ -1047,7 +1055,7 @@ public abstract class AbstractWebAppBean extends AbstractBaseWebAppBean {
                     primaryKeyMap.remove(primaryKeyId);
                 }
             }
-            if (!partiallyLocated && !partiallyRemoved && getRemoved) {
+            if (!partiallyLocated && !partiallyRemoved && !partiallyInSourced && getRemoved) {
                 addMessage(SV_INFO, "massiveRemovalInfo");
             }
             if (partiallyLocated && getRemoved) {
@@ -1066,7 +1074,7 @@ public abstract class AbstractWebAppBean extends AbstractBaseWebAppBean {
         }
         clearMassiveRemovalReadyState();
         prepareRemoveOp = false;
-        if (getRemoved || partiallyRemoved) {
+        if (getRemoved && !partiallyRemoved && !partiallyInSourced) {
             notifiyListUpdate();
         }
     }

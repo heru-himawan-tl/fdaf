@@ -33,7 +33,9 @@ import fdaf.logic.base.Specification;
 import fdaf.logic.base.UpdateCallbackInterface;
 import fdaf.logic.ejb.repository.DepartmentRepository;
 import fdaf.logic.entity.Department;
+import fdaf.logic.callback.sourced_checker_wrapper.SourcedDataCheckWrapper;
 import java.io.Serializable;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.ejb.Remote;
 import javax.ejb.Stateful;
@@ -46,6 +48,14 @@ public class DepartmentUpdateCallback extends AbstractUpdateCallback
     private static final long serialVersionUID = 1L;
     private DepartmentRepository repository;
     private Department entity;
+    
+    @EJB
+    private SourcedDataCheckWrapper sourcedDataChecker;
+    
+    @PostConstruct
+    public void configureSourcedDataChecker() {
+        sourcedDataChecker.configure(this);
+    }
 
     public DepartmentUpdateCallback() {
         // NO-OP
@@ -83,5 +93,9 @@ public class DepartmentUpdateCallback extends AbstractUpdateCallback
         }
         setMessage("updateDepartmentDuplicated");
         return false;
+    }
+    
+    public boolean allowRemovedIfNotSourced(Object primaryKey) {
+        return !sourcedDataChecker.isSourced(primaryKey);
     }
 }

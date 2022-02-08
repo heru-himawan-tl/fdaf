@@ -67,11 +67,17 @@ public class Initializer {
     private final String applicationSourceDirectory;
     private final String ejbLookupDir;
     private final String applicationCodeName;
+    private final String templatesDirectory;
+    private String sourcedDataCheckerLookupCode;
+    private String sourcedDataCheckerMapCode;
     
     private final List<String> undefinedCustomCallbackMessage = new ArrayList<String>();
     private final List<String> definedCustomCallbackMessage = new ArrayList<String>();
     private final List<String> undefinedCallbackMessage = new ArrayList<String>();
     private final List<String> definedCallbackMessage = new ArrayList<String>();
+    private final List<String> sourcedDataCheckerNameList = new ArrayList<String>();
+    
+    private int sourcedDataCheckerCount;
     
     private boolean validationMessageDefLocaleTailed;
     
@@ -92,6 +98,9 @@ public class Initializer {
         ejbLookupDir = applicationCodeName + "/" + applicationCodeName + "-logic";
         applicationSourceDirectory = new File(propertyMap.get("fdaf.applicationSourceDirectory")).getCanonicalPath();
         temporaryCompilationDir = System.getProperty("java.io.tmpdir") + File.separator + propertyMap.get("fdaf.applicationGroupId") + File.separator + "raw-compilation";
+        templatesDirectory = new File(".").getCanonicalPath() + "/templates";
+        sourcedDataCheckerLookupCode = "";
+        sourcedDataCheckerMapCode = "";
     }
     
     private void recursiveReadDir(String dirname, LinkedList<String> nodeList, boolean toFormat) {
@@ -101,10 +110,10 @@ public class Initializer {
                 String fileName = path.getFileName().toString();
                 if (toFormat) {
                     if (fileName.equals("pom.xml") || fileName.equals("ApplicationIdentifier.java")
-                            || fileName.equals("persistence.xml") || dirname.matches(".*webapp\\/bean.*")
-                            || dirname.matches(".*logic\\/ejb\\/callback.*")
-                            || dirname.matches(".*logic\\/ejb\\/facade.*")
-                            || dirname.matches(".*logic\\/ejb.*")
+                            || fileName.equals("persistence.xml") || dirname.matches(".*webapp[\\\\\\/]+bean.*")
+                            || dirname.matches(".*logic[\\\\\\/]+ejb[\\\\\\/]+callback.*")
+                            || dirname.matches(".*logic[\\\\\\/]+ejb[\\\\\\/]+facade.*")
+                            || dirname.matches(".*logic[\\\\\\/]+ejb.*")
                             || fileName.matches(".*\\.(yaml|yml|properties)$")
                             || fileName.equals("invoker-pom.xml")
                             || fileName.equals("faces-config.xml")
@@ -171,30 +180,32 @@ public class Initializer {
                 }
                 if (nodeAddr.matches(".*persistence.xml") && nodeAddr.matches(".*thorntail.*")
                         && s.matches(".*\\<jta\\-data\\-source\\>.*")
-                        && !s.matches(".*\\<jta\\-data\\-source\\>java\\:jboss\\/datasources\\/.*")) {
+                        && !s.matches(".*\\<jta\\-data\\-source\\>java\\:jboss[\\\\\\/]+datasources[\\\\\\/]+.*")) {
                     s = s.replace("jta-data-source>", "jta-data-source>java:jboss/datasources/");
                 }
-                if (nodeAddr.matches(".*(webapp\\/bean|logic\\/ejb\\/callback|logic\\/ejb\\/facade|logic\\/ejb\\/).*")
+                if (nodeAddr.matches(
+                    ".*(webapp[\\\\\\/]+bean|logic[\\\\\\/]+ejb[\\\\\\/]+callback|logic[\\\\\\/]+ejb[\\\\\\/]+facade|logic[\\\\\\/]+ejb[\\\\\\/]+).*")
                     && nodeAddr.matches(".*thorntail.*") && s.matches(".*__EJB_LOOKUP_DIR__.*")
                     && !nodeAddr.matches(".*\\-in\\-single\\-war.*")) {
                     s = s.replace("__EJB_LOOKUP_DIR__", applicationCodeName);
                 }
-                if (nodeAddr.matches(".*(webapp\\/bean|logic\\/ejb\\/callback|logic\\/ejb\\/facade|logic\\/ejb\\/).*")
+                if (nodeAddr.matches(".*(webapp[\\\\\\/]+bean|logic[\\\\\\/]+ejb[\\\\\\/]+callback|logic[\\\\\\/]+ejb[\\\\\\/]+facade|logic[\\\\\\/]+ejb[\\\\\\/]+).*")
                     && !nodeAddr.matches(".*thorntail.*") && s.matches(".*__EJB_LOOKUP_DIR__.*")
                     && !nodeAddr.matches(".*\\-in\\-single\\-war.*")) {
                     s = s.replace("__EJB_LOOKUP_DIR__", ejbLookupDir);
                 }
-                if (nodeAddr.matches(".*(webapp\\/bean|logic\\/ejb\\/callback|logic\\/ejb\\/facade|logic\\/ejb\\/).*")
+                if (nodeAddr.matches(
+                    ".*(webapp[\\\\\\/]+bean|logic[\\\\\\/]+ejb[\\\\\\/]+callback|logic[\\\\\\/]+ejb[\\\\\\/]+facade|logic[\\\\\\/]+ejb[\\\\\\/]+).*")
                     && !nodeAddr.matches(".*thorntail.*") && s.matches(".*__EJB_LOOKUP_DIR__.*")
                     && nodeAddr.matches(".*\\-in\\-single\\-war.*")) {
                     s = s.replace("__EJB_LOOKUP_DIR__", applicationCodeName + "-webapp");
                 }
-                if (nodeAddr.matches(".*webapp\\/bean.*") && s.matches(".*\\/\\/[\t ]+UI_UPDATER_FOR[\t ]+.*")) {
-                    String webAppTarget = s.replaceAll("(.*\\/\\/[\t ]+UI_UPDATER_FOR[\t ]+)([a-zA-Z\\_]+.*)", "$2").trim();
+                if (nodeAddr.matches(".*webapp[\\\\\\/]+bean.*") && s.matches(".*[\\\\\\/]+[\\\\\\/]+[     ]+UI_UPDATER_FOR[     ]+.*")) {
+                    String webAppTarget = s.replaceAll("(.*[\\\\\\/]+[\\\\\\/]+[     ]+UI_UPDATER_FOR[     ]+)([a-zA-Z\\_]+.*)", "$2").trim();
                     if (!frontEndUIUpdaterMap.containsKey(webAppTarget)) {
                         frontEndUIUpdaterMap.put(webAppTarget, new ArrayList<String>());
                     }
-                    String updaterClassName = nodeAddr.replaceAll(".*\\/fdaf", "fdaf").replaceAll("\\/", ".").replaceAll(".java$", "");
+                    String updaterClassName = nodeAddr.replaceAll(".*[\\\\\\/]+fdaf", "fdaf").replaceAll("[\\\\\\/]+", ".").replaceAll(".java$", "");
                     List<String> fl = frontEndUIUpdaterMap.get(webAppTarget);
                     if (!fl.contains(updaterClassName)) {
                         frontEndUIUpdaterMap.get(webAppTarget).add(updaterClassName);
@@ -206,34 +217,34 @@ public class Initializer {
                 if (nodeAddr.matches(".*with\\-hibernate.*")) {
                     s = s.replaceAll("__JPA_PROVIDER_NAME__", "Hibernate").replaceAll("__JPA_PROVIDER__", "hibernate");
                 }
-                if (nodeAddr.matches(".*(logic\\/ejb\\/callback|logic\\/ejb\\/facade).*") && s.matches(".*setCustomMessage\\(.*")) {
+                if (nodeAddr.matches(".*(logic[\\\\\\/]+ejb[\\\\\\/]+callback|logic[\\\\\\/]+ejb[\\\\\\/]+facade).*") && s.matches(".*setCustomMessage\\(.*")) {
                     String ccm = s.replaceAll(".*setCustomMessage\\(\"|\"\\).*", "");
                     if (!undefinedCustomCallbackMessage.contains(ccm + "=") && !definedCustomCallbackMessage.contains(ccm)) {
                         undefinedCustomCallbackMessage.add(ccm + "=");
                     }
                 }
-                if (nodeAddr.matches(".*(logic\\/ejb\\/callback|logic\\/ejb\\/facade).*") && s.matches(".*setMessage\\(.*")) {
+                if (nodeAddr.matches(".*(logic[\\\\\\/]+ejb[\\\\\\/]+callback|logic[\\\\\\/]+ejb[\\\\\\/]+facade).*") && s.matches(".*setMessage\\(.*")) {
                     String ccm = s.replaceAll(".*setMessage\\(\"|\"\\).*", "");
                     if (!undefinedCallbackMessage.contains(ccm + "=") && !definedCallbackMessage.contains(ccm)) {
                         undefinedCallbackMessage.add(ccm + "=");
                     }
                 }
-                if (nodeAddr.matches(".*\\-(logic|ear|webapp|entity)\\/pom\\.xml") && s.matches(".*__DEPENDENCIES__.*")) {
+                if (nodeAddr.matches(".*\\-(logic|ear|webapp|entity)[\\\\\\/]+pom\\.xml") && s.matches(".*__DEPENDENCIES__.*")) {
                     String depSourceName = "";
                     String depContents = "";
-                    if (nodeAddr.matches(".*\\-entity\\/pom\\.xml")) {
+                    if (nodeAddr.matches(".*\\-entity[\\\\\\/]+pom\\.xml")) {
                         depSourceName = "entity.deps";
                     }
-                    if (nodeAddr.matches(".*\\-webapp\\/pom\\.xml") && !nodeAddr.matches(".*\\-in\\-single\\-war.*")) {
+                    if (nodeAddr.matches(".*\\-webapp[\\\\\\/]+pom\\.xml") && !nodeAddr.matches(".*\\-in\\-single\\-war.*")) {
                         depSourceName = "webapp.deps";
                     }
-                    if (nodeAddr.matches(".*\\-webapp\\/pom\\.xml") && nodeAddr.matches(".*\\-in\\-single\\-war.*")) {
+                    if (nodeAddr.matches(".*\\-webapp[\\\\\\/]+pom\\.xml") && nodeAddr.matches(".*\\-in\\-single\\-war.*")) {
                         depSourceName = "webapp-in-single-war.deps";
                     }
-                    if (nodeAddr.matches(".*\\-logic\\/pom\\.xml")) {
+                    if (nodeAddr.matches(".*\\-logic[\\\\\\/]+pom\\.xml")) {
                         depSourceName = "logic.deps";
                     }
-                    if (nodeAddr.matches(".*\\-ear\\/pom\\.xml")) {
+                    if (nodeAddr.matches(".*\\-ear[\\\\\\/]+pom\\.xml")) {
                         depSourceName = "ear.deps";
                     }
                     try {
@@ -256,12 +267,24 @@ public class Initializer {
                 source += s + "\n";
             }
             r.close();
-
-
         } catch (Exception e) {
         }
-        if (nodeAddr.matches(".*webapp\\/bean\\/.*WebAppBean\\.java")) {
-            String webAppClassName = nodeAddr.replaceAll("(.*\\/|.java$)", "");
+        if (nodeAddr.matches(".*logic.*ejb.*callback.*sourced_checkers.*SourcedCheck\\.java")) {
+            System.out.println("[" + ANSI_BLUE + ANSI_BOLD + "FDAF INFO" + ANSI_RESET + "] " + ANSI_GREEN
+                        + "=======================================" + ANSI_RESET);
+            System.out.println("[" + ANSI_BLUE + ANSI_BOLD + "FDAF INFO" + ANSI_RESET + "] " + ANSI_GREEN + "Found sourced-data-checker: " + ANSI_RESET + nodeAddr.replaceAll(".*[\\\\\\/]+", ""));
+            String cn = nodeAddr.replaceAll(".*[\\\\\\/]+fdaf[\\\\\\/]+logic[\\\\\\/]+ejb[\\\\\\/]+callback[\\\\\\/]+sourced_checkers[\\\\\\/]+", "").replaceAll("\\.java$", "");
+            if (!sourcedDataCheckerNameList.contains(cn)) {
+                sourcedDataCheckerNameList.add(cn);
+                sourcedDataCheckerCount++;
+                sourcedDataCheckerLookupCode += "    @EJB(lookup = \"java:global/__EJB_SDC_LOOKUP_DIR__/" + cn + "\")\n    SourcedDataCheckerInterface sdc" + sourcedDataCheckerCount + ";\n";
+                sourcedDataCheckerMapCode += "        sourceDataCheckerMap.put(\"" + cn + "\", sdc" + sourcedDataCheckerCount + ");\n";
+            }
+            System.out.println("[" + ANSI_BLUE + ANSI_BOLD + "FDAF INFO" + ANSI_RESET + "] " + ANSI_GREEN
+                        + "=======================================" + ANSI_RESET);
+        }
+        if (nodeAddr.matches(".*webapp[\\\\\\/]+bean[\\\\\\/]+.*WebAppBean\\.java")) {
+            String webAppClassName = nodeAddr.replaceAll("(.*[\\\\\\/]+|.java$)", "");
             if (!frontEndUIUpdaterMap.isEmpty() && frontEndUIUpdaterMap.containsKey(webAppClassName)) {
                 String fia = "";
                 String fiv = "";
@@ -335,6 +358,9 @@ public class Initializer {
         String finalEAR = applicationCodeName + ".ear";
         String buildDirectory = "";
         recursiveReadDir(temporaryCompilationDir, toFormatNodeList, true);
+        if (!toFormatNodeList.isEmpty()) {
+            Collections.sort(toFormatNodeList);
+        }
         System.out.println("[" + ANSI_BLUE + ANSI_BOLD + "FDAF INFO" + ANSI_RESET + "] -------------------------------------------------------------------------------");
         System.out.println("[" + ANSI_BLUE + ANSI_BOLD + "FDAF INFO" + ANSI_RESET + "] " + ANSI_BOLD + "Formatting specific compilable application source files ..." + ANSI_RESET);
         System.out.println("[" + ANSI_BLUE + ANSI_BOLD + "FDAF INFO" + ANSI_RESET + "] -------------------------------------------------------------------------------");
@@ -353,7 +379,7 @@ public class Initializer {
                 } catch (Exception e) {
                 }
             }
-            if (nodeAddr.matches(".*\\/callback_message\\.properties.*")) {
+            if (nodeAddr.matches(".*[\\\\\\/]+callback_message\\.properties.*")) {
                 try {
                     BufferedReader r = Files.newBufferedReader(Paths.get(nodeAddr));
                     String l = null;
@@ -370,6 +396,43 @@ public class Initializer {
         }
         for (String nodeAddr : toFormatNodeList) {
             format(nodeAddr);
+        }
+        for (String nodeAddr : toFormatNodeList) {
+            if (nodeAddr.matches(
+                ".*fdaf[\\\\\\/]+logic[\\\\\\/]+ejb[\\\\\\/]+callback[\\\\\\/]+sourced_checker_wrapper[\\\\\\/]+SourcedDataCheckWrapper\\.java.*")) {
+                String sdwtc = "";
+                try {
+                    BufferedReader r = Files.newBufferedReader(Paths.get(templatesDirectory + File.separator + "SourcedDataCheckWrapperTemplate.java"));
+                    String l = null;
+                    while ((l = r.readLine()) != null) {
+                        String s = l;
+                        if (s.matches(".*\\/\\/[ ]+SOURCED_DATA_CHECKER_BEAN_LOOKUPS.*")) {
+                            s = "    " + sourcedDataCheckerLookupCode.trim();
+                        }
+                        if (s.matches(".*\\/\\/[ ]+SOURCED_DATA_CHECKER_BEAN_MAPS.*")) {
+                            s = "        " + sourcedDataCheckerMapCode.trim();
+                        }
+                        String ejbLookupDirSDC = ejbLookupDir;
+                        if (nodeAddr.matches(".*thorntail.*") && !nodeAddr.matches(".*\\-in\\-single\\-war.*")) {
+                            ejbLookupDirSDC = applicationCodeName;
+                        }
+                        if (!nodeAddr.matches(".*thorntail.*") && nodeAddr.matches(".*\\-in\\-single\\-war.*")) {
+                            ejbLookupDirSDC = applicationCodeName + "-webapp";
+                        }
+                        s = s.replace("__EJB_SDC_LOOKUP_DIR__", ejbLookupDirSDC);
+                        sdwtc += s + "\n";
+                    }
+                } catch (Exception e) {
+                }
+                if (!sdwtc.isEmpty()) {
+                    try {
+                        FileWriter fw = new FileWriter(nodeAddr, false);
+                        fw.write(sdwtc);
+                        fw.close();
+                    } catch (Exception e) {
+                    }
+                }
+            }
         }
         try {
             Files.delete(Paths.get("undefined_custom_callback.txt"));
