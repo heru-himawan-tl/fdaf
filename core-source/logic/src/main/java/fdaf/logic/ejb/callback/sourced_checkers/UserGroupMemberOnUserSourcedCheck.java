@@ -31,7 +31,9 @@ package fdaf.logic.ejb.callback.sourced_checkers;
 import fdaf.logic.base.SourcedDataCheckerInterface;
 import fdaf.logic.base.Specification;
 import fdaf.logic.ejb.repository.UserGroupMemberRepository;
+import fdaf.logic.ejb.repository.UserRepository;
 import fdaf.logic.entity.UserGroupMember;
+import fdaf.logic.entity.User;
 import java.io.Serializable;
 import javax.ejb.EJB;
 import javax.ejb.Remote;
@@ -39,23 +41,34 @@ import javax.ejb.Stateful;
 
 @Remote({SourcedDataCheckerInterface.class})
 @Stateful(passivationCapable = false)
-public class UserOnUserGroupMemberSourcedCheck implements Serializable {
+public class UserGroupMemberOnUserSourcedCheck implements Serializable {
 
     private static final long serialVersionUID = 1L;    
 
     @EJB
     private UserGroupMemberRepository userGroupMemberRepository;
+    
+    @EJB
+    private UserRepository userRepository;
 
-    public UserOnUserGroupMemberSourcedCheck() {
+    public UserGroupMemberOnUserSourcedCheck() {
         // NO-OP
     }
     
     public boolean isSourced(Object primaryKey) {
         Specification<UserGroupMember> spec = userGroupMemberRepository.presetSpecification();
-        spec.setPredicate(spec.getBuilder().equal(spec.getRoot().get("userId"), primaryKey));
-        if (userGroupMemberRepository.find(spec) != null) {
-            return true;
+        spec.setPredicate(spec.getBuilder().equal(spec.getRoot().get("id"), primaryKey));
+        UserGroupMember userGroupMember = userGroupMemberRepository.find(spec);
+        if (userGroupMember == null) {
+            return false;
         }
+        Object userId = (Object) userGroupMember.getUserId();
+        Specification<User> userSpec = userRepository.presetSpecification();   
+        userSpec.setPredicate(userSpec.getBuilder().equal(userSpec.getRoot().get("id"), userId));
+        User user = userRepository.find(userSpec);
+        if (user != null) {
+            return true;
+        } 
         return false;
     }
 }

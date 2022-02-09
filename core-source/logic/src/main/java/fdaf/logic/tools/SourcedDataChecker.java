@@ -58,7 +58,7 @@ public class SourcedDataChecker {
     public boolean isSourced(Object primaryKey) {
         if (!sourceDataCheckerMap.isEmpty()) {
             for (String key: sourceDataCheckerMap.keySet()) {
-                if (key.matches("^" + callbackPrefixName + ".*")) {
+                if (key.matches("^" + callbackPrefixName + "On.*")) {
                     SourcedDataCheckerInterface sdc = sourceDataCheckerMap.get(key);
                     if (sdc.isSourced(primaryKey)) {
                         return true;
