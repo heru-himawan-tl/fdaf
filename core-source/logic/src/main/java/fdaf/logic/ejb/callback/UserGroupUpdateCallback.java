@@ -31,9 +31,11 @@ package fdaf.logic.ejb.callback;
 import fdaf.logic.base.AbstractUpdateCallback;
 import fdaf.logic.base.Specification;
 import fdaf.logic.base.UpdateCallbackInterface;
+import fdaf.logic.callback.sourced_checker_wrapper.SourcedDataCheckWrapper;
 import fdaf.logic.ejb.repository.UserGroupRepository;
 import fdaf.logic.entity.UserGroup;
 import java.io.Serializable;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.ejb.Remote;
 import javax.ejb.Stateful;
@@ -46,6 +48,14 @@ public class UserGroupUpdateCallback extends AbstractUpdateCallback
     private static final long serialVersionUID = 1L;
     private UserGroupRepository repository;
     private UserGroup entity;
+    
+    @EJB
+    private SourcedDataCheckWrapper sourcedDataChecker;
+    
+    @PostConstruct
+    public void configureSourcedDataChecker() {
+        sourcedDataChecker.configure(this);
+    }
 
     public UserGroupUpdateCallback() {
         // NO-OP
@@ -83,5 +93,9 @@ public class UserGroupUpdateCallback extends AbstractUpdateCallback
         }
         setMessage("updateUserGroupDuplicated");
         return false;
+    }
+    
+    public boolean allowRemovedIfNotSourced(Object primaryKey) {
+        return !sourcedDataChecker.isSourced(primaryKey);
     }
 }

@@ -33,9 +33,11 @@ import fdaf.base.UserType;
 import fdaf.logic.base.AbstractUpdateCallback;
 import fdaf.logic.base.Specification;
 import fdaf.logic.base.UpdateCallbackInterface;
+import fdaf.logic.callback.sourced_checker_wrapper.SourcedDataCheckWrapper;
 import fdaf.logic.ejb.repository.UserRepository;
 import fdaf.logic.entity.User;
 import java.io.Serializable;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.ejb.Remote;
 import javax.ejb.Stateful;
@@ -49,6 +51,14 @@ public class UserUpdateCallback extends AbstractUpdateCallback
     private UserRepository repository;
     private User entity;
     private String passwordBackup;
+    
+    @EJB
+    private SourcedDataCheckWrapper sourcedDataChecker;
+    
+    @PostConstruct
+    public void configureSourcedDataChecker() {
+        sourcedDataChecker.configure(this);
+    }
 
     public UserUpdateCallback() {
         // NO-OP
@@ -147,5 +157,9 @@ public class UserUpdateCallback extends AbstractUpdateCallback
             }
         }
         return true;
+    }
+
+    public boolean allowRemovedIfNotSourced(Object primaryKey) {
+        return !sourcedDataChecker.isSourced(primaryKey);
     }
 }

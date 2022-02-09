@@ -17,7 +17,7 @@
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
- * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSEp
  * ARE DISCLAIMED. IN NO EVENT SHALL THE REGENTS OR CONTRIBUTORS BE LIABLE FOR
  * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
  * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
@@ -26,46 +26,36 @@
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE
  * USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package fdaf.logic.tools;
+package fdaf.logic.ejb.callback.sourced_checkers;
 
 import fdaf.logic.base.SourcedDataCheckerInterface;
-import java.util.HashMap;
-import java.util.Map;
+import fdaf.logic.base.Specification;
+import fdaf.logic.ejb.repository.UserGroupMemberRepository;
+import fdaf.logic.entity.UserGroupMember;
+import java.io.Serializable;
+import javax.ejb.EJB;
+import javax.ejb.Remote;
+import javax.ejb.Stateful;
 
-public class SourcedDataChecker {
+@Remote({SourcedDataCheckerInterface.class})
+@Stateful(passivationCapable = false)
+public class UserGroupOnUserGroupMemberSourcedCheck implements Serializable {
 
-    protected final Map<String, SourcedDataCheckerInterface> sourceDataCheckerMap = new HashMap<String, SourcedDataCheckerInterface>();
-    protected String callbackPrefixName;
+    private static final long serialVersionUID = 1L;    
 
-    public SourcedDataChecker() {
+    @EJB
+    private UserGroupMemberRepository userGroupMemberRepository;
+
+    public UserGroupOnUserGroupMemberSourcedCheck() {
         // NO-OP
     }
-
-    public void configure(Object callback) {
-        Class<?> enclosingClass = callback.getClass().getEnclosingClass();
-        if (enclosingClass == null) {
-            callbackPrefixName = callback.getClass().getName();
-        } else {
-            callbackPrefixName = enclosingClass.getName();
-        }
-        callbackPrefixName = callbackPrefixName.replaceAll("^.*\\.|UpdateCallback$", "");
-    }
-
-    protected void mapSourcedDataCheckers() {
-        // NO-OP
-    }
-
+    
     public boolean isSourced(Object primaryKey) {
-        if (!sourceDataCheckerMap.isEmpty()) {
-            for (String key: sourceDataCheckerMap.keySet()) {
-                if (key.matches("^" + callbackPrefixName + ".*")) {
-                    SourcedDataCheckerInterface sdc = sourceDataCheckerMap.get(key);
-                    if (sdc.isSourced(primaryKey)) {
-                        return true;
-                    }
-                }
-            }
+        Specification<UserGroupMember> spec = userGroupMemberRepository.presetSpecification();
+        spec.setPredicate(spec.getBuilder().equal(spec.getRoot().get("userGroupId"), primaryKey));
+        if (userGroupMemberRepository.find(spec) != null) {
+            return true;
         }
         return false;
-    } 
+    }
 }
