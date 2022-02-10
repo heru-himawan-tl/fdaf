@@ -37,7 +37,7 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     <d:controllerInit bean="#{addAdministratorWebAppBean}" />
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <title><h:outputText value="#{controller.bean.applicationName} - #{fn:toUpperCase(label.addAdministrator)}" /></title>
+        <d:customTitleTag pageTitle="#{fn:toUpperCase(label.addAdministrator)}" />
         <h:outputStylesheet library="css" name="style.css"/>
         <d:customHeadTag />
     </h:head>

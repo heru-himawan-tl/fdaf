@@ -252,6 +252,14 @@ public abstract class AbstractBaseWebAppBean extends AbstractWebAppCommon {
     public boolean getHideMobileMenu() {
         return hideMobileMenu;
     }
+    
+    public String getSiteNameForWeb() {
+        String siteNameForWeb = getCommonConfiguration().getSiteName();
+        if (siteNameForWeb == null || (siteNameForWeb != null && siteNameForWeb.isEmpty())) {
+            siteNameForWeb = getApplicationName();
+        }
+        return siteNameForWeb;
+    }
 
     public void checkAdministratorAccount(ComponentSystemEvent event) throws AbortProcessingException {
         try {

@@ -38,6 +38,6 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         <composite:attribute required="true" name="pageTitle" type="java.lang.String" />
     </composite:interface>
     <composite:implementation>
-        <title><h:outputText value="#{controller.bean.applicationName} - #{fn:toUpperCase(cc.attrs.pageTitle)}" /></title>
+        <title><h:outputText value="#{controller.bean.siteNameForWeb} - #{fn:toUpperCase(cc.attrs.pageTitle)}" /></title>
     </composite:implementation>
 </html>
