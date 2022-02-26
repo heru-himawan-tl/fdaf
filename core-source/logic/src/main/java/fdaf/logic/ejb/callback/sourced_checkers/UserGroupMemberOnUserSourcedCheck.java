@@ -32,8 +32,8 @@ import fdaf.logic.base.SourcedDataCheckerInterface;
 import fdaf.logic.base.Specification;
 import fdaf.logic.ejb.repository.UserGroupMemberRepository;
 import fdaf.logic.ejb.repository.UserRepository;
-import fdaf.logic.entity.UserGroupMember;
 import fdaf.logic.entity.User;
+import fdaf.logic.entity.UserGroupMember;
 import java.io.Serializable;
 import javax.ejb.EJB;
 import javax.ejb.Remote;
@@ -56,9 +56,9 @@ public class UserGroupMemberOnUserSourcedCheck implements Serializable {
     }
     
     public boolean isSourced(Object primaryKey) {
-        Specification<UserGroupMember> spec = userGroupMemberRepository.presetSpecification();
-        spec.setPredicate(spec.getBuilder().equal(spec.getRoot().get("id"), primaryKey));
-        UserGroupMember userGroupMember = userGroupMemberRepository.find(spec);
+        Specification<UserGroupMember> userGroupMemberSpec = userGroupMemberRepository.presetSpecification();
+        userGroupMemberSpec.setPredicate(userGroupMemberSpec.getBuilder().equal(userGroupMemberSpec.getRoot().get("id"), primaryKey));
+        UserGroupMember userGroupMember = userGroupMemberRepository.find(userGroupMemberSpec);
         if (userGroupMember == null) {
             return false;
         }
