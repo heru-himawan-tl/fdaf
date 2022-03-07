@@ -49,7 +49,7 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                 <h:panelGroup layout="block" styleClass="viewer_data_main_info_box">
                     <composite:insertChildren />
                 </h:panelGroup>
-                <h:panelGroup layout="block" styleClass="viewer_data_properties_box">
+                <h:panelGroup layout="block" styleClass="viewer_data_properties_box" rendered="#{controller.bean.noDataProperties eq false}">
                     <h:panelGroup layout="block" styleClass="viewer_caption_box">
                         <h:outputText value="#{label.dataPropertiesOf} " />
                         <h:outputText value="#{cc.attrs.caption}" />
