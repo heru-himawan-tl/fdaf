@@ -44,8 +44,8 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                 <d:viewerRowSet label="#{elabel.employmentId}" value="#{controller.bean.resultObject.data.user.employee.employmentId}" />
                 <d:viewerRowSet label="#{elabel.department}" value="#{controller.bean.resultObject.data.user.employee.department.name}" />
                 <d:viewerRowSet label="#{elabel.role}" value="#{controller.bean.resultObject.data.user.employee.role.name}" />
-                <d:viewerRowSet label="#{elabel.inTimeStamp}" value="#{userLogin.data.inTimeStamp}" />
-                <d:viewerRowSet label="#{elabel.outTimeStamp}" value="#{userLogin.data.outTimeStamp}" />
+                <d:viewerRowSet label="#{elabel.inTimeStamp}" value="#{(not empty userLogin.data.inTimeStamp) ? userLogin.data.inTimeStamp : label.notAvailable}" />
+                <d:viewerRowSet label="#{elabel.outTimeStamp}" value="#{(not empty userLogin.data.outTimeStamp) ? userLogin.data.outTimeStamp : label.notAvailable}" />
                 <d:viewerRowSet rendered="#{userLogin.data.logoutState}" label="#{label.logoutStatus}" value="#{label.logout}" />
                 <d:viewerRowSet label="#{elabel.userAgent}" value="#{userLogin.data.userAgent}" />
             </d:viewerTable>

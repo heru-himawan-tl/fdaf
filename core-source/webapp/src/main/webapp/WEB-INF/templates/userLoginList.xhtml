@@ -56,8 +56,8 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                             <d:dataDetailSet label="#{elabel.userName}" value="#{userLogin.data.user.userName}" />
                             <d:dataDetailSet label="#{elabel.email}" value="#{userLogin.data.user.email}" />
                             <d:dataDetailSet label="#{elabel.userType}" value="#{userLogin.data.user.userType}" />
-                            <d:dataDetailSet label="#{elabel.inTimeStamp}" value="#{userLogin.data.inTimeStamp}" />
-                            <d:dataDetailSet label="#{elabel.outTimeStamp}" value="#{userLogin.data.outTimeStamp}" />
+                            <d:dataDetailSet label="#{elabel.inTimeStamp}" value="#{(not empty userLogin.data.inTimeStamp) ? userLogin.data.inTimeStamp : label.notAvailable}" />
+                            <d:dataDetailSet label="#{elabel.outTimeStamp}" value="#{(not empty userLogin.data.outTimeStamp) ? userLogin.data.outTimeStamp : label.notAvailable}" />
                             <d:dataDetailSet rendered="#{userLogin.data.logoutState}" label="#{label.logoutStatus}" value="#{label.logout}" />
                             <d:dataDetailSet label="#{elabel.userAgent}" value="#{userLogin.data.userAgent}" />
                         </d:dataDetailTable>
