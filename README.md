@@ -81,7 +81,8 @@ modules source codes:
   - Role [1]  
   - User Group [1]  
   - User Group Member [1]  
-  - Employee [1]  
+  - Employee [1]
+  - User Login (User Login Administration Board) [2]
 - Common Configuration Board  
 - Mailer Configuration Board  
 - File Manager
@@ -94,6 +95,13 @@ Modules marked as [1] are builtin with the following functions:
 - search tool  
 - mass removal  
 - orphan data check  
+
+Modules marked as [2] are builtin with the following functions:  
+- listing (with search tool, ordering tool, pagination)  
+- single record viewer  
+- single record removal  
+- search tool  
+- mass removal   
 
 Besides the above listed builtin sources, you will find ready-to-use
 business-logic-application-modules source codes within FDAF.
