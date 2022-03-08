@@ -42,7 +42,7 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                 <d:listHeadStrictWidth value="#{label.loginInformation}" />
             </d:listRowHead>
             <ui:repeat value="#{controller.bean.resultList}" var="userLogin">
-                <d:listRow editable="false" removePromptId="userLogin" listObject="#{userLogin}">
+                <d:listRow editable="false" removePromptId="userLogin" listObject="#{userLogin}" withEditButton="false">
                     <d:listColumnMobileViewWithTool listObject="#{userLogin}">
                         <d:dataListMobileViewContentBox>
                             <h:outputText value="#{userLogin.data.user.userName}" /><br />

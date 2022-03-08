@@ -38,6 +38,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 import javax.annotation.PostConstruct;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UISelectItem;
@@ -120,6 +121,8 @@ public abstract class AbstractWebAppBean extends AbstractBaseWebAppBean {
     protected String lastKnownNewRecordId;
 
     protected Object currentViewDataId;
+    
+    protected String rowUUID;
 
     protected AbstractWebAppBean() {
         // NO-OP
@@ -261,6 +264,15 @@ public abstract class AbstractWebAppBean extends AbstractBaseWebAppBean {
 
     public SelectItem[] getPermissions() {
         return permissions;
+    }
+    
+    public String presetRowUUID() {
+        rowUUID = UUID.randomUUID().toString();
+        return rowUUID;
+    }
+    
+    public String getRowUUID() {
+        return rowUUID;
     }
 
     public void prepareCreate() {

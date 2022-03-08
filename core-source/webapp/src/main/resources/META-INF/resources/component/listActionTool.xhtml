@@ -38,6 +38,7 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         <composite:attribute required="true" name="listObject" type="java.lang.Object" />
         <composite:attribute required="false" name="editable" type="java.lang.Boolean" default="true" />
         <composite:attribute required="false" name="removable" type="java.lang.Boolean" default="true" />
+        <composite:attribute required="false" name="withEditButton" type="java.lang.Boolean" default="true" />
     </composite:interface>
     <composite:implementation>
         <h:panelGroup layout="block" styleClass="list_action_column">
@@ -45,6 +46,7 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                 listObject="#{cc.attrs.listObject}"
                 editable="#{cc.attrs.editable}"
                 removable="#{cc.attrs.removable}"
+                withEditButton="#{cc.attrs.withEditButton}"
             />
         </h:panelGroup>
     </composite:implementation>
