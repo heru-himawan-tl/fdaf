@@ -27,9 +27,9 @@
  * USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-function initEditIndexingWS(URI, serviceUUID, viewLayerName, editID) {
+function initEditIndexingWS(URI, serviceUUID, viewLayerName, editID, webSessionUUID) {
     var editIndexingWS = new WebSocket(URI);
     editIndexingWS.onopen = function (event) {
-        editIndexingWS.send(serviceUUID + " " + viewLayerName + " " + editID);
+        editIndexingWS.send(serviceUUID + " " + viewLayerName + " " + editID + " " + webSessionUUID);
     }
 }

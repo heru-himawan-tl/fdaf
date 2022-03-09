@@ -96,6 +96,7 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                                 <f:ajax event="click" execute="@form" render="@form" />
                             </h:commandButton>
                             <h:commandButton type="button" styleClass="grouped_button_inner" value="#{label.buttonSaveClose}" rendered="#{(controller.bean.allowRender eq true and controller.bean.opMode eq 'UPDATE')}">
+                                <f:actionListener binding="#{controller.bean.closeEditIndexing()}" />
                                 <f:actionListener binding="#{controller.bean.executeUpdateAlt()}" />
                                 <f:ajax event="click" execute="@form" render="@form" />
                             </h:commandButton>
@@ -104,10 +105,12 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                                 <f:ajax event="click" execute="@form" render="@form" />
                             </h:commandButton>
                             <h:commandButton type="button" styleClass="grouped_button_inner" value="#{label.buttonSaveClose}" rendered="#{(controller.bean.allowRender eq true and controller.bean.opMode eq 'CREATE')}">
+                                <f:actionListener binding="#{controller.bean.closeEditIndexing()}" />
                                 <f:actionListener binding="#{controller.bean.executeCreateAlt()}" />
                                 <f:ajax event="click" execute="@form" render="@form" />
                             </h:commandButton>
                             <h:commandButton type="button" styleClass="#{(cc.attrs.simpleMode eq false) ? 'grouped_button_inner' : 'grouped_button_right'}" immediate="true" value="#{label.buttonCloseEditor}" rendered="#{(controller.bean.allowRender eq true and (controller.bean.opMode eq 'CREATE' or controller.bean.opMode eq 'UPDATE'))}">
+                                <f:actionListener binding="#{controller.bean.closeEditIndexing()}" />
                                 <f:actionListener binding="#{controller.bean.deinitMultipartForm()}" />
                                 <f:actionListener binding="#{controller.bean.setOpMode(opMode.LISTING)}" />
                                 <f:actionListener binding="#{controller.bean.setDisableValidation(true)}" />
@@ -137,6 +140,7 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                         </h:panelGroup>
                         <h:panelGroup layout="block" styleClass="program_heading_button_box_flex" rendered="#{((controller.bean.isLoggedOn eq false or controller.bean.isBrokenUserSession eq true) and cc.attrs.simpleMode eq true)}">
                             <h:commandButton type="button" styleClass="common_button" value="#{label.buttonClose}" immediate="true">
+                                <f:actionListener binding="#{controller.bean.closeEditIndexing()}" />
                                 <f:actionListener binding="#{controller.bean.setOpMode(opMode.LISTING)}" />
                                 <f:actionListener binding="#{controller.bean.setDisableValidation(true)}" />
                                 <f:ajax event="click" execute="@form" render="@form" />

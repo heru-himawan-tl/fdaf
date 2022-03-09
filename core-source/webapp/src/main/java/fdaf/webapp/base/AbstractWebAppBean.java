@@ -33,6 +33,7 @@ import fdaf.base.OrderingMode;
 import fdaf.base.Permission;
 import fdaf.base.UserType;
 import fdaf.webapp.bean.system.EditIndexingBean;
+import fdaf.webapp.bean.system.WebSessionHandleBean;
 import fdaf.webapp.bean.system.ListUpdaterBean;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -180,6 +181,18 @@ public abstract class AbstractWebAppBean extends AbstractBaseWebAppBean {
 
     protected void postConstructTask() {
         // NO-OP
+    }
+    
+    public WebSessionHandleBean getWebSessionHandleBean() {
+        return null;
+    }
+    
+    public String getWebSessionUUID() {
+        WebSessionHandleBean webSessionHandle = getWebSessionHandleBean();
+        if (webSessionHandle != null) {
+            return webSessionHandle.getWebSessionUUID();
+        }
+        return null;
     }
     
     public EditIndexingBean getEditIndexing() {
@@ -775,6 +788,15 @@ public abstract class AbstractWebAppBean extends AbstractBaseWebAppBean {
                     addMessage(SV_WARN, "inEditStateWarning");
                 }
             }
+        }
+    }
+    
+    public void closeEditIndexing() {
+        WebSessionHandleBean webSessionHandle = getWebSessionHandleBean();
+        EditIndexingBean editIndexing = getEditIndexing();
+        if (webSessionHandle != null && editIndexing != null && (opMode == WebAppOpMode.CREATE || opMode == WebAppOpMode.UPDATE)) {
+            String webSessionUUID = webSessionHandle.getWebSessionUUID();
+            editIndexing.removeWebSocket(webSessionUUID, viewLayerName);
         }
     }
 

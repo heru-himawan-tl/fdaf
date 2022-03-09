@@ -84,8 +84,8 @@ public abstract class AbstractWebSocket implements WebSocketInterface {
     @OnClose
     public void onClose(Session session) throws IOException {
         setSession(session);
-        open = false;
         onCloseTask();
+        open = false;
     }
     
     protected void onCloseTask() {

@@ -26,69 +26,30 @@
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE
  * USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package fdaf.webapp.bean.common;
+package fdaf.webapp.bean.system;
 
-import fdaf.base.FacadeInterface;
-import fdaf.webapp.base.AbstractWebAppBean;
-import fdaf.webapp.bean.system.Controller;
-import fdaf.webapp.bean.system.EditIndexingBean;
-import fdaf.webapp.bean.system.ListUpdaterBean;
-import fdaf.webapp.bean.system.WebSessionHandleBean;
 import java.io.Serializable;
-import javax.ejb.EJB;
-import javax.faces.view.ViewScoped;
-import javax.inject.Inject;
+import java.util.ArrayList;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ExecutorService;
+import java.util.List;
+import java.util.UUID;
+import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 
-@ViewScoped
+@SessionScoped
 @Named
-public class __NAME__WebAppBean extends AbstractWebAppBean implements Serializable {
+public class WebSessionHandleBean implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
-    @EJB(lookup = "java:global/__EJB_LOOKUP_DIR__/__NAME__Facade")
-    private FacadeInterface facade;
     
-    @Inject
-    private WebSessionHandleBean webSessionHandle;
+    private String webSessionUUID = UUID.randomUUID().toString();
     
-    @Inject
-    private EditIndexingBean editIndexing;
-    
-    // UI_UPDATER_INJECT_HERE
-    
-    @Inject
-    private ListUpdaterBean listUpdater;
-    
-    @Inject
-    private Controller controller;
-
-    public __NAME__WebAppBean() {
+    public WebSessionHandleBean() {
         // NO-OP
     }
     
-    protected Controller getController() {
-        return controller;
+    public String getWebSessionUUID() {
+        return webSessionUUID;
     }
-    
-    @Override
-    public WebSessionHandleBean getWebSessionHandleBean() {
-        return webSessionHandle;
-    }
-    
-    @Override
-    public EditIndexingBean getEditIndexing() {
-        return editIndexing;
-    }
-    
-    @Override
-    public ListUpdaterBean getListUpdater() {
-        return listUpdater;
-    }
-
-    protected FacadeInterface getFacade() {
-        return facade;
-    }
-    
-    // UI_UPDATER_ARRAY_GET_METHOD_HERE
 }

@@ -43,7 +43,7 @@ import javax.inject.Named;
 public class EditIndexingBean implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    private static final List<EditIndexingWS> webSockets = new ArrayList<EditIndexingWS>();    
+    private static final List<EditIndexingWS> webSockets = new ArrayList<EditIndexingWS>(); 
     private ExecutorService executorService;
     private String serviceUUID = UUID.randomUUID().toString();
     
@@ -51,9 +51,9 @@ public class EditIndexingBean implements Serializable {
         // NO-OP
     }
     
-    public void addWebSocket(EditIndexingWS websocket) {
-        if (websocket != null && websocket.isOpen()) {
-            webSockets.add(websocket);
+    public void addWebSocket(EditIndexingWS webSocket) {
+        if (webSocket != null && webSocket.isOpen()) {
+            webSockets.add(webSocket);
         }
     }
     
@@ -71,6 +71,26 @@ public class EditIndexingBean implements Serializable {
     
     public String getServiceUUID() {
         return serviceUUID;
+    }
+    
+    public void removeWebSocket(String webSessionUUID, String viewLayerName) {
+        try {
+            if (!webSockets.isEmpty()) {
+                List<EditIndexingWS> wss = new ArrayList<EditIndexingWS>();
+                for (EditIndexingWS webSocket : webSockets) {
+                    if (webSocket.isOpen() && webSessionUUID.equals(webSocket.getWebSessionUUID())
+                        && viewLayerName.equals(webSocket.getViewLayerName())) {
+                        wss.add(webSocket);
+                    }
+                }
+                if (!wss.isEmpty()) {
+                    for (EditIndexingWS ws : wss) {
+                        webSockets.remove(ws);
+                    }
+                }
+            }
+        } catch (Exception e) {
+        }
     }
     
     public void removeWebSocket(EditIndexingWS editIndexingWS) {

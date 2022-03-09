@@ -38,8 +38,10 @@ public class EditIndexingWS extends AbstractWebSocket {
 
     @Inject
     private EditIndexingBean editIndexing;
+    
     private String viewLayerName;
     private Object dataID;
+    private String webSessionUUID;
     
     public String getViewLayerName() {
         return viewLayerName;
@@ -47,6 +49,10 @@ public class EditIndexingWS extends AbstractWebSocket {
     
     public Object getDataID() {
         return dataID;
+    }
+    
+    public String getWebSessionUUID() {
+        return webSessionUUID;
     }
  
     @Override
@@ -58,10 +64,11 @@ public class EditIndexingWS extends AbstractWebSocket {
     @Override
     protected void onMessageTask(String message) {
         if (message != null && !message.trim().isEmpty()) {
-            String serviceUUID = message.replaceAll("^([a-zA-Z0-9\\-]+)([ ]+)([a-zA-Z]+)([ ]+)([0-9]+)$", "$1");
+            String serviceUUID = message.replaceAll("^([a-zA-Z0-9\\-]+)([ ]+)([a-zA-Z]+)([ ]+)([0-9]+)([ ]+)([a-zA-Z0-9\\-]+)$", "$1");
             if (serviceUUID.equals(editIndexing.getServiceUUID())) {
-                viewLayerName = message.replaceAll("^([a-zA-Z0-9\\-]+)([ ]+)([a-zA-Z]+)([ ]+)([0-9]+)$", "$3");
-                dataID = (Object) Long.parseLong(message.replaceAll("^([a-zA-Z0-9\\-]+)([ ]+)([a-zA-Z]+)([ ]+)([0-9]+)$", "$5"));
+                viewLayerName = message.replaceAll("^([a-zA-Z0-9\\-]+)([ ]+)([a-zA-Z]+)([ ]+)([0-9]+)([ ]+)([a-zA-Z0-9\\-]+)$", "$3");
+                dataID = (Object) Long.parseLong(message.replaceAll("^([a-zA-Z0-9\\-]+)([ ]+)([a-zA-Z]+)([ ]+)([0-9]+)([ ]+)([a-zA-Z0-9\\-]+)$", "$5"));
+                webSessionUUID = message.replaceAll("^([a-zA-Z0-9\\-]+)([ ]+)([a-zA-Z]+)([ ]+)([0-9]+)([ ]+)([a-zA-Z0-9\\-]+)$", "$7");
             }
         }
     }
