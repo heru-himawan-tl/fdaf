@@ -41,12 +41,13 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         <composite:attribute required="false" name="withListActionTool" type="java.lang.Boolean" default="true" />
         <composite:attribute required="false" name="editable" type="java.lang.Boolean" default="true" />
         <composite:attribute required="false" name="removable" type="java.lang.Boolean" default="true" />
+        <composite:attribute required="false" name="withEditButton" type="java.lang.Boolean" default="true" />
     </composite:interface>
     <composite:implementation>
         <h:panelGroup layout="block" styleClass="list_row #{cc.attrs.addStyleClass}">
             <d:listSelectItem itemId="#{cc.attrs.listObject.data.id}" rendered="#{(cc.attrs.withSelectItem eq true)}" readonly="#{(cc.attrs.listObject.removable eq false)}" />
             <composite:insertChildren />
-            <d:listActionTool listObject="#{cc.attrs.listObject}" rendered="#{(cc.attrs.withListActionTool eq true)}" editable="#{cc.attrs.editable}" removable="#{cc.attrs.removable}" />
+            <d:listActionTool listObject="#{cc.attrs.listObject}" rendered="#{(cc.attrs.withListActionTool eq true)}" editable="#{cc.attrs.editable}" removable="#{cc.attrs.removable}" withEditButton="#{cc.attrs.withEditButton}" />
         </h:panelGroup>
     </composite:implementation>
 </html>

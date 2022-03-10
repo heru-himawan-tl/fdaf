@@ -32,7 +32,7 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 <html xmlns="http://www.w3.org/1999/xhtml"
         xmlns:d="http://java.sun.com/jsf/composite/component"
         xmlns:ui="http://java.sun.com/jsf/facelets"
-        xmlns:h="http://java.sun.headingcom/jsf/html"
+        xmlns:h="http://java.sun.com/jsf/html"
         xmlns:f="http://java.sun.com/jsf/core">
     <ui:composition>
         <d:listContainer>
@@ -42,8 +42,8 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                 <d:listHeadStrictWidth value="#{label.loginInformation}" />
             </d:listRowHead>
             <ui:repeat value="#{controller.bean.resultList}" var="userLogin">
-                <d:listRow editable="false" removePromptId="userLogin" listObject="#{userLogin}" withEditButton="false">
-                    <d:listColumnMobileViewWithTool listObject="#{userLogin}">
+                <d:listRow removePromptId="userLogin" listObject="#{userLogin}" editable="false" withEditButton="false">
+                    <d:listColumnMobileViewWithTool listObject="#{userLogin}" editable="false" withEditButton="false">
                         <d:dataListMobileViewContentBox>
                             <h:outputText value="#{userLogin.data.user.userName}" /><br />
                             <h:outputText value="#{elabel.id}" />:
