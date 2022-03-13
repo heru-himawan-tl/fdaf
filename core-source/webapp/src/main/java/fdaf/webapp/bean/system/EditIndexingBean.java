@@ -73,13 +73,14 @@ public class EditIndexingBean implements Serializable {
         return serviceUUID;
     }
     
-    public void removeWebSocket(String webSessionUUID, String viewLayerName) {
+    public void removeWebSocket(String webSessionUUID, String viewLayerName, Object dataID) {
         try {
             if (!webSockets.isEmpty()) {
                 List<EditIndexingWS> wss = new ArrayList<EditIndexingWS>();
                 for (EditIndexingWS webSocket : webSockets) {
                     if (webSocket.isOpen() && webSessionUUID.equals(webSocket.getWebSessionUUID())
-                        && viewLayerName.equals(webSocket.getViewLayerName())) {
+                        && viewLayerName.equals(webSocket.getViewLayerName())
+                        && webSocket.getDataID().equals(dataID)) {
                         wss.add(webSocket);
                     }
                 }

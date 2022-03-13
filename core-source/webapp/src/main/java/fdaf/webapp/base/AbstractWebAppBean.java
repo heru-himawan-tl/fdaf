@@ -794,9 +794,10 @@ public abstract class AbstractWebAppBean extends AbstractBaseWebAppBean {
     public void closeEditIndexing() {
         WebSessionHandleBean webSessionHandle = getWebSessionHandleBean();
         EditIndexingBean editIndexing = getEditIndexing();
-        if (webSessionHandle != null && editIndexing != null && (opMode == WebAppOpMode.CREATE || opMode == WebAppOpMode.UPDATE)) {
+        if (webSessionHandle != null && editIndexing != null && primaryKey != null
+            && (opMode == WebAppOpMode.CREATE || opMode == WebAppOpMode.UPDATE)) {
             String webSessionUUID = webSessionHandle.getWebSessionUUID();
-            editIndexing.removeWebSocket(webSessionUUID, viewLayerName);
+            editIndexing.removeWebSocket(webSessionUUID, viewLayerName, primaryKey);
         }
     }
 
