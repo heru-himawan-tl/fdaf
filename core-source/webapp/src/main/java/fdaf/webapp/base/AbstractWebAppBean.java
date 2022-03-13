@@ -124,6 +124,8 @@ public abstract class AbstractWebAppBean extends AbstractBaseWebAppBean {
     protected Object currentViewDataId;
     
     protected String rowUUID;
+    
+    protected boolean editByViewMode;
 
     protected AbstractWebAppBean() {
         // NO-OP
@@ -248,7 +250,11 @@ public abstract class AbstractWebAppBean extends AbstractBaseWebAppBean {
     }
 
     public void setOpMode(WebAppOpMode opMode) {
-        this.opMode = opMode;
+        if (editByViewMode) {
+            this.opMode = WebAppOpMode.VIEW;
+        } else {
+            this.opMode = opMode;
+        }
     }
 
     public WebAppOpMode getOpMode() {
@@ -658,6 +664,18 @@ public abstract class AbstractWebAppBean extends AbstractBaseWebAppBean {
         }
     }
     
+    public void presetEditByViewMode() {
+        editByViewMode = true;
+    }
+    
+    public boolean getInEditByViewMode() {
+        return editByViewMode;
+    }
+    
+    public void resetEditByViewMode() {
+        editByViewMode = false;
+    }
+    
     public Object getCurrentViewDataId() {
         return currentViewDataId;
     }
@@ -668,6 +686,7 @@ public abstract class AbstractWebAppBean extends AbstractBaseWebAppBean {
     
     public void exitView() {
         opMode = WebAppOpMode.LISTING;
+        editByViewMode = false;
         resultObject = null;
         currentViewDataId = null;
         disposeEntity();
@@ -821,7 +840,13 @@ public abstract class AbstractWebAppBean extends AbstractBaseWebAppBean {
                 getFacade().postUpdateTask();
                 addMessage(SV_INFO, "updateRecordSuccess");
                 if (saveAndClose) {
-                    opMode = WebAppOpMode.LISTING;
+                    if (!editByViewMode) {
+                        opMode = WebAppOpMode.LISTING;
+                    } else {
+                        opMode = WebAppOpMode.VIEW;
+                        editByViewMode = false;
+                        view(primaryKey);
+                    }
                     saveAndClose = false;
                     onUpdateFinishTask();
                     disposeEntity();
@@ -833,6 +858,7 @@ public abstract class AbstractWebAppBean extends AbstractBaseWebAppBean {
                 }
                 getFacade().reloadEntity();
                 presetEntity();
+                view(primaryKey);
                 onUpdateFinishTask();
             } else {
                 addPreUpdateCheckWarnCustomMessage();
