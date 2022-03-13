@@ -1,0 +1,105 @@
+<!--
+
+Copyright (c) Heru Himawan Tejo Laksono. All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+
+1. Redistributions of source code must retain the above copyright notice,
+   this list of conditions and the following disclaimer.
+
+2. Redistributions in binary form must reproduce the above copyright notice,
+   this list of conditions and the following disclaimer in the documentation
+   and/or other materials provided with the distribution.
+
+3. Neither the name of the copyright holders nor the names of its
+   contributors may be used to endorse or promote products derived from this
+   software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ARE DISCLAIMED. IN NO EVENT SHALL THE REGENTS OR CONTRIBUTORS BE LIABLE FOR
+ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE
+USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:composite="http://java.sun.com/jsf/composite"
+        xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:f="http://java.sun.com/jsf/core">
+    <composite:interface>
+        <composite:attribute required="true" name="pageTitle" type="java.lang.String" />
+    </composite:interface>
+    <composite:implementation>
+                <!--
+                    This is custom program heading with default design made by FDAF developer team.
+                    If you want to design your own program heading, then you may create
+                    one inside /custom-core-source/webapp/src/main/webapp/WEB-INF/resources/component/
+                    directory.
+                    This default design is intended to make the default FDAF administrator
+                    dashboard to be "just working".
+                -->
+        <h:panelGroup layout="block" styleClass="program_heading_container">
+            <h:panelGroup layout="block" styleClass="program_heading_box">
+                <h:panelGroup layout="block" styleClass="program_heading_inner">
+                    <h:panelGroup layout="block" styleClass="program_heading_title">
+                        <h:panelGroup layout="block" styleClass="program_heading_mobile_mode_table">
+                            <h:panelGroup layout="block" styleClass="program_heading_mobile_mode_row">
+                                <h:panelGroup layout="block" styleClass="program_heading_mobile_mode_title_cell">
+                                    <h:outputText value="#{cc.attrs.pageTitle}" />
+                                </h:panelGroup>
+                                <h:panelGroup layout="block" styleClass="program_heading_mobile_mode_action_menu_cell">
+                                    <h:commandButton type="button" styleClass="common_button blue_button mobile_menu_button mobile_menu_button_custom"
+                                        value="#{label.buttonAction}" 
+                                        onclick="var elx = document.getElementsByClassName('program_heading_mobile_action_tool_box')[0];
+                                            var el1 = document.getElementsByClassName('program_heading_button_box')[0];
+                                            var el2 = document.getElementsByClassName('list_control_top')[0];
+                                            if (el2 != null) {
+                                                elx.innerHTML = el1.innerHTML + el2.innerHTML;
+                                            } else {
+                                                elx.innerHTML = el1.innerHTML;
+                                            }
+                                            if (elx.style.display == 'none' || elx.style.display == '' || mobileMenuIsOpened == false) {
+                                                elx.style='display:block';
+                                                this.value = 'X';
+                                                mobileMenuIsOpened = true;
+                                            } else {
+                                                this.value = '#{label.buttonAction}';
+                                                elx.style='display:none';
+                                                mobileMenuIsOpened = false;
+                                            };" />
+                                </h:panelGroup>
+                                <h:outputScript rendered="#{controller.bean.hideMobileMenu eq false}">
+                                    if (mobileMenuIsOpened == true) {
+                                        var mnb = document.getElementsByClassName('mobile_menu_button_custom')[0];
+                                        if (mnb != null) {
+                                            mnb.click();
+                                        }
+                                    }
+                                </h:outputScript>
+                                <h:outputScript rendered="#{controller.bean.hideMobileMenu eq true}">
+                                    mobileMenuIsOpened = false;
+                                </h:outputScript>
+                            </h:panelGroup>
+                        </h:panelGroup>
+                    </h:panelGroup>
+                    <h:panelGroup layout="block" styleClass="program_heading_mobile_action_tool_box_outer">
+                        <h:panelGroup layout="block" styleClass="program_heading_mobile_action_tool_box" />
+                    </h:panelGroup>
+                    <h:panelGroup layout="block" styleClass="program_heading_button_box">
+                        <h:panelGroup layout="block" styleClass="program_heading_button_box_flex">
+                            <composite:insertChildren />
+                        </h:panelGroup>
+                    </h:panelGroup>
+                </h:panelGroup>
+            </h:panelGroup>
+        </h:panelGroup>
+    </composite:implementation>
+</html>

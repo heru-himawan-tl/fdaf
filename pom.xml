@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+Copyright (c) Heru Himawan Tejo Laksono. All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+
+1. Redistributions of source code must retain the above copyright notice,
+   this list of conditions and the following disclaimer.
+
+2. Redistributions in binary form must reproduce the above copyright notice,
+   this list of conditions and the following disclaimer in the documentation
+   and/or other materials provided with the distribution.
+
+3. Neither the name of the copyright holders nor the names of its
+   contributors may be used to endorse or promote products derived from this
+   software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ARE DISCLAIMED. IN NO EVENT SHALL THE REGENTS OR CONTRIBUTORS BE LIABLE FOR
+ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE
+USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    
+    <modelVersion>4.0.0</modelVersion>
+   
+    <groupId>io.sourceforge.fdaf</groupId>
+    <artifactId>fdaf</artifactId>
+    <version>1.0</version>
+    <packaging>pom</packaging>
+    <name>The F.D.A.F Framework</name>
+    
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+    </properties>
+    
+    <build>
+        <directory>${java.io.tmpdir}${file.separator}${project.groupId}${file.separator}${project.artifactId}</directory>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-install-plugin</artifactId>
+                <version>2.5.2</version>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.gmavenplus</groupId>
+                <artifactId>gmavenplus-plugin</artifactId>
+                <version>1.7.1</version>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.codehaus.groovy</groupId>
+                        <artifactId>groovy-all</artifactId>
+                        <version>3.0.8</version>
+                        <type>pom</type>
+                        <scope>runtime</scope>
+                    </dependency>
+                </dependencies>
+                <configuration>
+                    <scripts>
+                        <script>
+                            <![CDATA[
+                            String currentWorkingDir = new File(".").getCanonicalPath();
+                            project.properties.setProperty("fdaf.baseDirectory", currentWorkingDir);
+                            Properties properties = new Properties();
+                            InputStream propertiesFileStream = new FileInputStream("develop.properties");
+                            properties.load(propertiesFileStream);
+                            Enumeration e = properties.propertyNames();
+                            while (e.hasMoreElements()) {
+                                String key = (String) e.nextElement();
+                                String value = properties.getProperty(key);
+                                if (key.trim().matches(".*(Directory|directory|File|file)\$")) {
+                                    try {
+                                        value = new File(value).getCanonicalPath();
+                                    } catch (Exception ex) {
+                                    }
+                                }
+                                project.properties.setProperty(key, value);
+                            }
+                            String[] propertyFields = [
+                                "fdaf.applicationCodeName",
+                                "fdaf.applicationName",
+                                "fdaf.applicationLongName",
+                                "fdaf.applicationDescription",
+                                "fdaf.applicationGroupId",
+                                "fdaf.applicationSourceDirectory",
+                                "fdaf.applicationVersion",
+                                "fdaf.defaultLocale",
+                                "fdaf.copyright",
+                                "fdaf.dataSourceName",
+                                "fdaf.developerHomePage",
+                                "fdaf.jpaUnitName",
+                                "fdaf.thorntailDataSourceConnectionURL",
+                                "fdaf.thorntailDataSourceDriverName",
+                                "fdaf.thorntailDataSourcePassword",
+                                "fdaf.thorntailDataSourceUserName",
+                                "fdaf.thorntailDbConnectorDependencyArtifactId",
+                                "fdaf.thorntailDbConnectorDependencyGroupId",
+                                "fdaf.thorntailDbConnectorDependencyVersion",
+                                "fdaf.thorntailVersion",
+                            ];
+                            for (String f : propertyFields) {
+                                String v = project.properties.getProperty(f);
+                                if (v == null || v.trim().isEmpty()) {
+                                    throw new Exception("Development configuration property value is empty: " + f);
+                                }
+                            }
+                            String appSrcDir = project.properties.getProperty("fdaf.applicationSourceDirectory");
+                            if (currentWorkingDir.equals(new File(appSrcDir).getCanonicalPath())) {
+                                throw new Exception("Development source directory can be set as application source directory.");
+                            }
+                            ]]>
+                        </script>
+                    </scripts>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>set-properties-on-initial-stage</id>
+                        <phase>initialize</phase>
+                        <goals>
+                            <goal>execute</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>set-properties-on-clean</id>
+                        <phase>clean</phase>
+                        <goals>
+                            <goal>execute</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+    
+    <modules>
+        <module>cleaner</module>
+    </modules>
+    
+    <profiles>
+        <profile>
+            <id>initialize-compilable</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <build>
+                <defaultGoal>compile</defaultGoal>
+            </build>
+            <modules>
+                <module>compilable-init-preparation</module>
+                <module>custom-base</module>
+                <module>base</module>
+                <module>application-primitive-entity-model</module>
+                <module>core-primitive-entity-model</module>
+                <module>modeler</module>
+                <module>compilable-init</module>
+                <module>compilable-init-clear</module>
+            </modules>
+        </profile>
+        <profile>
+            <id>build-with-eclipselink</id>
+            <build>
+                <defaultGoal>package</defaultGoal>
+            </build>
+            <modules>
+                <module>compilable-init-preparation</module>
+                <module>custom-base</module>
+                <module>base</module>
+                <module>application-primitive-entity-model</module>
+                <module>core-primitive-entity-model</module>
+                <module>modeler</module>
+                <module>compilable-init</module>
+                <module>compilable-init-clear</module>
+                <module>with-eclipselink-build-invoker</module>
+            </modules>
+        </profile>
+        <profile>
+            <id>build-with-eclipselink-in-single-war</id>
+            <build>
+                <defaultGoal>package</defaultGoal>
+            </build>
+            <modules>
+                <module>compilable-init-preparation</module>
+                <module>custom-base</module>
+                <module>base</module>
+                <module>application-primitive-entity-model</module>
+                <module>core-primitive-entity-model</module>
+                <module>modeler</module>
+                <module>compilable-init</module>
+                <module>compilable-init-clear</module>
+                <module>with-eclipselink-in-single-war-build-invoker</module>
+            </modules>
+        </profile>
+        <profile>
+            <id>build-with-hibernate</id>
+            <build>
+                <defaultGoal>package</defaultGoal>
+            </build>
+            <modules>
+                <module>compilable-init-preparation</module>
+                <module>custom-base</module>
+                <module>base</module>
+                <module>application-primitive-entity-model</module>
+                <module>core-primitive-entity-model</module>
+                <module>modeler</module>
+                <module>compilable-init</module>
+                <module>compilable-init-clear</module>
+                <module>with-hibernate-build-invoker</module>
+            </modules>
+        </profile>
+        <profile>
+            <id>build-with-hibernate-in-single-war</id>
+            <build>
+                <defaultGoal>package</defaultGoal>
+            </build>
+            <modules>
+                <module>compilable-init-preparation</module>
+                <module>custom-base</module>
+                <module>base</module>
+                <module>application-primitive-entity-model</module>
+                <module>core-primitive-entity-model</module>
+                <module>modeler</module>
+                <module>compilable-init</module>
+                <module>compilable-init-clear</module>
+                <module>with-hibernate-in-single-war-build-invoker</module>
+            </modules>
+        </profile>
+        <profile>
+            <id>build-thorntail</id>
+            <build>
+                <defaultGoal>package</defaultGoal>
+            </build>
+            <modules>
+                <module>compilable-init-preparation</module>
+                <module>custom-base</module>
+                <module>base</module>
+                <module>application-primitive-entity-model</module>
+                <module>core-primitive-entity-model</module>
+                <module>modeler</module>
+                <module>compilable-init</module>
+                <module>compilable-init-clear</module>
+                <module>thorntail-build-invoker</module>
+            </modules>
+        </profile>
+        <profile>
+            <id>build-deployable</id>
+            <build>
+                <defaultGoal>package</defaultGoal>
+            </build>
+            <modules>
+                <module>compilable-init-preparation</module>
+                <module>custom-base</module>
+                <module>base</module>
+                <module>application-primitive-entity-model</module>
+                <module>core-primitive-entity-model</module>
+                <module>modeler</module>
+                <module>compilable-init</module>
+                <module>compilable-init-clear</module>
+                <module>with-eclipselink-in-single-war-build-invoker</module>
+                <module>with-hibernate-in-single-war-build-invoker</module>
+                <module>with-eclipselink-build-invoker</module>
+                <module>with-hibernate-build-invoker</module>
+            </modules>
+        </profile>
+        <profile>
+            <id>build-all</id>
+            <build>
+                <defaultGoal>package</defaultGoal>
+            </build>
+            <modules>
+                <module>compilable-init-preparation</module>
+                <module>custom-base</module>
+                <module>base</module>
+                <module>application-primitive-entity-model</module>
+                <module>core-primitive-entity-model</module>
+                <module>modeler</module>
+                <module>compilable-init</module>
+                <module>compilable-init-clear</module>
+                <module>with-eclipselink-in-single-war-build-invoker</module>
+                <module>with-hibernate-in-single-war-build-invoker</module>
+                <module>with-eclipselink-build-invoker</module>
+                <module>with-hibernate-build-invoker</module>
+                <module>thorntail-build-invoker</module>
+            </modules>
+        </profile>
+    </profiles>
+    
+</project>

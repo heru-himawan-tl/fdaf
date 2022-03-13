@@ -1,0 +1,613 @@
+<!--
+
+Copyright (c) Heru Himawan Tejo Laksono. All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+
+1. Redistributions of source code must retain the above copyright notice,
+   this list of conditions and the following disclaimer.
+
+2. Redistributions in binary form must reproduce the above copyright notice,
+   this list of conditions and the following disclaimer in the documentation
+   and/or other materials provided with the distribution.
+
+3. Neither the name of the copyright holders nor the names of its
+   contributors may be used to endorse or promote products derived from this
+   software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ARE DISCLAIMED. IN NO EVENT SHALL THE REGENTS OR CONTRIBUTORS BE LIABLE FOR
+ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE
+USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:d="http://java.sun.com/jsf/composite/component"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions"
+        xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+    <d:controllerInit bean="#{fileManagerWebAppBean}" />
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <d:customTitleTag pageTitle="#{fn:toUpperCase(label.fileManager)}" />
+        <h:outputStylesheet library="css" name="style.css"/>
+        <h:outputScript library="js" name="function.js" />
+        <d:customHeadTag />
+    </h:head>
+    <h:body>
+        <d:setUserSessionRequirement />
+        <h:form id="form" a:enctype="#{controller.bean.enctype}">
+            <d:mainInit />
+            <d:loadBundles />
+            <d:databaseServiceCheck />
+            <d:administratorAccountCheck rendered="#{controller.bean.databaseIsError eq false}" />
+            <d:addAdministratorStartPage rendered="#{controller.bean.databaseIsError eq false}" />
+            <d:userSessionWatch rendered="#{(controller.bean.administratorAccountExists eq true)}" />
+            <d:massiveRemovalPromptCommon />
+            <h:panelGroup layout="block" styleClass="dialog_container" rendered="#{(
+                    controller.bean.prepareMassiveMoveOp eq true and
+                    controller.bean.administratorAccountExists eq true and
+                    controller.bean.isLoggedOn eq true and
+                    controller.bean.isBrokenUserSession eq false
+                )}">
+                <h:panelGroup styleClass="dialog_box">
+                    <h:panelGroup styleClass="dialog_title_box" rendered="#{(controller.bean.massiveMoveReadyState eq false)}">
+                        <h:outputText value="#{label.massiveMoveNotReadyPromptTitle}" />
+                    </h:panelGroup>
+                    <h:panelGroup styleClass="dialog_content_box" rendered="#{(controller.bean.massiveMoveReadyState eq false)}">
+                        <h:outputText value="#{defaultMessage.massiveMoveNotReadyPrompt}" />
+                    </h:panelGroup>
+                    <h:panelGroup styleClass="dialog_title_box" rendered="#{(controller.bean.massiveMoveReadyState eq true)}">
+                        <h:outputText value="#{label.massiveMovePromptTitle}" />
+                    </h:panelGroup>
+                    <h:panelGroup styleClass="dialog_content_box" rendered="#{(controller.bean.massiveMoveReadyState eq true)}">
+                        <h:outputText value="#{defaultMessage.massiveMovePrompt}" />
+                        <h:panelGroup layout="block" styleClass="dialog_field_label_box">
+                            <h:outputText value="#{label.massiveMoveDirectoryDestination}" />
+                        </h:panelGroup>
+                        <h:panelGroup layout="block" styleClass="dialog_field_input_box">
+                            <h:selectOneMenu id="massiveMoveDirectoryDestination" value="#{controller.bean.massiveMoveDirectoryDestination}">
+                                <f:selectItems value="#{controller.bean.directorySelection}" var="selectItem" itemValue="#{selectItem.value}" 
+                                    itemLabel="#{selectItem.label}" />
+                            </h:selectOneMenu>
+                        </h:panelGroup>
+                    </h:panelGroup>
+                    <h:panelGroup styleClass="dialog_button_box">
+                        <h:panelGroup styleClass="dialog_button_box_gap">&nbsp;</h:panelGroup>
+                        <h:commandButton styleClass="grouped_button_left" value="#{label.buttonContinue}" 
+                                rendered="#{(controller.bean.massiveMoveReadyState eq true)}">
+                            <f:ajax event="click" execute="@form" render="@form" listener="#{controller.bean.executeMassiveMove}" />
+                        </h:commandButton>
+                        <h:commandButton styleClass="#{(controller.bean.massiveMoveReadyState eq true) ? 'grouped_button_right' : 'common_button'}" 
+                                value="#{(controller.bean.massiveMoveReadyState eq true) ? label.buttonCancel : label.buttonOk}" immediate="true">
+                            <f:actionListener binding="#{controller.bean.cancelMassiveMove()}" />
+                            <f:ajax event="click" execute="@form" render="@form" />
+                        </h:commandButton>
+                    </h:panelGroup>
+                </h:panelGroup>
+            </h:panelGroup>
+            <d:populateNodes />
+            <d:customTopPanel />
+            <h:panelGroup layout="block" styleClass="dialog_container" rendered="#{controller.bean.inPrepareCreateDirectory eq true}">
+                <h:panelGroup layout="block" styleClass="dialog_box">
+                    <h:panelGroup layout="block" styleClass="dialog_title_box">
+                        <h:outputText value="#{label.createNewDirectoryDialogTitle}" />
+                    </h:panelGroup>
+                    <h:panelGroup layout="block" styleClass="dialog_content_box">
+                        <h:panelGroup layout="block" styleClass="field_note_box">
+                            <h:outputText value="#{defaultMessage.createNewDirectoryNote}" />
+                        </h:panelGroup>
+                        <d:dialogMessages addStyleClass="dialog_messages_offset_top" rendered="#{controller.bean.inPrepareCreateDirectory eq true}" />
+                        <h:panelGroup layout="block" styleClass="dialog_field_label_box">
+                            <h:outputText value="#{label.newDirectoryName}" />
+                        </h:panelGroup>
+                        <h:panelGroup layout="block" styleClass="dialog_field_input_box">
+                            <h:inputText id="newDirectoryName" value="#{controller.bean.newDirectoryName}" />
+                        </h:panelGroup>
+                    </h:panelGroup>
+                    <h:panelGroup layout="block" styleClass="dialog_button_box">
+                        <h:commandButton type="button" styleClass="grouped_button_left" value="#{label.buttonCreate}">
+                            <f:actionListener binding="#{controller.bean.createNewDirectory()}" />
+                            <f:ajax event="click" execute="@form" render="@form" />
+                        </h:commandButton>
+                        <h:commandButton type="button" styleClass="grouped_button_right" value="#{label.buttonCancel}" immediate="true">
+                            <f:actionListener binding="#{controller.bean.cancelNewDirectoryCreation()}" />
+                            <f:ajax event="click" execute="@form" render="@form" />
+                        </h:commandButton>
+                    </h:panelGroup>
+                </h:panelGroup>
+            </h:panelGroup>
+            <h:panelGroup layout="block" styleClass="dialog_container" rendered="#{controller.bean.inPrepareMoveDirectory eq true}">
+                <h:panelGroup layout="block" styleClass="dialog_box">
+                    <h:panelGroup layout="block" styleClass="dialog_title_box">
+                        <h:outputText value="#{label.moveDirectoryDialogTitle}" />
+                    </h:panelGroup>
+                    <h:panelGroup layout="block" styleClass="dialog_content_box">
+                        <h:panelGroup layout="block" styleClass="field_note_box">
+                            <h:outputText value="#{defaultMessage.moveDirectoryNote} #{label.directoryToMoveNote}: #{controller.bean.currentDirectoryDisplayName}" />
+                        </h:panelGroup>
+                        <d:dialogMessages addStyleClass="dialog_messages_offset_top" rendered="#{controller.bean.inPrepareMoveDirectory eq true}" />
+                        <h:panelGroup layout="block" styleClass="dialog_field_label_box">
+                            <h:outputText value="#{label.moveDestinationDirectory}" />
+                        </h:panelGroup>
+                        <h:panelGroup layout="block" styleClass="dialog_field_input_box">
+                            <h:selectOneMenu id="moveDirectoryDestination" value="#{controller.bean.moveDirectoryDestination}">
+                                <f:selectItems value="#{controller.bean.directorySelection}" var="selectItem" itemValue="#{selectItem.value}" 
+                                    itemLabel="#{selectItem.label}" />
+                            </h:selectOneMenu>
+                        </h:panelGroup>
+                    </h:panelGroup>
+                    <h:panelGroup layout="block" styleClass="dialog_button_box">
+                        <h:commandButton type="button" styleClass="grouped_button_left" value="#{label.buttonContinue}">
+                            <f:actionListener binding="#{controller.bean.moveDirectory()}" />
+                            <f:ajax event="click" execute="@form" render="@form" />
+                        </h:commandButton>
+                        <h:commandButton type="button" styleClass="grouped_button_right" value="#{label.buttonCancel}" immediate="true">
+                            <f:actionListener binding="#{controller.bean.cancelMoveDirectory()}" />
+                            <f:ajax event="click" execute="@form" render="@form" />
+                        </h:commandButton>
+                    </h:panelGroup>
+                </h:panelGroup>
+            </h:panelGroup>
+            <h:panelGroup layout="block" styleClass="dialog_container" rendered="#{controller.bean.inPrepareMoveFile eq true}">
+                <h:panelGroup layout="block" styleClass="dialog_box">
+                    <h:panelGroup layout="block" styleClass="dialog_title_box">
+                        <h:outputText value="#{label.moveFileDialogTitle}" />
+                    </h:panelGroup>
+                    <h:panelGroup layout="block" styleClass="dialog_content_box">
+                        <h:panelGroup layout="block" styleClass="field_note_box">
+                            <h:outputText value="#{defaultMessage.moveFileNote} #{label.fileToMoveNote}: #{controller.bean.previewFileAddress}" />
+                        </h:panelGroup>
+                        <d:dialogMessages addStyleClass="dialog_messages_offset_top" rendered="#{controller.bean.inPrepareMoveFile eq true}" />
+                        <h:panelGroup layout="block" styleClass="dialog_field_label_box">
+                            <h:outputText value="#{label.moveFileDestinationDirectory}" />
+                        </h:panelGroup>
+                        <h:panelGroup layout="block" styleClass="dialog_field_input_box">
+                            <h:selectOneMenu id="moveFileDestinationDirectory" value="#{controller.bean.moveFileDestinationDirectory}">
+                                <f:selectItems value="#{controller.bean.directorySelection}" var="selectItem" itemValue="#{selectItem.value}" 
+                                    itemLabel="#{selectItem.label}" />
+                            </h:selectOneMenu>
+                        </h:panelGroup>
+                    </h:panelGroup>
+                    <h:panelGroup layout="block" styleClass="dialog_button_box">
+                        <h:commandButton type="button" styleClass="grouped_button_left" value="#{label.buttonContinue}">
+                            <f:actionListener binding="#{controller.bean.moveFile()}" />
+                            <f:ajax event="click" execute="@form" render="@form" />
+                        </h:commandButton>
+                        <h:commandButton type="button" styleClass="grouped_button_right" value="#{label.buttonCancel}" immediate="true">
+                            <f:actionListener binding="#{controller.bean.cancelMoveFile()}" />
+                            <f:ajax event="click" execute="@form" render="@form" />
+                        </h:commandButton>
+                    </h:panelGroup>
+                </h:panelGroup>
+            </h:panelGroup>
+            <h:panelGroup layout="block" styleClass="dialog_container" rendered="#{controller.bean.inPrepareRenameDirectory eq true}">
+                <h:panelGroup layout="block" styleClass="dialog_box">
+                    <h:panelGroup layout="block" styleClass="dialog_title_box">
+                        <h:outputText value="#{label.renameDirectoryDialogTitle}" />
+                    </h:panelGroup>
+                    <h:panelGroup layout="block" styleClass="dialog_content_box">
+                        <h:panelGroup layout="block" styleClass="field_note_box">
+                            <h:outputText value="#{defaultMessage.renameDirectoryNote} #{label.directoryToRenameNote}: #{controller.bean.currentDirectoryDisplayName}" />
+                        </h:panelGroup>
+                        <d:dialogMessages addStyleClass="dialog_messages_offset_top" rendered="#{controller.bean.inPrepareRenameDirectory eq true}" />
+                        <h:panelGroup layout="block" styleClass="dialog_field_label_box">
+                            <h:outputText value="#{label.newDirectoryName}" />
+                        </h:panelGroup>
+                        <h:panelGroup layout="block" styleClass="dialog_field_input_box">
+                            <h:inputText id="newDirectoryName1" value="#{controller.bean.newDirectoryName}" />
+                        </h:panelGroup>
+                    </h:panelGroup>
+                    <h:panelGroup layout="block" styleClass="dialog_button_box">
+                        <h:commandButton type="button" styleClass="grouped_button_left" value="#{label.buttonContinue}">
+                            <f:actionListener binding="#{controller.bean.renameDirectory()}" />
+                            <f:ajax event="click" execute="@form" render="@form" />
+                        </h:commandButton>
+                        <h:commandButton type="button" styleClass="grouped_button_right" value="#{label.buttonCancel}" immediate="true">
+                            <f:actionListener binding="#{controller.bean.cancelRenameDirectory()}" />
+                            <f:ajax event="click" execute="@form" render="@form" />
+                        </h:commandButton>
+                    </h:panelGroup>
+                </h:panelGroup>
+            </h:panelGroup>
+            <h:panelGroup layout="block" styleClass="dialog_container" rendered="#{controller.bean.inPrepareRenameFile eq true}">
+                <h:panelGroup layout="block" styleClass="dialog_box">
+                    <h:panelGroup layout="block" styleClass="dialog_title_box">
+                        <h:outputText value="#{label.renameFileDialogTitle}" />
+                    </h:panelGroup>
+                    <h:panelGroup layout="block" styleClass="dialog_content_box">
+                        <h:panelGroup layout="block" styleClass="field_note_box">
+                            <h:outputText value="#{defaultMessage.renameFileNote} #{label.fileToRenameNote}: #{controller.bean.previewFileAddress}" />
+                        </h:panelGroup>
+                        <d:dialogMessages addStyleClass="dialog_messages_offset_top" rendered="#{controller.bean.inPrepareRenameFile eq true}" />
+                        <h:panelGroup layout="block" styleClass="dialog_field_label_box">
+                            <h:outputText value="#{label.newFileName}" />
+                        </h:panelGroup>
+                        <h:panelGroup layout="block" styleClass="dialog_field_input_box">
+                            <h:inputText id="newFileName" value="#{controller.bean.newFileName}" />
+                        </h:panelGroup>
+                    </h:panelGroup>
+                    <h:panelGroup layout="block" styleClass="dialog_button_box">
+                        <h:commandButton type="button" styleClass="grouped_button_left" value="#{label.buttonContinue}">
+                            <f:actionListener binding="#{controller.bean.renameFile()}" />
+                            <f:ajax event="click" execute="@form" render="@form" />
+                        </h:commandButton>
+                        <h:commandButton type="button" styleClass="grouped_button_right" value="#{label.buttonCancel}" immediate="true">
+                            <f:actionListener binding="#{controller.bean.cancelRenameFile()}" />
+                            <f:ajax event="click" execute="@form" render="@form" />
+                        </h:commandButton>
+                    </h:panelGroup>
+                </h:panelGroup>
+            </h:panelGroup>
+            <h:inputHidden value="#{controller.bean.previewFileAddress}" id="previewFileAddress" a:autocomplete="false" />
+            <h:panelGroup layout="block" styleClass="left_panel_back_overlay"></h:panelGroup>
+            <h:panelGroup layout="block" styleClass="right_panel_back_overlay"></h:panelGroup>
+            <h:panelGroup layout="block" styleClass="main_panel_back_overlay"></h:panelGroup>
+            <h:panelGroup layout="block" styleClass="body_flexbox">
+                <d:leftPanel>
+                    <d:customLeftPanel />
+                </d:leftPanel>
+                <d:mainPanel>
+                    <d:pageContainer id="page">
+                        <d:fileManagerPreviewer iframeId="fileManagerPreviewer" classId="file_manager_preview"
+                                title="#{fn:toUpperCase(label.filePreviewer)}">
+                            <h:commandButton type="button" styleClass="grouped_button_left" value="#{label.buttonMove}">
+                                <f:actionListener binding="#{controller.bean.prepareMoveFile()}" />
+                                <f:ajax event="click" execute="@form" render="@form" />
+                            </h:commandButton>
+                            <h:commandButton type="button" styleClass="grouped_button_inner" value="#{label.buttonRename}">
+                                <f:actionListener binding="#{controller.bean.prepareRenameFile()}" />
+                                <f:ajax event="click" execute="@form" render="@form" />
+                            </h:commandButton>
+                            <h:commandButton type="button" styleClass="grouped_button_right"
+                                onclick="document.getElementsByClassName('file_manager_preview')[0].style='display:none;';
+                                    document.getElementById('fileManagerPreviewer').src='about:blank';
+                                    document.getElementsByClassName('file_manager_main_page_container')[0].style='display:block;';
+                                    var elx = document.getElementsByClassName('file_previewer_heading_mobile_action_tool_box')[0];
+                                    var mmf = document.getElementsByClassName('mobile_menu_button_fp')[0].value='#{label.buttonAction}';
+                                    elx.style='display:none';
+                                    document.getElementById('form:previewFileAddress').value='';
+                                    elx.innerHTML = '';"
+                                value="#{label.buttonClose}"
+                                rendered="#{controller.bean.inPreviewFile eq false}" />
+                            <h:commandButton type="button" styleClass="grouped_button_right" value="#{label.buttonClose}"
+                                    rendered="#{controller.bean.inPreviewFile eq true}">
+                                <f:actionListener binding="#{controller.bean.closePreview()}" />
+                                <f:ajax event="click" execute="@form" render="@form" />
+                            </h:commandButton>
+                        </d:fileManagerPreviewer>
+                        <h:outputScript rendered="#{controller.bean.isLoggedOn eq true and controller.bean.inPreviewFile eq true}">
+                            document.querySelector('.file_manager_preview').style='display:block';
+                            document.querySelector('.file_manager_main_page_container').style='display:none';
+                            document.getElementById('fileManagerPreviewer')
+                            .src='file-preview-tool?prev=1&amp;view=0&amp;address=#{utility.toURL(controller.bean.previewFileAddress)}';
+                        </h:outputScript>
+                        <h:panelGroup layout="block" styleClass="file_manager_main_page_container">
+                            <d:customProgramHeading pageTitle="#{fn:toUpperCase(label.fileManager)}">
+                                <h:commandButton type="button" styleClass="grouped_button_left" value="#{label.buttonHome}" immediate="true"
+                                        rendered="#{controller.bean.isLoggedOn eq true and controller.bean.inHomeDirectory eq false
+                                        and controller.bean.inPrepareUpload eq false}">
+                                    <f:actionListener binding="#{controller.bean.toHomeDirectory()}" />
+                                    <f:ajax event="click" execute="@form" render="@form" />
+                                </h:commandButton>
+                                <h:commandButton type="button"
+                                        styleClass="#{(controller.bean.inHomeDirectory eq false) ? 'grouped_button_inner' : 'grouped_button_left'}" 
+                                        value="#{label.buttonExitSearch}"
+                                        rendered="#{controller.bean.isLoggedOn eq true and controller.bean.inSearchMode eq true}">
+                                    <f:actionListener binding="#{controller.bean.exitSearch()}" />
+                                    <f:ajax event="click" execute="@form" render="@form" />
+                                </h:commandButton>
+                                <h:commandButton type="button" styleClass="grouped_button_left" value="#{label.buttonProceedUpload}"
+                                        rendered="#{controller.bean.isLoggedOn eq true and controller.bean.inPrepareUpload eq true}">
+                                    <f:actionListener binding="#{controller.bean.upload()}" />
+                                    <f:ajax event="click" execute="@form" render="@form" />
+                                </h:commandButton>
+                                <h:commandButton type="button" styleClass="grouped_button_inner" value="#{label.buttonCancelUpload}"
+                                        rendered="#{controller.bean.isLoggedOn eq true and controller.bean.inPrepareUpload eq true}">
+                                    <f:actionListener binding="#{controller.bean.cancelUpload()}" />
+                                    <f:ajax event="click" execute="@form" render="@form" />
+                                </h:commandButton>
+                                <h:commandButton type="button" styleClass="grouped_button_inner" value="#{label.buttonParentDir}"
+                                        immediate="true" rendered="#{controller.bean.isLoggedOn eq true and controller.bean.inHomeDirectory eq false
+                                        and controller.bean.inPrepareUpload eq false and controller.bean.inSearchMode eq false}">
+                                    <f:actionListener binding="#{controller.bean.toParentDirectory()}" />
+                                    <f:ajax event="click" execute="@form" render="@form" />
+                                </h:commandButton>
+                                <h:commandButton type="button" styleClass="#{
+                                        (controller.bean.inHomeDirectory eq true) ? 'grouped_button_left' : 'grouped_button_inner'
+                                        }" value="#{label.buttonNewDir}" immediate="true"
+                                        rendered="#{controller.bean.isLoggedOn eq true and controller.bean.inPrepareUpload eq false
+                                        and controller.bean.inSearchMode eq false}">
+                                    <f:actionListener binding="#{controller.bean.prepareCreateDirectory()}" />
+                                    <f:ajax event="click" execute="@form" render="@form" />
+                                </h:commandButton>
+                                <h:commandButton type="button" styleClass="grouped_button_inner" value="#{label.buttonMoveCurrentDirectory}"
+                                        immediate="true"
+                                        rendered="#{controller.bean.isLoggedOn eq true and controller.bean.inHomeDirectory eq false
+                                        and controller.bean.inPrepareUpload eq false and controller.bean.inSearchMode eq false}">
+                                    <f:actionListener binding="#{controller.bean.prepareMoveDirectory()}" />
+                                    <f:ajax event="click" execute="@form" render="@form" />
+                                </h:commandButton>
+                                <h:commandButton type="button" styleClass="grouped_button_inner" value="#{label.buttonUpload}"
+                                        immediate="true"
+                                        rendered="#{controller.bean.isLoggedOn eq true and controller.bean.inPrepareUpload eq false
+                                        and controller.bean.inSearchMode eq false}">
+                                    <f:actionListener binding="#{controller.bean.prepareUpload()}" />
+                                    <f:ajax event="click" execute="@form" render="@form" />
+                                </h:commandButton>
+                                <h:commandButton type="button" styleClass="grouped_button_inner" value="#{label.buttonRenameCurrentDirectory}"
+                                        immediate="true"
+                                        rendered="#{controller.bean.isLoggedOn eq true and controller.bean.inHomeDirectory eq false
+                                        and controller.bean.inPrepareUpload eq false and controller.bean.inSearchMode eq false}">
+                                    <f:actionListener binding="#{controller.bean.prepareRenameDirectory()}" />
+                                    <f:ajax event="click" execute="@form" render="@form" />
+                                </h:commandButton>
+                                <h:commandButton type="button" styleClass="grouped_button_inner" value="#{label.buttonMassiveMove}"
+                                        rendered="#{controller.bean.isLoggedOn eq true and controller.bean.inPrepareUpload eq false}">
+                                    <f:actionListener binding="#{controller.bean.presetMassiveMoveReadyState()}" />
+                                    <f:ajax event="click" execute="@form" render="@form" />
+                                </h:commandButton>
+                                <h:commandButton type="button" styleClass="grouped_button_inner" value="#{label.buttonMassiveRemove}"
+                                        rendered="#{controller.bean.isLoggedOn eq true and controller.bean.inPrepareUpload eq false
+                                        and controller.bean.inPrepareUpload eq false}">
+                                    <f:actionListener binding="#{controller.bean.presetMassiveRemovalReadyState()}" />
+                                    <f:ajax event="click" execute="@form" render="@form" />
+                                </h:commandButton>
+                                <h:commandButton type="button" styleClass="#{
+                                    (controller.bean.isLoggedOn eq true) ? 'grouped_button_right' : 'common_button'}"
+                                    onclick="document.location.href='adm.jsf'" value="#{label.buttonClose}" />
+                            </d:customProgramHeading>
+                            <h:panelGroup layout="block" styleClass="list_control_container list_control_top"
+                                    rendered="#{controller.bean.isLoggedOn eq true}">
+                                <h:panelGroup layout="block" styleClass="list_control_box">
+                                    <h:panelGroup layout="block" styleClass="list_control_inner">
+                                        <h:panelGroup layout="block" styleClass="list_control_deeper_label_left">
+                                            <h:outputText value="#{label.fileListSortBy}:" />
+                                        </h:panelGroup>
+                                        <h:panelGroup layout="block" styleClass="list_control_deeper">
+                                            <h:selectOneMenu value="#{controller.bean.sortMode}">
+                                                <f:selectItem itemValue="BY_NAME" itemLabel="#{label.fileListSortByName}" />
+                                                <f:selectItem itemValue="BY_SIZE" itemLabel="#{label.fileListSortBySize}" />
+                                                <f:selectItem itemValue="BY_CREATION_TIME" itemLabel="#{label.fileListSortByCreationTime}" />
+                                                <f:selectItem itemValue="BY_LAST_MODIFIED_TIME" itemLabel="#{label.fileListSortByLastModifiedTime}" />
+                                                <f:selectItem itemValue="BY_LAST_ACCESS_TIME" itemLabel="#{label.fileListSortByLastAccessTime}" />
+                                                <f:ajax event="change" execute="@form" render="@form" />
+                                            </h:selectOneMenu>
+                                        </h:panelGroup>
+                                        <h:panelGroup layout="block" styleClass="list_control_deeper_gap list_control_search_box">
+                                            <h:inputText a:autocomplete="off" onkeypress="if (event.keyCode != 13) { return false; }"
+                                                    value="#{controller.bean.keyword}">
+                                                <f:ajax event="keypress" execute="@form" render="@form" listener="#{controller.bean.configureSearch}" />
+                                            </h:inputText>
+                                        </h:panelGroup>
+                                        <h:panelGroup layout="block" styleClass="list_control_deeper">
+                                            <h:commandButton type="button" styleClass="common_button" value="#{label.buttonSearch}">
+                                                <f:ajax event="click" execute="@form" render="@form" listener="#{controller.bean.configureSearch}" />
+                                            </h:commandButton>
+                                        </h:panelGroup>
+                                        <h:panelGroup layout="block" styleClass="list_control_deeper_right">
+                                            <h:panelGroup layout="block" styleClass="list_control_page_switch_button_box">
+                                                <h:commandButton type="button" styleClass="grouped_button_left" value="#{label.buttonSelectAll}">
+                                                    <f:actionListener binding="#{controller.bean.selectAll()}" />
+                                                    <f:ajax event="click" execute="@form" render="@form" />
+                                                </h:commandButton>
+                                                <h:commandButton type="button" styleClass="grouped_button_right" value="#{label.buttonDeselectAll}">
+                                                    <f:actionListener binding="#{controller.bean.deselectAll()}" />
+                                                    <f:ajax event="click" execute="@form" render="@form" />
+                                                </h:commandButton>
+                                            </h:panelGroup>
+                                        </h:panelGroup>
+                                    </h:panelGroup>
+                                </h:panelGroup>
+                            </h:panelGroup>
+                            <d:messages rendered="#{
+                                    controller.bean.inPrepareCreateDirectory eq false and
+                                    controller.bean.inPrepareRenameFile eq false and
+                                    controller.bean.inPrepareRenameDirectory eq false and
+                                    controller.bean.inPrepareUpload eq false
+                                }" />
+                            <d:loginRequirementInlineDialog />
+                            <d:admFieldContainer>
+                                <h:panelGroup layout="block" styleClass="field_container_inner" rendered="#{controller.bean.inPrepareUpload eq true}">
+                                    <d:fieldNoteBox>
+                                        <h:outputText value="#{defaultMessage.fileUploadNotePre}: #{controller.bean.currentDirectoryDisplayName}. #{defaultMessage.fileUploadNote}" />
+                                    </d:fieldNoteBox>
+                                    <ui:repeat value="#{controller.bean.commonLoop}" var="cl">
+                                        <d:fieldRow>
+                                            <d:fieldColumn>
+                                                <d:fieldInputBox>
+                                                    <h:panelGroup display="block" style="position:relative">
+                                                        <h:inputFile value="#{controller.bean.fileParts[cl]}" style="display:none;"
+                                                            styleClass="filePart#{cl}"
+                                                            onchange="setFakeFileInputValue(this,'filePartTmp#{cl}');" />
+                                                        <d:fakeFileInput FIclassId="filePart#{cl}" classId="filePartTmp#{cl}" />
+                                                    </h:panelGroup>
+                                                </d:fieldInputBox>
+                                            </d:fieldColumn>
+                                        </d:fieldRow>
+                                    </ui:repeat>
+                                </h:panelGroup>
+                                <h:panelGroup layout="block" styleClass="field_container_inner" rendered="#{controller.bean.inSearchMode eq true}">
+                                    <h:panelGroup layout="block" styleClass="field_note_box field_note_box_free">
+                                        <h:outputText value="#{label.found}: #{controller.bean.searchResultCount} #{label.itemInSearchResult}" />
+                                    </h:panelGroup>
+                                    <h:panelGroup layout="block" styleClass="file_manager_src_box">
+                                        <h:panelGroup layout="block" styleClass="file_manager_src_table">
+                                            <ui:repeat value="#{controller.bean.searchResult}" var="result">
+                                                <ui:repeat value="#{result.value}" var="data">
+                                                    <h:panelGroup layout="block" styleClass="file_manager_src_row">
+                                                        <h:panelGroup layout="block" styleClass="file_manager_src_icon_cell">
+                                                            <h:panelGroup layout="block" styleClass="file_manager_src_item_box"
+                                                                    rendered="#{data.value eq true}">
+                                                                <h:commandButton type="button" style="display:none;" immediate="true"
+                                                                        value="" a:name="#{result.key}">
+                                                                    <f:actionListener binding="#{controller.bean.setCurrentDirectory(data.key)}" />
+                                                                    <f:actionListener binding="#{controller.bean.exitSearch()}" />
+                                                                    <f:ajax event="click" execute="@form" render="@form" />
+                                                                </h:commandButton>
+                                                                <h:panelGroup layout="block" styleClass="file_manager_image_item_cb_rel_box">
+                                                                    <h:panelGroup layout="block" styleClass="file_manager_image_item_cb_abs_box">
+                                                                        <h:selectManyCheckbox value="#{controller.bean.nodeNames}"
+                                                                                styleClass="checkbox file_manager_cb"
+                                                                                collectionType="java.util.ArrayList" a:autocomplete="false">
+                                                                            <f:selectItem itemValue="#{data.key}" itemLabel="" />
+                                                                        </h:selectManyCheckbox>
+                                                                    </h:panelGroup>
+                                                                </h:panelGroup>
+                                                                <h:panelGroup layout="block" styleClass="file_manager_src_item_icon_box">
+                                                                    <h:graphicImage value="file-preview-tool?address=#{utility.toURL(data.key)}&amp;view=0&amp;prev=0"
+                                                                        alt="#{result.key}" styleClass="file_manager_image_item"
+                                                                        a:onclick="var e = document.getElementsByName('#{result.key}');if(e!=null){e[0].click();};" />
+                                                                </h:panelGroup>
+                                                            </h:panelGroup>
+                                                            <h:panelGroup layout="block" styleClass="file_manager_src_item_box"
+                                                                    rendered="#{data.value eq false}">
+                                                                <h:panelGroup layout="block" styleClass="file_manager_image_item_cb_rel_box">
+                                                                    <h:panelGroup layout="block" styleClass="file_manager_image_item_cb_abs_box">
+                                                                        <h:selectManyCheckbox value="#{controller.bean.nodeNames}" styleClass="checkbox file_manager_cb"
+                                                                                collectionType="java.util.ArrayList" a:autocomplete="false">
+                                                                            <f:selectItem itemValue="#{data.key}" itemLabel="" />
+                                                                        </h:selectManyCheckbox>
+                                                                    </h:panelGroup>
+                                                                </h:panelGroup>
+                                                                <h:panelGroup layout="block" styleClass="file_manager_src_item_icon_box">
+                                                                    <h:graphicImage value="file-preview-tool?address=#{utility.toURL(data.key)}&amp;view=0&amp;prev=0"
+                                                                        alt="#{result.key}" styleClass="file_manager_image_item"
+                                                                        a:onclick="document.querySelector('.file_manager_preview')
+                                                                            .style='display:block';
+                                                                            document.querySelector('.file_manager_main_page_container')
+                                                                            .style='display:none';
+                                                                            document.getElementById('form:previewFileAddress').value='#{data.key}';
+                                                                            document.getElementById('fileManagerPreviewer')
+                                                                            .src='file-preview-tool?prev=1&amp;view=0&amp;address=#{utility.toURL(data.key)}';" />
+                                                                </h:panelGroup>
+                                                            </h:panelGroup>
+                                                        </h:panelGroup>
+                                                        <h:panelGroup layout="block" styleClass="file_manager_src_info_cell">
+                                                            <h:panelGroup layout="block" styleClass="file_manager_src_item_path_box"
+                                                                    rendered="#{data.value eq true}">
+                                                                <a href="javascript:void(0);"
+                                                                    onclick="var e = document.getElementsByName('#{result.key}');if(e!=null){e[0].click();};"
+                                                                ><h:outputText value="#{controller.bean.hideHomeDirectoryPath(data.key)}" /></a>
+                                                            </h:panelGroup>
+                                                            <h:panelGroup layout="block" styleClass="file_manager_src_item_path_box"
+                                                                    rendered="#{data.value eq false}">
+                                                                <a href="javascript:void(0);"
+                                                                    onclick="document.querySelector('.file_manager_preview')
+                                                                            .style='display:block';
+                                                                            document.querySelector('.file_manager_main_page_container')
+                                                                            .style='display:none';
+                                                                            document.getElementById('form:previewFileAddress').value='#{data.key}';
+                                                                            document.getElementById('fileManagerPreviewer')
+                                                                            .src='file-preview-tool?prev=1&amp;view=0&amp;address=#{utility.toURL(data.key)}';"
+                                                                ><h:outputText value="#{controller.bean.hideHomeDirectoryPath(data.key)}" /></a>
+                                                            </h:panelGroup>
+                                                        </h:panelGroup>
+                                                    </h:panelGroup>
+                                                </ui:repeat>
+                                            </ui:repeat>
+                                        </h:panelGroup>
+                                    </h:panelGroup>
+                                </h:panelGroup>
+                                <h:panelGroup layout="block" styleClass="field_container_inner"
+                                        rendered="#{controller.bean.inPrepareUpload eq false and controller.bean.inSearchMode eq false}">
+                                    <h:panelGroup layout="block" styleClass="field_note_box field_note_box_free">
+                                        <h:outputText value="#{controller.bean.currentDirectoryDisplayName}" />
+                                    </h:panelGroup>
+                                    <h:panelGroup layout="block" styleClass="file_manager_directory_empty_box_outer"
+                                            rendered="#{controller.bean.isEmptyDirectory eq true}">
+                                        <h:panelGroup layout="block" styleClass="file_manager_directory_empty_box">
+                                            <h:outputText value="#{defaultMessage.fileManagerDirectoryEmptyNote}" />
+                                        </h:panelGroup>
+                                    </h:panelGroup>
+                                    <h:panelGroup layout="block" styleClass="file_manager_image_box">
+                                        <ui:repeat value="#{controller.bean.nodes}" var="node">
+                                            <ui:repeat value="#{node.value}" var="data">
+                                                <h:panelGroup layout="block" styleClass="file_manager_image_item_box"
+                                                        rendered="#{data.value eq true}">
+                                                    <h:commandButton type="button" style="display:none;" immediate="true" value="" a:name="#{node.key}">
+                                                        <f:actionListener binding="#{controller.bean.setCurrentDirectory(data.key)}" />
+                                                        <f:ajax event="click" execute="@form" render="@form" />
+                                                    </h:commandButton>
+                                                    <h:panelGroup layout="block" styleClass="file_manager_image_item_cb_rel_box">
+                                                        <h:panelGroup layout="block" styleClass="file_manager_image_item_cb_abs_box">
+                                                            <h:selectManyCheckbox value="#{controller.bean.nodeNames}" styleClass="checkbox file_manager_cb"
+                                                                    collectionType="java.util.ArrayList" a:autocomplete="false">
+                                                                <f:selectItem itemValue="#{data.key}" itemLabel="" />
+                                                            </h:selectManyCheckbox>
+                                                        </h:panelGroup>
+                                                    </h:panelGroup>
+                                                    <h:panelGroup layout="block" styleClass="file_manager_image_item_icon_box">
+                                                        <h:graphicImage value="file-preview-tool?address=#{utility.toURL(data.key)}&amp;view=0&amp;prev=0"
+                                                            alt="#{node.key}" styleClass="file_manager_image_item"
+                                                            a:onclick="var e = document.getElementsByName('#{node.key}');if(e!=null){e[0].click();};" />
+                                                    </h:panelGroup>
+                                                    <h:panelGroup layout="block" styleClass="file_manager_image_item_name_box"><a
+                                                            href="javascript:void(0);"
+                                                                onclick="var e = document.getElementsByName('#{node.key}');if(e!=null){e[0].click();};"
+                                                            ><h:outputText value="#{node.key}" /></a>
+                                                    </h:panelGroup>
+                                                </h:panelGroup>
+                                                <h:panelGroup layout="block" styleClass="file_manager_image_item_box"
+                                                        rendered="#{data.value eq false}">
+                                                    <h:panelGroup layout="block" styleClass="file_manager_image_item_cb_rel_box">
+                                                        <h:panelGroup layout="block" styleClass="file_manager_image_item_cb_abs_box">
+                                                            <h:selectManyCheckbox value="#{controller.bean.nodeNames}" styleClass="checkbox file_manager_cb"
+                                                                    collectionType="java.util.ArrayList" a:autocomplete="false">
+                                                                <f:selectItem itemValue="#{data.key}" itemLabel="" />
+                                                            </h:selectManyCheckbox>
+                                                        </h:panelGroup>
+                                                    </h:panelGroup>
+                                                    <h:panelGroup layout="block" styleClass="file_manager_image_item_icon_box">
+                                                        <h:graphicImage value="file-preview-tool?address=#{utility.toURL(data.key)}&amp;view=0&amp;prev=0"
+                                                            alt="#{node.key}" styleClass="file_manager_image_item"
+                                                            a:onclick="document.querySelector('.file_manager_preview')
+                                                                .style='display:block';
+                                                                document.querySelector('.file_manager_main_page_container')
+                                                                .style='display:none';
+                                                                document.getElementById('form:previewFileAddress').value='#{data.key}';
+                                                                document.getElementById('fileManagerPreviewer')
+                                                                .src='file-preview-tool?prev=1&amp;view=0&amp;address=#{utility.toURL(data.key)}';" />
+                                                    </h:panelGroup>
+                                                    <h:panelGroup layout="block" styleClass="file_manager_image_item_name_box">
+                                                        <a href="javascript:void(0);"
+                                                            onclick="document.querySelector('.file_manager_preview')
+                                                                .style='display:block';
+                                                                document.querySelector('.file_manager_main_page_container')
+                                                                .style='display:none';
+                                                                document.getElementById('form:previewFileAddress').value='#{data.key}';
+                                                                document.getElementById('fileManagerPreviewer')
+                                                                .src='file-preview-tool?prev=1&amp;view=0&amp;address=#{utility.toURL(data.key)}';"
+                                                            ><h:outputText value="#{node.key}" /></a>
+                                                    </h:panelGroup>
+                                                </h:panelGroup>
+                                            </ui:repeat>
+                                        </ui:repeat>
+                                    </h:panelGroup>
+                                </h:panelGroup>
+                            </d:admFieldContainer>
+                        </h:panelGroup>
+                        <d:databaseErrorWarningBox />
+                        <d:mainPanelFooter />
+                    </d:pageContainer>
+                </d:mainPanel>
+                <d:rightPanel>
+                    <d:customRightPanel />
+                </d:rightPanel>
+            </h:panelGroup>
+            <d:customBottomForm />
+            <d:deinit />
+        </h:form>
+        <d:customBottomBody />
+    </h:body>
+</html>

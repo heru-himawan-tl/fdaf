@@ -1,0 +1,85 @@
+<!--
+
+Copyright (c) Heru Himawan Tejo Laksono. All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+
+1. Redistributions of source code must retain the above copyright notice,
+   this list of conditions and the following disclaimer.
+
+2. Redistributions in binary form must reproduce the above copyright notice,
+   this list of conditions and the following disclaimer in the documentation
+   and/or other materials provided with the distribution.
+
+3. Neither the name of the copyright holders nor the names of its
+   contributors may be used to endorse or promote products derived from this
+   software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ARE DISCLAIMED. IN NO EVENT SHALL THE REGENTS OR CONTRIBUTORS BE LIABLE FOR
+ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE
+USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:d="http://java.sun.com/jsf/composite/component"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:f="http://java.sun.com/jsf/core">
+    <ui:composition>
+        <d:disallowAdd />
+        <d:listContainer>
+            <d:listRowHead>
+                <d:listHeadMobileView value="#{label.contentsAndAction}" />
+                <d:listHead value="#{elabel.id}" />
+                <d:listHeadStrictWidth value="#{label.accountInformation}" />
+            </d:listRowHead>
+            <ui:repeat value="#{controller.bean.resultList}" var="user">
+                <d:listRow removePromptId="user" listObject="#{user}"
+                        removable="#{(controller.bean.userSessionManager.userId ne user.data.id)}"
+                        editable="#{(
+                            controller.bean.userSessionManager.userId ne user.data.id
+                            and
+                            user.data.userType ne 'ADMINISTRATOR'
+                        )}">
+                    <d:listColumnMobileViewWithTool
+                        listObject="#{user}"
+                        removable="#{(controller.bean.userSessionManager.userId ne user.data.id)}"
+                        editable="#{(
+                            controller.bean.userSessionManager.userId ne user.data.id
+                            and
+                            user.data.userType ne 'ADMINISTRATOR'
+                        )}">
+                        <d:dataListMobileViewContentBox>
+                            <h:outputText value="#{user.data.userName}" />
+                            (<h:outputText value="#{user.data.employee.firstName} " />
+                            <h:outputText value="#{user.data.employee.middleName}" />
+                            <h:outputText value="#{user.data.employee.lastName}" />)<br />
+                            <h:outputText value="#{user.data.email}" /><br />
+                            <h:outputText value="#{user.data.userType}" /><br />
+                            <h:outputText value="#{elabel.id}" />:
+                            <h:outputText value="#{user.data.id}" />
+                        </d:dataListMobileViewContentBox>
+                    </d:listColumnMobileViewWithTool>
+                    <d:listColumn value="#{user.data.id}" />
+                    <d:listColumnText>
+                        <d:dataDetailTable>
+                            <d:dataDetailSet label="#{elabel.userName}" value="#{user.data.userName}" />
+                            <d:dataDetailSet label="#{elabel.fullName}" value="#{user.data.employee.firstName} #{user.data.employee.middleName} #{user.data.employee.lastName}" />
+                            <d:dataDetailSet label="#{elabel.email}" value="#{user.data.email}" />
+                            <d:dataDetailSet label="#{elabel.userType}" value="#{user.data.userType}" />
+                        </d:dataDetailTable>
+                    </d:listColumnText>
+                </d:listRow>
+            </ui:repeat>
+        </d:listContainer>
+    </ui:composition>
+</html>
