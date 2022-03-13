@@ -59,7 +59,12 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                             user.data.userType ne 'ADMINISTRATOR'
                         )}">
                         <d:dataListMobileViewContentBox>
-                            <h:outputText value="#{user.data.userName}" /><br />
+                            <h:outputText value="#{user.data.userName}" />
+                            (<h:outputText value="#{user.data.employee.firstName} " />
+                            <h:outputText value="#{user.data.employee.middleName}" />
+                            <h:outputText value="#{user.data.employee.lastName}" />)<br />
+                            <h:outputText value="#{user.data.email}" /><br />
+                            <h:outputText value="#{user.data.userType}" /><br />
                             <h:outputText value="#{elabel.id}" />:
                             <h:outputText value="#{user.data.id}" />
                         </d:dataListMobileViewContentBox>
@@ -68,6 +73,7 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                     <d:listColumnText>
                         <d:dataDetailTable>
                             <d:dataDetailSet label="#{elabel.userName}" value="#{user.data.userName}" />
+                            <d:dataDetailSet label="#{elabel.fullName}" value="#{user.data.employee.firstName} #{user.data.employee.middleName} #{user.data.employee.lastName}" />
                             <d:dataDetailSet label="#{elabel.email}" value="#{user.data.email}" />
                             <d:dataDetailSet label="#{elabel.userType}" value="#{user.data.userType}" />
                         </d:dataDetailTable>
