@@ -1,8 +1,0 @@
-thorntail:
-  datasources:
-    data-sources:
-      ${fdaf.dataSourceName}:
-        driver-name: ${fdaf.thorntailDataSourceDriverName}
-        connection-url: ${fdaf.thorntailDataSourceConnectionURL} # Change it into your preference
-        user-name: ${fdaf.thorntailDataSourceUserName} # Change it into your preference
-        password: ${fdaf.thorntailDataSourcePassword} # Change it into your preference
