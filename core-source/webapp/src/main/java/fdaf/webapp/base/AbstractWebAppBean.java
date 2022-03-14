@@ -471,7 +471,11 @@ public abstract class AbstractWebAppBean extends AbstractBaseWebAppBean {
         try {
             if (loggedOn && !brokenUserSession) {
                 if (!withoutDataProperties && !checkOrphanDataMode) {
-                    totalRowCount = getFacade().count(authorId, userGroupId, keywords);
+                    if (userType != UserType.ADMINISTRATOR) {
+                        totalRowCount = getFacade().count(authorId, userGroupId, keywords);
+                    } else {
+                        totalRowCount = getFacade().count(keywords);
+                    }
                 } else {
                     totalRowCount = getFacade().count(keywords);
                 }
@@ -733,13 +737,21 @@ public abstract class AbstractWebAppBean extends AbstractBaseWebAppBean {
         try {
             if (loggedOn && !brokenUserSession) {
                 if (!withoutDataProperties && !checkOrphanDataMode) {
-                    resultListTemp = getFacade().list(orderParameter, orderMode, offset, limit, authorId, userGroupId, keywords);
+                    if (userType != UserType.ADMINISTRATOR) {
+                        resultListTemp = getFacade().list(orderParameter, orderMode, offset, limit, authorId, userGroupId, keywords);
+                    } else {
+                        resultListTemp = getFacade().list(orderParameter, orderMode, offset, limit, keywords);
+                    }
                 } else {
                     resultListTemp = getFacade().list(orderParameter, orderMode, offset, limit, keywords);
                 }
                 if (resultListTemp.isEmpty() && totalRowCount > 0) {
                     if (!withoutDataProperties && !checkOrphanDataMode) {
-                        resultListTemp = getFacade().list(orderParameter, orderMode,  0, limit, authorId, userGroupId, keywords);
+                        if (userType != UserType.ADMINISTRATOR) {
+                            resultListTemp = getFacade().list(orderParameter, orderMode,  0, limit, authorId, userGroupId, keywords);
+                        } else {
+                            resultListTemp = getFacade().list(orderParameter, orderMode, 0, limit, keywords);
+                        }
                     } else {
                         resultListTemp = getFacade().list(orderParameter, orderMode,  0, limit, keywords);
                     }
