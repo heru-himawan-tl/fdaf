@@ -123,6 +123,8 @@ public abstract class AbstractWebAppBean extends AbstractBaseWebAppBean {
 
     protected Object currentViewDataId;
     
+    protected boolean editableView;
+    
     protected String rowUUID;
     
     protected boolean editByViewMode;
@@ -670,6 +672,14 @@ public abstract class AbstractWebAppBean extends AbstractBaseWebAppBean {
     
     public void presetEditByViewMode() {
         editByViewMode = true;
+    }
+    
+    public void setEditableView(boolean editableView) {
+        this.editableView = editableView;
+    }
+    
+    public boolean getEditableView() {
+        return editableView;
     }
     
     public boolean getInEditByViewMode() {

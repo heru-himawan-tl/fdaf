@@ -42,6 +42,7 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     <composite:implementation>
             <h:panelGroup layout="block" styleClass="list_action_column_flex">
                 <h:commandButton styleClass="grouped_button_left" immediate="true" value="#{label.listActionView}">
+                    <f:actionListener binding="#{controller.bean.setEditableView(cc.attrs.editable)}" />
                     <f:actionListener binding="#{controller.bean.view(cc.attrs.listObject.data.id)}" />
                     <f:ajax event="click" execute="@form" render="@form" />
                 </h:commandButton>

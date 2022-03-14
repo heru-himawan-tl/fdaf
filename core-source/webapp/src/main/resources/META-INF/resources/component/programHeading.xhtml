@@ -83,12 +83,12 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                                 <f:actionListener binding="#{controller.bean.presetMassiveRemovalReadyState()}" />
                                 <f:ajax event="click" execute="@form" render="@form" />
                             </h:commandButton>
-                            <h:commandButton styleClass="grouped_button_left" immediate="true" value="#{label.listActionEdit}" rendered="#{(controller.bean.allowRender eq true and controller.bean.opMode eq 'VIEW' and controller.bean.allowEdit eq true and controller.bean.allowAdd eq true)}">
+                            <h:commandButton styleClass="grouped_button_left" immediate="true" value="#{label.listActionEdit}" rendered="#{(controller.bean.allowRender eq true and controller.bean.opMode eq 'VIEW' and controller.bean.allowEdit eq true and controller.bean.allowAdd eq true and controller.bean.editableView eq true)}">
                                 <f:actionListener binding="#{controller.bean.presetEditByViewMode()}" />
                                 <f:actionListener binding="#{controller.bean.prepareUpdate(controller.bean.currentViewDataId)}" />
                                 <f:ajax event="click" execute="@form" render="@form" />
                             </h:commandButton>
-                            <h:commandButton type="button" styleClass="#{(controller.bean.allowEdit eq true and controller.bean.allowAdd eq true) ? 'grouped_button_inner' : 'grouped_button_left'}" immediate="true" value="#{label.buttonCloseViewer}" rendered="#{(controller.bean.allowRender eq true and controller.bean.opMode eq 'VIEW')}">
+                            <h:commandButton type="button" styleClass="#{(controller.bean.allowEdit eq true and controller.bean.allowAdd eq true and controller.bean.editableView eq true) ? 'grouped_button_inner' : 'grouped_button_left'}" immediate="true" value="#{label.buttonCloseViewer}" rendered="#{(controller.bean.allowRender eq true and controller.bean.opMode eq 'VIEW')}">
                                 <f:actionListener binding="#{controller.bean.exitView()}" />
                                 <f:ajax event="click" execute="@form" render="@form" />
                             </h:commandButton>
